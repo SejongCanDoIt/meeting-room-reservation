@@ -61,7 +61,7 @@ const Dhdsh = styled.h1`
 
 
 const UserIcon = styled.img`
-    width: 30%;
+    width: 100px;
     max-width: 200px;
 `
 
