@@ -1,12 +1,11 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.4'
+	id 'org.springframework.boot' version '2.7.4'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'sejong'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -31,8 +30,23 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+	// Undertow 서블릿 컨테이너
+	implementation 'org.springframework.boot:spring-boot-starter-undertow'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// CLI 환경에서 자바 소스를 컴파일 할 때 적용할 옵션
+tasks.withType(JavaCompile) {
+	// 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
+	// $javac -encoding UTF-8 ..
+	options.encoding = 'UTF-8'
+
+	// 소스 파일을 작성할 때 사용할 자바 버전
+	sourceCompatibility = '11'
+
+	// 자바 클래스를 실행시킬 JVM의 최소 버전
+	targetCompatibility = '11'
 }
