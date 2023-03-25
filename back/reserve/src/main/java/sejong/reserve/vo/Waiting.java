@@ -14,7 +14,8 @@ public class Waiting {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 예약대기번호
 
-    @ColumnDefault("false")
+    @Column(columnDefinition = "TINYINT(1)", nullable = false)
+    @ColumnDefault("0")
     private Boolean success; // 예약 성공 여부
 
     @OneToOne
