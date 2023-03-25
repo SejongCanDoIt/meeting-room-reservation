@@ -13,9 +13,10 @@ import javax.persistence.*;
 @Entity
 @Data
 @DynamicInsert
-@Table(name = "ROOM")
+@Table(name = "room")
 public class Room {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
     private Long id; // 회의실 id
 
     private String name; // 회의실 이름
