@@ -17,7 +17,7 @@ public class Member {
     private int studentNo; // 학번
     @Column(name = "phn")
     private String phoneNo; // 전화번호
-    @Column(name = "prev")
+    @Column(name = "auth")
     private int authority; // 권한 0 < 1 < 2
     private String name; // 회원의 이름
 

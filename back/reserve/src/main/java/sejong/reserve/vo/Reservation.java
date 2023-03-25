@@ -20,7 +20,7 @@ public class Reservation {
     private Boolean regular; // 정기 예약 여부
 
     @OneToOne
-    @JoinColumn(name = "ROOM_NAME")
+    @JoinColumn(name = "ROOM_ID")
     private Room room;
 
     @OneToOne
