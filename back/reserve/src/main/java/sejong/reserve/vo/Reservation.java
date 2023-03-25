@@ -27,6 +27,4 @@ public class Reservation {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne(mappedBy = "reservation")
-    private Waiting waiting;
 }

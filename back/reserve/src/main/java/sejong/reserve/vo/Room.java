@@ -37,6 +37,4 @@ public class Room {
     private int com; // 컴퓨터 개수
     private String picture; // 사진 경로
 
-    @OneToOne(mappedBy = "room")
-    private Reservation reservation;
 }

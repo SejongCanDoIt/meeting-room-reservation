@@ -21,6 +21,4 @@ public class Member {
     private int authority; // 권한 0 < 1 < 2
     private String name; // 회원의 이름
 
-    @OneToOne(mappedBy = "member")
-    private Reservation reservation;
 }
