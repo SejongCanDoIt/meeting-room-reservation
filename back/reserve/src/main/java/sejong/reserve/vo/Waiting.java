@@ -19,7 +19,7 @@ public class Waiting {
     @ColumnDefault("0")
     private Boolean success; // 예약 성공 여부
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 }

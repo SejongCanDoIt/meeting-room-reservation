@@ -21,11 +21,11 @@ public class Reservation {
     private String status; // 예약 상태
     private Boolean regular; // 정기 예약 여부
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
