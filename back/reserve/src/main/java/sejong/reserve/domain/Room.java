@@ -1,12 +1,8 @@
-package sejong.reserve.vo;
+package sejong.reserve.domain;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import sejong.reserve.function.BooleanToYNConverter;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package sejong.reserve.vo;
+package sejong.reserve.domain;
 
 import lombok.Data;
 

@@ -1,11 +1,10 @@
-package sejong.reserve.vo;
+package sejong.reserve.domain;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity

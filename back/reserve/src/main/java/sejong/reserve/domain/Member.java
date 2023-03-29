@@ -1,4 +1,4 @@
-package sejong.reserve.vo;
+package sejong.reserve.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +15,12 @@ public class Member {
     private Long id; // 에약자 번호
     private String major; // 전공
     @Column(name = "sno")
-    private int studentNo; // 학번
+    private String studentNo; // 학번
     @Column(name = "phn")
     private String phoneNo; // 전화번호
     @Column(name = "auth")
     private int authority; // 권한 0 < 1 < 2
     private String name; // 회원의 이름
-
+    @Column(name = "pwd")
+    private String password;
 }
