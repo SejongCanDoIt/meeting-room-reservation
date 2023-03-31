@@ -1,0 +1,28 @@
+#changeCompletePageContainer {
+    background: #FAFAFA;
+    height: 100vh;
+}
+
+#changeCompleteSection {
+    height: 100vh;
+    position: relative;
+}
+
+#changeCompleteTitle {
+    font-family: 'Inter';
+    font-style: normal;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 40vh;
+}
+
+.message {
+    font-family: 'Inter';
+    font-style: normal;
+    text-align: center;
+    color: #929292;
+    position: absolute;
+    width: 100%;
+    bottom: 10vh;
+}
