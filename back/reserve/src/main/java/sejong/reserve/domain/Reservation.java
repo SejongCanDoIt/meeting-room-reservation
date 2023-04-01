@@ -17,7 +17,7 @@ public class Reservation {
 
     private LocalDateTime start; // 예약 시작 시간
     private LocalDateTime end; // 예약 종료 시간
-    private String status; // 예약 상태
+    private ReservationStatus status; // 예약 상태 RESERVED, FINISHED
     private Boolean regular; // 정기 예약 여부
 
     @OneToOne(fetch = FetchType.LAZY)
