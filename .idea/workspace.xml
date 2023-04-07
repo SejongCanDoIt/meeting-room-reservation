@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0b68c06e-2f2d-47a5-87c6-2fc01cca3c69" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/reserve/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/back/reserve">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="back-jimin4" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1680844128" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="back_lee" />
+                    <option name="lastUsedInstant" value="1679647740" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="back" />
+                    <option name="lastUsedInstant" value="1679647619" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2NSB4SnikBqwoKsV7lkzdjrLGp1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Git.Branch.Popup.ShowAllRemotes": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/meeting-room-reservation",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "spring.configuration.checksum": "9daaa46a91b498bc165a63e73dac38aa"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="sejong.reserve.controller" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ReserveApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="reserve.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sejong.reserve.ReserveApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0b68c06e-2f2d-47a5-87c6-2fc01cca3c69" name="Changes" comment="" />
+      <created>1679647411909</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1679647411909</updated>
+      <workItem from="1679647413237" duration="355000" />
+      <workItem from="1679676448650" duration="638000" />
+      <workItem from="1680243609034" duration="3831000" />
+      <workItem from="1680285649549" duration="37000" />
+      <workItem from="1680335046973" duration="1589000" />
+      <workItem from="1680378897457" duration="1194000" />
+      <workItem from="1680500325000" duration="21000" />
+      <workItem from="1680754712797" duration="7125000" />
+      <workItem from="1680840912041" duration="5607000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

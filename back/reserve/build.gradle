@@ -35,6 +35,12 @@ dependencies {
 
 	// Undertow 서블릿 컨테이너
 	implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+	// csv파일 읽기 라이브러리
+	implementation 'com.opencsv:opencsv:5.5.2'
+
+
+
 }
 
 tasks.named('test') {
