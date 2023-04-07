@@ -1,34 +1,32 @@
 package sejong.reserve.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import sejong.reserve.domain.Member;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
-public class MemberRepository {
-    private final EntityManager em;
+public interface MemberRepository extends JpaRepository<Member, String> {
 
-    public void save(Member member) {
-        em.persist(member);
-    }
+    List<Member> findByName(String name);
 
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
-    }
+    @Query("select m from Member m where m.studentNo = :studentNo")
+    Member findByStudentNo(@Param("studentNo") String studentNo);
 
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class)
-                .getResultList();
-    }
+    @Query("delete from Member m where m.studentNo = :studentNo")
+    void deleteByStudentNo(@Param("studentNo") String studentNo);
 
-    public List<Member> findByName(String name) {
-        return em.createQuery("select m from Member m where m.name = :name", Member.class)
-                .setParameter("name", name)
-                .getResultList();
-    }
+    @Query("update Member m set m.password = :newPassword where m.studentNo = :studentNo")
+    void updatePasswordByStudentNo(@Param("studentNo") String studentNo, @Param("newPassword") String newPassword);
+
+    @Query("select substring(m.phoneNo, length(m.phoneNo) - 3) from Member m where m.studentNo = :studentNo")
+    String findPhoneNoByStudentNo(@Param("studentNo") String studentNo);
+
 
 }

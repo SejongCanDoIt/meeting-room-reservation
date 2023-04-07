@@ -13,6 +13,8 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id; // 에약자 번호
+
+
     private String major; // 전공
     @Column(name = "sno")
     private String studentNo; // 학번
