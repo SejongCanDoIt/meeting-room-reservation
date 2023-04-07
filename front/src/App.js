@@ -13,8 +13,7 @@ import StartPage from "./components/pages/StartPage";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
-import Reservation from "./components/pages/Reservation";
-import ShowReservation from "./components/pages/ShowReservation";
+import GoogleCalendar from './components/pages/GoogleCalendar';
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
-          
           <Route path="/RoomListPage" element={<RoomListPage />}></Route>
           <Route path="/RoomInformationPage" element={<RoomInformationPage />}></Route>
           <Route path="/ChangePasswordPage" element={<ChangePasswordPage />}></Route>
@@ -35,8 +33,7 @@ function App() {
           <Route path="/loginPage" element={<LoginPage />}></Route>
           <Route path="/mainPage" element={<MainPage />}></Route>
           <Route path="/myPage" element={<MyPage />}></Route>
-          <Route path="reservation" element={<Reservation />}></Route>
-          <Route path="show" element={<ShowReservation />}></Route>
+          <Route path="/GoogleCalendar" element={<GoogleCalendar />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

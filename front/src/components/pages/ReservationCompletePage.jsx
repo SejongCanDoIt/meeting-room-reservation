@@ -1,4 +1,5 @@
 import '../css/ReservationCompletePageStyle.css';
+import { Link } from 'react-router-dom';
 
 function ReservationCompletePage() {
     return (
@@ -17,7 +18,9 @@ function ReservationCompletePage() {
                 </div>
                 <div id="shareMessage">
                     <h4>예약 정보 공유하기</h4>
-                    <img id="shareIcon" alt="share" src="https://cdn-icons-png.flaticon.com/128/2990/2990295.png"></img>
+                    <Link to='/ShareReservationPage'>
+                        <img id="shareIcon" alt="share" src="https://cdn-icons-png.flaticon.com/128/2990/2990295.png"></img>
+                    </Link>
                 </div>
                 <div className="message">
                     <h4>예약이 완료되면 마이페이지로 이동합니다</h4>
