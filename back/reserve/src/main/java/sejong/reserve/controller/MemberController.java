@@ -71,9 +71,4 @@ public class MemberController {
         return new ResponseEntity<>(memberId, HttpStatus.CREATED);
     }
 
-    @PostMapping("/set-cnt/{sno}")
-    public ResponseEntity<Integer> setCnt(@PathVariable("sno") String studentNo) {
-        int cnt = memberService.setCnt(studentNo);
-        return ResponseEntity.ok(cnt);
-    }
 }

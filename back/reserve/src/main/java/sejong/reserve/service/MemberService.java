@@ -63,26 +63,6 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    // 권한별 cnt 설정
-    public int setCnt(String studentNo) {
-        String authState = memberRepository.getAuthState(studentNo);
-        int cnt = 0;
-        switch (authState) {
-            case "UNI_STUDENT" :
-                cnt = managementRepository.getUnivCnt();
-                memberRepository.setCnt(cnt, studentNo);
-                break;
-            case "POST_STUDENT":
-                cnt = managementRepository.getPostCnt();
-                memberRepository.setCnt(cnt, studentNo);
-                break;
-            case "PROFESSOR": case "OFFICE":
-                cnt = managementRepository.getProCnt();
-                memberRepository.setCnt(cnt, studentNo);
-                break;
-            default:
-        }
-        return cnt;
-    }
+
 
 }
