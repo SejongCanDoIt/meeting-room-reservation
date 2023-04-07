@@ -8,7 +8,6 @@ import org.hibernate.annotations.DynamicInsert;
 import sejong.reserve.repository.RoomRepository;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
