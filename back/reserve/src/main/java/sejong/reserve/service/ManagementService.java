@@ -16,7 +16,6 @@ import java.util.List;
 public class ManagementService{
     private final ManagementRepository managementRepository;
     private final MemberRepository memberRepository;
-//    private final MemberService memberService;
 
     public Management getManagement() {
         return managementRepository.findOne();

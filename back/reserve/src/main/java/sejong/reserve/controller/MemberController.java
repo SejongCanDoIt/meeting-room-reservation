@@ -18,7 +18,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/member")
 public class MemberController {
 
-
     @Autowired
     private  MemberService memberService;
 
