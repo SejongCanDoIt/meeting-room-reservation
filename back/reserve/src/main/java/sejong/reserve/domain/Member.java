@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import sejong.reserve.exception.NotEnoughStockExeption;
+import sejong.reserve.exception.NotEnoughCntException;
 
 import javax.persistence.*;
 
@@ -50,7 +50,7 @@ public class Member {
     public void removeCnt () {
         int restStock = this.cnt--;
         if(restStock < 0) {
-            throw new NotEnoughStockExeption("no more chance to reserve");
+            throw new NotEnoughCntException("no more chance to reserve");
         }
         this.cnt = cnt;
     }
