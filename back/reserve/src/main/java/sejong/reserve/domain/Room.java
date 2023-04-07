@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import sejong.reserve.repository.RoomRepository;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -49,5 +51,14 @@ public class Room {
     @Column(columnDefinition = "TINYINT(1)", nullable = false)
     @ColumnDefault("0")
     private Boolean bim_projector; // 빔프로젝터 여부
+
+    //==생성 메서드==//
+    public static Room createRoom(Room roomInfo) {
+        Room room = new Room();
+
+        RoomRepository.setRoom(roomInfo, room);
+
+        return room;
+    }
 
 }
