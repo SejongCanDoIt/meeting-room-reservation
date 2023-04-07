@@ -28,7 +28,7 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wait_id")
     private Waiting waiting;
 
