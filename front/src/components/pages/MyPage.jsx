@@ -18,9 +18,9 @@ export default function MyPage() {
             <MenuContainer>
                 <ReservationInfo subTitle={"오늘의 예약"} info={"835호 13:30 ~ 16:30분에 오늘 예약이 있어요"}/>
                 <ReservationInfo subTitle={"가장 최근 이용 내역"} info={"2023년 1월 12일 월요일 15:00 ~ 16:00 836호 "}/>
-                <MainPageMenu icon={calendar} title={"예약하기"}/>
-                <MainPageMenu icon={search} title={"예약내역 확인하기"}/>
-                <MainPageMenu icon={visibility} title={"회의실 둘러보기"}/>
+                <MainPageMenu icon={calendar} title={"예약하기"} where={"/ChooseReservationPage"}/>
+                <MainPageMenu icon={search} title={"예약내역 확인하기"} where={"/show"}/>
+                <MainPageMenu icon={visibility} title={"회의실 둘러보기"} where={"/RoomListPage"}/>
             </MenuContainer>
         </MainPageContainer>
     );

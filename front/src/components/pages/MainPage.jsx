@@ -14,10 +14,10 @@ export default function MainPage() {
                 <h1>김민구</h1>
             </ProfileDiv>
             <MenuContainer>
-                <MainPageMenu icon={whiteuser} title={"내 정보"}/>
-                <MainPageMenu icon={calendar} title={"예약하기"}/>
-                <MainPageMenu icon={search} title={"예약 조회하기"}/>
-                <MainPageMenu icon={visibility} title={"회의실 둘러보기"}/>
+                <MainPageMenu icon={whiteuser} title={"내 정보"} where={"/myPage"}/>
+                <MainPageMenu icon={calendar} title={"예약하기"} where={"/ChooseReservationPage"}/>
+                <MainPageMenu icon={search} title={"예약 조회하기"} where={"/show"}/>
+                <MainPageMenu icon={visibility} title={"회의실 둘러보기"} where={"/RoomListPage"}/>
             </MenuContainer>
         </MainPageContainer>
     );

@@ -1,21 +1,72 @@
+import { useReducer, useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+const loginDefault = {
+    id: "",
+    password: null,
+}
+
+const loginReducer = (state, action) => {
+    switch (action.type) {
+        case "ID": {
+            return {
+                ...state,
+                id: action.id,
+            }
+        }
+
+        case "PASSWORD": {
+            return {
+                ...state,
+                password: action.password,
+            }
+        }
+
+        default: return state
+    }
+}
 
 export default function LoginPage() {
+
+    const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
+    const navigate = useNavigate();
+
+    const onLoginIdHandler = (e) => {
+        loginDispatch({
+            type: "ID",
+            id: e.target.value,
+        })
+    }
+
+    const onLoginPasswordHandler = (e) => {
+        loginDispatch({
+            type: "PASSWORD",
+            password: e.target.value,
+        })
+    }
+
+    const onLoginButtonHandler = () => {
+        console.log(`로그인 아이디: ${login.id} 로그인 비밀번호: ${login.password}`);
+        alert(`${login.id}님 반갑습니다`);
+        navigate("/myPage");
+    }
+
+
     return (
         <MainContainer>
             <SubContainer>
                 <InputContainer>
                     <InputBox>
                         <Ptag>학번</Ptag>
-                        <Input type="number"/>
+                        <Input type="number" onChange={onLoginIdHandler}/>
                     </InputBox>
                     <InputBox>
                         <Ptag>비밀번호</Ptag>
-                        <Input type="password" />
+                        <Input type="password" onChange={onLoginPasswordHandler}/>
                     </InputBox>
                 </InputContainer>
-                <LoginBtn>로그인</LoginBtn>
+                <LoginBtn onClick={onLoginButtonHandler}>로그인</LoginBtn>
             </SubContainer>
         </MainContainer>
     );
