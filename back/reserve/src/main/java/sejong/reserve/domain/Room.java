@@ -55,9 +55,23 @@ public class Room {
     public static Room createRoom(Room roomInfo) {
         Room room = new Room();
 
-        RoomRepository.setRoom(roomInfo, room);
+        setRoom(roomInfo, room);
 
         return room;
+    }
+
+    public static void setRoom(Room roomInfo, Room room) {
+        room.setName(roomInfo.getName());
+        room.setLoc(roomInfo.getLoc());
+        room.setCap(roomInfo.getCap());
+        room.setInfo(roomInfo.getInfo());
+        room.setBoard(roomInfo.getBoard());
+        room.setTv(roomInfo.getTv());
+        room.setPicture(roomInfo.getPicture());
+        room.setEmpty(roomInfo.getEmpty());
+        room.setEmpty(roomInfo.getEmpty());
+        room.setWifi(roomInfo.getWifi());
+        room.setBim_projector(roomInfo.getBim_projector());
     }
 
 }

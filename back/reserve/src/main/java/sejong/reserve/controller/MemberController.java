@@ -11,11 +11,12 @@ import sejong.reserve.service.MemberService;
 
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-
 
     @Autowired
     private  MemberService memberService;
@@ -60,7 +61,7 @@ public class MemberController {
     @PostMapping("/set-password/{sno}")
     public ResponseEntity<?> resetPassword(@PathVariable("sno") String studentNo) {
         memberService.resetPassword(studentNo);
-        return ResponseEntity.ok("비밀번호 초기화 성공");
+        return ok("비밀번호 초기화 성공");
     }
 
     @PostMapping("/insert")
@@ -68,4 +69,5 @@ public class MemberController {
         Long memberId = memberService.join(member);
         return new ResponseEntity<>(memberId, HttpStatus.CREATED);
     }
+
 }

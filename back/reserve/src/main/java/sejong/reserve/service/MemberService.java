@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
+import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
@@ -18,6 +20,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final ManagementRepository managementRepository;
 
     public void saveMembers(List<Member> members){
         log.info("멤버 저장 실행");
@@ -59,5 +62,7 @@ public class MemberService {
     public Member addNewMember(Member member) {
         return memberRepository.save(member);
     }
+
+
 
 }
