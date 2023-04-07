@@ -1,4 +1,4 @@
-package sejong.reserve.vo;
+package sejong.reserve.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -19,7 +19,7 @@ public class Waiting {
     @ColumnDefault("0")
     private Boolean success; // 예약 성공 여부
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "reservation_id")
+//    private Reservation reservation;
 }
