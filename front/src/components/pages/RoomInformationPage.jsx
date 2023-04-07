@@ -1,4 +1,5 @@
 import '../css/RoomInformationPageStyle.css';
+import { Link } from 'react-router-dom';
 
 function RoomInformationPage() {
     return (
@@ -8,7 +9,9 @@ function RoomInformationPage() {
             </section>
             <section id="nameSection">
                 <h1 style={{ fontWeight: 'bolder' }}>AI센터 835호 회의실</h1>
-                <button id="reservationButton">예약</button>
+                <Link to='/ReservationPage'>
+                    <button id="reservationButton">예약</button>
+                </Link>
             </section>
             <hr></hr>
             <section id="facilitySection">

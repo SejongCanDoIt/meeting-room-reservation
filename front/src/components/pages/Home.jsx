@@ -12,6 +12,7 @@ function Home() {
             <Link to='/ChooseReservationPage'><button>예약 방법 선택 페이지</button></Link>
             <Link to='/ReservationCompletePage'><button>예약 완료 페이지</button></Link>
             <Link to='/ShareReservationPage'><button>예약 공유 페이지</button></Link>
+            <Link to='/GoogleCalendar'><button>구글 캘린더</button></Link>
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import '../css/ReservationPageStyle.css';
+import { Link } from 'react-router-dom';
 
 function ReservationPage() {
     return (
@@ -10,14 +11,18 @@ function ReservationPage() {
                 <div id="roomListSpace">
                     <ul id="roomList">
                         <li>
-                            <button className="roomObject" style={{ backgroundColor: '#FF8484' }}>
-                                <h3>835</h3>
-                            </button>
+                            <Link to='/ChooseReservationPage'>
+                                <button className="roomObject" style={{ backgroundColor: '#FF8484' }}>
+                                    <h3>835</h3>
+                                </button>
+                            </Link>
                         </li>
                         <li>
-                            <button className="roomObject" style={{ backgroundColor: '#FFC793' }}>
-                                <h3>836</h3>
-                            </button>
+                            <Link to='/ChooseReservationPage'>
+                                <button className="roomObject" style={{ backgroundColor: '#FFC793' }}>
+                                    <h3>836</h3>
+                                </button>
+                            </Link>
                         </li>
                     </ul>
                 </div>

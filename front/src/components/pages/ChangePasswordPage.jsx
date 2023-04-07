@@ -1,4 +1,5 @@
 import '../css/ChangePasswordPageStyle.css';
+import { Link } from 'react-router-dom';
 
 function ChangePasswordPage() {
     return (
@@ -14,7 +15,9 @@ function ChangePasswordPage() {
                     </div>
                 </div>
                 <div id="buttonSpace">
-                    <button id="passwordChangeButton">변경</button>
+                    <Link to='/ChangeCompletePage'>
+                        <button id="passwordChangeButton">변경</button>
+                    </Link>
                 </div>
             </section >
         </div >
