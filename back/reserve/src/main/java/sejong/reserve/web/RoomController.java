@@ -1,6 +1,7 @@
 package sejong.reserve.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.Room;
 import sejong.reserve.service.RoomService;
@@ -19,13 +20,23 @@ public class RoomController {
     }
 
     @GetMapping("list")
-    public List<Room> list() {
-        return roomService.list();
+    public ResponseEntity<List<Room>> list() {
+        List<Room> rooms = roomService.list();
+        if (!rooms.isEmpty()) {
+            return ResponseEntity.ok(rooms);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @GetMapping("detail/{room_id}")
-    public Room detail(@PathVariable Long room_id) {
-        return roomService.detail(room_id);
+    public ResponseEntity<Room> detail(@PathVariable Long room_id) {
+        Room room = roomService.detail(room_id);
+        if (room != null) {
+            return ResponseEntity.ok(room);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("update")
@@ -33,9 +44,11 @@ public class RoomController {
         roomService.update(room);
     }
 
+
     @DeleteMapping("delete/{room_id}")
     public void delete(@PathVariable Long room_id) {
         roomService.delete(room_id);
     }
+
 
 }
