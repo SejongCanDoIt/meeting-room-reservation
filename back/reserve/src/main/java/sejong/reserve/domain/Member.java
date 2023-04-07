@@ -3,6 +3,7 @@ package sejong.reserve.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -26,4 +27,8 @@ public class Member {
     private String name; // 회원의 이름
     @Column(name = "pwd")
     private String password;
+
+    @Column(name = "cnt")
+    @ColumnDefault("0")
+    private int cnt; // 회원 예약 가능 횟수
 }

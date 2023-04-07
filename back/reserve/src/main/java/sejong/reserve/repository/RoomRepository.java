@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import java.util.List;
 
+import static sejong.reserve.domain.Room.setRoom;
+
 @Repository
 @RequiredArgsConstructor
 public class RoomRepository implements Repo<Room> {
@@ -38,22 +40,7 @@ public class RoomRepository implements Repo<Room> {
     @Override
     public void update(Room roomInfo) throws PersistenceException {
         Room room = em.find(Room.class, roomInfo.getId());
-        setRoom(roomInfo, room);
+        room.setRoom(roomInfo, room);
     }
-
-    public static void setRoom(Room roomInfo, Room room) {
-        room.setName(roomInfo.getName());
-        room.setLoc(roomInfo.getLoc());
-        room.setCap(roomInfo.getCap());
-        room.setInfo(roomInfo.getInfo());
-        room.setBoard(roomInfo.getBoard());
-        room.setTv(roomInfo.getTv());
-        room.setPicture(roomInfo.getPicture());
-        room.setEmpty(roomInfo.getEmpty());
-        room.setEmpty(roomInfo.getEmpty());
-        room.setWifi(roomInfo.getWifi());
-        room.setBim_projector(roomInfo.getBim_projector());
-    }
-
 
 }

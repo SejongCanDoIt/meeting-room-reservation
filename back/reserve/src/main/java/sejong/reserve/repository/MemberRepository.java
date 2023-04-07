@@ -28,5 +28,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Query("select substring(m.phoneNo, length(m.phoneNo) - 3) from Member m where m.studentNo = :studentNo")
     String findPhoneNoByStudentNo(@Param("studentNo") String studentNo);
 
+    @Query("select  m.authority from Member m where m.studentNo = :studentNo")
+    String getAuthState(@Param("studentNo") String studentNo);
+
+    @Query("update Member m set m.cnt = :cnt where m.studentNo = :studentNo")
+    void setCnt(@Param("cnt")int cnt, @Param("studentNo") String studentNo);
 
 }
