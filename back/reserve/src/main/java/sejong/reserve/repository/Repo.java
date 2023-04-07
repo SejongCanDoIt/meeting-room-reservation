@@ -12,5 +12,5 @@ public interface Repo<T> {
 
     void delete(Long id) throws PersistenceException;
 
-    void update(T t);
+    void update(T t) throws PersistenceException;
 }

@@ -36,7 +36,7 @@ public class RoomRepository implements Repo<Room> {
     }
 
     @Override
-    public void update(Room roomInfo) {
+    public void update(Room roomInfo) throws PersistenceException {
         Room room = em.find(Room.class, roomInfo.getId());
         setRoom(roomInfo, room);
     }
