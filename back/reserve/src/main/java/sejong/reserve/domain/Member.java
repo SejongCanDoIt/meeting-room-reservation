@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import sejong.reserve.exception.NotEnoughStockExeption;
+import sejong.reserve.exception.NotEnoughCntException;
 
 import javax.persistence.*;
 
@@ -14,12 +14,12 @@ import javax.persistence.*;
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private Long id; // 에약자 번호
+    private Long id; // 예약자 번호
 
 
     private String major; // 전공
     @Column(name = "sno")
-    private String studentNo; // 학번
+    private String studentNo; // 학번 (Login-ID)
     @Column(name = "phn")
     private String phoneNo; // 전화번호
     @Column(name = "auth")
@@ -50,7 +50,7 @@ public class Member {
     public void removeCnt () {
         int restStock = this.cnt--;
         if(restStock < 0) {
-            throw new NotEnoughStockExeption("no more chance to reserve");
+            throw new NotEnoughCntException("no more chance to reserve");
         }
         this.cnt = cnt;
     }

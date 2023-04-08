@@ -34,4 +34,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Query("update Member m set m.cnt = :cnt where m.studentNo = :studentNo")
     void setCnt(@Param("cnt")int cnt, @Param("studentNo") String studentNo);
 
+    @Query(value = "select m from Member m where m.studentNo =:studentNo and m.password = :password")
+    Member findMemberForLogin(@Param("studentNo") String studentNo, @Param("password") String password);
+
 }
