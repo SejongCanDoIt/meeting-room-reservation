@@ -14,12 +14,12 @@ import javax.persistence.*;
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private Long id; // 에약자 번호
+    private Long id; // 예약자 번호
 
 
     private String major; // 전공
     @Column(name = "sno")
-    private String studentNo; // 학번
+    private String studentNo; // 학번 (Login-ID)
     @Column(name = "phn")
     private String phoneNo; // 전화번호
     @Column(name = "auth")

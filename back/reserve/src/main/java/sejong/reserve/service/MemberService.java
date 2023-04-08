@@ -63,6 +63,8 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-
+    public Member findMemberForLogin(String studentNo, String password) {
+        return memberRepository.findMemberForLogin(studentNo, password);
+    }
 
 }
