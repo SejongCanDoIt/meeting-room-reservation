@@ -139,6 +139,7 @@ public class ReservationController {
     @PutMapping("set-status-canceled")
     public void updateStatusCanceled(@RequestParam Long reservation_id) {
         reservationService.setStatus(ReservationStatus.CANCELED, reservation_id);
+        reservationService.cancel(reservation_id);
     }
 
     /**

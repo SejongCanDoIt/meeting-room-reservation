@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
-import sejong.reserve.repository.MemberRepository;
 import sejong.reserve.repository.ReservationRepository;
-import sejong.reserve.repository.RoomRepository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -66,7 +64,9 @@ public class ReservationService {
 
     @Transactional
     public void setStatus(ReservationStatus status, Long reservation_id) {
-        reservationRepository.setStatus(status, reservation_id);
+        Optional<Reservation> reservation = reservationRepository.findById(reservation_id);
+        Reservation reservationReal = reservation.get();
+        reservationReal.setStatus(status);
     }
 
     @Transactional
@@ -87,5 +87,13 @@ public class ReservationService {
 
     public List<Reservation> getStatusList(String student_no, ReservationStatus status) {
         return reservationRepository.getStatusList(student_no, status);
+    }
+
+    @Transactional
+    public void cancel(Long reservation_id) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservation_id);
+        Reservation reservationReal = reservation.get();
+        reservationReal.setStart(null);
+        reservationReal.setEnd(null);
     }
 }
