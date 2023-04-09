@@ -33,6 +33,8 @@ public class ReservationController {
             throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
         }
 
+        loginMember.removeCnt();
+
         Room room = roomService.detail(room_id);
 
         LocalDateTime start = reservationInfo.getStart();
