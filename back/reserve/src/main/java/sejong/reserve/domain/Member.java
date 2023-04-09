@@ -48,9 +48,9 @@ public class Member {
      * cnt 감소
      */
     public void removeCnt () {
-        int restStock = this.cnt--;
-        if(restStock < 0) {
-            throw new NotEnoughCntException("no more chance to reserve");
+        int restCnt = this.cnt--;
+        if(restCnt < 0) {
+            throw new NotEnoughCntException("No more chance to reserve");
         }
         this.cnt = cnt;
     }
