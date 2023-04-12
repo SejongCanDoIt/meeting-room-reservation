@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b68c06e-2f2d-47a5-87c6-2fc01cca3c69" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/reserve/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +41,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="back-jimin4" />
+        <entry key="$PROJECT_DIR$" value="back-hun3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -56,6 +54,14 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="back-hun4" />
+                    <option name="lastUsedInstant" value="1681300012" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="back-hun3" />
+                    <option name="lastUsedInstant" value="1681299999" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
                     <option name="lastUsedInstant" value="1680844128" />
@@ -77,6 +83,18 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/ManagementController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Reservation.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/ReservationRepository.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/ReservationService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/RoomService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/Serv.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -90,22 +108,22 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Git.Branch.Popup.ShowAllRemotes": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/meeting-room-reservation",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "spring.configuration.checksum": "9daaa46a91b498bc165a63e73dac38aa"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/meeting-room-reservation&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;9daaa46a91b498bc165a63e73dac38aa&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="sejong.reserve.controller" />

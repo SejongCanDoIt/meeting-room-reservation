@@ -54,5 +54,6 @@ public class Member {
         }
         this.cnt = cnt;
     }
-
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Reservation reservationLog;
 }

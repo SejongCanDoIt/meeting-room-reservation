@@ -45,7 +45,10 @@ public class MemberService {
     }
 
     public void deleteByStudentNo(String studentNo){
-        memberRepository.deleteByStudentNo(studentNo);
+        Member member = memberRepository.findByStudentNo(studentNo);
+        if (member != null) {
+            memberRepository.delete(member);
+        }
     }
 
     public void updatePasswordByStudentNo(String studentNo, String newPassword){
