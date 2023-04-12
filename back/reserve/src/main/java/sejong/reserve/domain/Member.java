@@ -1,5 +1,6 @@
 package sejong.reserve.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -57,6 +58,7 @@ public class Member {
     }
 
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Reservation> reservationLogs;
 }
