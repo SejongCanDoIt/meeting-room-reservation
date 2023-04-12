@@ -45,6 +45,18 @@ public class ReservationController {
         // 예약 시간 gap이 권한에 적합한지?
         int gap = end.getHour() - start.getHour();
         AuthState authority = loginMember.getAuthority();
+        checkGap(gap, authority);
+
+        // 예약 저장
+        Room room = roomService.detail(room_id);
+        Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, room);
+        log.info("reservation = {}", reservation);
+        reservationService.makeReservation(reservation);
+
+        return reservation.getId();
+    }
+
+    private void checkGap(int gap, AuthState authority) {
         int authGap = 0;
         switch (authority) {
             case UNI_STUDENT:
@@ -60,14 +72,6 @@ public class ReservationController {
         if(authGap < gap) {
             throw new IllegalStateException("권한에 부여된 시간보다 넘게 신청하셨습니다. 시간을 조절해주시길 바랍니다.");
         }
-
-        // 예약 저장
-        Room room = roomService.detail(room_id);
-        Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, room);
-        log.info("reservation = {}", reservation);
-        reservationService.makeReservation(reservation);
-
-        return reservation.getId();
     }
 
     @GetMapping("time-check")
