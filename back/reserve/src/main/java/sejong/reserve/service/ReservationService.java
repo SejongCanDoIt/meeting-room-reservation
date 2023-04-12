@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
 import sejong.reserve.repository.ReservationRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,5 +98,23 @@ public class ReservationService {
         Reservation reservationReal = reservation.get();
         reservationReal.setStart(null);
         reservationReal.setEnd(null);
+    }
+
+    public List<Time> getTodayTimeList(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+        List<Time> timeList = new ArrayList<>();
+        for(Reservation reservation:reservations) {
+            LocalDateTime start = reservation.getStart();
+            LocalDateTime end = reservation.getEnd();
+            Time time = new Time(start, end);
+            timeList.add(time);
+        }
+        return timeList;
     }
 }

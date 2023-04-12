@@ -30,14 +30,10 @@ public class ReservationController {
                                 HttpSession session) {
         Member loginMember = (Member) session.getAttribute("loginMember");
         log.info("loginMember = {}", loginMember);
-
         if(loginMember == null) {
             throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
         }
-
         loginMember.removeCnt();
-
-        Room room = roomService.detail(room_id);
 
         LocalDateTime start = reservationInfo.getStart();
         LocalDateTime end = reservationInfo.getEnd();
@@ -48,7 +44,6 @@ public class ReservationController {
 
         // 예약 시간 gap이 권한에 적합한지?
         int gap = end.getHour() - start.getHour();
-
         AuthState authority = loginMember.getAuthority();
         int authGap = 0;
         switch (authority) {
@@ -66,10 +61,10 @@ public class ReservationController {
             throw new IllegalStateException("권한에 부여된 시간보다 넘게 신청하셨습니다. 시간을 조절해주시길 바랍니다.");
         }
 
+        // 예약 저장
+        Room room = roomService.detail(room_id);
         Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, room);
-
         log.info("reservation = {}", reservation);
-
         reservationService.makeReservation(reservation);
 
         return reservation.getId();
@@ -80,7 +75,6 @@ public class ReservationController {
                              @RequestParam LocalDateTime end) {
         return reservationService.isPossibleTime(start, end);
     }
-
 
 
     @GetMapping("get")
@@ -183,6 +177,11 @@ public class ReservationController {
     @GetMapping("finished-list")
     public List<Reservation> finishedList(@RequestParam("sno") String student_no) {
         return reservationService.getStatusList(student_no, ReservationStatus.FINISHED);
+    }
+
+    @GetMapping("time-list")
+    public List<Time> timeList(@RequestParam("todayDate") LocalDateTime todayDate) {
+        return reservationService.getTodayTimeList(todayDate);
     }
 
 

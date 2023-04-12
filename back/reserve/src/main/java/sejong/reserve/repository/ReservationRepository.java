@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.domain.ReservationStatus;
+import sejong.reserve.domain.Time;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,4 +38,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.member.studentNo =:studentNo and r.status =:status")
     List<Reservation> getStatusList(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
 
+    @Query("select r from Reservation r where r.start >= :todayStart and r.end <= :todayEnd")
+    List<Reservation> getTodayTimeList(@Param("todayStart")LocalDateTime todayStart, @Param("todayEnd")LocalDateTime todayEnd);
 }
