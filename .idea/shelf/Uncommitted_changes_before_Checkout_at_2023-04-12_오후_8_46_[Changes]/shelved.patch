@@ -1,0 +1,95 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -5,14 +5,7 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="0b68c06e-2f2d-47a5-87c6-2fc01cca3c69" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-03-31__3_27__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-03-31__3_27__Changes_1.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Reservation.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/ReservationRepository.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/resources/application.yml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -60,12 +53,12 @@
+               <option name="branches">
+                 <list>
+                   <RecentBranch>
+-                    <option name="branchName" value="back-hun3" />
+-                    <option name="lastUsedInstant" value="1681299267" />
++                    <option name="branchName" value="back" />
++                    <option name="lastUsedInstant" value="1681299530" />
+                   </RecentBranch>
+                   <RecentBranch>
+-                    <option name="branchName" value="back" />
+-                    <option name="lastUsedInstant" value="1681297905" />
++                    <option name="branchName" value="back-hun3" />
++                    <option name="lastUsedInstant" value="1681299267" />
+                   </RecentBranch>
+                   <RecentBranch>
+                     <option name="branchName" value="back-hun4" />
+@@ -101,26 +94,26 @@
+   <component name="ProjectViewState">
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "Git.Branch.Popup.ShowAllRemotes": "true",
+-    "RequestMappingsPanelOrder0": "0",
+-    "RequestMappingsPanelOrder1": "1",
+-    "RequestMappingsPanelWidth0": "75",
+-    "RequestMappingsPanelWidth1": "75",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "C:/meeting-room-reservation",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Project",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0",
+-    "spring.configuration.checksum": "9daaa46a91b498bc165a63e73dac38aa"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
++    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
++    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
++    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
++    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/meeting-room-reservation&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;spring.configuration.checksum&quot;: &quot;9daaa46a91b498bc165a63e73dac38aa&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyClassDialog.RECENTS_KEY">
+       <recent name="sejong.reserve.controller" />
+@@ -155,7 +148,7 @@
+       <workItem from="1681047429641" duration="8428000" />
+       <workItem from="1681102793665" duration="2146000" />
+       <workItem from="1681177470061" duration="26000" />
+-      <workItem from="1681296101288" duration="2151000" />
++      <workItem from="1681296101288" duration="2480000" />
+     </task>
+     <servers />
+   </component>

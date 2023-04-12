@@ -1,5 +1,6 @@
 package sejong.reserve.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,8 +35,8 @@ public class Reservation {
     @JoinColumn(name = "room_id")
     private Room room;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-    @OneToOne()
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

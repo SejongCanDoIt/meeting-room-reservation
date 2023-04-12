@@ -1,5 +1,6 @@
 package sejong.reserve.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import sejong.reserve.exception.NotEnoughCntException;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter  @Setter @ToString
@@ -55,4 +57,8 @@ public class Member {
         this.cnt = cnt;
     }
 
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Reservation> reservationLogs;
 }
