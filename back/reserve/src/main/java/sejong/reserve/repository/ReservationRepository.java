@@ -44,4 +44,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.member.studentNo =:studentNo and r.status =:status")
     List<Reservation> getStatusList(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
 
+
+
 }

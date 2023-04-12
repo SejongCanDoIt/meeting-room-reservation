@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import sejong.reserve.exception.NotEnoughCntException;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter  @Setter @ToString
@@ -54,5 +55,6 @@ public class Member {
         }
         this.cnt = cnt;
     }
-
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Reservation reservation_log;
 }

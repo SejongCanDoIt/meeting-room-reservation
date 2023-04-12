@@ -70,4 +70,10 @@ public class MemberController {
         return new ResponseEntity<>(memberId, HttpStatus.CREATED);
     }
 
+
+    @PostMapping("/fake")
+    public void fake(){
+
+    }
+
 }

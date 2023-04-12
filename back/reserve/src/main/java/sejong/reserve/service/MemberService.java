@@ -9,6 +9,7 @@ import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
 import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
+import sejong.reserve.repository.ReservationRepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class MemberService {
+    private final ReservationRepository reservationRepository;
 
     private final MemberRepository memberRepository;
     private final ManagementRepository managementRepository;
@@ -45,7 +47,12 @@ public class MemberService {
     }
 
     public void deleteByStudentNo(String studentNo){
-        memberRepository.deleteByStudentNo(studentNo);
+
+        Member member = memberRepository.findByStudentNo(studentNo);
+        if (member != null) {
+            memberRepository.delete(member);
+        }
+
     }
 
     public void updatePasswordByStudentNo(String studentNo, String newPassword){
