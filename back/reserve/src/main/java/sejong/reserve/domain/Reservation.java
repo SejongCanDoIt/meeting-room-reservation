@@ -1,5 +1,7 @@
 package sejong.reserve.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,13 +31,13 @@ public class Reservation {
     @ColumnDefault("0")
     private Boolean regular; // 정기 예약 여부
 
-//    @OneToOne(fetch = FetchType.LAZY)
-    @OneToOne()
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-    @OneToOne()
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
