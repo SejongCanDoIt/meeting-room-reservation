@@ -62,14 +62,14 @@ public class AuthController {
   }
 
   @GetMapping("checkLogin")
-  public Member checkLogin(HttpSession session) throws Exception {
+  public boolean checkLogin(HttpSession session) throws Exception {
     log.info("checkLogin-test");
     Member member = (Member) session.getAttribute("loginMember");
     log.info("member = {}", member);
     if(member == null) {
-      return null;
+      return false;
     } else {
-      return member;
+      return true;
     }
   }
 }
