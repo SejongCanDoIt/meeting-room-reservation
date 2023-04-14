@@ -191,7 +191,10 @@ public class ReservationController {
 
 
     @GetMapping("today-time-check")
-    public int[] getTodayTimeCheck(@RequestParam("todayDate") LocalDateTime todayDate) {
+    public int[] getTodayTimeCheck(@RequestParam("year") int year,
+                                   @RequestParam("month") int month,
+                                   @RequestParam("day") int day) {
+        LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
         return reservationService.getTodayTimeCheck(todayDate);
     }
 

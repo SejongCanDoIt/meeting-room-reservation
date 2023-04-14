@@ -156,6 +156,7 @@ public class ReservationService {
         for(Reservation reservation:reservations) {
             LocalDateTime start = reservation.getStart();
             LocalDateTime end = reservation.getEnd();
+            log.info("start = {}, end = {}", start, end);
 
             int startHour = start.getHour();
             int endHour = end.getHour();
