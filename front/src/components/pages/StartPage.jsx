@@ -1,5 +1,6 @@
-import meetingIcon from "../assets/meeting.png";
+import meetingIcon from "../../assets/meeting.png";
 import styled from "styled-components";
+
 
 
 export default function StartPage() {

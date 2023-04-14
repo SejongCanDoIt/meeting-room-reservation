@@ -1,12 +1,13 @@
 import styled from "styled-components";
-export default function MainPageMenu({icon, title}) {
+import { Link } from 'react-router-dom';
+export default function MainPageMenu({icon, title, where}) {
     return (
         <MenuBox>
             <LeftInfo>
                 <UserIcon src={icon} alt="" />
                 <TitleInfo>{title}</TitleInfo>
             </LeftInfo>
-            <RightInfo>➤</RightInfo>
+            <RightInfo><LinkTag to={where}>➤</LinkTag></RightInfo>
         </MenuBox>
 
     );
@@ -47,4 +48,9 @@ const UserIcon = styled.img`
     background-color: #A1203C;
     padding:10px;
     border-radius: 10px;
+`
+
+const LinkTag = styled(Link)`
+    text-decoration: none; 
+    color: black;
 `
