@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sejong.reserve.domain.Member;
 import sejong.reserve.service.MemberService;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -70,10 +72,15 @@ public class MemberController {
         return new ResponseEntity<>(memberId, HttpStatus.CREATED);
     }
 
-
-    @PostMapping("/fake")
-    public void fake(){
-
+    @PostMapping("/upload-csv")
+    public ResponseEntity<?> uploadCsv(@RequestParam("file") MultipartFile file) {
+        try {
+            memberService.saveMembersFromCsv(file);
+            return ResponseEntity.ok().body("CSV file uploaded successfully");
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("Failed to upload CSV file: " + e.getMessage());
+        }
     }
+
 
 }
