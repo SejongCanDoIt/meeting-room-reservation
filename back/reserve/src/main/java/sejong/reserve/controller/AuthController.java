@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.MemberDto;
 import sejong.reserve.service.MemberService;
 
 import javax.servlet.http.Cookie;
@@ -31,7 +32,8 @@ public class AuthController {
 
     if (member != null) {
       session.setAttribute("loginMember", member); // 로그인한 멤버 정보를 세션 보관소에 저장
-      log.info("login member = {}", session.getAttribute("loginMember"));
+      MemberDto memberDto = new MemberDto((Member) session.getAttribute("loginMember"));
+      log.info("login member = {}", memberDto);
     }
 
     // 클라이언트에게 쿠키 보내기

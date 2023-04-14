@@ -1,5 +1,6 @@
 package sejong.reserve.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter  @Setter @ToString
+@Getter @Setter @ToString
 @Table(name = "member")
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +59,7 @@ public class Member {
     }
 
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Reservation> reservationLogs;
 }

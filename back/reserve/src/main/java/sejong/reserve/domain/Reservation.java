@@ -36,7 +36,7 @@ public class Reservation {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
