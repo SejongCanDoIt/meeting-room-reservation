@@ -6,7 +6,7 @@ function Home() {
 
     // 특정 날짜에대한 예약 시간 여부 반환
     useEffect(() => {
-        axios.get('/reserve/today-time-check', {params: {year: 2023, month: 4, day: 14}})
+        axios.get('/reserve/month-reserve-check', {params: {year: 2023, month: 4}})
             .then((res) => {
                 console.log(res);
             })

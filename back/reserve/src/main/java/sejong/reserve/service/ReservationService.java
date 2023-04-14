@@ -134,8 +134,8 @@ public class ReservationService {
         LocalDateTime today = LocalDateTime.of(year, month, month.minLength(), 0, 0);
         int day = 1;
         while(day <= month.maxLength()) {
-            monthCheck.add(getTodayReserveCnt(today));
             today = LocalDateTime.of(year, month, day++, 0, 0);
+            monthCheck.add(getTodayReserveCnt(today));
         }
         return monthCheck;
     }

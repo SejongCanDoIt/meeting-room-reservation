@@ -12,6 +12,7 @@ import sejong.reserve.service.RoomService;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -196,6 +197,12 @@ public class ReservationController {
                                    @RequestParam("day") int day) {
         LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
         return reservationService.getTodayTimeCheck(todayDate);
+    }
+
+    @GetMapping("month-reserve-check")
+    public List<Integer> getMonthReserveCheck(@RequestParam("year") int year,
+                                   @RequestParam("month") int month) {
+        return reservationService.getMonthReserveCheck(year, Month.of(month));
     }
 
 
