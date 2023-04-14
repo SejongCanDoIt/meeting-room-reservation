@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
 import sejong.reserve.repository.ReservationRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
@@ -116,5 +115,55 @@ public class ReservationService {
             timeList.add(time);
         }
         return timeList;
+    }
+
+    public int getTodayReserveCnt(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+        int todayReserveCnt = reservationRepository.getTodayReserveCnt(todayStart, todayEnd);
+        return todayReserveCnt;
+    }
+
+    public List<Integer> getMonthReserveCheck(int year, Month month) {
+        List<Integer> monthCheck = new ArrayList<>();
+
+        LocalDateTime today = LocalDateTime.of(year, month, month.minLength(), 0, 0);
+        int day = 1;
+        while(day <= month.maxLength()) {
+            monthCheck.add(getTodayReserveCnt(today));
+            today = LocalDateTime.of(year, month, day++, 0, 0);
+        }
+        return monthCheck;
+    }
+
+
+    public int[] getTodayTimeCheck(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+
+
+        int[] todayTimeCheck = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+
+        for(Reservation reservation:reservations) {
+            LocalDateTime start = reservation.getStart();
+            LocalDateTime end = reservation.getEnd();
+
+            int startHour = start.getHour();
+            int endHour = end.getHour();
+
+            for(int i=startHour;i<=endHour;i++) {
+                todayTimeCheck[i] = 1;
+            }
+        }
+        return todayTimeCheck;
     }
 }

@@ -21,9 +21,9 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/reservedb?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/reserveDB?serverTimezone=Asia/Seoul
     username: root
-    password: 1234
+    password: 1111
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    hikari:
 #      poolName: MyHikariPool

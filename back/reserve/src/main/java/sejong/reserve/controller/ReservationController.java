@@ -24,7 +24,7 @@ public class ReservationController {
     private final ManagementService managementService;
     private final RoomService roomService;
 
-    @GetMapping("")
+    @PostMapping
     public Long makeReservation(@RequestBody ReservationInfo reservationInfo,
                                 @RequestParam Long room_id,
                                 HttpSession session) {
@@ -186,6 +186,13 @@ public class ReservationController {
     @GetMapping("time-list")
     public List<Time> timeList(@RequestParam("todayDate") LocalDateTime todayDate) {
         return reservationService.getTodayTimeList(todayDate);
+    }
+
+
+
+    @GetMapping("today-time-check")
+    public int[] getTodayTimeCheck(@RequestParam("todayDate") LocalDateTime todayDate) {
+        return reservationService.getTodayTimeCheck(todayDate);
     }
 
 
