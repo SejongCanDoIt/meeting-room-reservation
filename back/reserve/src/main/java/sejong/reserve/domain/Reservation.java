@@ -49,6 +49,8 @@ public class Reservation {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();;
 
+;
+
 
     //==생성 메서드==//
     public static Reservation createReservation(ReservationInfo reservationInfo, Member member, Room room) {
