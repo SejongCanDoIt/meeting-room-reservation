@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const loginDefault = {
     id: "",
@@ -33,20 +34,18 @@ export default function LoginPage() {
 
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
     const navigate = useNavigate();
+    const cookies = new Cookies();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
-        // const status = sessionStorage.getItem('loginID');
-        // if (status) {
-        //     navigate('/myPage');
-        // }
-
-        console.log("상태확인");
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
                 if (res.data) {
                     navigate('/myPage');
+                }
+                else {
+                    console.log("로그인 실패");
                 }
             })
             .catch((err) => {
@@ -70,29 +69,22 @@ export default function LoginPage() {
     
     // 로그인 버튼이 눌렸을때 세션에 정보를 저장하고, /myPage로 라우팅
     const onLoginButtonHandler = () => {
-        console.log(`로그인 아이디: ${login.id} 로그인 비밀번호: ${login.password}`);
-        alert(`${login.id}님 반갑습니다`);
-        sessionStorage.setItem('loginID', login.id);
-        navigate("/myPage");
+        // console.log(`로그인 아이디: ${login.id} 로그인 비밀번호: ${login.password}`);
+        // alert(`${login.id}님 반갑습니다`);
+        // sessionStorage.setItem('loginID', login.id);
+        // navigate("/myPage");
 
-    //     axios
-    //   .post("주소", { ...body })
-    //   .then((res) => {
-    //     console.log(res);
-    //     navigate("/login");
-    //   })
-    //   .catch((err) => {
-    //     console.log(11, err);
-    //   });
-
-    // axios
-    //   .post("/auth/login", null, { params: { id: login.id, password: login.password } })
-    //   .then((res) => {
-    //        console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log("로그인 실패", err);
-    //   });
+    axios
+      .post("/auth/login", null, { params: { sno: login.id, password: login.password } })
+      .then((res) => {
+          if (res.data) {
+               console.log(`${cookies.get('student_no')} 쿠기 가져오기`);
+               navigate('/myPage');
+           }
+      })
+      .catch((err) => {
+        // console.log("로그인 실패", err);
+      });
     }
 
 
@@ -102,7 +94,7 @@ export default function LoginPage() {
                 <InputContainer>
                     <InputBox>
                         <Ptag>학번</Ptag>
-                        <Input type="number" onChange={onLoginIdHandler}/>
+                        <Input type="text" onChange={onLoginIdHandler}/>
                     </InputBox>
                     <InputBox>
                         <Ptag>비밀번호</Ptag>

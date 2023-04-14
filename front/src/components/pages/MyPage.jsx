@@ -6,16 +6,18 @@ import edit from "../../assets/edit.png";
 import calendar from "../../assets/calendar.png";
 import visibility from "../../assets/visibility.png";
 import styled from "styled-components";
-import { useEffect } from "react";
+import Cookies from "universal-cookie";
 import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 
 export default function MyPage() {
-    const logedId = sessionStorage.getItem('loginID');
-
+    const cookies = new Cookies();
+    const userId = cookies.get('student_no');
     const navigate = useNavigate();
-    // 로그인이 되어 있지 않으면 loginPage로 이동.
     useEffect(() => {
-        if (!logedId) {
+        const status = cookies.get('student_no');
+        // 로그인이 되어 있지 않으면 loginPage로 이동.
+        if (!status) {
             navigate('/loginPage');
         }   
     }, [])
@@ -23,7 +25,7 @@ export default function MyPage() {
         <MainPageContainer>
             <ProfileDiv>
                 <UserIcon src={user} alt="" />
-                <Dhdsh>안녕하세요 {logedId}님 <EditIcon src={edit} alt="" /></Dhdsh>
+                <Dhdsh>안녕하세요 {userId}님 <EditIcon src={edit} alt="" /></Dhdsh>
             </ProfileDiv>
             <MenuContainer>
                 <ReservationInfo subTitle={"오늘의 예약"} info={"835호 13:30 ~ 16:30분에 오늘 예약이 있어요"}/>

@@ -1,5 +1,5 @@
 import '../css/ChooseReservationPageStyle.css';
-
+import { Link } from 'react-router-dom';
 function ChooseReservationPage() {
     return (
         <div id="ChooseReservationPageContainer">
@@ -16,7 +16,7 @@ function ChooseReservationPage() {
                         </li>
                         <li>
                             <button className="reservationObject" style={{ backgroundColor: '#85D3FF' }}>
-                                <h3>일반 예약</h3>
+                                <Link to="/reservation"><h3>일반 예약</h3></Link>
                             </button>
                         </li>
                     </ul>
