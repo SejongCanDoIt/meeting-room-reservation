@@ -23,18 +23,25 @@ public class ManagementService{
 
     @Transactional
     public void update(Management managementInfo) {
-        managementRepository.update(managementInfo);
+        Management management = managementRepository.findOne();
+        management.setManagement(managementInfo, management);
     }
 
 
     @Transactional
     public void updateCnt(int univ_cnt, int post_cnt, int pro_cnt) {
-        managementRepository.updateCnt(univ_cnt, post_cnt, pro_cnt);
+        Management management = managementRepository.findOne();
+        management.setUniv_cnt(univ_cnt);
+        management.setPost_cnt(post_cnt);
+        management.setPro_cnt(pro_cnt);
     }
 
     @Transactional
     public void updateGap(int univ_gap, int post_gap, int pro_gap) {
-        managementRepository.updateGap(univ_gap, post_gap, pro_gap);
+        Management management = managementRepository.findOne();
+        management.setUniv_gap(univ_gap);
+        management.setPost_gap(post_gap);
+        management.setPro_gap(pro_gap);
     }
 
     public int getUnivCnt() {return managementRepository.getUnivCnt();}

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.*;
+import sejong.reserve.service.ManagementService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.service.ReservationService;
 import sejong.reserve.service.RoomService;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequestMapping("/reserve/")
 public class ReservationController {
     private final ReservationService reservationService;
+    private final ManagementService managementService;
     private final RoomService roomService;
 
     @GetMapping("")
@@ -28,14 +30,10 @@ public class ReservationController {
                                 HttpSession session) {
         Member loginMember = (Member) session.getAttribute("loginMember");
         log.info("loginMember = {}", loginMember);
-
         if(loginMember == null) {
             throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
         }
-
         loginMember.removeCnt();
-
-        Room room = roomService.detail(room_id);
 
         LocalDateTime start = reservationInfo.getStart();
         LocalDateTime end = reservationInfo.getEnd();
@@ -44,13 +42,36 @@ public class ReservationController {
             throw new IllegalStateException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
         }
 
+        // 예약 시간 gap이 권한에 적합한지?
+        int gap = end.getHour() - start.getHour();
+        AuthState authority = loginMember.getAuthority();
+        checkGap(gap, authority);
+
+        // 예약 저장
+        Room room = roomService.detail(room_id);
         Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, room);
-
         log.info("reservation = {}", reservation);
-
         reservationService.makeReservation(reservation);
 
         return reservation.getId();
+    }
+
+    private void checkGap(int gap, AuthState authority) {
+        int authGap = 0;
+        switch (authority) {
+            case UNI_STUDENT:
+                authGap = managementService.getUnivGap();
+                break;
+            case POST_STUDENT:
+                authGap = managementService.getPostGap();
+                break;
+            case PROFESSOR: case OFFICE:
+                authGap = managementService.getProGap();
+                break;
+        }
+        if(authGap < gap) {
+            throw new IllegalStateException("권한에 부여된 시간보다 넘게 신청하셨습니다. 시간을 조절해주시길 바랍니다.");
+        }
     }
 
     @GetMapping("time-check")
@@ -58,7 +79,6 @@ public class ReservationController {
                              @RequestParam LocalDateTime end) {
         return reservationService.isPossibleTime(start, end);
     }
-
 
 
     @GetMapping("get")
@@ -139,6 +159,7 @@ public class ReservationController {
     @PutMapping("set-status-canceled")
     public void updateStatusCanceled(@RequestParam Long reservation_id) {
         reservationService.setStatus(ReservationStatus.CANCELED, reservation_id);
+        reservationService.cancel(reservation_id);
     }
 
     /**
@@ -160,6 +181,11 @@ public class ReservationController {
     @GetMapping("finished-list")
     public List<Reservation> finishedList(@RequestParam("sno") String student_no) {
         return reservationService.getStatusList(student_no, ReservationStatus.FINISHED);
+    }
+
+    @GetMapping("time-list")
+    public List<Time> timeList(@RequestParam("todayDate") LocalDateTime todayDate) {
+        return reservationService.getTodayTimeList(todayDate);
     }
 
 

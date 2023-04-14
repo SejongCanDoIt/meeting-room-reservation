@@ -1,5 +1,7 @@
 package sejong.reserve.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import org.hibernate.annotations.DynamicInsert;
 import sejong.reserve.repository.RoomRepository;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -50,6 +53,10 @@ public class Room {
     @Column(columnDefinition = "TINYINT(1)", nullable = false)
     @ColumnDefault("0")
     private Boolean bim_projector; // 빔프로젝터 여부
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
+    private List<Reservation> reservationLogs;
 
     //==생성 메서드==//
     public static Room createRoom(Room roomInfo) {

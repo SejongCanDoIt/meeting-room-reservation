@@ -5,12 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
-import sejong.reserve.repository.MemberRepository;
 import sejong.reserve.repository.ReservationRepository;
-import sejong.reserve.repository.RoomRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +67,9 @@ public class ReservationService {
 
     @Transactional
     public void setStatus(ReservationStatus status, Long reservation_id) {
-        reservationRepository.setStatus(status, reservation_id);
+        Optional<Reservation> reservation = reservationRepository.findById(reservation_id);
+        Reservation reservationReal = reservation.get();
+        reservationReal.setStatus(status);
     }
 
     @Transactional
@@ -87,5 +90,31 @@ public class ReservationService {
 
     public List<Reservation> getStatusList(String student_no, ReservationStatus status) {
         return reservationRepository.getStatusList(student_no, status);
+    }
+
+    @Transactional
+    public void cancel(Long reservation_id) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservation_id);
+        Reservation reservationReal = reservation.get();
+        reservationReal.setStart(null);
+        reservationReal.setEnd(null);
+    }
+
+    public List<Time> getTodayTimeList(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+        List<Time> timeList = new ArrayList<>();
+        for(Reservation reservation:reservations) {
+            LocalDateTime start = reservation.getStart();
+            LocalDateTime end = reservation.getEnd();
+            Time time = new Time(start, end);
+            timeList.add(time);
+        }
+        return timeList;
     }
 }
