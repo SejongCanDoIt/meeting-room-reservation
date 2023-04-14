@@ -1,6 +1,8 @@
-import { useReducer, useState } from "react";
+import { useEffect } from "react";
+import { useReducer } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import axios from "axios";
 
 const loginDefault = {
     id: "",
@@ -32,6 +34,23 @@ export default function LoginPage() {
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
     const navigate = useNavigate();
 
+    // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
+    useEffect(() => {
+        // const status = sessionStorage.getItem('loginID');
+        // if (status) {
+        //     navigate('/myPage');
+        // }
+
+        // 서버로부터 로그인 여부 확인
+        // axios.get('/auth/checkLogin')
+        //     .then((res) => {
+
+        //     })
+        //     .catch((err) => {
+
+        //     })
+    }, []);
+
     const onLoginIdHandler = (e) => {
         loginDispatch({
             type: "ID",
@@ -45,11 +64,32 @@ export default function LoginPage() {
             password: e.target.value,
         })
     }
-
+    
+    // 로그인 버튼이 눌렸을때 세션에 정보를 저장하고, /myPage로 라우팅
     const onLoginButtonHandler = () => {
         console.log(`로그인 아이디: ${login.id} 로그인 비밀번호: ${login.password}`);
         alert(`${login.id}님 반갑습니다`);
+        sessionStorage.setItem('loginID', login.id);
         navigate("/myPage");
+
+    //     axios
+    //   .post("주소", { ...body })
+    //   .then((res) => {
+    //     console.log(res);
+    //     navigate("/login");
+    //   })
+    //   .catch((err) => {
+    //     console.log(11, err);
+    //   });
+
+    // axios
+    //   .post("/auth/login", null, { params: { id: login.id, password: login.password } })
+    //   .then((res) => {
+    //        console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log("로그인 실패", err);
+    //   });
     }
 
 

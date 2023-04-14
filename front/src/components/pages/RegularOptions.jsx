@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function RegularOptions() {
+export default function RegularOptions({month, date}) {
     return (
         <RegularContainer>
-            <h3>3월 21일부터</h3>
+            <h3>{month}월 {date}일부터</h3>
             <SeletedTagBox>
                 <SeletedTag name="times" id="times">
                     <option value="one">1화</option>
@@ -26,6 +26,8 @@ const RegularContainer = styled.div`
     max-width: 350px;
 
     border-radius: 8px;
+
+    margin-top: 10px;
 `
 const SeletedTagBox = styled.div`
     display: flex;
