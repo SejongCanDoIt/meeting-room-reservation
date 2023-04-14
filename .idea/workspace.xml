@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b68c06e-2f2d-47a5-87c6-2fc01cca3c69" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-03-31__3_27__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-03-31__3_27__Changes_1.xml" afterDir="false" />
+    <list default="true" id="56fed51a-33ee-4083-8457-8909e07eabaf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/AuthStateConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/reserve/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/reserve/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/repository/ReservationRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/service/MemberService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/resources/application.yml" afterDir="false" />
     </list>
@@ -25,80 +24,16 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <projects_view>
-          <tree_state>
-            <expand />
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="back" />
-        <entry key="$PROJECT_DIR$" value="back-hun3" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitToolBoxStore">
-    <option name="recentBranches">
-      <RecentBranches>
-        <option name="branchesForRepo">
-          <list>
-            <RecentBranchesForRepo>
-              <option name="branches">
-                <list>
-                  <RecentBranch>
-                    <option name="branchName" value="back-hun3" />
-                    <option name="lastUsedInstant" value="1681299267" />
-                    <option name="branchName" value="back-hun4" />
-                    <option name="lastUsedInstant" value="1681300012" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="back-hun3" />
-                    <option name="lastUsedInstant" value="1681299999" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1680844128" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="back" />
-                    <option name="lastUsedInstant" value="1681297905" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="back-hun4" />
-                    <option name="lastUsedInstant" value="1681296999" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="back-hun2" />
-                    <option name="lastUsedInstant" value="1680852749" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="back-jimin4" />
-                    <option name="lastUsedInstant" value="1680852089" />
-                  </RecentBranch>
-                </list>
-              </option>
-              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
-            </RecentBranchesForRepo>
-          </list>
-        </option>
-      </RecentBranches>
-    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/ManagementController.java" root0="FORCE_HIGHLIGHTING" />
@@ -115,55 +50,18 @@
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="2NSB4SnikBqwoKsV7lkzdjrLGp1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Git.Branch.Popup.ShowAllRemotes": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/meeting-room-reservation",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "spring.configuration.checksum": "9daaa46a91b498bc165a63e73dac38aa"
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/meeting-room-reservation&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;9daaa46a91b498bc165a63e73dac38aa&quot;
+    "RequestMappingsPanelWidth1": "75"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="sejong.reserve.controller" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager">
     <configuration name="ReserveApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="reserve.main" />
@@ -173,32 +71,8 @@
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="0b68c06e-2f2d-47a5-87c6-2fc01cca3c69" name="Changes" comment="" />
-      <created>1679647411909</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1679647411909</updated>
-      <workItem from="1679647413237" duration="355000" />
-      <workItem from="1679676448650" duration="638000" />
-      <workItem from="1680243609034" duration="3831000" />
-      <workItem from="1680285649549" duration="37000" />
-      <workItem from="1680335046973" duration="1589000" />
-      <workItem from="1680378897457" duration="1194000" />
-      <workItem from="1680500325000" duration="21000" />
-      <workItem from="1680754712797" duration="7125000" />
-      <workItem from="1680840912041" duration="8007000" />
-      <workItem from="1681047429641" duration="8428000" />
-      <workItem from="1681102793665" duration="2146000" />
-      <workItem from="1681177470061" duration="26000" />
-      <workItem from="1681296101288" duration="2151000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -210,8 +84,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

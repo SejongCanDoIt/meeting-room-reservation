@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Upload Test</title>
+</head>
+<body>
+<h1>Upload CSV File</h1>
+<form id="csv-upload-form">
+  <input type="file" id="csv-file" accept=".csv" required>
+  <button type="submit">Upload</button>
+</form>
+
+<script>
+  document.getElementById('csv-upload-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fileInput = document.getElementById('csv-file');
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/member/upload-csv', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        alert('CSV file uploaded successfully');
+      } else {
+        const errorText = await response.text();
+        alert('Failed to upload CSV file: ' + errorText);
+      }
+    } catch (error) {
+      alert('Error occurred: ' + error.message);
+    }
+  });
+</script>
+</body>
+</html>
