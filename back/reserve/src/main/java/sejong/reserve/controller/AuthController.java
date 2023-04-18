@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.LoginDto;
 import sejong.reserve.dto.MemberDto;
 import sejong.reserve.service.MemberService;
 
@@ -21,10 +22,11 @@ public class AuthController {
 
   @PostMapping("login")
   public Boolean login(
-          @RequestParam("sno") String student_no,
-          @RequestParam("password")String password,
+          @RequestBody LoginDto loginInfo,
           HttpServletResponse response,
           HttpSession session) throws Exception {
+    String student_no = loginInfo.getStudentNo();
+    String password = loginInfo.getPassword();
 
     log.info("login sno = {}, password = {}", student_no, password);
 
