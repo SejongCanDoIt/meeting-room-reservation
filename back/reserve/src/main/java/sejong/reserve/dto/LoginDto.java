@@ -8,6 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class LoginDto {
-    private String studentNo; // 학번 (Login-ID)
+    private String sno; // 학번 (Login-ID)
     private String password;
 }
