@@ -25,6 +25,7 @@ public class MemberDto {
     private int cnt; // 회원 예약 가능 횟수
 
     public MemberDto(Member loginMember) {
+        this.studentNo = loginMember.getStudentNo();
         this.id = loginMember.getId();
         this.major = loginMember.getMajor();
         this.phoneNo = loginMember.getPhoneNo();
