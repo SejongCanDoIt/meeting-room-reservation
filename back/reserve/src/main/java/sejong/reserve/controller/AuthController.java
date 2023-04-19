@@ -25,7 +25,7 @@ public class AuthController {
           @RequestBody LoginDto loginInfo,
           HttpServletResponse response,
           HttpSession session) throws Exception {
-    String student_no = loginInfo.getStudentNo();
+    String student_no = loginInfo.getSno();
     String password = loginInfo.getPassword();
 
     log.info("login sno = {}, password = {}", student_no, password);
@@ -40,19 +40,19 @@ public class AuthController {
 
     // 클라이언트에게 쿠키 보내기
     // - 쿠키 데이터는 문자열만 가능
-    Cookie cookie = new Cookie("student_no", student_no); // 클라이언트 쪽에 저장할 쿠키 생성
+//    Cookie cookie = new Cookie("student_no", student_no); // 클라이언트 쪽에 저장할 쿠키 생성
 
-    cookie.setPath("/");
+//    cookie.setPath("/");
 
-    if (member == null) {
-      cookie.setMaxAge(0); // 클라이언트에게 해당 이름의 쿠키를 지우라고 명령한다.
-    } else {
+//    if (member == null) {
+//      cookie.setMaxAge(0); // 클라이언트에게 해당 이름의 쿠키를 지우라고 명령한다.
+//    } else {
       // 쿠키의 지속시간을 설정하지 않으면 웹브라우저가 실행되는 동안만 유효하다.
       // 만약 웹브라우저를 종료하더라도 쿠키를 유지하고 싶다면,
       // 지속 시간을 설정해야 한다.
-      cookie.setMaxAge(60 * 60 * 24 * 7);
-    }
-    response.addCookie(cookie);
+//      cookie.setMaxAge(60 * 60 * 24 * 7);
+//    }
+//    response.addCookie(cookie);
 
     if(member != null)
       return true;

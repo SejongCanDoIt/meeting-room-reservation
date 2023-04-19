@@ -74,8 +74,12 @@ export default function LoginPage() {
         // sessionStorage.setItem('loginID', login.id);
         // navigate("/myPage");
 
+    const loginInfo = {
+        sno: login.id,
+        password: login.password,
+    }
     axios
-      .post("/auth/login", null, { params: { sno: login.id, password: login.password } })
+      .post("/auth/login", {...loginInfo})
       .then((res) => {
           if (res.data) {
                console.log(`${cookies.get('student_no')} 쿠기 가져오기`);
