@@ -125,15 +125,15 @@ const reservedTime = [
     {
         // 2023년 4월 25일
         date: "2023-04-25",
-        tList: [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+        tList: [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0],
     },
     {
         date: "2023-04-12",
-        tList: [1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1],
+        tList: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     },
     {
         date: "2023-04-09",
-        tList: [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+        tList: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
 ]
 
@@ -144,6 +144,8 @@ export default function Reservation() {
     const [isRegular, setIsRegular] = useState(false);
     const [selectedDay, dayDispatch] = useReducer(dayReducer, initialDay);
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
+
+    const [reservedTime, setReservedTime] = useState([]);
 
     const navigate = useNavigate();
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
@@ -159,6 +161,19 @@ export default function Reservation() {
     //             console.log(err);
     //         })
     // }, []);
+
+    // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
+    useEffect(() => {
+        console.log(selectedDay.year, selectedDay.month, selectedDay.date);
+        axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
+            .then((res) => {
+                // console.log(res.data);
+                setReservedTime((state) => [...res.data]);
+            })
+            .catch((err) => {
+                console.log("통신실패");
+            })
+    }, [selectedDay.date])
 
     // 날짜가 선택되었을때 실행되는 함수
     const onCalendarHandler = (e) => {
@@ -281,25 +296,9 @@ export default function Reservation() {
         // onReservedStatusHandler();
     }
 
-    // 날짜에 맞는 tList 반환하기
+    // 선택된 날짜의 예약 리스트를 반환하는 함수
     const onReservedStatusHandler = () => {
-        const year = selectedDay.year.toString();
-        const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
-        const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
-
-        // 날짜를 'YYYY-MM-DD" 형태로 변환
-        const fullDate = `${year}-${month}-${date}`;
-
-        // 날짜가 일치하는지 확인
-        const findList = reservedTime.find(selectedDate => new Date(selectedDate.date).getTime() === new Date(fullDate).getTime());
-        
-        // 날짜가 일치할때
-        if (findList) {
-            return findList.tList;
-        }
-        // 날짜와 일치하는 경우가 없을때
-        return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
+        return reservedTime;
     };
 
     return (
