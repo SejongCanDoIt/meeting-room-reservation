@@ -147,18 +147,18 @@ export default function Reservation() {
 
     const navigate = useNavigate();
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
-    useEffect(() => {
-        // 서버로부터 로그인 여부 확인
-        axios.get('/auth/checkLogin')
-            .then((res) => {
-                if (!res.data) {
-                    navigate('/loginPage');
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, []);
+    // useEffect(() => {
+    //     // 서버로부터 로그인 여부 확인
+    //     axios.get('/auth/checkLogin')
+    //         .then((res) => {
+    //             if (!res.data) {
+    //                 navigate('/loginPage');
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }, []);
 
     // 날짜가 선택되었을때 실행되는 함수
     const onCalendarHandler = (e) => {
@@ -212,23 +212,23 @@ export default function Reservation() {
     // TimeTable에서 선택된 시간 가져와서 반영하기
     const onTimeHandler = (start, end) => {
         // 시작 시간이 선택되지 않았을때
-        if (start !== 0) {
+        if (start !== -1) {
             timeDispatch({
                 type: "START_TIME",
-                time: start  + 9,
+                time: start,
             })
         }
 
         // 끝나는 시간이 선택되지 않았을때
-        if (end !== 0) {
+        if (end !== -1) {
             timeDispatch({
                 type: "END_TIME",
-                time: end + 9,
+                time: end,
             })
         }
 
         // 선택된 시간이 모두 0일때. 리셋
-        if (start === 0 && end === 0) {
+        if (start === -1 && end === -1) {
             timeDispatch({
                 type: "RESET_TIME",
                 time: start,
@@ -246,17 +246,19 @@ export default function Reservation() {
         const year = selectedDay.year.toString();
         const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
         const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
-        const startTime = selectedTime.startTime < 20 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
-        const endTime = selectedTime.endTime < 20 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+        const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
         // console.log("예약은 다음과 같습니다.");
         // console.log(`${year}년 ${month}월 ${date}일`);
         // console.log(`${startTime}시 부터 ${endTime}까지`);
         
-        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00`;
-        const reservationToInfo = `${year}-${month}-${date}T${endTime}:00`;
+        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
+        const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
 
         console.log(new Date(reservationFromInfo));
         console.log(new Date(reservationToInfo));
+        
+        
 
         const reservationInfo = {
             start: new Date(reservationFromInfo),

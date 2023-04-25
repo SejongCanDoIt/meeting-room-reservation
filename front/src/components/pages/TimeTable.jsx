@@ -8,47 +8,51 @@ import { useEffect, useState } from "react";
 
 export default function TimeTable({onTimeHandler, reservedStatusList}) {
 
-    const timeSchdule = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-    const [clickedStatus, setClickedStatus] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    const [start, setStart] = useState(0);
-    const [end, setEnd] = useState(0);
+    // const timeSchdule = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    // const [clickedStatus, setClickedStatus] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    const timeSchdule = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+    const [clickedStatus, setClickedStatus] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    const [start, setStart] = useState(-1);
+    const [end, setEnd] = useState(-1);
 
     const onClickHanlder = (clickedTime) => {
         const newTimeList = [...clickedStatus];
-        if (start === 0) {
+        if (start === -1) {
             // 시작 시간 상태 변경
             setStart(clickedTime);
 
             // 시작 시간에 대한 새로운 상태 반영
-            newTimeList[clickedTime-7] = 1;
+            newTimeList[clickedTime] = 1;
             setClickedStatus((state) => [...newTimeList]);
         }
 
         // 시작 시간은 선택되어있고, 끝나는 시간을 선택할때.
-        else if (end === 0) {
+        else if (end === -1) {
             setEnd(clickedTime);
 
 
             // 끝나는 시간이 시작시간보다 앞설때
             if (start >= clickedTime) {
-                setClickedStatus((state) => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-                setStart(0);
-                setEnd(0);
+                // setClickedStatus((state) => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+                setClickedStatus((state) => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+                setStart(-1);
+                setEnd(-1);
                 alert("끝나는 시간은 시작 시간보다 앞서야 합니다");
             }
 
         
             else {
-                for(let i=start - 7 ; i <= clickedTime-7 ; i++) {
+                for(let i=start ; i <= clickedTime ; i++) {
                     newTimeList[i] = 1
                 }
                 setClickedStatus((state) => [...newTimeList]);
             }
         }
         else {
-            setStart(0);
-            setEnd(0);
-            setClickedStatus((state) => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+            setStart(-1);
+            setEnd(-1);
+            // setClickedStatus((state) => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+            setClickedStatus((state) => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         }
     }
 
