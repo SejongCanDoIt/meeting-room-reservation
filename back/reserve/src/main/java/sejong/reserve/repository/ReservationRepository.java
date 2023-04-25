@@ -1,18 +1,13 @@
 package sejong.reserve.repository;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.domain.ReservationStatus;
-import sejong.reserve.domain.Time;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Repository

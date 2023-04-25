@@ -14,7 +14,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter @Setter @ToString
+@Getter @Setter
+@ToString(exclude = "reservationLogs")
 @Table(name = "member")
 public class Member {
     @Id

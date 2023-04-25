@@ -3,13 +3,8 @@ package sejong.reserve.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Getter
 @Setter
@@ -34,4 +29,5 @@ public class MemberDto {
         this.password = loginMember.getPassword();
         this.cnt = loginMember.getCnt();
     }
+
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import sejong.reserve.repository.RoomRepository;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @DynamicInsert
 @Table(name = "room")
+@ToString(exclude = "reservationLogs")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
