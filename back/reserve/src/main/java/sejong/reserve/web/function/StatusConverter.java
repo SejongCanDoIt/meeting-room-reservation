@@ -1,4 +1,4 @@
-package sejong.reserve.function;
+package sejong.reserve.web.function;
 
 import sejong.reserve.domain.ReservationStatus;
 

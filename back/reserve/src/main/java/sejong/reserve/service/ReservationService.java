@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
+import sejong.reserve.dto.TimeDto;
 import sejong.reserve.repository.ReservationRepository;
 
 import java.time.LocalDateTime;
@@ -99,7 +100,7 @@ public class ReservationService {
         reservationReal.setEnd(null);
     }
 
-    public List<Time> getTodayTimeList(LocalDateTime todayDate) {
+    public List<TimeDto> getTodayTimeList(LocalDateTime todayDate) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
@@ -107,11 +108,11 @@ public class ReservationService {
         LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
 
         List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
-        List<Time> timeList = new ArrayList<>();
+        List<TimeDto> timeList = new ArrayList<>();
         for(Reservation reservation:reservations) {
             LocalDateTime start = reservation.getStart();
             LocalDateTime end = reservation.getEnd();
-            Time time = new Time(start, end);
+            TimeDto time = new TimeDto(start, end);
             timeList.add(time);
         }
         return timeList;

@@ -1,20 +1,19 @@
 package sejong.reserve.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import sejong.reserve.service.ReservationService;
+import sejong.reserve.dto.ReservationDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
 @Entity
-@Setter @Getter @ToString
+@Setter @Getter
+@ToString(exclude = {"member", "room"})
 @Table(name = "reservation_log")
 public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,13 +52,13 @@ public class Reservation {
 
 
     //==생성 메서드==//
-    public static Reservation createReservation(ReservationInfo reservationInfo, Member member, Room room) {
+    public static Reservation createReservation(ReservationDto reservationDto, Member member, Room room) {
         Reservation reservation = new Reservation();
         reservation.setMember(member);
         reservation.setRoom(room);
-        reservation.setStart(reservationInfo.getStart());
-        reservation.setEnd(reservationInfo.getEnd());
-        reservation.setRegular(reservationInfo.getRegular());
+        reservation.setStart(reservationDto.getStart());
+        reservation.setEnd(reservationDto.getEnd());
+        reservation.setRegular(reservationDto.getRegular());
         reservation.setStatus(ReservationStatus.RESERVED);
         return reservation;
     }
