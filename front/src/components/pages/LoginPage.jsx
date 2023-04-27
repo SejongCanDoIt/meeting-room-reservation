@@ -45,7 +45,7 @@ export default function LoginPage() {
                     navigate('/myPage');
                 }
                 else {
-                    console.log("로그인 실패");
+                    console.log("로그인을 해주세요");
                 }
             })
             .catch((err) => {
@@ -82,7 +82,7 @@ export default function LoginPage() {
       .post("/auth/login", {...loginInfo})
       .then((res) => {
           if (res.data) {
-               console.log(`${cookies.get('student_no')} 쿠기 가져오기`);
+            //    console.log(`${cookies.get('student_no')} 쿠기 가져오기`);
                navigate('/myPage');
            }
       })

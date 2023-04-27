@@ -6,9 +6,8 @@ import RegularOptions from "./RegularOptions";
 import Calendar from "react-calendar";
 import moment from "moment";
 import TimeTable from "./TimeTable";
-import { useState, useEffect, useReducer, useCallback } from "react";
+import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
-import Cookies from "universal-cookie";
 import { useNavigate } from 'react-router';
 
 
@@ -120,22 +119,6 @@ const marks = [
     },
 ];
 
-// 선택된 날짜에대한 예약 시간
-const reservedTime = [
-    {
-        // 2023년 4월 25일
-        date: "2023-04-25",
-        tList: [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0],
-    },
-    {
-        date: "2023-04-12",
-        tList: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-    },
-    {
-        date: "2023-04-09",
-        tList: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    },
-]
 
 export default function Reservation() {
     const type = "일반 예약";
@@ -148,19 +131,20 @@ export default function Reservation() {
     const [reservedTime, setReservedTime] = useState([]);
 
     const navigate = useNavigate();
-    // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
-    // useEffect(() => {
-    //     // 서버로부터 로그인 여부 확인
-    //     axios.get('/auth/checkLogin')
-    //         .then((res) => {
-    //             if (!res.data) {
-    //                 navigate('/loginPage');
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         })
-    // }, []);
+
+    // 로그인되어있는지 확인해서 안되어있다면 로그인하도록 유도
+    useEffect(() => {
+        // 서버로부터 로그인 여부 확인
+        axios.get('/auth/checkLogin')
+            .then((res) => {
+                if (!res.data) {
+                    navigate('/loginPage');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, []);
 
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
@@ -242,7 +226,7 @@ export default function Reservation() {
             })
         }
 
-        // 선택된 시간이 모두 0일때. 리셋
+        // 선택된 시간이 모두 -1일때. 리셋
         if (start === -1 && end === -1) {
             timeDispatch({
                 type: "RESET_TIME",
@@ -251,13 +235,15 @@ export default function Reservation() {
         }
     }
 
+    // 사용자가 선택한 시간이 미리 예약된 시간과 겹치는 경우를 다루는 함수
+    const reservationOverlapHandler = (startTime, endTime) => {
+        // 기존 예약시간 리스트를 예약된 시간으로 나눠서 새로운 배열 반환. -> 해당 배열에 1이 하나라도 있다면 초기화
+        const overlapArray = reservedTime.slice(startTime, endTime + 1)
+        return overlapArray.find((el) => el === 1);
+    }
 
     // 예약 버튼이 클릭되었을때.
     const onBtnClicked = () => {
-
-        console.log(selectedTime.startTime);
-        console.log(selectedTime.endTime);
-
         const year = selectedDay.year.toString();
         const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
         const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
@@ -266,14 +252,18 @@ export default function Reservation() {
         // console.log("예약은 다음과 같습니다.");
         // console.log(`${year}년 ${month}월 ${date}일`);
         // console.log(`${startTime}시 부터 ${endTime}까지`);
-        
+
+        // 예약된 시간이 겹치지 않는것을 확인했다면
+        const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
+        isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, startTime, endTime);
+    }
+
+    const makeReservation = (year, month, date, startTime, endTime) => {
         const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
         const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
-
+    
         console.log(new Date(reservationFromInfo));
         console.log(new Date(reservationToInfo));
-        
-        
 
         const reservationInfo = {
             start: new Date(reservationFromInfo),
@@ -283,17 +273,16 @@ export default function Reservation() {
         }   
 
         console.log(reservationInfo);
-
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
             .then((res) => {
                 console.log(res);
+                navigate('/ShareReservationPage')
             })
             .catch((err) => {
                 console.log(err);
             })
-
-
-        // onReservedStatusHandler();
+        onReservedStatusHandler();
+        alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
     }
 
     // 선택된 날짜의 예약 리스트를 반환하는 함수

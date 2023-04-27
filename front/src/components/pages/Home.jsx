@@ -3,24 +3,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Home() {
-
-    // 특정 날짜에대한 예약 시간 여부 반환
-    useEffect(() => {
-        // axios.get('/reserve/month-reserve-check', {params: {year: 2023, month: 11}})
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log("통신실패");
-        //     })
-        axios.get('/reserve/today-time-check', {params: {year: 2023, month: 4, day: 20}})
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log("통신실패");
-            })
-    }, [])
     return (
         <div>
             <h3> 임시 홈페이지 </h3>

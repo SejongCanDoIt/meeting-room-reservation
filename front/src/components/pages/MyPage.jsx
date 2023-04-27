@@ -6,21 +6,27 @@ import edit from "../../assets/edit.png";
 import calendar from "../../assets/calendar.png";
 import visibility from "../../assets/visibility.png";
 import styled from "styled-components";
-import Cookies from "universal-cookie";
+import { useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
 
 export default function MyPage() {
-    const cookies = new Cookies();
-    const userId = cookies.get('student_no');
+    const userId = "임시 유저";
     const navigate = useNavigate();
+
+    // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
-        const status = cookies.get('student_no');
-        // 로그인이 되어 있지 않으면 loginPage로 이동.
-        if (!status) {
-            navigate('/loginPage');
-        }   
-    }, [])
+        // 서버로부터 로그인 여부 확인
+        axios.get('/auth/checkLogin')
+            .then((res) => {
+                if (!res.data) {
+                    navigate('/loginPage');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, []);
     return (
         <MainPageContainer>
             <ProfileDiv>
