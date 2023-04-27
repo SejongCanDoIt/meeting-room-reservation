@@ -247,6 +247,7 @@ export default function Reservation() {
         const year = selectedDay.year.toString();
         const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
         const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
+        const day = selectedDay.day;
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
         // console.log("예약은 다음과 같습니다.");
@@ -255,10 +256,10 @@ export default function Reservation() {
 
         // 예약된 시간이 겹치지 않는것을 확인했다면
         const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
-        isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, startTime, endTime);
+        isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
     }
 
-    const makeReservation = (year, month, date, startTime, endTime) => {
+    const makeReservation = (year, month, date, day, startTime, endTime) => {
         const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
         const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
     
@@ -276,7 +277,7 @@ export default function Reservation() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
             .then((res) => {
                 console.log(res);
-                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&startTime=${startTime}&endTime=${endTime}`)
+                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
             })
             .catch((err) => {
                 console.log(err);
