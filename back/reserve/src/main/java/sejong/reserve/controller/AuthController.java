@@ -41,8 +41,10 @@ public class AuthController {
 
     if(member != null)
       return true;
-    else
+    else {
+      log.error("login fail!");
       return false;
+    }
   }
 
   @GetMapping("logout")

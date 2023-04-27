@@ -12,6 +12,9 @@ import sejong.reserve.service.MemberService;
 import sejong.reserve.service.ReservationService;
 import sejong.reserve.service.RoomService;
 import sejong.reserve.web.SessionConst;
+import sejong.reserve.web.exception.AlreadyReservedException;
+import sejong.reserve.web.exception.AuthorityException;
+import sejong.reserve.web.exception.NotLoginException;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -35,7 +38,7 @@ public class ReservationController {
                                 HttpSession session) {
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if(loginMember == null) {
-            throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
+            throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
         log.info("loginMember = {}", loginMember);
         loginMember.removeCnt();
@@ -44,7 +47,7 @@ public class ReservationController {
         LocalDateTime end = reservationDto.getEnd();
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
         if(!reservationService.isPossibleTime(start, end)) {
-            throw new IllegalStateException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
+            throw new AlreadyReservedException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
         }
 
         // 예약 시간 gap이 권한에 적합한지?
@@ -76,7 +79,7 @@ public class ReservationController {
                 break;
         }
         if(authGap < gap) {
-            throw new IllegalStateException("권한에 부여된 시간보다 넘게 신청하셨습니다. 시간을 조절해주시길 바랍니다.");
+            throw new AuthorityException("권한에 부여된 시간보다 넘게 신청하셨습니다. 시간을 조절해주시길 바랍니다.");
         }
     }
 
@@ -112,7 +115,7 @@ public class ReservationController {
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
-            throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
+            throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
 
         List<Reservation> reservations =
@@ -141,7 +144,7 @@ public class ReservationController {
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
-            throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
+            throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
         reservationService.deleteAll(loginMember.getStudentNo());
     }
