@@ -16,7 +16,6 @@ import sejong.reserve.web.exception.AlreadyReservedException;
 import sejong.reserve.web.exception.AuthorityException;
 import sejong.reserve.web.exception.NotLoginException;
 
-import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
@@ -30,13 +29,11 @@ public class ReservationController {
     private final ReservationService reservationService;
     private final ManagementService managementService;
     private final RoomService roomService;
-    private final MemberService memberService;
 
     @PostMapping
     public Long makeReservation(@RequestBody ReservationDto reservationDto,
                                 @RequestParam Long room_id,
-                                @Login Member loginMember,
-                                HttpSession session) {
+                                @Login Member loginMember) {
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
@@ -111,8 +108,7 @@ public class ReservationController {
     }
 
     @GetMapping("user-list")
-    public ResponseEntity<List<Reservation>> userList(HttpSession session,
-                                                      @Login Member loginMember) {
+    public ResponseEntity<List<Reservation>> userList(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
@@ -140,7 +136,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("login-delete-all")
-    public void deleteAll(HttpSession session, @Login Member loginMember) {
+    public void deleteAll(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
