@@ -276,7 +276,7 @@ export default function Reservation() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
             .then((res) => {
                 console.log(res);
-                navigate('/ShareReservationPage')
+                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&startTime=${startTime}&endTime=${endTime}`)
             })
             .catch((err) => {
                 console.log(err);
