@@ -11,7 +11,7 @@ import sejong.reserve.service.ManagementService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.service.ReservationService;
 import sejong.reserve.service.RoomService;
-import sejong.reserve.web.SessionConst;
+import sejong.reserve.web.argumentresolver.Login;
 import sejong.reserve.web.exception.AlreadyReservedException;
 import sejong.reserve.web.exception.AuthorityException;
 import sejong.reserve.web.exception.NotLoginException;
@@ -35,8 +35,8 @@ public class ReservationController {
     @PostMapping
     public Long makeReservation(@RequestBody ReservationDto reservationDto,
                                 @RequestParam Long room_id,
+                                @Login Member loginMember,
                                 HttpSession session) {
-        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
@@ -111,8 +111,8 @@ public class ReservationController {
     }
 
     @GetMapping("user-list")
-    public ResponseEntity<List<Reservation>> userList(HttpSession session) {
-        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+    public ResponseEntity<List<Reservation>> userList(HttpSession session,
+                                                      @Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
@@ -140,8 +140,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("login-delete-all")
-    public void deleteAll(HttpSession session) {
-        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+    public void deleteAll(HttpSession session, @Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
