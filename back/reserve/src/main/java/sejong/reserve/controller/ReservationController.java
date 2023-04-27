@@ -11,6 +11,7 @@ import sejong.reserve.service.ManagementService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.service.ReservationService;
 import sejong.reserve.service.RoomService;
+import sejong.reserve.web.SessionConst;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public class ReservationController {
     public Long makeReservation(@RequestBody ReservationDto reservationDto,
                                 @RequestParam Long room_id,
                                 HttpSession session) {
-        Member loginMember = (Member) session.getAttribute("loginMember");
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if(loginMember == null) {
             throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
         }
@@ -108,7 +109,7 @@ public class ReservationController {
 
     @GetMapping("user-list")
     public ResponseEntity<List<Reservation>> userList(HttpSession session) {
-        Member loginMember = (Member) session.getAttribute("loginMember");
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");
@@ -137,7 +138,7 @@ public class ReservationController {
 
     @DeleteMapping("login-delete-all")
     public void deleteAll(HttpSession session) {
-        Member loginMember = (Member) session.getAttribute("loginMember");
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new IllegalStateException("로그인이 안되어 있는 상태입니다.");

@@ -1,9 +1,10 @@
-package sejong.reserve.domain;
+package sejong.reserve.web.function;
 
 import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.bean.AbstractCsvConverter;
 import com.opencsv.bean.CsvConverter;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import sejong.reserve.domain.AuthState;
 
 import java.util.Locale;
 

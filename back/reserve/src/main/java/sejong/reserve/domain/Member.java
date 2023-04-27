@@ -1,14 +1,14 @@
 package sejong.reserve.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import sejong.reserve.exception.NotEnoughCntException;
+import sejong.reserve.web.exception.NotEnoughCntException;
+import sejong.reserve.web.function.AuthStateConverter;
 
 import javax.persistence.*;
 import java.util.List;

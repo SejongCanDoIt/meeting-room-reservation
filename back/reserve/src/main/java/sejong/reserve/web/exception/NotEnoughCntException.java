@@ -1,4 +1,4 @@
-package sejong.reserve.exception;
+package sejong.reserve.web.exception;
 
 public class NotEnoughCntException extends RuntimeException {
     public NotEnoughCntException() {
