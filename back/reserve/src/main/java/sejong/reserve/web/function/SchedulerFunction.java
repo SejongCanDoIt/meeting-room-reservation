@@ -20,8 +20,8 @@ public class SchedulerFunction {
     private final ManagementService managementService;
     private final MemberService memberService;
 
-//    @Scheduled(cron = "0 0 0 1 * ?", zone="Asia/Seoul") // 매달 1일 0시 0분에 실행
-    @Scheduled(cron = "0 11 23 * * *", zone="Asia/Seoul") // 매일 11시에 실행
+    //    @Scheduled(cron = "0 11 23 * * *", zone="Asia/Seoul") // 매일 11시에 실행
+    @Scheduled(cron = "0 0 0 1 * ?", zone="Asia/Seoul") // 매달 1일 0시 0분에 실행
     public void resetValue() {
         managementService.resetCntAll();
 
@@ -32,8 +32,4 @@ public class SchedulerFunction {
         }
     }
 
-//    @Scheduled(initialDelay = 10000, fixedDelay = 10000)
-//    public void runAfterTenSecondsRepeatTenSeconds() {
-//        log.info("10초 후 실행 => time : " + LocalTime.now());
-//    }
 }

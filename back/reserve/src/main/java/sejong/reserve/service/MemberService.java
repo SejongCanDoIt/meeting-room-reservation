@@ -63,7 +63,8 @@ public class MemberService {
     }
 
     public void updatePasswordByStudentNo(String studentNo, String newPassword){
-        memberRepository.updatePasswordByStudentNo(studentNo,newPassword);
+        Member member = memberRepository.findByStudentNo(studentNo);
+        member.setPassword(newPassword);
     }
 
     public String findPhoneNoByStudentNo(String studentNo) {
@@ -71,7 +72,8 @@ public class MemberService {
     }
     public void resetPassword(String studentNo) {
         String last4DigitsOfPhone = memberRepository.findPhoneNoByStudentNo(studentNo);
-        memberRepository.updatePasswordByStudentNo(studentNo, last4DigitsOfPhone);
+        Member member = memberRepository.findByStudentNo(studentNo);
+        member.setPassword(last4DigitsOfPhone);
     }
     public Member addNewMember(Member member) {
         return memberRepository.save(member);
