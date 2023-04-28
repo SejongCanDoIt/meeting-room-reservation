@@ -54,9 +54,6 @@ public class Member {
     @ColumnDefault("0")
     private int cnt; // 회원 예약 가능 횟수
 
-    // ===비즈니스 로직===== //
-
-
 
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)

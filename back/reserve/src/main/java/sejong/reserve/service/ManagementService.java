@@ -71,18 +71,19 @@ public class ManagementService{
     public int resetCntEach(String studentNo) {
         String authState = memberRepository.getAuthState(studentNo);
         int cnt = 0;
+        Member member = memberRepository.findByStudentNo(studentNo);
         switch (authState) {
             case "UNI_STUDENT" :
                 cnt = managementRepository.getUnivCnt();
-                memberRepository.setCnt(cnt, studentNo);
+                member.setCnt(cnt);
                 break;
             case "POST_STUDENT":
                 cnt = managementRepository.getPostCnt();
-                memberRepository.setCnt(cnt, studentNo);
+                member.setCnt(cnt);
                 break;
             case "PROFESSOR": case "OFFICE":
                 cnt = managementRepository.getProCnt();
-                memberRepository.setCnt(cnt, studentNo);
+                member.setCnt(cnt);
                 break;
             default:
         }
