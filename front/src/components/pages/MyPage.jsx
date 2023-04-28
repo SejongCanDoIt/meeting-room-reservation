@@ -10,9 +10,10 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
 export default function MyPage() {
-    const userId = "임시 유저";
+    const [serchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
@@ -32,7 +33,7 @@ export default function MyPage() {
         <MainPageContainer>
             <ProfileDiv>
                 <UserIcon src={user} alt="" />
-                <Dhdsh>안녕하세요 {userId}님 <EditIcon src={edit} alt="" /></Dhdsh>
+                <Dhdsh>안녕하세요 {serchParams.get('id')}님 <EditIcon src={edit} alt="" /></Dhdsh>
             </ProfileDiv>
             <MenuContainer>
                 <ReservationInfo subTitle={"오늘의 예약"} info={"835호 13:30 ~ 16:30분에 오늘 예약이 있어요"}/>
