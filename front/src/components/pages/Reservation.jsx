@@ -134,7 +134,7 @@ export default function Reservation() {
 
     // 로그인되어있는지 확인해서 안되어있다면 로그인하도록 유도
     useEffect(() => {
-        // 서버로부터 로그인 여부 확인
+        //  서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
                 if (!res.data) {
