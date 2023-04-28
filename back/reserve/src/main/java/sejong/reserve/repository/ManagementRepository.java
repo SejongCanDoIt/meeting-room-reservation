@@ -26,29 +26,6 @@ public class ManagementRepository {
         return managements.get(0);
     }
 
-//    public void update(Management managementInfo) throws PersistenceException {
-//        Management management = em.find(Management.class, managementInfo.getId());
-//        management.setManagement(managementInfo, management);
-//    }
-
-//    public void updateCnt(int univ_cnt, int post_cnt, int pro_cnt) throws PersistenceException {
-//        Management management =
-//                em.createQuery("select m from Management m", Management.class)
-//                        .getResultList().get(0);
-//        management.setUniv_cnt(univ_cnt);
-//        management.setPost_cnt(post_cnt);
-//        management.setPro_cnt(pro_cnt);
-//    }
-
-//    public void updateGap(int univ_gap, int post_gap, int pro_gap) throws PersistenceException {
-//        Management management =
-//                em.createQuery("select m from Management m", Management.class)
-//                        .getResultList().get(0);
-//        management.setUniv_gap(univ_gap);
-//        management.setPost_gap(post_gap);
-//        management.setPro_gap(pro_gap);
-//    }
-
     public int getUnivCnt() {
         return (int) em.createQuery("select m.univ_cnt from Management m").getSingleResult();
     }
