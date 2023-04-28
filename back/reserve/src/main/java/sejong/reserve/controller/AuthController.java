@@ -2,6 +2,7 @@ package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,11 @@ public class AuthController {
       log.info("login member = {}", sessionMember);
     }
 
-    return ResponseEntity.ok().build();
+    if(member != null) {
+      return ResponseEntity.ok().build();
+    } else {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username or password is incorrect");
+    }
   }
 
   @GetMapping("logout")

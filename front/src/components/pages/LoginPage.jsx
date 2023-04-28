@@ -74,6 +74,7 @@ export default function LoginPage() {
         // sessionStorage.setItem('loginID', login.id);
         // navigate("/myPage");
 
+    console.log("WORKING");
     const loginInfo = {
         sno: login.id,
         password: login.password,
@@ -81,13 +82,10 @@ export default function LoginPage() {
     axios
       .post("/auth/login", {...loginInfo})
       .then((res) => {
-          if (res.data) {
-            //    console.log(`${cookies.get('student_no')} 쿠기 가져오기`);
-               navigate('/myPage');
-           }
+        navigate('/myPage')
       })
       .catch((err) => {
-        // console.log("로그인 실패", err);
+        alert("아이디 또는 비밀번호를 확인해주세요");
       });
     }
 
