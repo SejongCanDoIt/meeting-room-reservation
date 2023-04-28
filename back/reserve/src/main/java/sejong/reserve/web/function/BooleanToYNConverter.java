@@ -1,4 +1,4 @@
-package sejong.reserve.function;
+package sejong.reserve.web.function;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
