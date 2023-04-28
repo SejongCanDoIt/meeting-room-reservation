@@ -5,6 +5,7 @@ import search from "../../assets/search-interface-symbol.png";
 import edit from "../../assets/edit.png";
 import calendar from "../../assets/calendar.png";
 import visibility from "../../assets/visibility.png";
+import logout from "../../assets/logout.png";
 import styled from "styled-components";
 import { useEffect } from "react";
 import axios from "axios";
@@ -39,6 +40,7 @@ export default function MyPage() {
                 <MainPageMenu icon={calendar} title={"예약하기"} where={"/ChooseReservationPage"}/>
                 <MainPageMenu icon={search} title={"예약내역 확인하기"} where={"/show"}/>
                 <MainPageMenu icon={visibility} title={"회의실 둘러보기"} where={"/RoomListPage"}/>
+                <MainPageMenu icon={logout} title={"로그아웃"} where={"/logout"}/>
             </MenuContainer>
         </MainPageContainer>
     );

@@ -5,7 +5,7 @@ export default function MainPageMenu({icon, title, where}) {
         <MenuBox>
             <LeftInfo>
                 <UserIcon src={icon} alt="" />
-                <TitleInfo>{title}</TitleInfo>
+                <TitleInfo><LinkTag to={where}>{title}</LinkTag></TitleInfo>
             </LeftInfo>
             <RightInfo><LinkTag to={where}>➤</LinkTag></RightInfo>
         </MenuBox>

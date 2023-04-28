@@ -34,7 +34,6 @@ export default function LoginPage() {
 
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
     const navigate = useNavigate();
-    const cookies = new Cookies();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
@@ -73,20 +72,19 @@ export default function LoginPage() {
         // alert(`${login.id}님 반갑습니다`);
         // sessionStorage.setItem('loginID', login.id);
         // navigate("/myPage");
-
-    console.log("WORKING");
-    const loginInfo = {
-        sno: login.id,
-        password: login.password,
-    }
-    axios
-      .post("/auth/login", {...loginInfo})
-      .then((res) => {
-        navigate('/myPage')
-      })
-      .catch((err) => {
-        alert("아이디 또는 비밀번호를 확인해주세요");
-      });
+        console.log("WORKING");
+        const loginInfo = {
+            sno: login.id,
+            password: login.password,
+        }
+        axios
+        .post("/auth/login", {...loginInfo})
+        .then((res) => {
+            navigate('/myPage')
+        })
+        .catch((err) => {
+            alert("아이디 또는 비밀번호를 확인해주세요");
+        });
     }
 
 
