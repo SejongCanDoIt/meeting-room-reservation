@@ -2,6 +2,7 @@ package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.*;
@@ -31,7 +32,7 @@ public class ReservationController {
     private final RoomService roomService;
 
     @PostMapping
-    public Long makeReservation(@RequestBody ReservationDto reservationDto,
+    public ResponseEntity<Long> makeReservation(@RequestBody ReservationDto reservationDto,
                                 @RequestParam Long room_id,
                                 @Login Member loginMember) {
         if(loginMember == null) {
@@ -59,7 +60,7 @@ public class ReservationController {
         log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
 
-        return reservation.getId();
+        return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
     }
 
     private void checkGap(int gap, AuthState authority) {
