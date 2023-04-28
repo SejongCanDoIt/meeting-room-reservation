@@ -2,6 +2,7 @@ package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.Member;
@@ -21,7 +22,7 @@ public class AuthController {
   private final MemberService memberService;
 
   @PostMapping("login")
-  public Boolean login(
+  public ResponseEntity<?> login(
           @RequestBody LoginDto loginInfo,
           HttpServletResponse response,
           HttpSession session) throws Exception {
@@ -39,17 +40,13 @@ public class AuthController {
       log.info("login member = {}", sessionMember);
     }
 
-    if(member != null)
-      return true;
-    else {
-      log.error("login fail!");
-      return false;
-    }
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("logout")
-  public void logout(HttpSession httpSession) throws Exception {
+  public ResponseEntity<?> logout(HttpSession httpSession) throws Exception {
     httpSession.invalidate();
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("checkLogin")
