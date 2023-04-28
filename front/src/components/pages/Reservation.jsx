@@ -281,6 +281,8 @@ export default function Reservation() {
             })
             .catch((err) => {
                 console.log(err);
+                console.log("에러발생");
+                alert(`${err.response.data.message}`);
             })
         onReservedStatusHandler();
         alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
