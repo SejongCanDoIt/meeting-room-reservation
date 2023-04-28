@@ -30,6 +30,7 @@ public class ReservationController {
     private final ReservationService reservationService;
     private final ManagementService managementService;
     private final RoomService roomService;
+    private final MemberService memberService;
 
     @PostMapping
     public ResponseEntity<Long> makeReservation(@RequestBody ReservationDto reservationDto,
@@ -39,7 +40,9 @@ public class ReservationController {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
         log.info("loginMember = {}", loginMember);
-        loginMember.removeCnt();
+        log.info("remove cnt before = {}", loginMember.getCnt());
+        memberService.removeCnt(loginMember.getId());
+        log.info("remove cnt after = {}", loginMember.getCnt());
 
         LocalDateTime start = reservationDto.getStart();
         LocalDateTime end = reservationDto.getEnd();

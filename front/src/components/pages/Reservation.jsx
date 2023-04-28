@@ -277,15 +277,13 @@ export default function Reservation() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
             .then((res) => {
                 console.log(res);
+                alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
                 navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
             })
             .catch((err) => {
-                console.log(err);
-                console.log("에러발생");
                 alert(`${err.response.data.message}`);
             })
         onReservedStatusHandler();
-        alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
     }
 
     // 선택된 날짜의 예약 리스트를 반환하는 함수

@@ -56,23 +56,6 @@ public class Member {
 
     // ===비즈니스 로직===== //
 
-    /**
-     * cnt 증가
-     */
-    public void addCnt() {
-        this.cnt++;
-    }
-
-    /**
-     * cnt 감소
-     */
-    public void removeCnt() {
-        int restCnt = this.cnt--;
-        if (restCnt < 0) {
-            throw new NotEnoughCntException("No more chance to reserve");
-        }
-        this.cnt = cnt;
-    }
 
 
     @JsonIgnore

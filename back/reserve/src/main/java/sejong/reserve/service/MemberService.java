@@ -14,12 +14,14 @@ import sejong.reserve.domain.Member;
 import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
 import sejong.reserve.repository.ReservationRepository;
+import sejong.reserve.web.exception.NotEnoughCntException;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -95,6 +97,24 @@ public class MemberService {
             }
             saveMembers(members);
         }
+    }
+
+    public void removeCnt(Long member_id) {
+        Optional<Member> memberById = memberRepository.findById(member_id);
+        Member member = memberById.get();
+        int cnt = member.getCnt();
+        cnt--;
+        if (cnt < 0) {
+            throw new NotEnoughCntException("No more chance to reserve");
+        }
+        member.setCnt(cnt);
+    }
+
+    public void addCnt(Long member_id) {
+        Optional<Member> memberById = memberRepository.findById(member_id);
+        Member member = memberById.get();
+        int cnt = member.getCnt();
+        member.setCnt(cnt++);
     }
 
 }
