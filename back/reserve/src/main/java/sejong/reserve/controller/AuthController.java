@@ -10,6 +10,7 @@ import sejong.reserve.domain.Member;
 import sejong.reserve.dto.LoginDto;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.web.SessionConst;
+import sejong.reserve.web.exception.NotLoginException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -55,14 +56,14 @@ public class AuthController {
   }
 
   @GetMapping("checkLogin")
-  public boolean checkLogin(HttpSession session) throws Exception {
+  public ResponseEntity<Long> checkLogin(HttpSession session) throws Exception {
     log.info("checkLogin-test");
     Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
     log.info("member = {}", member);
     if(member == null) {
-      return false;
+      throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
     } else {
-      return true;
+      return new ResponseEntity<>(member.getId(), HttpStatus.OK);
     }
   }
 }
