@@ -40,15 +40,11 @@ export default function LoginPage() {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                if (res.data) {
-                    navigate('/myPage');
-                }
-                else {
-                    console.log("로그인을 해주세요");
-                }
+                console.log(res);
+                // console.log("로그인 되어있습니다")
             })
             .catch((err) => {
-                console.log(err);
+                navigate('/loginPage')
             })
     }, []);
 

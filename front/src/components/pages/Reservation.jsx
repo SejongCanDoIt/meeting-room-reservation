@@ -131,17 +131,15 @@ export default function Reservation() {
     const [reservedTime, setReservedTime] = useState([]);
     const navigate = useNavigate();
 
-    // 로그인되어있는지 확인해서 안되어있다면 로그인하도록 유도
+    // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
-        //  서버로부터 로그인 여부 확인
+        // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                if (!res.data) {
-                    navigate('/loginPage');
-                }
+                console.log("로그인 되어있습니다")
             })
             .catch((err) => {
-                console.log(err);
+                navigate('/loginPage')
             })
     }, []);
 
