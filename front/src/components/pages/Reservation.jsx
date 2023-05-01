@@ -129,7 +129,6 @@ export default function Reservation() {
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
 
     const [reservedTime, setReservedTime] = useState([]);
-
     const navigate = useNavigate();
 
     // 로그인되어있는지 확인해서 안되어있다면 로그인하도록 유도
@@ -250,13 +249,23 @@ export default function Reservation() {
         const day = selectedDay.day;
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
-        // console.log("예약은 다음과 같습니다.");
-        // console.log(`${year}년 ${month}월 ${date}일`);
-        // console.log(`${startTime}시 부터 ${endTime}까지`);
 
         // 예약된 시간이 겹치지 않는것을 확인했다면
         const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
         isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
+    }
+
+    // 지난 날짜는 선택할 수 없도록 그리고 오늘로부터 2개월 뒤에는 선택할 수 없도록
+    const tileDisabledHandler = ({date, view}) => {
+        // 오늘로부터 지난날들은 비활성화
+        if (moment(date).format('MM-DD') < moment(new Date()).format('MM-DD')) {
+            return true
+        }
+
+        // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
+        if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
+            return true
+        }
     }
 
     const makeReservation = (year, month, date, day, startTime, endTime) => {
@@ -294,7 +303,7 @@ export default function Reservation() {
     return (
         <ReservationContainer>
             <ReservationNav reserveType={type} message="언제 사용하실 건가요?" isRegular={isRegular}/>
-            <Calendar onChange={onCalendarHandler} tileClassName={reservedStatus}/>
+            <Calendar onChange={onCalendarHandler} tileClassName={reservedStatus} tileDisabled={tileDisabledHandler}/>
             {isRegular ? <RegularOptions month={selectedDay.month} date={selectedDay.date}></RegularOptions> : <></>}
 
             <TimeBox>
