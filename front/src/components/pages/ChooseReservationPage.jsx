@@ -23,6 +23,7 @@ function ChooseReservationPage() {
                         </li>
                     </ul>
                 </div>
+                
                 <div className="message">
                     <h4>예약 종류를 선택해주세요</h4>
                 </div>
