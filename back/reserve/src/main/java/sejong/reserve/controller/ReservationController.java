@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.*;
 import sejong.reserve.dto.ReservationDto;
+import sejong.reserve.dto.ReservationsDto;
 import sejong.reserve.dto.TimeDto;
 import sejong.reserve.service.ManagementService;
 import sejong.reserve.service.MemberService;
@@ -112,13 +113,13 @@ public class ReservationController {
     }
 
     @GetMapping("user-list")
-    public ResponseEntity<List<Reservation>> userList(@Login Member loginMember) {
+    public ResponseEntity<List<ReservationsDto>> userList(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
 
-        List<Reservation> reservations =
+        List<ReservationsDto> reservations =
                 reservationService.userList(loginMember.getStudentNo());
 
         log.info("sno = {}", loginMember.getStudentNo());

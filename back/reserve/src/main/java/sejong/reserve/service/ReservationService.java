@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
+import sejong.reserve.dto.ReservationsDto;
 import sejong.reserve.dto.TimeDto;
 import sejong.reserve.repository.ReservationRepository;
 
@@ -36,8 +37,15 @@ public class ReservationService {
     }
 
     // 학생별 예약 리스트
-    public List<Reservation> userList(String student_no) {
-        return reservationRepository.findByStudentNo(student_no);
+    public List<ReservationsDto> userList(String student_no) {
+
+        List<Reservation> reservations = reservationRepository.findByStudentNo(student_no);
+        List<ReservationsDto> reservationDtoList = new ArrayList<>();;
+        for(Reservation reservation:reservations) {
+            ReservationsDto reservationsDto = new ReservationsDto(reservation);
+            reservationDtoList.add(reservationsDto);
+        }
+        return reservationDtoList;
     }
 
     // 예약 id 를 통한 예약 정보
