@@ -17,6 +17,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.member.studentNo = :studentNo order by r.createdAt DESC ")
     List<Reservation> findByStudentNo(@Param("studentNo") String studentNo);
 
+    // 상태에 따라 예약 리스트를 최신순으로 반환
+    @Query("select r from Reservation r where r.member.studentNo = :studentNo and r.status = :status order by r.createdAt DESC ")
+    List<Reservation> findByStudentNoAndStatus(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
+
 
     // 해당 예약의 시작 시간 반환
     @Query("select r.start from Reservation r where r.id = :id")

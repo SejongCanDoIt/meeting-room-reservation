@@ -40,11 +40,26 @@ public class ReservationService {
     public List<ReservationsDto> userList(String student_no) {
 
         List<Reservation> reservations = reservationRepository.findByStudentNo(student_no);
-        List<ReservationsDto> reservationDtoList = new ArrayList<>();;
-        for(Reservation reservation:reservations) {
+        List<ReservationsDto> reservationDtoList = convertToDto(reservations);
+        return reservationDtoList;
+    }
+
+    private List<ReservationsDto> convertToDto(List<Reservation> reservations) {
+        List<ReservationsDto> reservationDtoList = new ArrayList<>();
+        for(Reservation reservation: reservations) {
             ReservationsDto reservationsDto = new ReservationsDto(reservation);
             reservationDtoList.add(reservationsDto);
         }
+        return reservationDtoList;
+    }
+
+    /**
+     *
+     * 예약 상태별 리스트
+     */
+    public List<ReservationsDto> userListStatus(String student_no, ReservationStatus status) {
+        List<Reservation> reservations = reservationRepository.findByStudentNoAndStatus(student_no, status);
+        List<ReservationsDto> reservationDtoList = convertToDto(reservations);
         return reservationDtoList;
     }
 

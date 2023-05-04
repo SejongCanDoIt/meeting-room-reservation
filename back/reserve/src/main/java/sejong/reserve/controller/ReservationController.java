@@ -131,6 +131,60 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("user-list-reserved")
+    public ResponseEntity<List<ReservationsDto>> userListReserved(@Login Member loginMember) {
+        log.info("loginMember = {}", loginMember);
+        if(loginMember == null) {
+            throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
+        }
+
+        List<ReservationsDto> reservations =
+                reservationService.userListStatus(loginMember.getStudentNo(), ReservationStatus.RESERVED);
+
+        log.info("sno = {}", loginMember.getStudentNo());
+        if (!reservations.isEmpty()) {
+            return ResponseEntity.ok(reservations);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping("user-list-finished")
+    public ResponseEntity<List<ReservationsDto>> userListFinished(@Login Member loginMember) {
+        log.info("loginMember = {}", loginMember);
+        if(loginMember == null) {
+            throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
+        }
+
+        List<ReservationsDto> reservations =
+                reservationService.userListStatus(loginMember.getStudentNo(), ReservationStatus.FINISHED);
+
+        log.info("sno = {}", loginMember.getStudentNo());
+        if (!reservations.isEmpty()) {
+            return ResponseEntity.ok(reservations);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping("user-list-canceled")
+    public ResponseEntity<List<ReservationsDto>> userListCanceled(@Login Member loginMember) {
+        log.info("loginMember = {}", loginMember);
+        if(loginMember == null) {
+            throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
+        }
+
+        List<ReservationsDto> reservations =
+                reservationService.userListStatus(loginMember.getStudentNo(), ReservationStatus.CANCELED);
+
+        log.info("sno = {}", loginMember.getStudentNo());
+        if (!reservations.isEmpty()) {
+            return ResponseEntity.ok(reservations);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
     @DeleteMapping("delete-one")
     public void deleteOne(@RequestParam("reservation_id") Long reservation_id) {
         reservationService.deleteOne(reservation_id);
