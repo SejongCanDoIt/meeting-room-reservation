@@ -1,0 +1,40 @@
+#topContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 1px solid black;
+}
+
+#logo {
+    height: 10vh;
+    width: auto;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+}
+
+.admin-info p {
+    font-size: 40px;
+}
+
+.admin-info p:first-child {
+    font-weight: bold;
+}
+
+.admin-info p:last-of-type {
+    margin-right: 0.4em;
+}
+
+.admin-info button {
+    background-color: transparent;
+    border: none;
+}
+
+.admin-info button img {
+    height: 4vh;
+    width: auto;
+    margin-right: 1vw;
+}
