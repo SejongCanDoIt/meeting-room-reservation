@@ -2,6 +2,7 @@ package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -211,6 +212,17 @@ public class ReservationController {
     public List<Integer> getMonthReserveCheck(@RequestParam("year") int year,
                                    @RequestParam("month") int month) {
         return reservationService.getMonthReserveCheck(year, Month.of(month));
+    }
+
+    @GetMapping("today-reserve-cnt")
+    public ResponseEntity<Integer> getTodayReserveCnt(
+            @RequestParam("year") int year,
+            @RequestParam("month") int month,
+            @RequestParam("day") int day) {
+        LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
+        log.info("date = {}", todayDate);
+        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate);
+        return ResponseEntity.ok(todayReserveCnt);
     }
 
 
