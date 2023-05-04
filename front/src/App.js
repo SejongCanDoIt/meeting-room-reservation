@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './components/pages/Home';
 import RoomListPage from './components/pages/RoomListPage';
@@ -14,13 +14,18 @@ import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
 import Reservation from "./components/pages/Reservation";
+import Regularreservations from "./components/pages/RegularReservation";
 import ShowReservation from "./components/pages/ShowReservation";
 import Logout from './components/pages/Logout';
+import styled from 'styled-components';
 
 function App() {
   return (
     <BrowserRouter>
       <div>
+        <NavBar>
+          <LinkStyle to="/myPage">예약 시스템</LinkStyle>
+        </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
           
@@ -37,12 +42,35 @@ function App() {
           <Route path="/mainPage" element={<MainPage />}></Route>
           <Route path="/myPage" element={<MyPage />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
-          <Route path="reservation" element={<Reservation />}></Route>
-          <Route path="show" element={<ShowReservation />}></Route>
+          <Route path="/show" element={<ShowReservation />}></Route>
+          <Route path="/reservation" element={<Reservation />}></Route>
+          <Route path="/regularReservation" element={<Regularreservations />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
+
+const LinkStyle = styled(Link)`
+  color: white;
+  text-decoration: none;
+`
+
+const NavBar = styled.div`
+
+  width: 100%;
+  height: 30px;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+  font-size: 25px;
+
+  background-color: #A1203C;
+  color: white;
+
+`
 
 export default App;

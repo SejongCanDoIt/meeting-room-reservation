@@ -9,7 +9,7 @@ import moment from "moment";
 import TimeTable from "./TimeTable";
 import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 
 // 날짜의 초기값
@@ -25,6 +25,12 @@ const initialTime = {
     startTime: 0,
     endTime: 1,
     rangeTime: 1,
+}
+
+// 정기예약 정보 초기값
+const initialRegular = {
+    dayWeekMonth: "일간",
+    count: 1,
 }
 
 // selectedDa의 리듀서
@@ -93,6 +99,27 @@ const timeReducer = (state, action) => {
             return {
                 startTime: action.time,
                 endTime: action.time,
+                rangeTime: 1,
+            }
+        }
+
+        default: return state
+    }
+}
+
+// 정기 예약 정보를 담는 리듀서
+const regularInfoReducer = (state, action) => {
+    switch(action.type) {
+        case "R_TYPE": {
+            return {
+                ...state,
+                dayWeekMonth: action.dayWeekMonth
+            }
+        }
+        case "C_TYPE": {
+            return {
+                ...state,
+                count: action.count,
             }
         }
 
@@ -131,22 +158,24 @@ const marks = [
 const timeTable = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
 const reserveTimeTable = ["1", "2", "3"];
 
-export default function Reservation() {
-    const type = "일반 예약";
+export default function RegularReservations() {
+    const type = "정기 예약";
 
     // 예약 타입, 날짜 선택, 시간 선택의 상태를 다루는 변수들.
     const [selectedDay, dayDispatch] = useReducer(dayReducer, initialDay);
+    const [regularInfo, regularDispatch] = useReducer(regularInfoReducer, initialRegular);
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
-
     const [reservedTime, setReservedTime] = useState([]);
+    const [overlap, setOverLap] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                console.log("로그인 되어있습니다")
+                // console.log("로그인 되어있습니다")
             })
             .catch((err) => {
                 navigate('/loginPage')
@@ -155,7 +184,8 @@ export default function Reservation() {
 
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
-        console.log(selectedDay.year, selectedDay.month, selectedDay.date);
+        // console.log(selectedDay.year, selectedDay.month, selectedDay.date, '선택한 날짜의 예약 시간 정보를 가져옵니다');
+        // console.log(selectedDay.year, selectedDay.month, selectedDay.date);
         axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
             .then((res) => {
                 // console.log(res.data);
@@ -205,25 +235,77 @@ export default function Reservation() {
     }
 
     // 사용자가 선택한 시간이 미리 예약된 시간과 겹치는 경우를 다루는 함수
-    const reservationOverlapHandler = (startTime, endTime) => {
+    // const reservationOverlapHandler = (startTime, endTime) => {
+    //     // 기존 예약시간 리스트를 예약된 시간으로 나눠서 새로운 배열 반환. -> 해당 배열에 1이 하나라도 있다면 초기화
+    //     const overlapArray = reservedTime.slice(startTime, endTime + 1)
+    //     return overlapArray.find((el) => el === 1);
+    // }
+
+    const reservationOverlapHandler = async (year, month, date, day, startTime, endTime) => {
         // 기존 예약시간 리스트를 예약된 시간으로 나눠서 새로운 배열 반환. -> 해당 배열에 1이 하나라도 있다면 초기화
-        const overlapArray = reservedTime.slice(startTime, endTime + 1)
-        return overlapArray.find((el) => el === 1);
+        console.log(`${year}년 ${month}월 ${date}일 예약을 진행합니다`);
+        return new Promise((resolve, reject) => {
+            axios.get('/reserve/today-time-check', {params: {year: year, month: month, day: date}})
+            .then(async (res) => {
+                const overlapArray = await res.data.slice(startTime, endTime + 1);
+                const isOverlap = await overlapArray.find((el) => el === 1);
+                await resolve(isOverlap);
+            })
+            .catch((err) => {
+                reject(err);
+            })
+        })
     }
 
     // 예약 버튼이 클릭되었을때.
     const onBtnClicked = () => {
-        const year = selectedDay.year.toString();
-        const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
-        const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
-        const day = selectedDay.day;
+        for (let day=0 ; day <= regularInfo.count*7; day += 7) {
+            if (regularInfo.dayWeekMonth === "week") {
+                onWeekRegularHandler(day);
+            }
+        }
+
+        // // 예약된 시간이 겹치지 않는것을 확인했다면
+        // const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
+        // isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
+    }
+
+    const a = (year, month, date) => {
+        alert(`다른 날짜에 중복된 시간이 존재합니다. 예약을 취소합니다 ${year} ${month} ${date}`);
+        // window.location.replace('/regularreservation');
+    }
+
+    const onWeekRegularHandler = async (day) => {
+        // 정기 날짜를 받아와서
+        const tmp = findRegularDate(day);
+
+        // 서버에 알맞은 형태로 넘기기 위해 변환하는 작업을 거친다.
+        const yearT = tmp.getFullYear().toString();
+        const monthT = (tmp.getMonth() + 1) < 10 ? "0" + (tmp.getMonth() + 1).toString() : (tmp.getMonth() + 1).toString();
+        const dateT = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
+        const dayT = selectedDay.day;
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
-
-        // 예약된 시간이 겹치지 않는것을 확인했다면
-        const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
-        isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
+        
+        console.log(`${startTime}시 부터, ${endTime}시 까지`);
+        await reservationOverlapHandler(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime)
+            .then((res) => {
+                res ? a(yearT, monthT, dateT) : makeReservation(yearT, monthT, dateT, dayT, startTime, endTime);
+            })
+        // console.log(`${yearT}년 ${monthT}월 ${dateT}일 중복여부: ${overlap}`);
+        // await makeReservation(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime);
     }
+
+    // 7이 더해져서 자동으로 날짜가 계산되어 반환해주는 함수.
+    const findRegularDate = (addDay) => {
+        const year = selectedDay.year.toString();
+        const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
+        const date = (selectedDay.date + addDay) < 10 ? "0" + (selectedDay.date + addDay).toString() : (selectedDay.date + addDay).toString();
+
+
+        return new Date(year, month-1, date);
+    }
+
 
     // 지난 날짜는 선택할 수 없도록 그리고 오늘로부터 2개월 뒤에는 선택할 수 없도록
     const tileDisabledHandler = ({date, view}) => {
@@ -233,30 +315,38 @@ export default function Reservation() {
         }
 
         // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
-        if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
+        if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 2, new Date().getDate())).format('MM-DD')) {
             return true
         }
     }
 
     const makeReservation = (year, month, date, day, startTime, endTime) => {
-        console.log(startTime, endTime);
+        // console.log(startTime, endTime);
         const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
         const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
-    
-        console.log(new Date(reservationFromInfo));
-        console.log(new Date(reservationToInfo));
+        
+        // console.log(`${year}-${month}-${date} 예약 완료`);
+
+        // console.log(reservationFromInfo);
+        // console.log(reservationToInfo);
+
+        // console.log(new Date(reservationFromInfo));
+        // console.log(new Date(reservationToInfo));
+
+        // console.log("정기예약 정보");
+        // console.log(regularInfo.dayWeekMonth, regularInfo.count);
+
 
         const reservationInfo = {
             start: new Date(reservationFromInfo),
             end: new Date(reservationToInfo),
             status: "RESERVED",
-            regular: false,
-        }   
-
-        console.log(reservationInfo);
+            regular: true,
+        }  
+        
+        // console.log("예약 완료");
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
             .then((res) => {
-                console.log(res);
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
                 navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
             })
@@ -265,6 +355,18 @@ export default function Reservation() {
             })
         onReservedStatusHandler();
     }
+
+    // const makeWeekReservation = () => {
+    //     axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
+    //         .then((res) => {
+    //             console.log(res);
+    //             alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
+    //             navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
+    //         })
+    //         .catch((err) => {
+    //             alert(`${err.response.data.message}`);
+    //         })
+    // }
 
     // 선택된 날짜의 예약 리스트를 반환하는 함수
     const onReservedStatusHandler = () => {
@@ -299,10 +401,29 @@ export default function Reservation() {
         onReserveTimeHandler(selectedTime.startTime, range);
     }
 
+    // 일간, 주간, 월간 선택 가져오는 함수
+    const onRegularTypeHandler = (e) => {
+        console.log(e.target.value);
+        regularDispatch({
+            type: "R_TYPE",
+            dayWeekMonth: e.target.value,
+        })
+    }
+    // 일간, 주간, 월간의 횟수를 가져오는 함수
+    const onRegularCountHandler = (e) => {
+        console.log(e.target.value);
+        const count = e.target.value;
+        regularDispatch({
+            type: "C_TYPE",
+            count: count,
+        })
+    }
+
     return (
         <ReservationContainer>
             <ReservationNav reserveType={type} message="언제 사용하실 건가요?"/>
             <Calendar onChange={onCalendarHandler} tileClassName={reservedStatus} tileDisabled={tileDisabledHandler}/>
+            <RegularOptions month={selectedDay.month} date={selectedDay.date} onRegularTypeHandler={onRegularTypeHandler} onRegularCountHandler={onRegularCountHandler}></RegularOptions>
 
             <TimeBox>
                 <TimeTable reservedStatusList={onReservedStatusHandler()}/>
@@ -312,6 +433,8 @@ export default function Reservation() {
                 <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
                 <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect>
             </ReservedInfoDiv>
+            
+            
             <button onClick={onBtnClicked}>예약하기</button>
         </ReservationContainer>
 
@@ -350,6 +473,6 @@ const ReservedInfoDiv = styled.div`
     margin-bottom: 15px;
 
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
 `
 

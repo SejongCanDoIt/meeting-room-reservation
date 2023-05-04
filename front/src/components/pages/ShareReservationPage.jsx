@@ -2,6 +2,7 @@ import { useSearchParams, useNavigate, useLocation } from "react-router-dom"
 import '../css/ShareReservationPageStyle.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 function ShareReservationPage() {
     const [serchParams, setSearchParams] = useSearchParams();
@@ -22,17 +23,15 @@ function ShareReservationPage() {
     const onLinkCopyHandler = () => {
         console.log(url);
         alert("링크 복사 완료!")
-        navigate('/myPage');
+        navigate('/show', {replace: true});
     }
     
     return (
         <div id="shareReservationPageContainer">
             <section id="shareReservationSection">
-                <div id="shareReservationTitle">
-                    <h1>예약 확인</h1>
-                </div>
                 <div id="contentListSpace">
-                    <img id="shareRoomImage" alt="roomImage" src="https://www.ibusiness.co.kr/wp-content/themes/twentytwenty-child/page/images/common_preview_conference07.jpg"></img>
+                    <h1>예약 확인</h1>
+                    <ShareReservedImg id="shareRoomImage" alt="roomImage" src="https://www.ibusiness.co.kr/wp-content/themes/twentytwenty-child/page/images/common_preview_conference07.jpg"></ShareReservedImg>
                     <ul id="contentList">
                         <li className="contents">날짜 <p>{serchParams.get('year')}년 {serchParams.get('month')}월 {serchParams.get('date')}일</p></li>
                         <li className="contents">요일 <p>{dayList[serchParams.get('day')]}요일</p></li>
@@ -47,5 +46,12 @@ function ShareReservationPage() {
         </div>
     );
 }
+
+const ShareReservedImg = styled.img`
+    width: 100%;
+    max-width: 320px;
+    border-radius: 30px;
+
+`
 
 export default ShareReservationPage;

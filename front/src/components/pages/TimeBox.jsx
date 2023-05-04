@@ -1,14 +1,9 @@
 import styled from "styled-components";
 import "../css/CustomCalendar.css";
 
-export default function TimeBox({id, reservedStatusList, timeClicked, isClicked}) {
-
-    const onSelectedHandler = () => {
-        isClicked(id);
-    }
-
+export default function TimeBox({id, reservedStatusList}) {
     return (
-        <TBox className={timeClicked} reserved={reservedStatusList} onClick={onSelectedHandler}></TBox>
+        <TBox reserved={reservedStatusList}></TBox>
     );
 }
 

@@ -1,5 +1,7 @@
 import '../css/ChooseReservationPageStyle.css';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 function ChooseReservationPage() {
     return (
         <div id="ChooseReservationPageContainer">
@@ -11,12 +13,12 @@ function ChooseReservationPage() {
                     <ul id="reservationList">
                         <li>
                             <button className="reservationObject" style={{ backgroundColor: '#FF8484' }}>
-                                <h3>정기 예약</h3>
+                                <LinkStyle to="/regularreservation"><h3>정기 예약</h3></LinkStyle>
                             </button>
                         </li>
                         <li>
                             <button className="reservationObject" style={{ backgroundColor: '#85D3FF' }}>
-                                <Link to="/reservation"><h3>일반 예약</h3></Link>
+                                <LinkStyle to="/reservation"><h3>일반 예약</h3></LinkStyle>
                             </button>
                         </li>
                     </ul>
@@ -28,5 +30,10 @@ function ChooseReservationPage() {
         </div>
     );
 }
+
+const LinkStyle = styled(Link)`
+  color: white;
+  text-decoration: none;
+`
 
 export default ChooseReservationPage;
