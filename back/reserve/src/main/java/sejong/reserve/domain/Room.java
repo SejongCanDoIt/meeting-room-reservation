@@ -44,7 +44,7 @@ public class Room {
 
     private String picture; // 사진 경로
 
-    @Column(columnDefinition = "TINYINT(1)", nullable = false)
+    @Column(columnDefinition = "TINYINT(1)", nullable = false, name = "empty1")
     @ColumnDefault("0")
     private Boolean empty; // 회의실 예약 가능 여부
 
