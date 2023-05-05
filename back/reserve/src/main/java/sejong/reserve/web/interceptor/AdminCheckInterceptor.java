@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
-public class LoginCheckInterceptor implements HandlerInterceptor {
+public class AdminCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
-        log.info("LoginCheckInterceptor 실행 = {}", requestURI);
+        log.info("AdminCheckInterceptor 실행 = {}", requestURI);
 
         HttpSession session = request.getSession();
 
-        if(session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
-            log.info("미인증 사용자 요청");
-//            response.sendRedirect(request.getContextPath() + "/auth/login");
+        if(session.getAttribute(SessionConst.LOGIN_MEMBER) != SessionConst.ADMIN_MEMBER) {
+            log.info("미인증 관리자 사용자 요청");
             response.sendError(HttpStatus.UNAUTHORIZED.value());
             return false;
         }
