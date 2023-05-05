@@ -57,6 +57,13 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = {NotAvailableReservedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> NotAvailableReservationException(NotAvailableReservedException e) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Parameter cannot be null");
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 

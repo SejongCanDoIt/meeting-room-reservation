@@ -37,11 +37,11 @@ public class ManagementService{
     }
 
     @Transactional
-    public void updateGap(int univ_gap, int post_gap, int pro_gap) {
+    public void updateTimeGap(int univ_gap, int post_gap, int pro_gap) {
         Management management = managementRepository.findOne();
-        management.setUniv_gap(univ_gap);
-        management.setPost_gap(post_gap);
-        management.setPro_gap(pro_gap);
+        management.setUniv_time_gap(univ_gap);
+        management.setPost_time_gap(post_gap);
+        management.setPro_time_gap(pro_gap);
     }
 
     public int getUnivCnt() {return managementRepository.getUnivCnt();}

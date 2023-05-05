@@ -17,6 +17,7 @@ import sejong.reserve.service.RoomService;
 import sejong.reserve.web.argumentresolver.Login;
 import sejong.reserve.web.exception.AlreadyReservedException;
 import sejong.reserve.web.exception.AuthorityException;
+import sejong.reserve.web.exception.NotAvailableReservedException;
 import sejong.reserve.web.exception.NotLoginException;
 
 import java.time.LocalDateTime;
@@ -42,21 +43,42 @@ public class ReservationController {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
         log.info("loginMember = {}", loginMember);
-        log.info("remove cnt before = {}", loginMember.getCnt());
+
+        // remove Cnt
         memberService.removeCnt(loginMember.getId());
-        log.info("remove cnt after = {}", loginMember.getCnt());
 
         LocalDateTime start = reservationDto.getStart();
         LocalDateTime end = reservationDto.getEnd();
-        // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
-        if(!reservationService.isPossibleTime(start, end)) {
-            throw new AlreadyReservedException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
+        AuthState authority = loginMember.getAuthority();
+        Boolean regular = reservationDto.getRegular();
+        
+        Month todayMonth = LocalDateTime.now().getMonth();
+        if(regular) {
+            // 정기예약일경우
+            switch (authority) {
+                case UNI_STUDENT:
+
+                    break;
+                case POST_STUDENT:
+                    break;
+                case OFFICE:
+                case PROFESSOR:
+                    break;
+            }
+        } else {
+            // 일반 예약일경우
+            Month reservationMonth = start.getMonth();
+            if(reservationMonth != todayMonth) {
+                throw new NotAvailableReservedException("일반 예약은 이번달 예약만 가능합니다.");
+            }
         }
 
+        // 예약할 날짜가 오늘보다 이전 날짜인지?
+        checkPastDate(start);
+        // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
+        checkDuplicateReservation(start, end);
         // 예약 시간 gap이 권한에 적합한지?
-        int gap = end.getHour() - start.getHour();
-        AuthState authority = loginMember.getAuthority();
-        checkGap(gap, authority);
+        checkGap(start, end, authority);
 
         // 예약 저장
         Room room = roomService.detail(room_id);
@@ -65,10 +87,26 @@ public class ReservationController {
         log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
 
+
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
     }
 
-    private void checkGap(int gap, AuthState authority) {
+    private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end) {
+        if(!reservationService.isPossibleTime(start, end)) {
+            throw new AlreadyReservedException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
+        }
+    }
+
+    private void checkPastDate(LocalDateTime start) {
+        LocalDateTime todayDate = LocalDateTime.now();
+        log.info("오늘 날짜 = {}", todayDate);
+        if(start.isBefore(todayDate)) {
+            throw new NotAvailableReservedException("오늘 보다 이전 날짜에 예약은 불가능합니다.");
+        }
+    }
+
+    private void checkGap(LocalDateTime start, LocalDateTime end, AuthState authority) {
+        int requestGap = end.getHour() - start.getHour();
         int authGap = 0;
         switch (authority) {
             case UNI_STUDENT:
@@ -81,7 +119,7 @@ public class ReservationController {
                 authGap = managementService.getProGap();
                 break;
         }
-        if(authGap < gap) {
+        if(authGap < requestGap) {
             throw new AuthorityException("권한에 부여된 시간보다 넘게 신청하셨습니다. 시간을 조절해주시길 바랍니다.");
         }
     }
@@ -249,6 +287,17 @@ public class ReservationController {
 
     @GetMapping("today-reserve-cnt")
     public ResponseEntity<Integer> getTodayReserveCnt(
+            @RequestParam("year") int year,
+            @RequestParam("month") int month,
+            @RequestParam("day") int day) {
+        LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
+        log.info("date = {}", todayDate);
+        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate);
+        return ResponseEntity.ok(todayReserveCnt);
+    }
+
+    @GetMapping("past-limitation")
+    public ResponseEntity<Integer> limitPastReservation(
             @RequestParam("year") int year,
             @RequestParam("month") int month,
             @RequestParam("day") int day) {

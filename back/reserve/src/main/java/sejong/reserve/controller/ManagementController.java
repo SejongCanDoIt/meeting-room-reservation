@@ -20,7 +20,7 @@ public class ManagementController {
 
     @PutMapping("update-gap")
     public void updateGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int pro_gap) {
-        managementService.updateGap(univ_gap, post_gap, pro_gap);
+        managementService.updateTimeGap(univ_gap, post_gap, pro_gap);
     }
 
     @GetMapping("univ-cnt")
