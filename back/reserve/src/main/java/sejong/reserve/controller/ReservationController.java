@@ -226,27 +226,6 @@ public class ReservationController {
         reservationService.cancel(reservation_id);
     }
 
-    /**
-     * 예약 상태에 따른 예약 내역 가져오기
-     */
-    // 취소
-    @GetMapping("canceled-list")
-    public List<Reservation> canceledList(@RequestParam("sno") String student_no) {
-        return reservationService.getStatusList(student_no, ReservationStatus.CANCELED);
-    }
-
-    // 대기(예약 된 상태)
-    @GetMapping("reserved-list")
-    public List<Reservation> reservedList(@RequestParam("sno") String student_no) {
-        return reservationService.getStatusList(student_no, ReservationStatus.RESERVED);
-    }
-
-    // 끝남
-    @GetMapping("finished-list")
-    public List<Reservation> finishedList(@RequestParam("sno") String student_no) {
-        return reservationService.getStatusList(student_no, ReservationStatus.FINISHED);
-    }
-
     @GetMapping("time-list")
     public List<TimeDto> timeList(@RequestParam("todayDate") LocalDateTime todayDate) {
         return reservationService.getTodayTimeList(todayDate);

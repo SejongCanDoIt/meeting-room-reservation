@@ -14,11 +14,11 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     // 전체 예약을 최신순으로 반환 (예약중, 완료, 삭제 포함)
-    @Query("select r from Reservation r where r.member.studentNo = :studentNo order by r.createdAt DESC ")
+    @Query("select r from Reservation r where r.member.studentNo = :studentNo order by r.start DESC ")
     List<Reservation> findByStudentNo(@Param("studentNo") String studentNo);
 
     // 상태에 따라 예약 리스트를 최신순으로 반환
-    @Query("select r from Reservation r where r.member.studentNo = :studentNo and r.status = :status order by r.createdAt DESC ")
+    @Query("select r from Reservation r where r.member.studentNo = :studentNo and r.status = :status order by r.start DESC ")
     List<Reservation> findByStudentNoAndStatus(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
 
 
