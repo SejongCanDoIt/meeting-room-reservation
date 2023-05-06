@@ -29,11 +29,12 @@ public class ManagementService{
 
 
     @Transactional
-    public void updateCnt(int univ_cnt, int post_cnt, int pro_cnt) {
+    public void updateCnt(int univ_cnt, int post_cnt, int pro_cnt, int office_cnt) {
         Management management = managementRepository.findOne();
         management.setUniv_cnt(univ_cnt);
         management.setPost_cnt(post_cnt);
         management.setPro_cnt(pro_cnt);
+        management.setOffice_cnt(office_cnt);
     }
 
     @Transactional

@@ -14,8 +14,8 @@ public class ManagementController {
     private final ManagementService managementService;
 
     @PutMapping("update-cnt")
-    public void updateCnt(@RequestParam int univ_cnt, @RequestParam int post_cnt, @RequestParam int pro_cnt) {
-        managementService.updateCnt(univ_cnt, post_cnt, pro_cnt);
+    public void updateCnt(@RequestParam int univ_cnt, @RequestParam int post_cnt, @RequestParam int pro_cnt, @RequestParam int office_cnt) {
+        managementService.updateCnt(univ_cnt, post_cnt, pro_cnt, office_cnt);
     }
 
     @PutMapping("update-time-gap")
