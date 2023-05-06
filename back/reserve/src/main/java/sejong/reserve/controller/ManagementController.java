@@ -43,6 +43,11 @@ public class ManagementController {
         return ResponseEntity.ok(managementService.getProCnt());
     }
 
+    @GetMapping("office-cnt")
+    public ResponseEntity<Integer> getOfficeCnt() {
+        return ResponseEntity.ok(managementService.getProCnt());
+    }
+
     @GetMapping("univ-time-gap")
     public ResponseEntity<Integer> getUnivTimeGap() {
         return ResponseEntity.ok(managementService.getUnivTimeGap());
