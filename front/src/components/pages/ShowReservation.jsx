@@ -27,7 +27,7 @@ export default function ShowReservation() {
     useEffect(() => {
         axios.get('/reserve/user-list')
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 const info = makeReserveList(res.data);
                 setReserveList((state) => [...info]);
             })
