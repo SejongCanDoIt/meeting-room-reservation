@@ -51,34 +51,15 @@ public class ReservationController {
         LocalDateTime end = reservationDto.getEnd();
         AuthState authority = loginMember.getAuthority();
         Boolean regular = reservationDto.getRegular();
-        
-        Month todayMonth = LocalDateTime.now().getMonth();
-        if(regular) {
-            // 정기예약일경우
-            switch (authority) {
-                case UNI_STUDENT:
 
-                    break;
-                case POST_STUDENT:
-                    break;
-                case OFFICE:
-                case PROFESSOR:
-                    break;
-            }
-        } else {
-            // 일반 예약일경우
-            Month reservationMonth = start.getMonth();
-            if(reservationMonth != todayMonth) {
-                throw new NotAvailableReservedException("일반 예약은 이번달 예약만 가능합니다.");
-            }
-        }
-
+        // 정기 및 일반 예약에 대한 달이 적합한지?
+        checkNormalAndRegularCheck(start, authority, regular);
         // 예약할 날짜가 오늘보다 이전 날짜인지?
         checkPastDate(start);
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
         checkDuplicateReservation(start, end);
         // 예약 시간 gap이 권한에 적합한지?
-        checkGap(start, end, authority);
+        checkTimeGap(start, end, authority);
 
         // 예약 저장
         Room room = roomService.detail(room_id);
@@ -89,6 +70,37 @@ public class ReservationController {
 
 
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
+    }
+
+    private void checkNormalAndRegularCheck(LocalDateTime start, AuthState authority, Boolean regular) {
+        Month todayMonth = LocalDateTime.now().getMonth();
+        Month reservationMonth = start.getMonth();
+        int regularGapMonth = 0;
+        if(regular) {
+            // 정기예약일경우
+            switch (authority) {
+                case UNI_STUDENT:
+                    regularGapMonth = managementService.getUnivRegularGap();
+                    break;
+                case POST_STUDENT:
+                    regularGapMonth = managementService.getPostRegularGap();
+                    break;
+                case OFFICE:
+                    regularGapMonth = managementService.getOfficeRegularGap();
+                    break;
+                case PROFESSOR:
+                    regularGapMonth = managementService.getProRegularGap();
+                    break;
+            }
+            if(todayMonth.getValue() + regularGapMonth < reservationMonth.getValue()) {
+                throw new NotAvailableReservedException("권한에 부여된 정기예약 가능 달이 아닙니다.");
+            }
+        } else {
+            // 일반 예약일경우
+            if(reservationMonth != todayMonth) {
+                throw new NotAvailableReservedException("일반 예약은 이번달 예약만 가능합니다.");
+            }
+        }
     }
 
     private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end) {
@@ -105,18 +117,21 @@ public class ReservationController {
         }
     }
 
-    private void checkGap(LocalDateTime start, LocalDateTime end, AuthState authority) {
+    private void checkTimeGap(LocalDateTime start, LocalDateTime end, AuthState authority) {
         int requestGap = end.getHour() - start.getHour();
         int authGap = 0;
         switch (authority) {
             case UNI_STUDENT:
-                authGap = managementService.getUnivGap();
+                authGap = managementService.getUnivTimeGap();
                 break;
             case POST_STUDENT:
-                authGap = managementService.getPostGap();
+                authGap = managementService.getPostTimeGap();
                 break;
-            case PROFESSOR: case OFFICE:
-                authGap = managementService.getProGap();
+            case PROFESSOR:
+                authGap = managementService.getProTimeGap();
+                break;
+            case OFFICE:
+                authGap = managementService.getOfficeTimeGap();
                 break;
         }
         if(authGap < requestGap) {

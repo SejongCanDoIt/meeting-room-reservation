@@ -24,7 +24,7 @@ public class Management {
     private int office_time_gap; // 대학원생
     private int pro_time_gap; // 교수
 
-    // 정기예약 가능 시간 간격
+    // 정기예약 가능 시간 간격 기준: 월
     private int univ_regular_gap; // 대학생
     private int post_regular_gap; // 대학원생
     private int office_regular_gap; // 대학원생

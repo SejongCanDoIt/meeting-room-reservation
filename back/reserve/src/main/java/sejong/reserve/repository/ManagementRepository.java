@@ -34,18 +34,40 @@ public class ManagementRepository {
         return (int) em.createQuery("select m.post_cnt from Management m").getSingleResult();
     }
 
+    public int getOfficeCnt() {
+        return (int) em.createQuery("select m.office_cnt from Management m").getSingleResult();
+    }
     public int getProCnt() {
         return (int) em.createQuery("select m.pro_cnt from Management m").getSingleResult();
     }
 
-    public int getUnivGap() {
-        return (int) em.createQuery("select m.univ_gap from Management m").getSingleResult();
+
+    public int getUnivTimeGap() {
+        return (int) em.createQuery("select m.univ_time_gap from Management m").getSingleResult();
     }
-    public int getPostGap() {
-        return (int) em.createQuery("select m.post_gap from Management m").getSingleResult();
+    public int getPostTimeGap() {
+        return (int) em.createQuery("select m.post_time_gap from Management m").getSingleResult();
     }
-    public int getProGap() {
-        return (int) em.createQuery("select m.pro_gap from Management m").getSingleResult();
+
+    public int getOfficeTimeGap() {
+        return (int) em.createQuery("select m.office_time_gap from Management m").getSingleResult();
+    }
+    public int getProTimeGap() {
+        return (int) em.createQuery("select m.pro_time_gap from Management m").getSingleResult();
+    }
+
+    public int getUnivRegularGap() {
+        return (int) em.createQuery("select m.univ_regular_gap from Management m").getSingleResult();
+    }
+    public int getPostRegularGap() {
+        return (int) em.createQuery("select m.post_regular_gap from Management m").getSingleResult();
+    }
+
+    public int getOfficeRegularGap() {
+        return (int) em.createQuery("select m.office_regular_gap from Management m").getSingleResult();
+    }
+    public int getProRegularGap() {
+        return (int) em.createQuery("select m.pro_regular_gap from Management m").getSingleResult();
     }
 
 }

@@ -37,11 +37,21 @@ public class ManagementService{
     }
 
     @Transactional
-    public void updateTimeGap(int univ_gap, int post_gap, int pro_gap) {
+    public void updateTimeGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
         Management management = managementRepository.findOne();
         management.setUniv_time_gap(univ_gap);
         management.setPost_time_gap(post_gap);
+        management.setOffice_time_gap(office_gap);
         management.setPro_time_gap(pro_gap);
+    }
+
+    @Transactional
+    public void updateRegularGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
+        Management management = managementRepository.findOne();
+        management.setUniv_regular_gap(univ_gap);
+        management.setPost_regular_gap(post_gap);
+        management.setOffice_regular_gap(office_gap);
+        management.setPro_regular_gap(pro_gap);
     }
 
     public int getUnivCnt() {return managementRepository.getUnivCnt();}
@@ -50,11 +60,19 @@ public class ManagementService{
 
     public int getProCnt() {return managementRepository.getProCnt();}
 
-    public int getUnivGap() {return managementRepository.getUnivGap();}
+    public int getUnivTimeGap() {return managementRepository.getUnivTimeGap();}
 
-    public int getPostGap() {return managementRepository.getPostGap();}
+    public int getPostTimeGap() {return managementRepository.getPostTimeGap();}
 
-    public int getProGap() {return managementRepository.getProGap();}
+    public int getOfficeTimeGap() {return managementRepository.getOfficeTimeGap();}
+    public int getProTimeGap() {return managementRepository.getProTimeGap();}
+
+    public int getUnivRegularGap() {return managementRepository.getUnivRegularGap();}
+
+    public int getPostRegularGap() {return managementRepository.getPostRegularGap();}
+
+    public int getOfficeRegularGap() {return managementRepository.getOfficeRegularGap();}
+    public int getProRegularGap() {return managementRepository.getProRegularGap();}
 
     @Transactional
     public void resetCntAll() {
@@ -81,8 +99,12 @@ public class ManagementService{
                 cnt = managementRepository.getPostCnt();
                 member.setCnt(cnt);
                 break;
-            case "PROFESSOR": case "OFFICE":
+            case "PROFESSOR":
                 cnt = managementRepository.getProCnt();
+                member.setCnt(cnt);
+                break;
+            case "OFFICE":
+                cnt = managementRepository.getOfficeCnt();
                 member.setCnt(cnt);
                 break;
             default:

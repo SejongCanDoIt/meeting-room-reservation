@@ -18,9 +18,14 @@ public class ManagementController {
         managementService.updateCnt(univ_cnt, post_cnt, pro_cnt);
     }
 
-    @PutMapping("update-gap")
-    public void updateGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int pro_gap) {
-        managementService.updateTimeGap(univ_gap, post_gap, pro_gap);
+    @PutMapping("update-time-gap")
+    public void updateTimeGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int office_gap, @RequestParam int pro_gap) {
+        managementService.updateTimeGap(univ_gap, post_gap, office_gap, pro_gap);
+    }
+
+    @PutMapping("update-regular-gap")
+    public void updateRegularGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int office_gap, @RequestParam int pro_gap) {
+        managementService.updateRegularGap(univ_gap, post_gap, office_gap, pro_gap);
     }
 
     @GetMapping("univ-cnt")
@@ -38,19 +43,42 @@ public class ManagementController {
         return ResponseEntity.ok(managementService.getProCnt());
     }
 
-    @GetMapping("univ-gap")
-    public ResponseEntity<Integer> getUnivGap() {
-        return ResponseEntity.ok(managementService.getUnivGap());
+    @GetMapping("univ-time-gap")
+    public ResponseEntity<Integer> getUnivTimeGap() {
+        return ResponseEntity.ok(managementService.getUnivTimeGap());
     }
 
-    @GetMapping("post-gap")
-    public ResponseEntity<Integer> getPostGap() {
-        return ResponseEntity.ok(managementService.getPostGap());
+    @GetMapping("post-time-gap")
+    public ResponseEntity<Integer> getPostTimeGap() {
+        return ResponseEntity.ok(managementService.getPostTimeGap());
     }
 
-    @GetMapping("pro-gap")
-    public ResponseEntity<Integer> getProGap() {
-        return ResponseEntity.ok(managementService.getProGap());
+    @GetMapping("office-time-gap")
+    public ResponseEntity<Integer> getOfficeTimeGap() {
+        return ResponseEntity.ok(managementService.getOfficeTimeGap());
+    }
+    @GetMapping("pro-time-gap")
+    public ResponseEntity<Integer> getProTimeGap() {
+        return ResponseEntity.ok(managementService.getProTimeGap());
+    }
+
+    @GetMapping("univ-regular-gap")
+    public ResponseEntity<Integer> getUnivRegularGap() {
+        return ResponseEntity.ok(managementService.getUnivRegularGap());
+    }
+
+    @GetMapping("post-regular-gap")
+    public ResponseEntity<Integer> getPostRegularGap() {
+        return ResponseEntity.ok(managementService.getPostRegularGap());
+    }
+
+    @GetMapping("office-regular-gap")
+    public ResponseEntity<Integer> getOfficeRegularGap() {
+        return ResponseEntity.ok(managementService.getOfficeRegularGap());
+    }
+    @GetMapping("pro-regular-gap")
+    public ResponseEntity<Integer> getProRegularGap() {
+        return ResponseEntity.ok(managementService.getProRegularGap());
     }
 
     @GetMapping
