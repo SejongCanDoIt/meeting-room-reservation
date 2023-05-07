@@ -13,9 +13,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-06__1_18__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-06_오후_1_18_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/domain/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/components/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/pages/Home.jsx" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/back/reserve/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/back/reserve/src/main/resources/application.yml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +42,31 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1682658992" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="back-hun6" />
+                    <option name="lastUsedInstant" value="1682658991" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/ManagementController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/back/reserve/src/main/java/sejong/reserve/controller/MemberController.java" root0="FORCE_HIGHLIGHTING" />
@@ -56,12 +85,19 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectId" id="2P2fIPNfK1OWrg1TvjY9WsSphBA" />
+=======
+  <component name="ProjectId" id="2P4MVFWsUqMHO2gv903jAspZHr8" />
+>>>>>>> Stashed changes
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
+<<<<<<< Updated upstream
     <option name="hideEmptyMiddlePackages" value="true" />
+=======
+>>>>>>> Stashed changes
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
@@ -73,7 +109,18 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< Updated upstream
     "last_opened_file_path": "C:/Users/이지수/Desktop/4학년 1학기/창의학기제/vita-project"
+=======
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/dlrbg/meeting-room-reservation",
+    "spring.configuration.checksum": "9daaa46a91b498bc165a63e73dac38aa"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+>>>>>>> Stashed changes
   }
 }]]></component>
   <component name="RunManager" selected="Application.ReserveApplication">
@@ -107,12 +154,24 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="56fed51a-33ee-4083-8457-8909e07eabaf" name="Changes" comment="" />
+<<<<<<< Updated upstream
       <created>1682660016335</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682660016335</updated>
+=======
+      <created>1682711930690</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682711930690</updated>
+      <workItem from="1682711932619" duration="29000" />
+      <workItem from="1683186715531" duration="766000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
