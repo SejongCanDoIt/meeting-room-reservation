@@ -11,6 +11,7 @@ import java.util.List;
 
 @Setter @Getter @ToString
 public class ReservationsDto {
+    private Long reservation_id;
     private LocalDateTime start; // 예약 시작 시간
     private LocalDateTime end; // 예약 종료 시간
     private ReservationStatus status; // 예약 상태 RESERVED, FINISHED, CANCELED
@@ -22,6 +23,7 @@ public class ReservationsDto {
     }
 
     public ReservationsDto(Reservation reservation) {
+        this.reservation_id = reservation.getId();
         this.start = reservation.getStart();
         this.end = reservation.getEnd();
         this.status = reservation.getStatus();
