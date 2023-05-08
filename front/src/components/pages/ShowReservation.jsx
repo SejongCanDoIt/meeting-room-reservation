@@ -29,6 +29,13 @@ export default function ShowReservation() {
             .then((res) => {
                 console.log(res.data);
                 const info = makeReserveList(res.data);
+
+                // 같은 날일때는 시간이 앞선 것부터.
+                info.sort((a, b) => a.sHour - b.sHour);
+                // 그 다음에 날짜를 기준으로 정렬
+                info.sort((a, b) => b.date - a.date);
+
+                // 상태 반영
                 setReserveList((state) => [...info]);
             })
             .catch((err) => {
@@ -45,16 +52,19 @@ export default function ShowReservation() {
             const startCal = startTmp[0].split('-');
             const startTime = startTmp[1].split(':');
             const endTime = endTmp[1].split(':');
+            const isExpire = new Date(el.start) < new Date(); // 만료된 예약인지 확인.
+            // console.log(isExpire);
 
             const info = {
                 year: startCal[0],
                 month: startCal[1],
                 date: startCal[2],
                 day: dayList[new Date(startCal[0], startCal[1]-1, startCal[2]).getDay()],
-                sHour: startTime[0],
-                sMinute: startTime[1],
-                eHour: endTime[0],
-                eMinute: endTime[1],
+                startHour: startTime[0],
+                startMinute: startTime[1],
+                endHour: endTime[0],
+                endMinute: endTime[1],
+                isExpire: isExpire,
             }
             infoData.push(info);
             // console.log(info);
@@ -68,8 +78,9 @@ export default function ShowReservation() {
                 <h1>{loginId}님의 <br/> 예약내역입니다.</h1>
             </ProfileDiv>
             {reserveList.map((it, idx) => (
-                <ShowDiv key={idx}>
-                    <h3>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.sHour}:{it.sMinute}시 ~ {it.eHour}:{it.eMinute}시</h3>
+                <ShowDiv key={idx} isExpire={it.isExpire}>
+                    {it.isExpire ? <Ptag isExpire={it.isExpire}>만료된 예약</Ptag> : <Ptag isExpire={it.isExpire}>예정된 예약</Ptag>}
+                    <h3>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}:{it.startMinute}시 ~ {it.endHour}:{it.endMinute}시</h3>
                 </ShowDiv>
             ))}
         </ShowContainer>
@@ -107,6 +118,15 @@ const ShowDiv = styled.div`
     max-width: 500px;
     border-bottom: 1px solid black;
     padding: 10px;
+    
+    background-color: ${(props) => (props.isExpire ? "#FAFAFA" : "#FFFFFF")};
+    color: ${(props) => (props.isExpire ? "#dee2e6" : "black")};
 
     text-align: center;
+`
+
+const Ptag = styled.p`
+    width: 100%;
+    text-align: left;
+    color: ${(props) => (props.isExpire ? "#dee2e6" : "#838383")};
 `
