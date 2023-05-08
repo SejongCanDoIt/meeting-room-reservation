@@ -31,9 +31,11 @@ export default function ShowReservation() {
                 const info = makeReserveList(res.data);
 
                 // 같은 날일때는 시간이 앞선 것부터.
-                info.sort((a, b) => a.sHour - b.sHour);
+                info.sort((a, b) => a.startHour - b.startHour);
                 // 그 다음에 날짜를 기준으로 정렬
                 info.sort((a, b) => b.date - a.date);
+                // 월별 기준으로 정렬
+                info.sort((a, b) => b.month - a.month);
 
                 // 상태 반영
                 setReserveList((state) => [...info]);
