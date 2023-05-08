@@ -61,6 +61,7 @@ export default function ShowReservation() {
             // console.log(isExpire);
 
             const info = {
+                reservationId: el.reservation_id,
                 year: startCal[0],
                 month: startCal[1],
                 date: startCal[2],
@@ -77,15 +78,15 @@ export default function ShowReservation() {
         return infoData;
     }
 
-    const onReservationDeleteHandler = () => {
-        console.log("삭제를 진행합니다");
-        // axios.delete('/reserve/delete-one', {params: {reservation_id: "72"}})
-        //     .then((res) => {
-        //         window.location.reload();
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     })
+    const onReservationDeleteHandler = (reservationId) => {
+        // console.log(`${reservationId} 삭제를 진행합니다`);
+        axios.delete('/reserve/delete-one', {params: {reservation_id: reservationId}})
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     return (
@@ -98,7 +99,7 @@ export default function ShowReservation() {
                     {it.isExpire ? <Ptag isExpire={it.isExpire}>만료된 예약</Ptag> : <Ptag isExpire={it.isExpire}>예정된 예약</Ptag>}
                     <ContentDiv>
                         <ContentInfo>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}:{it.startMinute}시 ~ {it.endHour}:{it.endMinute}시</ContentInfo>
-                        {it.isExpire ? <></> : <ImgBox><ImgTag src={deleteIcon} alt="" onClick={onReservationDeleteHandler}/></ImgBox>}
+                        {it.isExpire ? <></> : <ImgBox><ImgTag src={deleteIcon} alt="" onClick={() => onReservationDeleteHandler(it.reservationId)}/></ImgBox>}
                         
                     </ContentDiv>
                 </ShowDiv>
