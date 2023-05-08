@@ -60,7 +60,6 @@ const NavBar = styled.div`
 
   width: 100%;
   height: 30px;
-  max-width: 500px;
   display: flex;
   justify-content: center;
   align-items: center;

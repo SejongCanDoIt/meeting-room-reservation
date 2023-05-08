@@ -48,6 +48,7 @@ export default function ShowReservation() {
     const makeReserveList = (data) => {
         const infoData = [];
         for (let el of data) {
+            console.log(el);
             const startTmp = el.start.split('T'); // 2023-04-20     05:00:00
             const endTmp = el.end.split('T'); // 2023-04-20     05:00:00
             
