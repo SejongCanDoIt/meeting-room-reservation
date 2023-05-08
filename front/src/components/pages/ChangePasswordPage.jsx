@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 
 function ChangePasswordPage() {
   const [newPassword, setNewPassword] = useState("");
@@ -34,8 +35,7 @@ function ChangePasswordPage() {
         params: { studentNo: loginId, newPassword: newPassword },
       })
       .then((res) => {
-        console.log(res);
-        // navigate('/myPage');
+        navigate('/logout');
       })
       .catch((err) => {
         console.log(err);
@@ -51,12 +51,11 @@ function ChangePasswordPage() {
         <div id="inputFormSpace">
           <div id="SubtitleForm">
             <p id="inputFormSubtitle">변경할 비밀번호</p>
-            <input
+            <InputTag
               onChange={onPasswordHandler}
-              type="text"
+              type="password"
               id="inputForm"
-              autoFocus
-            ></input>
+            ></InputTag>
           </div>
         </div>
         <div id="buttonSpace">
@@ -66,5 +65,11 @@ function ChangePasswordPage() {
     </div>
   );
 }
+
+const InputTag = styled.input`
+  font-size: 17px;
+`
+
+
 
 export default ChangePasswordPage;
