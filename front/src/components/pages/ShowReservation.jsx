@@ -3,6 +3,8 @@ import { useState } from "react"
 import { useEffect } from "react"
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import booking from "../../assets/booking.png";
+import deleteIcon from "../../assets/deleteIcon.png";
 
 export default function ShowReservation() {
     const [reserveList, setReserveList] = useState([]);
@@ -27,7 +29,7 @@ export default function ShowReservation() {
     useEffect(() => {
         axios.get('/reserve/user-list')
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 const info = makeReserveList(res.data);
 
                 // 같은 날일때는 시간이 앞선 것부터.
@@ -48,7 +50,7 @@ export default function ShowReservation() {
     const makeReserveList = (data) => {
         const infoData = [];
         for (let el of data) {
-            console.log(el);
+            // console.log(el);
             const startTmp = el.start.split('T'); // 2023-04-20     05:00:00
             const endTmp = el.end.split('T'); // 2023-04-20     05:00:00
             
@@ -75,6 +77,17 @@ export default function ShowReservation() {
         return infoData;
     }
 
+    const onReservationDeleteHandler = () => {
+        console.log("삭제를 진행합니다");
+        // axios.delete('/reserve/delete-one', {params: {reservation_id: "72"}})
+        //     .then((res) => {
+        //         window.location.reload();
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     })
+    }
+
     return (
         <ShowContainer>
             <ProfileDiv>
@@ -83,7 +96,11 @@ export default function ShowReservation() {
             {reserveList.map((it, idx) => (
                 <ShowDiv key={idx} isExpire={it.isExpire}>
                     {it.isExpire ? <Ptag isExpire={it.isExpire}>만료된 예약</Ptag> : <Ptag isExpire={it.isExpire}>예정된 예약</Ptag>}
-                    <h3>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}:{it.startMinute}시 ~ {it.endHour}:{it.endMinute}시</h3>
+                    <ContentDiv>
+                        <ContentInfo>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}:{it.startMinute}시 ~ {it.endHour}:{it.endMinute}시</ContentInfo>
+                        {it.isExpire ? <></> : <ImgBox><ImgTag src={deleteIcon} alt="" onClick={onReservationDeleteHandler}/></ImgBox>}
+                        
+                    </ContentDiv>
                 </ShowDiv>
             ))}
         </ShowContainer>
@@ -96,6 +113,26 @@ const ShowContainer = styled.div`
     align-items: center;
 
     // background-color: gray;
+`
+
+const ContentDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+const ContentInfo = styled.h3`
+    width: 100%;
+`
+
+const ImgBox = styled.div`
+    width: 10%;
+    // text-align: right;
+    // background-color: gray;
+`
+
+const ImgTag = styled.img`
+    width: 50px;
 `
 
 const ProfileDiv = styled.div`
