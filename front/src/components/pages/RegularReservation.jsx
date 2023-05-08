@@ -167,6 +167,7 @@ export default function RegularReservations() {
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
     const [reservedTime, setReservedTime] = useState([]);
     const [overlap, setOverLap] = useState(0);
+    const [tmpMarks, setTmpMarks] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -196,6 +197,32 @@ export default function RegularReservations() {
             })
     }, [selectedDay.date])
 
+    // 의존성은 임시로 월별을 클릭했을때 변경되도록 함. -> 달력을 클릭했을때 바뀌는 걸로 수정해야함.
+    useEffect(() => {
+        console.log("카운트 불러오기");
+        createMonthReservedCount();
+    }, [selectedDay.month])
+
+
+    // 월별 예약건수를 서버에 요청해 만드는 함수.
+    const createMonthReservedCount = () => {
+        for (let i=1; i<=30 ; i++) {
+            // 서버에 해당 날짜의 예약건수 요청.
+            axios.get('/reserve/today-reserve-cnt', {params: {year: "2023", month: "06", day:i}})
+                .then(async (res) => {
+                    const cntData = {
+                        reservedCount: res.data,
+                        reservedDate: `${i}-06-2023`
+                    }
+                    await setTmpMarks((state) => [...state, cntData])
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+        }
+    }
+
     // 날짜가 선택되었을때 실행되는 함수
     const onCalendarHandler = (e) => {
         dayDispatch({
@@ -223,13 +250,23 @@ export default function RegularReservations() {
      const reservedStatus = ({date, view}) => {
 
         // 3건 이상일때 색상 칠하기
-        if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
+        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
+        //     return "heavy_reservation";
+        // }
+
+
+        // // 1~3건 사이일때의 색상 칠하기
+        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
+        //     return "middle_reservation";
+        // }
+
+        if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
             return "heavy_reservation";
         }
 
 
         // 1~3건 사이일때의 색상 칠하기
-        if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
+        if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
             return "middle_reservation";
         }
     }
@@ -259,20 +296,47 @@ export default function RegularReservations() {
 
     // 예약 버튼이 클릭되었을때.
     const onBtnClicked = () => {
-        for (let day=0 ; day <= regularInfo.count*7; day += 7) {
-            if (regularInfo.dayWeekMonth === "week") {
+        if (regularInfo.dayWeekMonth === "week") {
+            for (let day=0 ; day <= regularInfo.count*7; day += 7) {
                 onWeekRegularHandler(day);
             }
         }
+        else if (regularInfo.dayWeekMonth === "month") {
+            // console.log(new Date(selectedDay.year, selectedDay.month, 0).getDate());
+            // console.log(new Date(selectedDay.year, selectedDay.month, 0));
+            
+            // 해당 월의 가장 끝
+            const lastDay = new Date(selectedDay.year, selectedDay.month, 0).getDate();
+            // 기본 가중치
+            let wei = 4;
 
+            // 가중치를 더해도 월이 동일하다면 가중치 7을 더해줌.
+            if (selectedDay.date + 28 <= lastDay && selectedDay.date <= 5) {
+                console.log("가중치를 5로 만듭니다");
+                wei = 5;
+            }
+
+            const tmp = findRegularDate(7*wei);
+            const yearT = tmp.getFullYear().toString();
+            const monthT = (tmp.getMonth() + 1) < 10 ? "0" + (tmp.getMonth() + 1).toString() : (tmp.getMonth() + 1).toString();
+            const dateT = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
+            const dayT = selectedDay.day;
+            console.log(yearT, monthT, dateT);
+            // console.log(`${selectedDay.month}월 ${selectedDay.day + 7*4}일 월간 예약을 진행합니다`);
+            onMonthRegularHandler();
+        }
         // // 예약된 시간이 겹치지 않는것을 확인했다면
         // const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
         // isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
     }
 
-    const a = (year, month, date) => {
+    const overLapHandler = (year, month, date) => {
         alert(`다른 날짜에 중복된 시간이 존재합니다. 예약을 취소합니다 ${year} ${month} ${date}`);
         // window.location.replace('/regularreservation');
+    }
+
+    const onMonthRegularHandler = () => {
+        console.log("월간 정기예약");
     }
 
     const onWeekRegularHandler = async (day) => {
@@ -290,7 +354,7 @@ export default function RegularReservations() {
         console.log(`${startTime}시 부터, ${endTime}시 까지`);
         await reservationOverlapHandler(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime)
             .then((res) => {
-                res ? a(yearT, monthT, dateT) : makeReservation(yearT, monthT, dateT, dayT, startTime, endTime);
+                res ? overLapHandler(yearT, monthT, dateT) : makeReservation(yearT, monthT, dateT, dayT, startTime, endTime);
             })
         // console.log(`${yearT}년 ${monthT}월 ${dateT}일 중복여부: ${overlap}`);
         // await makeReservation(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime);

@@ -104,23 +104,23 @@ const timeReducer = (state, action) => {
 const marks = [
     {
         reservedCount: 3,
-        reservedDate: "15-04-2023"
+        reservedDate: "15-05-2023"
     },
     {
         reservedCount: 2,
-        reservedDate: "11-04-2023"
+        reservedDate: "11-05-2023"
     },
     {
         reservedCount: 1,
-        reservedDate: "12-04-2023"
+        reservedDate: "12-05-2023"
     },
     {
         reservedCount: 3,
-        reservedDate: "01-04-2023"
+        reservedDate: "01-05-2023"
     },
     {
         reservedCount: 3,
-        reservedDate: "25-04-2023"
+        reservedDate: "25-05-2023"
     },
     {
         reservedCount: 4,
@@ -139,6 +139,7 @@ export default function Reservation() {
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
 
     const [reservedTime, setReservedTime] = useState([]);
+    const [tmpMarks, setTmpMarks] = useState([]);
     const navigate = useNavigate();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
@@ -166,6 +167,66 @@ export default function Reservation() {
             })
     }, [selectedDay.date])
 
+    // 의존성은 임시로 월별을 클릭했을때 변경되도록 함. -> 달력을 클릭했을때 바뀌는 걸로 수정해야함.
+    useEffect(() => {
+        createMonthReservedCount();
+    }, [selectedDay.month])
+
+
+
+    // 월별 예약건수를 서버에 요청해 만드는 함수.
+    const createMonthReservedCount = async () => {
+        setTmpMarks((state) => []);
+
+        // const currentMonth = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
+        // const todayDay = new Date().getDate();
+        // const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 2, 0).getDate();
+        // console.log(currentMonth);
+        
+        let idx = 2;
+        let ttt = 0;
+        while (idx > 0) {
+            console.log("HIHIHI");
+            const currentMonth = selectedDay.month + ttt < 10 ? "0" + (selectedDay.month + ttt).toString() : (selectedDay.month + ttt).toString();
+            const todayDay = new Date().getDate();
+            const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 1, 0).getDate();
+            for (let day=1; day<=lastMonthDay ; day++) {
+                console.log(selectedDay.year, currentMonth, day)
+                // 서버에 해당 날짜의 예약건수 요청.
+                axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
+                    .then((res) => {
+                        const cntData = {
+                            reservedCount: res.data,
+                            reservedDate: `${day}-${currentMonth}-${selectedDay.year}`
+                        }
+                        setTmpMarks((state) => [...state, cntData])
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+    
+            }
+            idx -= 1
+            ttt += 1
+        }
+        // for (let day=1; day<=30 ; day++) {
+        //     console.log(selectedDay.year, currentMonth, day)
+        //     // 서버에 해당 날짜의 예약건수 요청.
+        //     axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
+        //         .then((res) => {
+        //             const cntData = {
+        //                 reservedCount: res.data,
+        //                 reservedDate: `${day}-${currentMonth}-${selectedDay.year}`
+        //             }
+        //             setTmpMarks((state) => [...state, cntData])
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         })
+
+        // }
+    }
+
     // 날짜가 선택되었을때 실행되는 함수
     const onCalendarHandler = (e) => {
         dayDispatch({
@@ -191,17 +252,27 @@ export default function Reservation() {
 
      // 예약 건수에 따라 필요한 배경색상을 반환해줌.
      const reservedStatus = ({date, view}) => {
-
         // 3건 이상일때 색상 칠하기
-        if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
+        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
+        //     return "heavy_reservation";
+        // }
+
+
+        // // 1~3건 사이일때의 색상 칠하기
+        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
+        //     return "middle_reservation";
+        // }
+
+        if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
             return "heavy_reservation";
         }
 
 
         // 1~3건 사이일때의 색상 칠하기
-        if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
+        if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
             return "middle_reservation";
         }
+
     }
 
     // 사용자가 선택한 시간이 미리 예약된 시간과 겹치는 경우를 다루는 함수
@@ -232,10 +303,13 @@ export default function Reservation() {
             return true
         }
 
-        // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
-        if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
+        // 오늘을 기준으로 1개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용) // 2개월 뒤로할려면  new Date().getMonth() + 1
+        if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth())).format('MM-DD')) {
             return true
         }
+        // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
+        //     return true
+        // }
     }
 
     const makeReservation = (year, month, date, day, startTime, endTime) => {
@@ -261,6 +335,7 @@ export default function Reservation() {
                 navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
             })
             .catch((err) => {
+                console.log("ERRR");
                 alert(`${err.response.data.message}`);
             })
         onReservedStatusHandler();
