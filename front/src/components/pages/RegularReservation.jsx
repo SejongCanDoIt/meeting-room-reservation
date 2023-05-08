@@ -198,10 +198,10 @@ export default function RegularReservations() {
     }, [selectedDay.date])
 
     // 의존성은 임시로 월별을 클릭했을때 변경되도록 함. -> 달력을 클릭했을때 바뀌는 걸로 수정해야함.
-    useEffect(() => {
-        console.log("카운트 불러오기");
-        createMonthReservedCount();
-    }, [selectedDay.month])
+    // useEffect(() => {
+    //     // console.log("카운트 불러오기");
+    //     createMonthReservedCount();
+    // }, [selectedDay.month])
 
 
     // 월별 예약건수를 서버에 요청해 만드는 함수.
@@ -280,7 +280,7 @@ export default function RegularReservations() {
 
     const reservationOverlapHandler = async (year, month, date, day, startTime, endTime) => {
         // 기존 예약시간 리스트를 예약된 시간으로 나눠서 새로운 배열 반환. -> 해당 배열에 1이 하나라도 있다면 초기화
-        console.log(`${year}년 ${month}월 ${date}일 예약을 진행합니다`);
+        // console.log(`${year}년 ${month}월 ${date}일 예약을 진행합니다`);
         return new Promise((resolve, reject) => {
             axios.get('/reserve/today-time-check', {params: {year: year, month: month, day: date}})
             .then(async (res) => {
@@ -302,32 +302,22 @@ export default function RegularReservations() {
             }
         }
         else if (regularInfo.dayWeekMonth === "month") {
-            // console.log(new Date(selectedDay.year, selectedDay.month, 0).getDate());
-            // console.log(new Date(selectedDay.year, selectedDay.month, 0));
-            
-            // 해당 월의 가장 끝
-            const lastDay = new Date(selectedDay.year, selectedDay.month, 0).getDate();
-            // 기본 가중치
-            let wei = 4;
+            let yearR = selectedDay.year;
+            let monthR = selectedDay.month;
+            let dateR = selectedDay.date;
+            let dayR = selectedDay.day;
 
-            // 가중치를 더해도 월이 동일하다면 가중치 7을 더해줌.
-            if (selectedDay.date + 28 <= lastDay && selectedDay.date <= 5) {
-                console.log("가중치를 5로 만듭니다");
-                wei = 5;
+            const selecDay = translateIntToString(yearR, monthR, dateR, dayR);
+
+            makeReservation(selecDay.year, selecDay.month, selecDay.date, dayR, selecDay.startTime, selecDay.endTime);
+            for (let cnt=0 ; cnt < regularInfo.count; cnt++) {
+                const nextRegular = onMonthRegularHandler(yearR, monthR, dateR, dayR);
+                yearR = nextRegular.yearR;
+                monthR = nextRegular.monthR;
+                dateR = nextRegular.dateR;
+                dayR = nextRegular.dayR;
             }
-
-            const tmp = findRegularDate(7*wei);
-            const yearT = tmp.getFullYear().toString();
-            const monthT = (tmp.getMonth() + 1) < 10 ? "0" + (tmp.getMonth() + 1).toString() : (tmp.getMonth() + 1).toString();
-            const dateT = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
-            const dayT = selectedDay.day;
-            console.log(yearT, monthT, dateT);
-            // console.log(`${selectedDay.month}월 ${selectedDay.day + 7*4}일 월간 예약을 진행합니다`);
-            onMonthRegularHandler();
         }
-        // // 예약된 시간이 겹치지 않는것을 확인했다면
-        // const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
-        // isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
     }
 
     const overLapHandler = (year, month, date) => {
@@ -335,13 +325,45 @@ export default function RegularReservations() {
         // window.location.replace('/regularreservation');
     }
 
-    const onMonthRegularHandler = () => {
-        console.log("월간 정기예약");
+    const onMonthRegularHandler = (yearR, monthR, dateR, dayR) => {
+        // console.log("월간 정기예약");
+        // console.log(new Date(selectedDay.year, selectedDay.month, 0).getDate());
+        // console.log(new Date(selectedDay.year, selectedDay.month, 0));
+            
+        // 해당 월의 가장 끝
+        const lastDay = new Date(yearR, monthR, 0).getDate();
+        // 기본 가중치
+        let wei = 4;
+
+        // 가중치를 더해도 월이 동일하다면 가중치 7을 더해줌.
+        if (dateR + 28 <= lastDay && dateR <= 5) {
+            // console.log("가중치를 5로 만듭니다");
+            wei = 5;
+        }
+
+        const tmp = findMonthRegularDate(7*wei, yearR, monthR, dateR, dayR);
+        const yearString = tmp.getFullYear().toString();
+        const monthString = (tmp.getMonth() + 1) < 10 ? "0" + (tmp.getMonth() + 1).toString() : (tmp.getMonth() + 1).toString();
+        const dateString = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
+        const dayString = dayR;
+        const startTimeR = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const endTimeR = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+        
+        // console.log(`${yearR}년 ${monthR}월 ${dateR}일 정기 예약 진행`);
+
+        makeReservation(yearString, monthString, dateString, dayString, startTimeR, endTimeR);
+
+        return {
+            yearR: tmp.getFullYear(),
+            monthR: tmp.getMonth() + 1,
+            dateR: tmp.getDate(),
+            dayR: dayR,
+        }
     }
 
     const onWeekRegularHandler = async (day) => {
         // 정기 날짜를 받아와서
-        const tmp = findRegularDate(day);
+        const tmp = findWeekRegularDate(day);
 
         // 서버에 알맞은 형태로 넘기기 위해 변환하는 작업을 거친다.
         const yearT = tmp.getFullYear().toString();
@@ -360,14 +382,32 @@ export default function RegularReservations() {
         // await makeReservation(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime);
     }
 
-    // 7이 더해져서 자동으로 날짜가 계산되어 반환해주는 함수.
-    const findRegularDate = (addDay) => {
+    // [월] 자동으로 날짜가 계산되어 반환해주는 함수.
+    const findMonthRegularDate = (addDay, yearR, monthR, dateR, dayR) => {
+        const year = yearR.toString();
+        const month = monthR < 10 ? "0" + monthR.toString() : monthR.toString();
+        const date = (dateR + addDay) < 10 ? "0" + (dateR + addDay).toString() : (dateR + addDay).toString();
+        return new Date(year, month-1, date);
+    }
+
+    // [주] 자동으로 날짜가 계산되어 반환해주는 함수.
+    const findWeekRegularDate = (addDay) => {
         const year = selectedDay.year.toString();
         const month = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
         const date = (selectedDay.date + addDay) < 10 ? "0" + (selectedDay.date + addDay).toString() : (selectedDay.date + addDay).toString();
 
-
         return new Date(year, month-1, date);
+    }
+
+    // 정수형으로 표현된 날짜를 문자로 바꿔줌
+    const translateIntToString = (yearR, monthR, dateR) => {
+        const year = yearR.toString();
+        const month = monthR < 10 ? "0" + monthR.toString() : monthR.toString();
+        const date = dateR < 10 ? "0" + dateR.toString() : dateR.toString();
+        const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+
+        return {year,  month, date, startTime, endTime}
     }
 
 
@@ -379,9 +419,13 @@ export default function RegularReservations() {
         }
 
         // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
-        if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 2, new Date().getDate())).format('MM-DD')) {
+        if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format('MM-DD')) {
             return true
         }
+        // // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
+        // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 2, new Date().getDate())).format('MM-DD')) {
+        //     return true
+        // }
     }
 
     const makeReservation = (year, month, date, day, startTime, endTime) => {
@@ -389,7 +433,7 @@ export default function RegularReservations() {
         const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
         const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
         
-        // console.log(`${year}-${month}-${date} 예약 완료`);
+        console.log(`${year}-${month}-${date} 예약 완료`);
 
         // console.log(reservationFromInfo);
         // console.log(reservationToInfo);
@@ -417,20 +461,8 @@ export default function RegularReservations() {
             .catch((err) => {
                 alert(`${err.response.data.message}`);
             })
-        onReservedStatusHandler();
+        // onReservedStatusHandler();
     }
-
-    // const makeWeekReservation = () => {
-    //     axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
-    //         .then((res) => {
-    //             console.log(res);
-    //             alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-    //             navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
-    //         })
-    //         .catch((err) => {
-    //             alert(`${err.response.data.message}`);
-    //         })
-    // }
 
     // 선택된 날짜의 예약 리스트를 반환하는 함수
     const onReservedStatusHandler = () => {

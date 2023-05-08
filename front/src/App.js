@@ -28,7 +28,6 @@ function App() {
         </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
-          
           <Route path="/RoomListPage" element={<RoomListPage />}></Route>
           <Route path="/RoomInformationPage" element={<RoomInformationPage />}></Route>
           <Route path="/ChangePasswordPage" element={<ChangePasswordPage />}></Route>
