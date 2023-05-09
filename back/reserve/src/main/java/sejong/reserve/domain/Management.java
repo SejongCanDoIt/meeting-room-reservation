@@ -1,6 +1,7 @@
 package sejong.reserve.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.RoomRepository;
 
@@ -13,22 +14,34 @@ public class Management {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // 예약 가능 횟수
+    @ColumnDefault("3")
     private int univ_cnt; // 대학생
+    @ColumnDefault("5")
     private int post_cnt; // 대학원생
-    private int office_cnt; // 교수
+    @ColumnDefault("10")
+    private int office_cnt; // 사무실
+    @ColumnDefault("10")
     private int pro_cnt; // 교수
 
     // 예약 시간 간격
-    private int univ_time_gap; // 대학생
-    private int post_time_gap; // 대학원생
-    private int office_time_gap; // 대학원생
-    private int pro_time_gap; // 교수
+    @ColumnDefault("2")
+    private int univ_hour_gap; // 대학생
+    @ColumnDefault("3")
+    private int post_hour_gap; // 대학원생
+    @ColumnDefault("6")
+    private int office_hour_gap; // 사무실
+    @ColumnDefault("6")
+    private int pro_hour_gap; // 교수
 
-    // 정기예약 가능 시간 간격 기준: 월
-    private int univ_regular_gap; // 대학생
-    private int post_regular_gap; // 대학원생
-    private int office_regular_gap; // 대학원생
-    private int pro_regular_gap; // 교수
+    // 예약 가능 시간 간격 기준: 주
+    @ColumnDefault("1")
+    private int univ_week_gap; // 대학생
+    @ColumnDefault("2")
+    private int post_week_gap; // 대학원생
+    @ColumnDefault("12") // (3 month)
+    private int office_week_gap; // 사무실
+    @ColumnDefault("12") // (3 month)
+    private int pro_week_gap; // 교수
 
     //==생성 메서드==//
     public static Management createManagement(Management managementInfo) {
@@ -43,13 +56,13 @@ public class Management {
         management.setUniv_cnt(managementInfo.getUniv_cnt());
         management.setPost_cnt(managementInfo.getPost_cnt());
         management.setPro_cnt(managementInfo.getPro_cnt());
-        management.setUniv_time_gap(managementInfo.getUniv_time_gap());
-        management.setPost_time_gap(managementInfo.getPost_time_gap());
-        management.setOffice_time_gap(managementInfo.getOffice_time_gap());
-        management.setPro_time_gap(managementInfo.getPro_time_gap());
-        management.setUniv_regular_gap(managementInfo.getUniv_regular_gap());
-        management.setPost_regular_gap(managementInfo.getPost_regular_gap());
-        management.setOffice_regular_gap(managementInfo.getOffice_regular_gap());
-        management.setPro_regular_gap(managementInfo.getPro_regular_gap());
+        management.setUniv_hour_gap(managementInfo.getUniv_hour_gap());
+        management.setPost_hour_gap(managementInfo.getPost_hour_gap());
+        management.setOffice_hour_gap(managementInfo.getOffice_hour_gap());
+        management.setPro_hour_gap(managementInfo.getPro_hour_gap());
+        management.setUniv_week_gap(managementInfo.getUniv_week_gap());
+        management.setPost_week_gap(managementInfo.getPost_week_gap());
+        management.setOffice_week_gap(managementInfo.getOffice_week_gap());
+        management.setPro_week_gap(managementInfo.getPro_week_gap());
     }
 }

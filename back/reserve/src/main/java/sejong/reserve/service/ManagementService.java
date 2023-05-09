@@ -40,19 +40,19 @@ public class ManagementService{
     @Transactional
     public void updateTimeGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
         Management management = managementRepository.findOne();
-        management.setUniv_time_gap(univ_gap);
-        management.setPost_time_gap(post_gap);
-        management.setOffice_time_gap(office_gap);
-        management.setPro_time_gap(pro_gap);
+        management.setUniv_hour_gap(univ_gap);
+        management.setPost_hour_gap(post_gap);
+        management.setOffice_hour_gap(office_gap);
+        management.setPro_hour_gap(pro_gap);
     }
 
     @Transactional
-    public void updateRegularGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
+    public void updatePossibleGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
         Management management = managementRepository.findOne();
-        management.setUniv_regular_gap(univ_gap);
-        management.setPost_regular_gap(post_gap);
-        management.setOffice_regular_gap(office_gap);
-        management.setPro_regular_gap(pro_gap);
+        management.setUniv_week_gap(univ_gap);
+        management.setPost_week_gap(post_gap);
+        management.setOffice_week_gap(office_gap);
+        management.setPro_week_gap(pro_gap);
     }
 
     public int getUnivCnt() {return managementRepository.getUnivCnt();}
@@ -61,19 +61,19 @@ public class ManagementService{
 
     public int getProCnt() {return managementRepository.getProCnt();}
 
-    public int getUnivTimeGap() {return managementRepository.getUnivTimeGap();}
+    public int getUnivHourGap() {return managementRepository.getUnivHourGap();}
 
-    public int getPostTimeGap() {return managementRepository.getPostTimeGap();}
+    public int getPostHourGap() {return managementRepository.getPostHourGap();}
 
-    public int getOfficeTimeGap() {return managementRepository.getOfficeTimeGap();}
-    public int getProTimeGap() {return managementRepository.getProTimeGap();}
+    public int getOfficeHourGap() {return managementRepository.getOfficeHourGap();}
+    public int getProHourGap() {return managementRepository.getProHourGap();}
 
-    public int getUnivRegularGap() {return managementRepository.getUnivRegularGap();}
+    public int getUnivWeekGap() {return managementRepository.getUnivWeekGap();}
 
-    public int getPostRegularGap() {return managementRepository.getPostRegularGap();}
+    public int getPostWeekGap() {return managementRepository.getPostWeekGap();}
 
-    public int getOfficeRegularGap() {return managementRepository.getOfficeRegularGap();}
-    public int getProRegularGap() {return managementRepository.getProRegularGap();}
+    public int getOfficeWeekGap() {return managementRepository.getOfficeWeekGap();}
+    public int getProWeekGap() {return managementRepository.getProWeekGap();}
 
     @Transactional
     public void resetCntAll() {

@@ -4,12 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import sejong.reserve.domain.Management;
-import sejong.reserve.domain.Room;
-import sejong.reserve.service.ManagementService;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -42,32 +38,32 @@ public class ManagementRepository {
     }
 
 
-    public int getUnivTimeGap() {
-        return (int) em.createQuery("select m.univ_time_gap from Management m").getSingleResult();
+    public int getUnivHourGap() {
+        return (int) em.createQuery("select m.univ_hour_gap from Management m").getSingleResult();
     }
-    public int getPostTimeGap() {
-        return (int) em.createQuery("select m.post_time_gap from Management m").getSingleResult();
-    }
-
-    public int getOfficeTimeGap() {
-        return (int) em.createQuery("select m.office_time_gap from Management m").getSingleResult();
-    }
-    public int getProTimeGap() {
-        return (int) em.createQuery("select m.pro_time_gap from Management m").getSingleResult();
+    public int getPostHourGap() {
+        return (int) em.createQuery("select m.post_hour_gap from Management m").getSingleResult();
     }
 
-    public int getUnivRegularGap() {
-        return (int) em.createQuery("select m.univ_regular_gap from Management m").getSingleResult();
+    public int getOfficeHourGap() {
+        return (int) em.createQuery("select m.office_hour_gap from Management m").getSingleResult();
     }
-    public int getPostRegularGap() {
-        return (int) em.createQuery("select m.post_regular_gap from Management m").getSingleResult();
+    public int getProHourGap() {
+        return (int) em.createQuery("select m.pro_hour_gap from Management m").getSingleResult();
     }
 
-    public int getOfficeRegularGap() {
-        return (int) em.createQuery("select m.office_regular_gap from Management m").getSingleResult();
+    public int getUnivWeekGap() {
+        return (int) em.createQuery("select m.univ_week_gap from Management m").getSingleResult();
     }
-    public int getProRegularGap() {
-        return (int) em.createQuery("select m.pro_regular_gap from Management m").getSingleResult();
+    public int getPostWeekGap() {
+        return (int) em.createQuery("select m.post_week_gap from Management m").getSingleResult();
+    }
+
+    public int getOfficeWeekGap() {
+        return (int) em.createQuery("select m.office_week_gap from Management m").getSingleResult();
+    }
+    public int getProWeekGap() {
+        return (int) em.createQuery("select m.pro_week_gap from Management m").getSingleResult();
     }
 
 }

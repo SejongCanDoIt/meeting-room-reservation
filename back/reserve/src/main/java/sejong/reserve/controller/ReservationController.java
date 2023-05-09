@@ -2,7 +2,6 @@ package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,15 +48,14 @@ public class ReservationController {
         LocalDateTime start = reservationDto.getStart();
         LocalDateTime end = reservationDto.getEnd();
         AuthState authority = loginMember.getAuthority();
-        Boolean regular = reservationDto.getRegular();
 
         // 정기 및 일반 예약에 대한 달이 적합한지?
-        checkNormalAndRegularCheck(start, authority, regular);
+        checkStateLimitation(start, authority);
         // 예약할 날짜가 오늘보다 이전 날짜인지?
         checkPastDate(start);
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
         checkDuplicateReservation(start, end);
-        // 예약 시간 gap이 권한에 적합한지?
+        // 예약 시간 gap 이 권한에 적합한지?
         checkTimeGap(start, end, authority);
 
         // 예약 저장
@@ -73,34 +71,25 @@ public class ReservationController {
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
     }
 
-    private void checkNormalAndRegularCheck(LocalDateTime start, AuthState authority, Boolean regular) {
-        Month todayMonth = LocalDateTime.now().getMonth();
-        Month reservationMonth = start.getMonth();
-        int regularGapMonth = 0;
-        if(regular) {
-            // 정기예약일경우
-            switch (authority) {
-                case UNI_STUDENT:
-                    regularGapMonth = managementService.getUnivRegularGap();
-                    break;
-                case POST_STUDENT:
-                    regularGapMonth = managementService.getPostRegularGap();
-                    break;
-                case OFFICE:
-                    regularGapMonth = managementService.getOfficeRegularGap();
-                    break;
-                case PROFESSOR:
-                    regularGapMonth = managementService.getProRegularGap();
-                    break;
-            }
-            if(todayMonth.getValue() + regularGapMonth < reservationMonth.getValue()) {
-                throw new NotAvailableReservedException("권한에 부여된 정기예약 가능 달이 아닙니다.");
-            }
-        } else {
-            // 일반 예약일경우
-            if(reservationMonth != todayMonth) {
-                throw new NotAvailableReservedException("일반 예약은 이번달 예약만 가능합니다.");
-            }
+    private void checkStateLimitation(LocalDateTime start, AuthState authority) {
+        LocalDateTime now = LocalDateTime.now();
+        int possibleGap = 0;
+        switch (authority) {
+            case UNI_STUDENT:
+                possibleGap = managementService.getUnivWeekGap();
+                break;
+            case POST_STUDENT:
+                possibleGap = managementService.getPostWeekGap();
+                break;
+            case OFFICE:
+                possibleGap = managementService.getOfficeWeekGap();
+                break;
+            case PROFESSOR:
+                possibleGap = managementService.getProWeekGap();
+                break;
+        }
+        if(now.plusWeeks(possibleGap).isBefore(start)) {
+                throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");
         }
     }
 
@@ -123,16 +112,16 @@ public class ReservationController {
         int authGap = 0;
         switch (authority) {
             case UNI_STUDENT:
-                authGap = managementService.getUnivTimeGap();
+                authGap = managementService.getUnivHourGap();
                 break;
             case POST_STUDENT:
-                authGap = managementService.getPostTimeGap();
+                authGap = managementService.getPostHourGap();
                 break;
             case PROFESSOR:
-                authGap = managementService.getProTimeGap();
+                authGap = managementService.getProHourGap();
                 break;
             case OFFICE:
-                authGap = managementService.getOfficeTimeGap();
+                authGap = managementService.getOfficeHourGap();
                 break;
         }
         if(authGap < requestGap) {
