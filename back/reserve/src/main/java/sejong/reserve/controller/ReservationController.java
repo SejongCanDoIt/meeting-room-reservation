@@ -44,8 +44,7 @@ public class ReservationController {
         }
         log.info("loginMember = {}", loginMember);
 
-        // remove Cnt
-        memberService.removeCnt(loginMember.getId());
+
 
         LocalDateTime start = reservationDto.getStart();
         LocalDateTime end = reservationDto.getEnd();
@@ -68,6 +67,8 @@ public class ReservationController {
         log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
 
+        // remove Cnt
+        memberService.removeCnt(loginMember.getId());
 
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
     }
@@ -113,7 +114,7 @@ public class ReservationController {
         LocalDateTime todayDate = LocalDateTime.now();
         log.info("오늘 날짜 = {}", todayDate);
         if(start.isBefore(todayDate)) {
-            throw new NotAvailableReservedException("오늘 보다 이전 날짜에 예약은 불가능합니다.");
+            throw new NotAvailableReservedException("현재 보다 이전 시간 예약은 불가능합니다.");
         }
     }
 
