@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    /* 가로 스크롤 제거 */
+    overflow-y: hidden;
+    /* 세로 스크롤 제거 */
+}
+
+.meeting-room-management {
+    max-width: 100%;
+    padding-left: 200px;
+    /* 사이드바 너비와 패딩만큼 여백 추가 */
+    padding-top: 7vh;
+    /* 탑바 높이와 패딩만큼 여백 추가 */
+}
+
+.meeting-room-container {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header button {
+    background-color: #A1203C;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.header button:hover {
+    background-color: #8a1c33;
+    /* 마우스 오버 시 배경색 변경 */
+}
+
+.room-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 40px;
+    column-gap: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 10vh - 8vh - 20px);
+    padding-right: 10px;
+}
+
+.room-list a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.room-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 48%;
+    /* 추가 */
+}
+
+.room-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}

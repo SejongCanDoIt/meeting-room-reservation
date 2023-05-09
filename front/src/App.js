@@ -18,6 +18,12 @@ import Regularreservations from "./components/pages/RegularReservation";
 import ShowReservation from "./components/pages/ShowReservation";
 import Logout from './components/pages/Logout';
 import styled from 'styled-components';
+import AdminMemberManagePage from './components/pages/AdminMemberManagePage';
+import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
+import AdminSettingPage from './components/pages/AdminSettingPage';
+import AdminReservManagePage from './components/pages/AdminReservManagePage';
+import AdminRoomInfoPage from './components/pages/AdminRoomInfoPage';
+import AdminRoomModifyPage from './components/pages/AdminRoomModifyPage';
 
 function App() {
   return (
@@ -45,6 +51,12 @@ function App() {
           <Route path="/show" element={<ShowReservation />}></Route>
           <Route path="/reservation" element={<Reservation />}></Route>
           <Route path="/regularReservation" element={<Regularreservations />}></Route>
+          <Route path="/AdminMemberManagePage" element={<AdminMemberManagePage />}></Route>
+          <Route path="/AdminRoomManagePage" element={<AdminRoomManagePage />}></Route>
+          <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>
+          <Route path="/AdminReservManagePage" element={<AdminReservManagePage />}></Route>
+          <Route path="/AdminRoomInfoPage" element={<AdminRoomInfoPage />}></Route>
+          <Route path="/AdminRoomModifyPage" element={<AdminRoomModifyPage />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

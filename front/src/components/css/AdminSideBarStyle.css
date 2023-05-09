@@ -7,6 +7,16 @@
 .sidebar {
     width: 200px;
     background-color: #f1f1f1;
+    position: fixed; /* 추가 */
+    top: 10vh; /* 추가 */
+    left: 0; /* 추가 */
+    bottom: 0; /* 추가 */
+    z-index: 1000; /* 추가 */
+}
+
+.sidebar a {
+    text-decoration: none; /* 링크에 밑줄 제거 */
+    color: inherit; /* 링크 색상을 부모 요소의 색상과 동일하게 설정 */
 }
 
 .sidebar ul {
@@ -32,36 +42,32 @@
     cursor: pointer;
 }
 
-.menu-item.active,
-.submenu-item.active {
-    color: #A1203C;
+.menu-item:hover,
+.submenu-item:hover {
+    color: #A1203C; /* 마우스 오버 시 색상 변경 */
 }
 
 .submenu {
     display: none;
 }
 
-.arrow {
+.menu-item.reservation::after {
+    content: '';
     display: inline-block;
-    margin-left: 5px;
-    width: 0;
-    height: 0;
-    border-style: solid;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.3s;
 }
 
-.arrow.up {
-    border-width: 0 4px 4px 4px;
-    border-color: transparent transparent currentColor transparent;
-    width: 6px;
-    height: 6px;
+.menu-item.reservation.active::after {
+    transform: rotate(135deg);
 }
 
-.arrow.down {
-    border-width: 4px 4px 0 4px;
-    border-color: currentColor transparent transparent transparent;
-    width: 6px;
-    height: 6px;
-}
 
 .menu-item.reservation.active+.submenu {
     display: block;

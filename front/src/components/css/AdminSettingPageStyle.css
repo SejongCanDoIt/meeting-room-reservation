@@ -1,0 +1,59 @@
+.settings-management {
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+}
+
+.settings-management-container {
+    background-color: white;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-settings-button {
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.edit-settings-button:hover {
+    background-color: #8B1B34;
+}
+
+.settings-list {
+    margin-top: 20px;
+}
+
+.settings-list-header,
+.settings-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.settings-list-header {
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.settings-row {
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.settings-row:last-child {
+    border-bottom: none;
+}
