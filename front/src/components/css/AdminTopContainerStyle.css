@@ -4,6 +4,12 @@
     align-items: center;
     height: 10vh;
     border-bottom: 1px solid black;
+    position: fixed; /* 추가 */
+    top: 0; /* 추가 */
+    left: 0; /* 추가 */
+    right: 0; /* 추가 */
+    background-color: white; /* 추가 */
+    z-index: 1000; /* 추가 */
 }
 
 #logo {

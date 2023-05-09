@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import "../css/AdminSideBarStyle.css";
 
 const AdminSideBar = () => {
@@ -18,9 +19,9 @@ const AdminSideBar = () => {
             <ul>
                 <li
                     className={`menu-item ${activeMenu === "membership" ? "active" : ""}`}
-                    onClick={() => handleMenuClick("membership")}
+                    onClick={() => handleMenuClick("AdminMemberManagePage")}
                 >
-                    회원관리
+                    <Link to="/AdminMemberManagePage">회원 관리</Link>
                 </li>
                 <li
                     className={`menu-item reservation ${reservationSubmenu ? "active" : ""
@@ -28,7 +29,6 @@ const AdminSideBar = () => {
                     onClick={() => handleMenuClick("reservation")}
                 >
                     예약
-                    <span className={`arrow ${reservationSubmenu ? "up" : "down"}`} />
                 </li>
                 {reservationSubmenu && (
                     <ul className="submenu">
@@ -44,23 +44,23 @@ const AdminSideBar = () => {
                                 }`}
                             onClick={() => setActiveMenu("reservation-management")}
                         >
-                            예약 관리
+                            <Link to="/AdminReservManagePage">예약 관리</Link>
                         </li>
                     </ul>
                 )}
                 <li
                     className={`menu-item ${activeMenu === "meeting-room" ? "active" : ""
                         }`}
-                    onClick={() => handleMenuClick("meeting-room")}
+                    onClick={() => handleMenuClick("AdminRoomManagePage")}
                 >
-                    회의실 관리
+                    <Link to="/AdminRoomManagePage">회의실 관리</Link>
                 </li>
                 <li
                     className={`menu-item ${activeMenu === "detailed-settings" ? "active" : ""
                         }`}
                     onClick={() => handleMenuClick("detailed-settings")}
                 >
-                    세부 설정
+                    <Link to="/AdminSettingPage">세부 설정</Link>
                 </li>
             </ul>
         </div>
