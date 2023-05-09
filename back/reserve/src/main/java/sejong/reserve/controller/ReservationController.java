@@ -93,12 +93,18 @@ public class ReservationController {
                 break;
         }
 
-        LocalDateTime endOfPossibleSunday = now.plusWeeks(possibleGap+1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay().minusDays(1);
-        if(endOfPossibleSunday.isBefore(start)) {
-            log.info("예약 가능한 마지막 = {}", endOfPossibleSunday);
+        if(now.plusWeeks(possibleGap).isBefore(start)) {
+            log.info("예약 가능한 마지막 날= {}", now.plusWeeks(possibleGap));
             log.info("예약 요청한 날 = {}", start);
             throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");
         }
+
+//        LocalDateTime endOfPossibleSunday = now.plusWeeks(possibleGap+1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay().minusDays(1);
+//        if(endOfPossibleSunday.isBefore(start)) {
+//            log.info("예약 가능한 마지막 = {}", endOfPossibleSunday);
+//            log.info("예약 요청한 날 = {}", start);
+//            throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");
+//        }
     }
 
     private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end) {
