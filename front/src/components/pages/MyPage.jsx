@@ -16,6 +16,8 @@ import { useState } from "react";
 export default function MyPage() {
     const [serchParams, setSearchParams] = useSearchParams();
     const [loginId, setLoginId] = useState("");
+    const [reserveList, setReserveList] = useState([]);
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"];
     const navigate = useNavigate();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
@@ -31,6 +33,7 @@ export default function MyPage() {
                 navigate('/loginPage')
             })
     }, []);
+
     return (
         <MainPageContainer>
             <ProfileDiv>

@@ -64,11 +64,6 @@ export default function LoginPage() {
     
     // 로그인 버튼이 눌렸을때 세션에 정보를 저장하고, /myPage로 라우팅
     const onLoginButtonHandler = () => {
-        // console.log(`로그인 아이디: ${login.id} 로그인 비밀번호: ${login.password}`);
-        // alert(`${login.id}님 반갑습니다`);
-        // sessionStorage.setItem('loginID', login.id);
-        // navigate("/myPage");
-        console.log("WORKING");
         const loginInfo = {
             sno: login.id,
             password: login.password,
@@ -76,6 +71,7 @@ export default function LoginPage() {
         axios
         .post("/auth/login", {...loginInfo})
         .then((res) => {
+            sessionStorage.setItem('Authorization', true);
             navigate(`/myPage?id=${login.id}`)
         })
         .catch((err) => {

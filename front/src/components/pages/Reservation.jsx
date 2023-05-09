@@ -387,7 +387,7 @@ export default function Reservation() {
                 <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
                 <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect>
             </ReservedInfoDiv>
-            <button onClick={onBtnClicked}>예약하기</button>
+            <ReserveBtn onClick={onBtnClicked}>예약하기</ReserveBtn>
         </ReservationContainer>
 
     );
@@ -426,5 +426,22 @@ const ReservedInfoDiv = styled.div`
 
     width: 100%;
     max-width: 500px;
+`
+
+const ReserveBtn = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 15px;
+
+    width: 130px;
+    height: 30px;
+    background-color: #0096c7;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px;
 `
 
