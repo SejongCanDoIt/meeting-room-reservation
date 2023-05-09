@@ -19,8 +19,12 @@ import sejong.reserve.web.exception.AuthorityException;
 import sejong.reserve.web.exception.NotAvailableReservedException;
 import sejong.reserve.web.exception.NotLoginException;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,8 +92,12 @@ public class ReservationController {
                 possibleGap = managementService.getProWeekGap();
                 break;
         }
-        if(now.plusWeeks(possibleGap).isBefore(start)) {
-                throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");
+
+        LocalDateTime endOfPossibleSunday = now.plusWeeks(possibleGap+1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toLocalDate().atStartOfDay().minusDays(1);
+        if(endOfPossibleSunday.isBefore(start)) {
+            log.info("예약 가능한 마지막 = {}", endOfPossibleSunday);
+            log.info("예약 요청한 날 = {}", start);
+            throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");
         }
     }
 
