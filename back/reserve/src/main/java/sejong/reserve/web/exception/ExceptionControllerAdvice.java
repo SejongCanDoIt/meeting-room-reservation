@@ -50,12 +50,12 @@ public class ExceptionControllerAdvice {
     }
 
 
-    @ExceptionHandler(value = {NullPointerException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException e) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Parameter cannot be null");
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(value = {NullPointerException.class})
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException e) {
+//        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Parameter cannot be null");
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(value = {NotAvailableReservedException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
