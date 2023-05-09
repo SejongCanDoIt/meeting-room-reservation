@@ -1,0 +1,53 @@
+.member-management {
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+}
+
+.member-management-container {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-member-button {
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-member-button:hover {
+    background-color: #8B1B34;
+}
+
+.member-list {
+    overflow-y: auto;
+    max-height: calc(100vh - 10vh - 8vh - 20px);
+}
+
+.member-list-header,
+.member-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1.5fr 2fr 1fr;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 6vh;
+}
+
+.member-list-header span {
+    font-weight: bold;
+}
+
+.delete-icon {
+    cursor: pointer;
+}
