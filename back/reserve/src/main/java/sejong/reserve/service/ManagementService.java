@@ -38,7 +38,7 @@ public class ManagementService{
     }
 
     @Transactional
-    public void updateTimeGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
+    public void updateHourGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
         Management management = managementRepository.findOne();
         management.setUniv_hour_gap(univ_gap);
         management.setPost_hour_gap(post_gap);
@@ -47,7 +47,7 @@ public class ManagementService{
     }
 
     @Transactional
-    public void updatePossibleGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
+    public void updateWeekGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
         Management management = managementRepository.findOne();
         management.setUniv_week_gap(univ_gap);
         management.setPost_week_gap(post_gap);

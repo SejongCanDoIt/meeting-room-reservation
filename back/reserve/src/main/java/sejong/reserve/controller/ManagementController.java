@@ -20,12 +20,12 @@ public class ManagementController {
 
     @PutMapping("update-hour-gap")
     public void updateHourGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int office_gap, @RequestParam int pro_gap) {
-        managementService.updateTimeGap(univ_gap, post_gap, office_gap, pro_gap);
+        managementService.updateHourGap(univ_gap, post_gap, office_gap, pro_gap);
     }
 
     @PutMapping("update-week-gap")
     public void updateWeekGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int office_gap, @RequestParam int pro_gap) {
-        managementService.updatePossibleGap(univ_gap, post_gap, office_gap, pro_gap);
+        managementService.updateWeekGap(univ_gap, post_gap, office_gap, pro_gap);
     }
 
     @GetMapping("univ-cnt")
