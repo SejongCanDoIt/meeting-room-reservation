@@ -10,12 +10,14 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function MyPage() {
     const [serchParams, setSearchParams] = useSearchParams();
     const [loginId, setLoginId] = useState("");
+    const [reserveList, setReserveList] = useState([]);
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"];
     const navigate = useNavigate();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
@@ -31,11 +33,12 @@ export default function MyPage() {
                 navigate('/loginPage')
             })
     }, []);
+
     return (
         <MainPageContainer>
             <ProfileDiv>
                 <UserIcon src={user} alt="" />
-                <Dhdsh>안녕하세요 {loginId}님 <EditIcon src={edit} alt="" /></Dhdsh>
+                <Dhdsh>안녕하세요 {loginId}님 <LinkTag to="/ChangePasswordPage"><EditIcon src={edit} alt="" /></LinkTag></Dhdsh>
             </ProfileDiv>
             <MenuContainer>
                 <ReservationInfo subTitle={"오늘의 예약"} info={"835호 13:30 ~ 16:30분에 오늘 예약이 있어요"}/>
@@ -54,6 +57,10 @@ const MainPageContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
+`
+const LinkTag = styled(Link)`
+    width: 10%;
+    text-align: right;
 `
 
 const ProfileDiv = styled.div`
@@ -76,7 +83,10 @@ const MenuContainer = styled.div`
     flex: 1;
 `
 
-const Dhdsh = styled.h1`
+const Dhdsh = styled.h2`
+    width: 100%;
+    // font-weight: bold;
+    // font-size: 1.5em;
     display: flex;
     justify-content: center;
     // background-color: gray;
@@ -89,7 +99,7 @@ const UserIcon = styled.img`
 `
 
 const EditIcon = styled.img`
-    width: 10%;
-    max-width: 150px;
+    width: 100%;
+    max-width: 30px;
 `
 

@@ -13,11 +13,14 @@ import StartPage from "./components/pages/StartPage";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
+import PrivateRoute from "./components/pages/PrivateRoute";
 import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
 import ShowReservation from "./components/pages/ShowReservation";
 import Logout from './components/pages/Logout';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
   return (
@@ -41,7 +44,8 @@ function App() {
           <Route path="/mainPage" element={<MainPage />}></Route>
           <Route path="/myPage" element={<MyPage />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
-          <Route path="/show" element={<ShowReservation />}></Route>
+          {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
+          <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
           <Route path="/regularReservation" element={<Regularreservations />}></Route>
         </Routes>
