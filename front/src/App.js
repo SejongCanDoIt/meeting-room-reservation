@@ -13,6 +13,7 @@ import StartPage from "./components/pages/StartPage";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
+import RoomInfo from "./components/pages/RoomInfo";
 import PrivateRoute from "./components/pages/PrivateRoute";
 import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
@@ -48,6 +49,7 @@ function App() {
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
           <Route path="/regularReservation" element={<Regularreservations />}></Route>
+          <Route path="/RoomInfo" element={<RoomInfo />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

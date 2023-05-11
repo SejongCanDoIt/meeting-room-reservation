@@ -32,8 +32,9 @@ const MessageSubTitle = styled.div`
     
     width: 100%;
     color: #838383;
+    font-size: 15px;
     // background-color: gray;
-    height: 35%;
+    height: 25%;
 `
 
 const MessageInfo = styled.div`
@@ -41,10 +42,10 @@ const MessageInfo = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 70%;
+    width: 80%;
 
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     // background-color: red;
 `

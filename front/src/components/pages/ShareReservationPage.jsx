@@ -50,10 +50,13 @@ function ShareReservationPage() {
 
 const ReserveContent = styled.div`
     width: 90%;
+    max-width: 400px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    justify-content: center;
+    padding: 15px;
 
     border-radius: 10px;
     // background-color: gray;
@@ -75,6 +78,7 @@ const ReserveBtn = styled.button`
     border: none;
     border-radius: 30px;
     padding: 15px;
+
 `
 
 export default ShareReservationPage;

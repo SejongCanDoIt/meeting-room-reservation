@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 function Home() {
     return (
         <div>
-            <h3> 임시 홈페이지 </h3>
-            <Link to='/RoomListPage'><button>회의실 리스트 페이지</button></Link>
+            {/* <h3> 임시 홈페이지 </h3> */}
+            {/* <Link to='/RoomListPage'><button>회의실 리스트 페이지</button></Link>
             <Link to='/RoomInformationPage'><button>회의실 정보 페이지</button></Link>
             <Link to='/ChangePasswordPage'><button>비밀번호 변경 페이지</button></Link>
             <Link to='/ChangeCompletePage'><button>비밀번호 변경 완료 페이지</button></Link>
@@ -15,7 +15,7 @@ function Home() {
             <Link to='/ReservationCompletePage'><button>예약 완료 페이지</button></Link>
             <Link to='/ShareReservationPage'><button>예약 공유 페이지</button></Link>
             <Link to='/GoogleCalendar'><button>구글 캘린더</button></Link>
-            <Link to='/AdminMemberManagePage'><button>관리자 회원 관리 페이지</button></Link>
+            <Link to='/AdminMemberManagePage'><button>관리자 회원 관리 페이지</button></Link> */}
         </div>
     );
 }
