@@ -12,7 +12,6 @@ function RoomListPage() {
                 <LinkStyle to="/RoomInfo"><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
             </BtnBox>
             <div>
-                
                 <Ptag>선택시 다음 화면으로 넘어가요</Ptag>
             </div>
         </ChooseReservationContainer>
