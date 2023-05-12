@@ -24,22 +24,30 @@ public class Member {
     private Long id; // 예약자 번호
 
 
-    @CsvBindByName(column = "성함", locale = "ko-KR", required = true)
-    @Column(name = "name")
-    private String name; // 회원의 이름
-
     @CsvBindByName(column = "학번")
     @Column(name = "sno")
     private String studentNo; // 학번 (Login-ID)
 
+
+
+    @Column(name = "pwd")
+    private String password;
+
+    @CsvBindByName(column = "성함", locale = "ko-KR", required = true)
+    @Column(name = "name")
+    private String name; // 회원의 이름
+
+
     @CsvBindByName(column = "전공", locale = "ko-KR")
-    @Column(name = "major", columnDefinition = "VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci", length = 512)
-    @ColumnDefault("컴퓨터공학과")
-    private String major; // 전공
+    @Column(name = "major")
+    private int major; // 전공
 
     @CsvBindByName(column = "휴대폰번호")
     @Column(name = "phn")
     private String phoneNo; // 전화번호
+
+    @Column(name="email")
+    private String email;
 
     @CsvCustomBindByName(column = "등급", converter = AuthStateConverter.class)
     @Column(name = "auth")
@@ -48,13 +56,14 @@ public class Member {
 
 
 
-    @Column(name = "pwd")
-    private String password;
-
     @Column(name = "cnt")
     @ColumnDefault("0")
     private int cnt; // 회원 예약 가능 횟수
 
+
+    @Column(name = "noshow")
+    @ColumnDefault("0")
+    private int noshow; // 회원 예약 가능 횟수
 
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
