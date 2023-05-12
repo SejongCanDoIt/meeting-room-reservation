@@ -20,6 +20,7 @@ public class ExcelService {
 
     @Transactional
     public void importExcelFile(InputStream in) {
+        memberRepository.deleteAll();
         try (Workbook workbook = new XSSFWorkbook(in)) {
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
