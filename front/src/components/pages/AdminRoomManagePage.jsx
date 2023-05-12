@@ -1,72 +1,132 @@
-import '../css/AdminRoomManagePageStyle.css';
+import React, { useEffect, useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 import { Link } from 'react-router-dom';
+import axios from "axios"
 
-/*
-<div className="room-list">
-    {rooms.map(room => (
-        <div key={room.id} className="room-card">
-            <Link to={`/AdminRoomInfoPage/${room.id}`}>
-                <img src={room.image} alt={`이미지: ${room.name}`} />
-                <h2>{room.name}</h2>
-                <p>{room.description}</p>
-            </Link>
-        </div>
-    ))}
-</div>
+export default function AdminRoomManagePage() {
+    const [roomList, setRoomList] = useState(null);
 
-App.js에 추가
-<Route path="/admin/room-info/:roomId" component={AdminRoomInfoPage} />
-*/
+    useEffect(() => {
+        const fetchRoomListData = async () => {
+            try {
+                const response = await axios.get(`/room/list`); // 실제 API 엔드포인트와 room id를 조합하여 요청
+                setRoomList(response.data); // 받아온 데이터로 roomInfo 상태 업데이트
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-const AdminRoomManagePage = () => {
-    const rooms = [
-        {
-            id: 1,
-            name: 'AI센터 613호 회의실',
-            description: '대양 AI센터 613호 회의실은 세종대학교 대양AI센터 6층에 위치해있습니다. 회의실의 규모는 최대 8명까지 수용이 가능하며 화이트보드와 빔 프로젝트가 포함되어 있는 회의에 최적화된 장소입니다.',
-            image: "https://www.kmeetingroom.com/_storage/thumbnails/EGjiXO3iYGEkyTrUCvmNllDLhbkJLh4xATGnzkI2.jpg"
-        },
-        {
-            id: 2,
-            name: 'AI센터 713호 회의실',
-            description: '대양 AI센터 713호 회의실은 세종대학교 대양AI센터 6층에 위치해있습니다. 회의실의 규모는 최대 8명까지 수용이 가능하며 화이트보드와 빔 프로젝트가 포함되어 있는 회의에 최적화된 장소입니다.',
-            image: "https://www.kmeetingroom.com/_storage/thumbnails/HRlTPrTYXDrwY7Iydr7IhgaiFkQTq0NQsPybwHWZ.jpg"
-        },
-        {
-            id: 3,
-            name: '임시 회의실',
-            description: '나중에 회의실이 추가됐을 때 스크롤바가 생기는 지 테스트하기 위한 회의실 데이터',
-            image: "https://www.kmeetingroom.com/_storage/thumbnails/BlmpCS0WGkrttLINaBAatozNtXIkcwaIIbuY4ncM.jpg"
-        },
-    ];
+        fetchRoomListData(); // 데이터 받아오기 함수 호출
+    }, []); // roomId가 변경될 때마다 실행
+
+    if (!roomList) {
+        return <p>Loading...</p>; // 데이터 로딩 중에는 로딩 메시지 표시
+    }
 
     return (
         <>
-            <AdminTopContainer></AdminTopContainer>
-            <AdminSideBar></AdminSideBar>
-            <div className="meeting-room-management">
-                <div className='meeting-room-container'>
-                    <div className="header">
+            <GlobalStyle />
+            <AdminTopContainer />
+            <AdminSideBar />
+            <MeetingRoomManagement>
+                <MeetingRoomContainer>
+                    <Header>
                         <h1>회의실 관리</h1>
                         <button>회의실 추가</button>
-                    </div>
-                    <div className="room-list">
-                        {rooms.map(room => (
-                            <div key={room.id} className="room-card">
-                                <Link to={`/AdminRoomInfoPage`}>
-                                    <img src={room.image} alt={`이미지: ${room.name}`} />
+                    </Header>
+                    <RoomList>
+                        {roomList.map(room => (
+                            <RoomCard key={room.id}>
+                                <Link to={`/AdminRoomInfoPage/${room.id}`}>
+                                    <RoomImage src={room.picture} alt={`이미지: ${room.name}`} />
                                     <h2>{room.name}</h2>
-                                    <p>{room.description}</p>
+                                    <p>{room.info}</p>
                                 </Link>
-                            </div>
+                            </RoomCard>
                         ))}
-                    </div>
-                </div>
-            </div>
+                    </RoomList>
+                </MeetingRoomContainer>
+            </MeetingRoomManagement>
         </>
     );
 };
 
-export default AdminRoomManagePage;
+const GlobalStyle = createGlobalStyle`
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    }
+`
+
+const MeetingRoomManagement = styled.div`
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+`;
+
+const MeetingRoomContainer = styled.div`
+    padding: 20px;
+`;
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    button {
+        background-color: #A1203C;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #8a1c33;
+        }
+    }
+`;
+
+const RoomList = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 40px;
+    column-gap: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 10vh - 8vh - 20px);
+    padding-right: 10px;
+`;
+
+const RoomCard = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 48%;
+
+    a {
+        display: inline-block;
+        text-decoration: none;
+        color: inherit;
+    }
+`;
+
+const RoomImage = styled.img`
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+`;

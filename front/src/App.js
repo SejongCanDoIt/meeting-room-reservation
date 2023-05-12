@@ -56,7 +56,7 @@ function App() {
           <Route path="/AdminRoomManagePage" element={<AdminRoomManagePage />}></Route>
           <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>
           <Route path="/AdminReservManagePage" element={<AdminReservManagePage />}></Route>
-          <Route path="/AdminRoomInfoPage" element={<AdminRoomInfoPage />}></Route>
+          <Route path="/AdminRoomInfoPage/:id" element={<AdminRoomInfoPage />} />
           <Route path="/AdminRoomModifyPage" element={<AdminRoomModifyPage />}></Route>
         </Routes>
       </div>

@@ -1,9 +1,9 @@
 import React from 'react';
-import '../css/AdminReservManagePageStyle.css';
+import styled from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 
-const AdminReservManagePage = () => {
+export default function AdminReservManagePage() {
     const reservations = [
         {
             id: 1,
@@ -127,34 +127,87 @@ const AdminReservManagePage = () => {
         <>
             <AdminTopContainer />
             <AdminSideBar />
-            <div className="reservation-management">
-                <div className="reservation-management-container">
-                    <div className="header">
+            <ReservationManagement>
+                <ReservationManagementContainer>
+                    <Header>
                         <h1>예약 관리</h1>
-                    </div>
-                    <div className="reservation-list">
-                        <div className="reservation-list-header">
+                    </Header>
+                    <ReservationList>
+                        <ReservationListHeader>
                             <span>학과</span>
                             <span>학번</span>
                             <span>이름</span>
                             <span>예약 시간</span>
-                        </div>
+                        </ReservationListHeader>
                         {reservations.map(reservation => (
-                            <div key={reservation.id} className="reservation-row">
+                            <ReservationRow key={reservation.id}>
                                 <span>{reservation.department}</span>
                                 <span>{reservation.studentId}</span>
                                 <span>{reservation.name}</span>
                                 <span>{reservation.reservationTime}</span>
-                                <button className="cancel-reservation" onClick={handleCancelReservation}>
+                                <CancelReservation onClick={handleCancelReservation}>
                                     예약 취소
-                                </button>
-                            </div>
+                                </CancelReservation>
+                            </ReservationRow>
                         ))}
-                    </div>
-                </div>
-            </div>
+                    </ReservationList>
+                </ReservationManagementContainer>
+            </ReservationManagement>
         </>
     );
 };
 
-export default AdminReservManagePage;
+const ReservationManagement = styled.div`
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+`;
+
+const ReservationManagementContainer = styled.div`
+    padding: 20px;
+`;
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const ReservationList = styled.div`
+    overflow-y: auto;
+    max-height: calc(100vh - 10vh - 8vh - 20px);
+`;
+
+const ReservationListHeader = styled.div`
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1.5fr 2.3fr 0.7fr;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 6vh;
+    & span {
+        font-weight: bold;
+    }
+`;
+
+const ReservationRow = styled(ReservationListHeader)`
+    & span {
+        font-weight: normal;
+    }
+`;
+
+const CancelReservation = styled.button`
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    width: auto;
+    height: 40px;
+    &:hover {
+        background-color: #8B1B34;
+    }
+`;
