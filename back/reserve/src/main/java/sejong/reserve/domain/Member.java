@@ -29,7 +29,7 @@ public class Member {
     private String name; // 회원의 이름
 
     @CsvBindByName(column = "학번")
-    @Column(name = "sno")
+    @Column(name = "sno", unique = true)
     private String studentNo; // 학번 (Login-ID)
 
     @CsvBindByName(column = "전공", locale = "ko-KR")
