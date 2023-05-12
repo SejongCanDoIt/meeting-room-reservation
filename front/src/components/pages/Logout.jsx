@@ -7,7 +7,8 @@ export default function Logout() {
     useEffect(() => {
         axios.get("/auth/logout")
             .then(() => {
-                navigate('/loginPage');
+                sessionStorage.clear();
+                navigate('/');
             })
     }, [])
 }

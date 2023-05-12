@@ -38,11 +38,11 @@ const RightInfo = styled.div`
 const TitleInfo = styled.h4`
     padding-left: 1em;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 17px;
 `
 
 const UserIcon = styled.img`
-    width: 10%;
+    width: 7%;
     max-width: 500px;
     
     background-color: #A1203C;

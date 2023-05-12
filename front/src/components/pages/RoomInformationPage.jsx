@@ -5,15 +5,15 @@ function RoomInformationPage() {
     return (
         <div id="roomInformationPageContainer">
             <section id="imageSection">
-                <img id="roomImage" alt="roomImage" src="https://www.ibusiness.co.kr/wp-content/themes/twentytwenty-child/page/images/common_preview_conference07.jpg"></img>
+                <img id="roomImage" alt="roomImage" src="https://images.unsplash.com/photo-1503423571797-2d2bb372094a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"/>
             </section>
+            <hr></hr>
             <section id="nameSection">
                 <h1 style={{ fontWeight: 'bolder' }}>AI센터 835호 회의실</h1>
                 <Link to='/ReservationPage'>
                     <button id="reservationButton">예약</button>
                 </Link>
             </section>
-            <hr></hr>
             <section id="facilitySection">
                 <h3 className='roomInformationPageText'>보유 편의 시설</h3>
                 <ul id="facilityList">

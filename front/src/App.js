@@ -13,6 +13,7 @@ import StartPage from "./components/pages/StartPage";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
+import RoomInfo from "./components/pages/RoomInfo";
 import PrivateRoute from "./components/pages/PrivateRoute";
 import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
@@ -29,9 +30,9 @@ import AdminRoomModifyPage from './components/pages/AdminRoomModifyPage';
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <RootContainer>
         <NavBar>
-          <LinkStyle to="/myPage">예약 시스템</LinkStyle>
+          <LinkStyle to="/">예약 시스템</LinkStyle>
         </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -59,10 +60,15 @@ function App() {
           <Route path="/AdminRoomInfoPage/:id" element={<AdminRoomInfoPage />} />
           <Route path="/AdminRoomModifyPage" element={<AdminRoomModifyPage />}></Route>
         </Routes>
-      </div>
+      </RootContainer>
     </BrowserRouter>
   );
 }
+
+const RootContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 const LinkStyle = styled(Link)`
   color: white;
@@ -79,6 +85,13 @@ const NavBar = styled.div`
 
   font-weight: bold;
   font-size: 25px;
+
+  // padding: 15px;
+  z-index: 1;
+
+  @media screen and (max-width: 600px) {
+    padding: 10px;
+  }
 
   background-color: #A1203C;
   color: white;
