@@ -39,13 +39,8 @@ public class Member {
 
 
     @CsvBindByName(column = "전공", locale = "ko-KR")
-<<<<<<< HEAD
-    @Column(name = "major", columnDefinition = "VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci", length = 512)
-    private String major; // 전공
-=======
     @Column(name = "major")
     private int major; // 전공
->>>>>>> back-hun8
 
     @CsvBindByName(column = "휴대폰번호")
     @Column(name = "phn")
