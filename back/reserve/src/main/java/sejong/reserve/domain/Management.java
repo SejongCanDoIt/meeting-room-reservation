@@ -23,7 +23,7 @@ public class Management {
     @ColumnDefault("10")
     private int pro_cnt; // 교수
 
-    // 예약 시간 간격
+    // 예약 시간 간격 간격 기준: 시간
     @ColumnDefault("2")
     private int univ_hour_gap; // 대학생
     @ColumnDefault("3")
@@ -32,6 +32,16 @@ public class Management {
     private int office_hour_gap; // 사무실
     @ColumnDefault("6")
     private int pro_hour_gap; // 교수
+
+    // 예약 시간 간격 간격 기준: 일
+    @ColumnDefault("2")
+    private int univ_day_gap; // 대학생
+    @ColumnDefault("7")
+    private int post_day_gap; // 대학원생
+    @ColumnDefault("365")
+    private int office_day_gap; // 사무실
+    @ColumnDefault("365")
+    private int pro_day_gap; // 교수
 
     // 예약 가능 시간 간격 기준: 주
     @ColumnDefault("1")

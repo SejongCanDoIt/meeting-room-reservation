@@ -67,6 +67,25 @@ public class ManagementController {
         return ResponseEntity.ok(managementService.getProHourGap());
     }
 
+    @GetMapping("univ-day-gap")
+    public ResponseEntity<Integer> getUnivDayGap() {
+        return ResponseEntity.ok(managementService.getUnivDayGap());
+    }
+
+    @GetMapping("post-day-gap")
+    public ResponseEntity<Integer> getPostDayGap() {
+        return ResponseEntity.ok(managementService.getPostDayGap());
+    }
+
+    @GetMapping("office-day-gap")
+    public ResponseEntity<Integer> getOfficeDayGap() {
+        return ResponseEntity.ok(managementService.getOfficeDayGap());
+    }
+    @GetMapping("pro-day-gap")
+    public ResponseEntity<Integer> getProDayGap() {
+        return ResponseEntity.ok(managementService.getProDayGap());
+    }
+
     @GetMapping("univ-week-gap")
     public ResponseEntity<Integer> getUnivWeekGap() {
         return ResponseEntity.ok(managementService.getUnivWeekGap());

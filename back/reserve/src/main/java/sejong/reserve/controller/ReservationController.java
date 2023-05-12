@@ -53,6 +53,10 @@ public class ReservationController {
         LocalDateTime end = reservationDto.getEnd();
         AuthState authority = loginMember.getAuthority();
 
+        if(authority == AuthState.UNI_STUDENT && reservationDto.getRegular()==true) {
+            throw new NotAvailableReservedException("학부생은 정기예약을 진행할 수 없습니다.");
+        }
+
         // 정기 및 일반 예약에 대한 달이 적합한지?
         checkStateLimitation(start, authority);
         // 예약할 날짜가 오늘보다 이전 날짜인지?
@@ -80,20 +84,20 @@ public class ReservationController {
         int possibleGap = 0;
         switch (authority) {
             case UNI_STUDENT:
-                possibleGap = managementService.getUnivWeekGap();
+                possibleGap = managementService.getUnivDayGap();
                 break;
             case POST_STUDENT:
-                possibleGap = managementService.getPostWeekGap();
+                possibleGap = managementService.getPostDayGap();
                 break;
             case OFFICE:
-                possibleGap = managementService.getOfficeWeekGap();
+                possibleGap = managementService.getOfficeDayGap();
                 break;
             case PROFESSOR:
-                possibleGap = managementService.getProWeekGap();
+                possibleGap = managementService.getProDayGap();
                 break;
         }
 
-        if(now.plusWeeks(possibleGap).isBefore(start)) {
+        if(now.plusDays(possibleGap).isBefore(start)) {
             log.info("예약 가능한 마지막 날= {}", now.plusWeeks(possibleGap));
             log.info("예약 요청한 날 = {}", start);
             throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");

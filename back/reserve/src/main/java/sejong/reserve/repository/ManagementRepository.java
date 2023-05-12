@@ -52,6 +52,20 @@ public class ManagementRepository {
         return (int) em.createQuery("select m.pro_hour_gap from Management m").getSingleResult();
     }
 
+    public int getUnivDayGap() {
+        return (int) em.createQuery("select m.univ_day_gap from Management m").getSingleResult();
+    }
+    public int getPostDayGap() {
+        return (int) em.createQuery("select m.post_day_gap from Management m").getSingleResult();
+    }
+
+    public int getOfficeDayGap() {
+        return (int) em.createQuery("select m.office_day_gap from Management m").getSingleResult();
+    }
+    public int getProDayGap() {
+        return (int) em.createQuery("select m.pro_day_gap from Management m").getSingleResult();
+    }
+
     public int getUnivWeekGap() {
         return (int) em.createQuery("select m.univ_week_gap from Management m").getSingleResult();
     }

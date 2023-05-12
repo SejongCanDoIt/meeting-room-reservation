@@ -47,6 +47,15 @@ public class ManagementService{
     }
 
     @Transactional
+    public void updateDayGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
+        Management management = managementRepository.findOne();
+        management.setUniv_day_gap(univ_gap);
+        management.setPost_day_gap(post_gap);
+        management.setOffice_day_gap(office_gap);
+        management.setPro_day_gap(pro_gap);
+    }
+
+    @Transactional
     public void updateWeekGap(int univ_gap, int post_gap, int office_gap, int pro_gap) {
         Management management = managementRepository.findOne();
         management.setUniv_week_gap(univ_gap);
@@ -67,6 +76,13 @@ public class ManagementService{
 
     public int getOfficeHourGap() {return managementRepository.getOfficeHourGap();}
     public int getProHourGap() {return managementRepository.getProHourGap();}
+
+    public int getUnivDayGap() {return managementRepository.getUnivDayGap();}
+
+    public int getPostDayGap() {return managementRepository.getPostDayGap();}
+
+    public int getOfficeDayGap() {return managementRepository.getOfficeDayGap();}
+    public int getProDayGap() {return managementRepository.getProDayGap();}
 
     public int getUnivWeekGap() {return managementRepository.getUnivWeekGap();}
 
