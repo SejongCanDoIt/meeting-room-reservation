@@ -8,8 +8,8 @@ function RoomListPage() {
                 <TitleH>회의실을 둘러보세요</TitleH>
             </div>
             <BtnBox>
-                <LinkStyle to="/RoomInfo"><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
-                <LinkStyle to="/RoomInfo"><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
+                <LinkStyle to={`/RoomInfo?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
+                <LinkStyle to={`/RoomInfo?room_id=${836}`}><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
             </BtnBox>
             <div>
                 <Ptag>선택시 다음 화면으로 넘어가요</Ptag>

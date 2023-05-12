@@ -26,9 +26,9 @@ import axios from 'axios';
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <RootContainer>
         <NavBar>
-          <LinkStyle to="/myPage">예약 시스템</LinkStyle>
+          <LinkStyle to="/">예약 시스템</LinkStyle>
         </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -51,10 +51,15 @@ function App() {
           <Route path="/regularReservation" element={<Regularreservations />}></Route>
           <Route path="/RoomInfo" element={<RoomInfo />}></Route>
         </Routes>
-      </div>
+      </RootContainer>
     </BrowserRouter>
   );
 }
+
+const RootContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 const LinkStyle = styled(Link)`
   color: white;
@@ -71,6 +76,13 @@ const NavBar = styled.div`
 
   font-weight: bold;
   font-size: 25px;
+
+  // padding: 15px;
+  z-index: 1;
+
+  @media screen and (max-width: 600px) {
+    padding: 10px;
+  }
 
   background-color: #A1203C;
   color: white;

@@ -73,6 +73,7 @@ export default function LoginPage() {
         .post("/auth/login", {...loginInfo})
         .then((res) => {
             sessionStorage.setItem('Authorization', true);
+            sessionStorage.setItem('LoginID', login.id);
             navigate(`/myPage?id=${login.id}`)
         })
         .catch((err) => {
