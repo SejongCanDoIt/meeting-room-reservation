@@ -40,11 +40,13 @@ dependencies {
 	implementation 'com.opencsv:opencsv:5.5.2'
 
 	implementation 'commons-io:commons-io:2.11.0'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	// security
 //	implementation 'org.springframework.security:spring-security-config:5.5.1'
-
-
+	//엑셀 읽기 관련 라이브러리
+	implementation 'org.apache.poi:poi:5.2.2'
+	implementation 'org.apache.poi:poi-ooxml:5.2.2'
 
 }
 
