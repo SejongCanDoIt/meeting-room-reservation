@@ -42,6 +42,7 @@ public class Member {
     @Column(name = "major")
     private int major; // 전공
 
+
     @CsvBindByName(column = "휴대폰번호")
     @Column(name = "phn")
     private String phoneNo; // 전화번호
