@@ -28,6 +28,11 @@ public class ManagementController {
         managementService.updateWeekGap(univ_gap, post_gap, office_gap, pro_gap);
     }
 
+    @PutMapping("update-day-gap")
+    public void updateDayGap(@RequestParam int univ_gap, @RequestParam int post_gap, @RequestParam int office_gap, @RequestParam int pro_gap) {
+        managementService.updateDayGap(univ_gap, post_gap, office_gap, pro_gap);
+    }
+
     @GetMapping("univ-cnt")
     public ResponseEntity<Integer> getUnivCnt() {
         return ResponseEntity.ok(managementService.getUnivCnt());
