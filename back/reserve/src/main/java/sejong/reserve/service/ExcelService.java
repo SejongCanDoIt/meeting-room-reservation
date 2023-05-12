@@ -1,40 +1,26 @@
 package sejong.reserve.service;
 
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
 import sejong.reserve.repository.MemberRepository;
 
-import java.io.FileInputStream;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
 @RequiredArgsConstructor
 @Service
 public class ExcelService {
-
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public void importExcelFile(InputStream in) {
         try (Workbook workbook = new XSSFWorkbook(in)) {
-
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
             if (!rows.hasNext()) return; // if there are no rows, return
@@ -50,36 +36,33 @@ public class ExcelService {
                 if (isRowEmpty(currentRow)) continue; // skip empty rows
 
                 Member member = new Member();
-                member.setStudentNo(String.valueOf((long) currentRow.getCell(headerMap.get("ID")).getNumericCellValue()));
-                member.setPassword(currentRow.getCell(headerMap.get("PASS")).getStringCellValue());
-                member.setName(currentRow.getCell(headerMap.get("Name")).getStringCellValue());
-
-                // map Dept. to specific values
-                member.setMajor((int) currentRow.getCell(headerMap.get("Dept.")).getNumericCellValue());
-
-                member.setPhoneNo(currentRow.getCell(headerMap.get("Phone")).getStringCellValue());
-                member.setEmail(currentRow.getCell(headerMap.get("email")).getStringCellValue());
+                member.setStudentNo(getCellValueAsString(currentRow.getCell(headerMap.get("ID"))));
+                member.setPassword(getCellValueAsString(currentRow.getCell(headerMap.get("PASS"))));
+                member.setName(getCellValueAsString(currentRow.getCell(headerMap.get("Name"))));
+                member.setMajor(getCellValueAsInt(currentRow.getCell(headerMap.get("Dept."))));
+                member.setPhoneNo(getCellValueAsString(currentRow.getCell(headerMap.get("Phone"))));
+                member.setEmail(getCellValueAsString(currentRow.getCell(headerMap.get("email"))));
 
                 // map Type to specific values
-                String typeValue = currentRow.getCell(headerMap.get("Type")).getStringCellValue();
+                String typeValue = getCellValueAsString(currentRow.getCell(headerMap.get("Type")));
                 switch (typeValue) {
-                    case "관리자":
+                    case "1":
                         member.setAuthority(AuthState.OFFICE);
                         break;
-                    case "교수":
+                    case "2":
                         member.setAuthority(AuthState.PROFESSOR);
                         break;
-                    case "대학원생":
+                    case "3":
                         member.setAuthority(AuthState.POST_STUDENT);
                         break;
-                    case "학부생":
+                    case "4":
                         member.setAuthority(AuthState.UNI_STUDENT);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid Type value: " + typeValue);
                 }
 
-                member.setNoshow((int) currentRow.getCell(headerMap.get("NoShow")).getNumericCellValue());
+                member.setNoshow(getCellValueAsInt(currentRow.getCell(headerMap.get("NoShow"))));
 
                 memberRepository.save(member);
             }
@@ -95,5 +78,27 @@ public class ExcelService {
                 return false;
         }
         return true;
+    }
+
+    private String getCellValueAsString(Cell cell) {
+        if (cell == null)
+            return null;
+
+        CellType cellType = cell.getCellType();
+        if (cellType == CellType.STRING) {
+            return cell.getStringCellValue();
+        } else if (cellType == CellType.NUMERIC || cellType == CellType.FORMULA) {
+            cell.setCellType(CellType.STRING); // convert numeric or formula cell to string cell
+            return cell.getStringCellValue();
+        } else {
+            return null;
+        }
+    }
+
+    private int getCellValueAsInt(Cell cell) {
+        String cellValue = getCellValueAsString(cell);
+        if (cellValue == null)
+            return 0;
+        return Integer.parseInt(cellValue);
     }
 }

@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/excelt")
+@RequestMapping("/excel")
 public class ExcelController {
     private final ExcelService excelService;
     @GetMapping("/upload")
@@ -31,8 +31,7 @@ public class ExcelController {
     public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:uploadStatus";
-        }
+            return "redirect:/excel/upload";        }
 
         try {
             // Get the InputStream and pass it to the ExcelService
@@ -46,7 +45,6 @@ public class ExcelController {
             e.printStackTrace();
         }
 
-        return "redirect:/uploadStatus";
-    }
+        return "redirect:/excel/upload";    }
 }
 
