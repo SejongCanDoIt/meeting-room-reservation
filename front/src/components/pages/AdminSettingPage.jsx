@@ -1,8 +1,8 @@
-import '../css/AdminSettingPageStyle.css';
+import styled from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 
-const AdminSettingPage = () => {
+export default function AdminSettingPage() {
     const settings = [
         {
             id: 1,
@@ -38,34 +38,92 @@ const AdminSettingPage = () => {
         <>
             <AdminTopContainer />
             <AdminSideBar />
-            <div className="settings-management">
-                <div className="settings-management-container">
-                    <div className="header">
+            <SettingsManagement>
+                <SettingsManagementContainer>
+                    <Header>
                         <h1>세부 설정</h1>
-                        <button className="edit-settings-button">
+                        <EditSettingsButton>
                             수정하기
-                        </button>
-                    </div>
-                    <div className="settings-list">
-                        <div className="settings-list-header">
+                        </EditSettingsButton>
+                    </Header>
+                    <SettingsList>
+                        <SettingsListHeader>
                             <span>권한</span>
                             <span>예약 횟수 설정</span>
                             <span>예약 가능 시간 설정</span>
                             <span>사용 가능 시간 설정</span>
-                        </div>
+                        </SettingsListHeader>
                         {settings.map(setting => (
-                            <div key={setting.id} className="settings-row">
+                            <SettingsRow key={setting.id}>
                                 <span>{setting.role}</span>
                                 <span>{setting.reservations}</span>
                                 <span>{setting.reservationPeriod} 전</span>
                                 <span>{setting.availableTime}</span>
-                            </div>
+                            </SettingsRow>
                         ))}
-                    </div>
-                </div>
-            </div>
+                    </SettingsList>
+                </SettingsManagementContainer>
+            </SettingsManagement>
         </>
     );
 };
 
-export default AdminSettingPage;
+const SettingsManagement = styled.div`
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+`;
+
+const SettingsManagementContainer = styled.div`
+    background-color: white;
+    border-radius: 4px;
+    padding: 20px;
+`;
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const EditSettingsButton = styled.button`
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 15px;
+
+    &:hover {
+        background-color: #8B1B34;
+    }
+`;
+
+const SettingsList = styled.div`
+    margin-top: 20px;
+`;
+
+const SettingsListHeader = styled.div`
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+`;
+
+const SettingsRow = styled.div`
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+        border-bottom: none;
+    }
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+`;

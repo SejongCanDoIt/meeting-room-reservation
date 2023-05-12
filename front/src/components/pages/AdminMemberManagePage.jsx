@@ -1,8 +1,8 @@
-import '../css/AdminMemberManagePageStyle.css';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
+import styled from 'styled-components';
 
-const AdminMemberManagePage = () => {
+export default function AdminMemberManagePage() {
     const members = [
         {
             id: 1,
@@ -238,35 +238,96 @@ const AdminMemberManagePage = () => {
         <>
             <AdminTopContainer />
             <AdminSideBar />
-            <div className="member-management">
-                <div className="member-management-container">
-                    <div className="header">
+            <MemberManagement>
+                <MemberManagementContainer>
+                    <Header>
                         <h1>회원 관리</h1>
-                        <button className="add-member-button" onClick={handleAddMember}>
+                        <AddMemberButton onClick={handleAddMember}>
                             회원 추가
-                        </button>
-                    </div>
-                    <div className="member-list">
-                        <div className="member-list-header">
+                        </AddMemberButton>
+                    </Header>
+                    <MemberList>
+                        <MemberListHeader>
                             <span>학과</span>
                             <span>학번</span>
                             <span>이름</span>
                             <span>전화번호</span>
-                        </div>
+                        </MemberListHeader>
                         {members.map(member => (
-                            <div key={member.id} className="member-row">
+                            <MemberRow key={member.id}>
                                 <span>{member.department}</span>
                                 <span>{member.studentId}</span>
                                 <span>{member.name}</span>
                                 <span>{member.phoneNumber}</span>
-                                <span className="delete-icon">🗑️</span>
-                            </div>
+                                <DeleteIcon>🗑️</DeleteIcon>
+                            </MemberRow>
                         ))}
-                    </div>
-                </div>
-            </div>
+                    </MemberList>
+                </MemberManagementContainer>
+            </MemberManagement>
         </>
     );
 };
 
-export default AdminMemberManagePage;
+const MemberManagement = styled.div`
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+`;
+
+const MemberManagementContainer = styled.div`
+    padding: 20px;
+`;
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const AddMemberButton = styled.button`
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #8B1B34;
+    }
+`;
+
+const MemberList = styled.div`
+    overflow-y: auto;
+    max-height: calc(100vh - 10vh - 8vh - 20px);
+`;
+
+const MemberListHeader = styled.div`
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1.5fr 2fr 1fr;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 6vh;
+    
+    & span {
+        font-weight: bold;
+    }
+`;
+
+const MemberRow = styled.div`
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1.5fr 2fr 1fr;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 6vh;
+`;
+
+const DeleteIcon = styled.span`
+    cursor: pointer;
+`;
