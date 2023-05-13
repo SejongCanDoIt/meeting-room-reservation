@@ -1,60 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios'
 
 export default function AdminRoomInfoPage() {
-    const { id } = useParams();  // 변경된 부분
-    const [roominfo, setRoominfo] = useState(null); 
+    const { id } = useParams();
+    const [roominfo, setRoominfo] = useState(null);
 
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
                 const response = await axios.get(`/room/detail/${id}`);
-                setRoominfo(response.data); 
+                setRoominfo(response.data);
             } catch (error) {
                 console.error(error);
             }
         };
 
-        fetchRoomData(); 
-    }, [id]); 
+        fetchRoomData();
+    }, [id]);
 
     if (!roominfo) {
-        return <p>Loading...</p>; 
+        return <p>Loading...</p>;
     }
 
     return (
         <>
+            <GlobalStyle />
             <AdminTopContainer />
             <AdminSideBar />
             <RoomInformation>
                 <RoomInfoContainer>
                     <Header>
                         <h1>회의실 정보</h1>
-                        <Link to={`/AdminRoomModifyPage`}><button>수정하기</button></Link>
+                        <Link
+                            to={{
+                                pathname: `/AdminRoomModifyPage/${roominfo.id}`,
+                                state: { roomInfo: roominfo }
+                            }}
+                        >
+                            <button>수정하기</button>
+                        </Link>
                     </Header>
                     <RoomInfo>
                         <LeftInfo>
                             <NameBlock>
-                                <h2>회의실 이름</h2>
+                                <StyledH2>회의실 이름</StyledH2>
                                 <p>{roominfo.name}</p>
                                 <hr></hr>
                             </NameBlock>
                             <Block>
-                                <h2>회의실 설명</h2>
-                                <p>{roominfo.info}</p>
+                                <StyledH2>회의실 설명</StyledH2>
+                                <StyledP>{roominfo.info}</StyledP>
                             </Block>
                             <Block>
-                                <h2>회의실 위치</h2>
-                                <p>{roominfo.loc}</p>
+                                <StyledH2>회의실 위치</StyledH2>
+                                <StyledP>{roominfo.loc}</StyledP>
                             </Block>
                         </LeftInfo>
                         <RightInfo>
                             <RoomImg src={roominfo.picture} alt={`이미지: ${roominfo.name}`} />
-                            <RoomFacilities>
+                            <FacilitiesList>
                                 <FacilityItem>
                                     <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" />
                                     {roominfo.cap}명
@@ -79,7 +87,7 @@ export default function AdminRoomInfoPage() {
                                     <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" />
                                     {roominfo.com}개
                                 </FacilityItem>
-                            </RoomFacilities>
+                            </FacilitiesList>
                         </RightInfo>
                     </RoomInfo>
                 </RoomInfoContainer>
@@ -87,6 +95,16 @@ export default function AdminRoomInfoPage() {
         </>
     );
 };
+
+const GlobalStyle = createGlobalStyle`
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+`;
 
 const RoomInformation = styled.div`
     max-width: 100%;
@@ -131,11 +149,6 @@ const LeftInfo = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    h2 {
-        margin-bottom: 15px;
-        color: #A1203C;
-    }
 `;
 
 const NameBlock = styled.div`
@@ -168,11 +181,18 @@ const RightInfo = styled.div`
     padding: 20px;
     display: flex;
     flex-direction: column;
+`;
 
-    h2 {
-        margin-bottom: 15px;
-        color: #A1203C;
-    }
+const StyledH2 = styled.h2`
+    margin-bottom: 15px;
+    color: #A1203C;
+`;
+
+const StyledP = styled.p`
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px 10px 20px 10px;
 `;
 
 const RoomImg = styled.img`
@@ -183,7 +203,7 @@ const RoomImg = styled.img`
     margin-bottom: 20px;
 `;
 
-const RoomFacilities = styled.ul`
+const FacilitiesList = styled.ul`
     list-style-type: none;
     padding: 0;
     display: grid;
@@ -202,7 +222,7 @@ const FacilityItem = styled.li`
 `;
 
 const FacilitiesIcon = styled.img`
-    display: inline-block;
-    width: 40px;
-    height: 40px;
+display: inline-block;
+width: 40px;
+height: 40px;
 `;

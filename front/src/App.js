@@ -58,7 +58,7 @@ function App() {
           <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>
           <Route path="/AdminReservManagePage" element={<AdminReservManagePage />}></Route>
           <Route path="/AdminRoomInfoPage/:id" element={<AdminRoomInfoPage />} />
-          <Route path="/AdminRoomModifyPage" element={<AdminRoomModifyPage />}></Route>
+          <Route path="/AdminRoomModifyPage/:id" element={<AdminRoomModifyPage />}></Route>
           <Route path="/RoomInfo" element={<RoomInfo />}></Route>
         </Routes>
       </RootContainer>

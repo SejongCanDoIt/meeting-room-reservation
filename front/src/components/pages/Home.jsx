@@ -22,7 +22,7 @@ function Home() {
 
             <ImgBox>
                 <HomeTitle>세종대학교 회의실예약 시스템</HomeTitle>
-                <Img src="https://images.unsplash.com/photo-1580537782437-8d6a0ca13de6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80" alt="" />
+                <Img src="http://www.sejongpr.ac.kr/dataview/sejong_pr/temp/DEI20210428140436.jpg" alt="" />
             </ImgBox>
 
             <FooterDiv>
