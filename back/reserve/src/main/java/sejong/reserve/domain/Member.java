@@ -19,7 +19,8 @@ import java.util.List;
 @Table(name = "member")
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "member_sequence")
+    @SequenceGenerator(name = "member_sequence", sequenceName = "member_sequence", initialValue = 1, allocationSize = 1)
     @Column(name = "member_id")
     private Long id; // 예약자 번호
 
