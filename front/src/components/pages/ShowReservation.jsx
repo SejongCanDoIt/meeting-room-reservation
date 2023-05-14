@@ -154,11 +154,12 @@ const ShowDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    // justify-content: flex-start;
 
     width: 100%;
     max-width: 500px;
     border-bottom: 1px solid black;
-    padding: 10px;
+    padding: 3px;
     
     background-color: ${(props) => (props.isExpire ? "#FAFAFA" : "#FFFFFF")};
     color: ${(props) => (props.isExpire ? "#dee2e6" : "black")};
@@ -169,5 +170,6 @@ const ShowDiv = styled.div`
 const Ptag = styled.p`
     width: 100%;
     text-align: left;
+    margin-left: 10px;
     color: ${(props) => (props.isExpire ? "#dee2e6" : "#838383")};
 `

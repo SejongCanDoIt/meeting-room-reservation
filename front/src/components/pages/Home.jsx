@@ -15,7 +15,7 @@ function Home() {
                 <RightMenu>
                     { authorization ? <UserSpan><IconImg src={userwhite} alt="" /> {loginId}</UserSpan> : <></>}
                     { authorization ? <LinkStyle to="/logout">로그아웃</LinkStyle> : <LinkStyle to="/loginPage">로그인</LinkStyle>}
-                    { authorization ? <LinkStyle to="/ChooseReservationPage">예약하기</LinkStyle> : <LinkStyle to="/RoomListPage">회의실 둘러보기</LinkStyle>}
+                    { authorization ? <LinkStyle to="/selectmeetingroom">예약하기</LinkStyle> : <LinkStyle to="/RoomListPage">회의실 둘러보기</LinkStyle>}
                     { authorization ? <LinkStyle to="/myPage">마이페이지</LinkStyle> : <></>}
                 </RightMenu>
             </NavBarMenu>
@@ -50,6 +50,7 @@ function Home() {
 }
 
 const Nav = styled.div`
+    width: 100%;
     height: 100vh;
     // height: 300px;
     display: flex;
