@@ -99,7 +99,16 @@ export default function MyPage() {
             if (moment(new Date(year, month, date)).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD") && !el.isExpire) {
                 message = `${el.room_id}호 ${el.startHour}:${el.startMinute} ~ ${el.endHour}:${el.endMinute}분에 오늘 예약이 있어요`;
             }
-            // 835호 ${reserveList[0].startHour}:${reserveList[0].startMinute} ~ ${reserveList[0].endHour}:${reserveList[0].endMinute}분에 오늘 예약이 있어요`}
+        }
+        return message;
+    }
+
+    const recentList = () => {
+        let message = "최근 예약내역이 없습니다."
+        for (let el of reserveList) {
+            if (el.isExpire) {
+                return `${el.room_id}호 ${el.year}년 ${el.month}월 ${el.date}일 ${el.day}요일 ${el.startHour}:${el.startMinute} ~ ${el.endHour}:${el.endMinute}`;
+            }
         }
         return message;
     }
@@ -118,8 +127,8 @@ export default function MyPage() {
             </ProfileDiv>
             <MenuContainer>
                 {reserveList[0] ? <ReservationInfo subTitle={"오늘의 예약"} info={todayList()}/> : <ReservationInfo subTitle={"오늘의 예약"} info="예약 내역을 불러오고 있어요"/>}
-                {/* {reserveList[0] ? <ReservationInfo subTitle={"오늘의 예약"} info={`835호 ${reserveList[0].startHour}:${reserveList[0].startMinute} ~ ${reserveList[0].endHour}:${reserveList[0].endMinute}분에 오늘 예약이 있어요`}/> : <ReservationInfo subTitle={"오늘의 예약"} info="예약 내역을 불러오고 있어요"/>} */}
-                <ReservationInfo subTitle={"가장 최근 이용 내역"} info={"2023년 1월 12일 월요일 15:00 ~ 16:00"}/>
+                {reserveList[0] ? <ReservationInfo subTitle={"가장 최근 이용 내역"} info={recentList()}/> : <ReservationInfo subTitle={"가장 최근 이용 내역"} info="최근 예약 내역을 불러오고 있어요"/>}
+                {/* <ReservationInfo subTitle={"가장 최근 이용 내역"} info={"2023년 1월 12일 월요일 15:00 ~ 16:00"}/> */}
                 <MainPageMenu icon={calendar} title={"예약하기"} where={"/selectmeetingroom"}/>
                 <MainPageMenu icon={search} title={"예약내역 확인하기"} where={"/show"}/>
                 <MainPageMenu icon={visibility} title={"회의실 둘러보기"} where={"/RoomListPage"}/>
