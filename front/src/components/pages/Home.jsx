@@ -15,6 +15,7 @@ function Home() {
         axios.get('/auth/checkLogin')
             .then((res) => {
                 setAuthorization(true);
+                setLoginId((id) => sessionStorage.getItem('LoginID'));
             })
             .catch((err) => {
                 setAuthorization(false);
@@ -26,10 +27,10 @@ function Home() {
             <NavBarMenu>
                 <LeftMenu><LinkStyle to="/">세종대학교</LinkStyle></LeftMenu>
                 <RightMenu>
-                    { authorization ? <UserSpan><IconImg src={userwhite} alt="" /> {loginId}</UserSpan> : <></>}
-                    { authorization ? <LinkStyle to="/logout">로그아웃</LinkStyle> : <LinkStyle to="/loginPage">로그인</LinkStyle>}
-                    { authorization ? <LinkStyle to="/selectmeetingroom">예약하기</LinkStyle> : <LinkStyle to="/RoomListPage">회의실 둘러보기</LinkStyle>}
-                    { authorization ? <LinkStyle to="/myPage">마이페이지</LinkStyle> : <></>}
+                    { authorization ? <UserSpan><IconImg src={userwhite} alt="" /> {loginId} </UserSpan> : <></>}
+                    { authorization ? <LinkStyle to="/logout">로그아웃</LinkStyle> : <LinkStyle to="/loginpage">로그인</LinkStyle>}
+                    { authorization ? <LinkStyle to="/selectmeetingroom">예약하기</LinkStyle> : <LinkStyle to="/roomlistpage">회의실 둘러보기</LinkStyle>}
+                    { authorization ? <LinkStyle to="/mypage">마이페이지</LinkStyle> : <></>}
                 </RightMenu>
             </NavBarMenu>
 
@@ -47,17 +48,6 @@ function Home() {
                     <span>김민구, 이병찬, 박지민, 이규훈</span>
                 </FooterRightContent>
             </FooterDiv>
-            {/* <h3> 임시 홈페이지 </h3> */}
-            {/* <Link to='/RoomListPage'><button>회의실 리스트 페이지</button></Link>
-            <Link to='/RoomInformationPage'><button>회의실 정보 페이지</button></Link>
-            <Link to='/ChangePasswordPage'><button>비밀번호 변경 페이지</button></Link>
-            <Link to='/ChangeCompletePage'><button>비밀번호 변경 완료 페이지</button></Link>
-            <Link to='/ReservationPage'><button>예약하기 페이지</button></Link>
-            <Link to='/ChooseReservationPage'><button>예약 방법 선택 페이지</button></Link>
-            <Link to='/ReservationCompletePage'><button>예약 완료 페이지</button></Link>
-            <Link to='/ShareReservationPage'><button>예약 공유 페이지</button></Link>
-            <Link to='/GoogleCalendar'><button>구글 캘린더</button></Link>
-            <Link to='/AdminMemberManagePage'><button>관리자 회원 관리 페이지</button></Link> */}
         </Nav>
     );
 }

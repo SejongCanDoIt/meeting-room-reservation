@@ -119,7 +119,7 @@ export default function MyPage() {
                     <Intro>{loginId}님</Intro>
                     <div>
                         {/* <LinkTag to="/ChangePasswordPage"><EditIcon src={edit} alt="" /></LinkTag> */}
-                        <LinkTag to="/ChangePasswordPage"><ChangePasswordBtn>비밀번호 수정하기</ChangePasswordBtn></LinkTag>
+                        <LinkTag to="/changepasswordpage"><ChangePasswordBtn>비밀번호 수정하기</ChangePasswordBtn></LinkTag>
                     </div>
                 </IntroBox>
             </ProfileDiv>
@@ -129,7 +129,7 @@ export default function MyPage() {
                 {/* <ReservationInfo subTitle={"가장 최근 이용 내역"} info={"2023년 1월 12일 월요일 15:00 ~ 16:00"}/> */}
                 <MainPageMenu icon={calendar} title={"예약하기"} where={"/selectmeetingroom"}/>
                 <MainPageMenu icon={search} title={"예약내역 확인하기"} where={"/show"}/>
-                <MainPageMenu icon={visibility} title={"회의실 둘러보기"} where={"/RoomListPage"}/>
+                <MainPageMenu icon={visibility} title={"회의실 둘러보기"} where={"/roomlistpage"}/>
                 <MainPageMenu icon={logout} title={"로그아웃"} where={"/logout"}/>
             </MenuContainer>
         </MainPageContainer>

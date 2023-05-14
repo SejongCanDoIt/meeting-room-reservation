@@ -8,8 +8,8 @@ function SelectMeetingRoom() {
                 <TitleH>회의실을 선택해주세요</TitleH>
             </div>
             <BtnBox>
-                <LinkStyle to={`/ChooseReservationPage?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
-                <LinkStyle to={`/ChooseReservationPage?room_id=${836}`}><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
+                <LinkStyle to={`/choosereservationpage?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
+                <LinkStyle to={`/choosereservationpage?room_id=${836}`}><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
             </BtnBox>
             <div>
                 <Ptag>선택시 예약 화면으로 넘어가요</Ptag>

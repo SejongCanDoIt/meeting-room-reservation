@@ -37,19 +37,19 @@ function App() {
         </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
-          <Route path="/RoomListPage" element={<RoomListPage />}></Route>
-          <Route path="/RoomInformationPage" element={<RoomInformationPage />}></Route>
-          <Route path="/ChangePasswordPage" element={<ChangePasswordPage />}></Route>
-          <Route path="/ChangeCompletePage" element={<ChangeCompletePage />}></Route>
-          <Route path="/ReservationPage" element={<ReservationPage />}></Route>
-          <Route path="/ChooseReservationPage" element={<ChooseReservationPage />}></Route>
+          <Route path="/roomlistPage" element={<RoomListPage />}></Route>
+          <Route path="/roominformationpage" element={<RoomInformationPage />}></Route>
+          <Route path="/changepasswordpage" element={<ChangePasswordPage />}></Route>
+          <Route path="/changecompletepage" element={<ChangeCompletePage />}></Route>
+          <Route path="/reservationpage" element={<ReservationPage />}></Route>
+          <Route path="/choosereservationpage" element={<ChooseReservationPage />}></Route>
           <Route path="/selectmeetingroom" element={<SelectMeetingRoom />}></Route>
-          <Route path="/ReservationCompletePage" element={<ReservationCompletePage />}></Route>
-          <Route path="/ShareReservationPage" element={<ShareReservationPage />}></Route>
-          <Route path="/startPage" element={<StartPage />}></Route>
-          <Route path="/loginPage" element={<LoginPage />}></Route>
-          <Route path="/mainPage" element={<MainPage />}></Route>
-          <Route path="/myPage" element={<MyPage />}></Route>
+          <Route path="/reservationcompletepage" element={<ReservationCompletePage />}></Route>
+          <Route path="/sharereservationpage" element={<ShareReservationPage />}></Route>
+          <Route path="/startpage" element={<StartPage />}></Route>
+          <Route path="/loginpage" element={<LoginPage />}></Route>
+          <Route path="/mainpage" element={<MainPage />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>

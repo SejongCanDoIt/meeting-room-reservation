@@ -153,7 +153,7 @@ export default function Reservation() {
                 isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
             })
             .catch((err) => {
-                navigate('/loginPage')
+                navigate('/loginpage')
             })
     }, []);
 
@@ -372,7 +372,7 @@ export default function Reservation() {
             .then((res) => {
                 console.log(res);
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}&room_id=${roomId}`)
+                navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}&room_id=${roomId}`)
             })
             .catch((err) => {
                 console.log("ERRR");
