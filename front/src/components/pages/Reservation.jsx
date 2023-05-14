@@ -159,10 +159,10 @@ export default function Reservation() {
 
     // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
     useEffect(() => {
-        axios.get('/member/18011669')
+        axios.get(`/member/${sessionStorage.getItem('LoginID')}`)
             .then((res) => {
                 setAuthority((state) => res.data.authority)
-                // console.log(res.data);
+                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -327,7 +327,6 @@ export default function Reservation() {
             return true
         }
 
-
         // 학생인 경우 2일전 예약 가능.
         if (authority === "UNI_STUDENT") {
             if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
@@ -335,6 +334,7 @@ export default function Reservation() {
             }
             
         }
+
         // 대학원은 일주일전 예약 가능.
         else if(authority === "POST_STUDENT") {
             if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7)).format('MM-DD')) {

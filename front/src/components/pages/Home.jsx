@@ -1,12 +1,25 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import userwhite from "../../assets/userwhite.png";
+import axios from "axios";
 
 function Home() {
 
     const [authorization, setAuthorization] = useState(sessionStorage.getItem('Authorization'));
     const [loginId, setLoginId] = useState(sessionStorage.getItem('LoginID'));
+
+    // login이 되어있는지 확인
+    useEffect(() => {
+        // 서버로부터 로그인 여부 확인
+        axios.get('/auth/checkLogin')
+            .then((res) => {
+                setAuthorization(true);
+            })
+            .catch((err) => {
+                setAuthorization(false);
+            })
+    }, []);
 
     return (
         <Nav>
