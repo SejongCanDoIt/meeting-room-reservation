@@ -9,6 +9,7 @@ import ReservationPage from './components/pages/ReservationPage';
 import ChooseReservationPage from './components/pages/ChooseReservationPage';
 import ReservationCompletePage from './components/pages/ReservationCompletePage';
 import ShareReservationPage from './components/pages/ShareReservationPage';
+import SelectMeetingRoom from './components/pages/SelectMeetingRoom';
 import StartPage from "./components/pages/StartPage";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
@@ -42,6 +43,7 @@ function App() {
           <Route path="/ChangeCompletePage" element={<ChangeCompletePage />}></Route>
           <Route path="/ReservationPage" element={<ReservationPage />}></Route>
           <Route path="/ChooseReservationPage" element={<ChooseReservationPage />}></Route>
+          <Route path="/selectmeetingroom" element={<SelectMeetingRoom />}></Route>
           <Route path="/ReservationCompletePage" element={<ReservationCompletePage />}></Route>
           <Route path="/ShareReservationPage" element={<ShareReservationPage />}></Route>
           <Route path="/startPage" element={<StartPage />}></Route>
@@ -90,9 +92,9 @@ const NavBar = styled.div`
   // padding: 15px;
   z-index: 1;
 
-  @media screen and (max-width: 600px) {
-    padding: 10px;
-  }
+  // @media screen and (max-width: 600px) {
+  //   padding: 10px;
+  // }
 
   background-color: #A1203C;
   color: white;
