@@ -2,7 +2,6 @@ import MainPageMenu from "./MainPageMenu";
 import ReservationInfo from "./ReservationInfo";
 import user from "../../assets/user.png";
 import search from "../../assets/search-interface-symbol.png";
-import edit from "../../assets/edit.png";
 import moment from "moment";
 import calendar from "../../assets/calendar.png";
 import visibility from "../../assets/visibility.png";
@@ -59,7 +58,6 @@ export default function MyPage() {
     const makeReserveList = (data) => {
         const infoData = [];
         for (let el of data) {
-            console.log(el);
             const startTmp = el.start.split('T'); // 2023-04-20     05:00:00
             const endTmp = el.end.split('T'); // 2023-04-20     05:00:00
             

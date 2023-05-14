@@ -162,7 +162,6 @@ export default function Reservation() {
         axios.get(`/member/${sessionStorage.getItem('LoginID')}`)
             .then((res) => {
                 setAuthority((state) => res.data.authority)
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
