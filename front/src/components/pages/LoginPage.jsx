@@ -5,6 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import * as React from 'react';
@@ -115,16 +116,19 @@ export default function LoginPage() {
             <SubContainer>
                 <InputContainer>
                     <InputBox>
-                        <Ptag>학번</Ptag>
-                        <Input type="text" onChange={onLoginIdHandler}/>
+                        {/* <Ptag>학번</Ptag> */}
+                        <TextField id="standard-search" label="학번" variant="standard" type="string" sx={{ m: 1, width: '100%' }} onChange={onLoginIdHandler}/> 
+                        {/* <Input type="string" onChange={onLoginIdHandler}/> */}
                     </InputBox>
                     <InputBox>
-                        <Ptag>비밀번호</Ptag>
-                        <Input type="password" onChange={onLoginPasswordHandler}/>
+                        {/* <Ptag>비밀번호</Ptag> */}
+                        <TextField id="standard-password-input" label="비밀번호" variant="standard" type="password" sx={{ m: 1, width: '100%' }} onChange={onLoginPasswordHandler}/>
+                        {/* <Input type="password" onChange={onLoginPasswordHandler}/> */}
                     </InputBox>
                 </InputContainer>
                 <LoginBtn onClick={onLoginButtonHandler}>로그인</LoginBtn>
             </SubContainer>
+            {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
             
             {/* 입력된 정보가 다를때 나오는 알림 */}
             {isError ? 

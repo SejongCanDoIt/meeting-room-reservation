@@ -3,7 +3,6 @@ import "../css/CustomCalendar.css";
 import styled from "styled-components";
 import ReservationNav from "./ReservationNav";
 import TimeSelect from "./TimeSelect";
-import RegularOptions from "./RegularOptions";
 import Calendar from "react-calendar";
 import moment from "moment";
 import TimeTable from "./TimeTable";
