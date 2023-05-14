@@ -140,6 +140,7 @@ export default function Reservation() {
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
     const [searchParams, setSearchParams] = useSearchParams();
     const [roomId, setRoodId] = useState();
+    const [authority, setAuthority] = useState("");
     const [reservedTime, setReservedTime] = useState([]);
     const [tmpMarks, setTmpMarks] = useState([]);
     const navigate = useNavigate();
@@ -149,13 +150,24 @@ export default function Reservation() {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                console.log("로그인 되어있습니다");
                 isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
             })
             .catch((err) => {
                 navigate('/loginPage')
             })
     }, []);
+
+    // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
+    useEffect(() => {
+        axios.get('/member/18011669')
+            .then((res) => {
+                setAuthority((state) => res.data.authority)
+                // console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
 
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
@@ -315,10 +327,27 @@ export default function Reservation() {
             return true
         }
 
-        // 오늘을 기준으로 1개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용) // 2개월 뒤로할려면  new Date().getMonth() + 1
-        if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth())).format('MM-DD')) {
-            return true
+
+        // 학생인 경우 2일전 예약 가능.
+        if (authority === "UNI_STUDENT") {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
+                return true
+            }
+            
         }
+        // 대학원은 일주일전 예약 가능.
+        else if(authority === "POST_STUDENT") {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7)).format('MM-DD')) {
+                return true
+            }
+        }
+
+        // 교수, 교직원 -> 무제한
+
+        // 오늘을 기준으로 1개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용) // 2개월 뒤로할려면  new Date().getMonth() + 1
+        // if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth())).format('MM-DD')) {
+        //     return true
+        // }
         // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
         //     return true
         // }
