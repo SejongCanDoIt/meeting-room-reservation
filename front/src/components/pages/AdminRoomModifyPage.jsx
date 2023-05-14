@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 
-export default function AdminRoomModifyPage() {
-    const room = {
-        id: 1,
-        name: 'AI센터 613호 회의실',
-        description: '대양 AI센터 613호 회의실은 세종대학교 대양AI센터 8층에 위치해있습니다. 회의실의 규모는 최대 8명까지 수용이 가능하며 화이트보드와 빔 프로젝트가 포함되어 있는 회의에 최적화된 장소입니다.',
-        location: '대양 AI센터 613호 회의실은 세종대학교 대양AI센터 8층에 위치해있습니다. 회의실의 규모는 최대 8명까지 수용이 가능하며 화이트보드와 빔 프로젝트가 포함되어 있는 회의에 최적화된 장소입니다.',
-        image: 'https://www.kmeetingroom.com/_storage/thumbnails/EGjiXO3iYGEkyTrUCvmNllDLhbkJLh4xATGnzkI2.jpg',
-        facilities: {
-            chairs: 8,
-            wifi: true,
-            whiteboard: true,
-            projector: true,
-            monitors: 2,
-            computers: 2,
-        },
+export default function AdminRoomModifyPage({ initialRoomInfo }) {
+    const [room, setRoom] = useState(initialRoomInfo);
+
+    const handleChange = (event) => {
+        const { name, value, type, checked } = event.target;
+        setRoom(prevState => ({
+            ...prevState,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.put('/room/update', room);
+            alert("회의실 정보가 성공적으로 변경되었습니다.");
+        } catch (error) {
+            console.error("회의실 정보 변경에 실패하였습니다.", error);
+        }
     };
 
     return (
@@ -29,39 +34,59 @@ export default function AdminRoomModifyPage() {
                 <RoomInfoContainer>
                     <Header>
                         <h1>회의실 정보</h1>
-                        <button>변경하기</button>
+                        <button onClick={handleSubmit}>변경하기</button>
                     </Header>
-                    <RoomInfo>
-                        <LeftInfo>
-                            <NameBlock>
-                                <StyledH2>회의실 이름</StyledH2>
-                                <p>{room.name}</p>
-                                <hr></hr>
-                            </NameBlock>
-                            <Block>
-                                <StyledH2>회의실 설명</StyledH2>
-                                <StyledP>{room.description}</StyledP>
-                            </Block>
-                            <Block>
-                                <StyledH2>회의실 위치</StyledH2>
-                                <StyledP>{room.location}</StyledP>
-                            </Block>
-                        </LeftInfo>
-                        <RightInfo>
-                            <RoomImg src={room.image} alt={`이미지: ${room.name}`} />
-                            <ButtonContainer>
-                                <RoomAddButton>사진 추가하기</RoomAddButton>
-                            </ButtonContainer>
-                            <FacilitiesList>
-                                <FacilityItem><FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" width="20" height="20" /> {room.facilities.chairs}개</FacilityItem>
-                                <FacilityItem><FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" width="20" height="20" /> {room.facilities.wifi ? '있음' : '없음'}</FacilityItem>
-                                <FacilityItem><FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" width="20" height="20" /> {room.facilities.whiteboard ? '있음' : '없음'}</FacilityItem>
-                                <FacilityItem><FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" width="20" height="20" /> {room.facilities.monitors}개</FacilityItem>
-                                <FacilityItem><FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" width="20" height="20" /> {room.facilities.projector ? '있음' : '없음'}</FacilityItem>
-                                <FacilityItem><FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" width="20" height="20" /> {room.facilities.computers}개</FacilityItem>
-                            </FacilitiesList>
-                        </RightInfo>
-                    </RoomInfo>
+                    <form onSubmit={handleSubmit}>
+                        <RoomInfo>
+                            <LeftInfo>
+                                <NameBlock>
+                                    <StyledH2>회의실 이름</StyledH2>
+                                    <input type="text" name="name" value={room.name} onChange={handleChange} required />
+                                    <hr></hr>
+                                </NameBlock>
+                                <Block>
+                                    <StyledH2>회의실 설명</StyledH2>
+                                    <input type="text" name="info" value={room.info} onChange={handleChange} required />
+                                </Block>
+                                <Block>
+                                    <StyledH2>회의실 위치</StyledH2>
+                                    <input type="text" name="loc" value={room.loc} onChange={handleChange} required />
+                                </Block>
+                            </LeftInfo>
+                            <RightInfo>
+                                <RoomImg src={room.image} alt={`이미지: ${room.name}`} />
+                                <ButtonContainer>
+                                    <RoomAddButton>사진 추가하기</RoomAddButton>
+                                </ButtonContainer>
+                                <FacilitiesList>
+                                    <FacilityItem>
+                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" width="20" height="20" />
+                                        <input type="number" name="facilities.chairs" value={room.facilities.chairs} onChange={handleChange} required />
+                                    </FacilityItem>
+                                    <FacilityItem>
+                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" width="20" height="20" />
+                                        <input type="checkbox" name="facilities.wifi" checked={room.facilities.wifi} onChange={handleChange} required />
+                                    </FacilityItem>
+                                    <FacilityItem>
+                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" width="20" height="20" />
+                                        <input type="checkbox" name="facilities.whiteboard" checked={room.facilities.whiteboard} onChange={handleChange} required />
+                                    </FacilityItem>
+                                    <FacilityItem>
+                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" width="20" height="20" />
+                                        <input type="number" name="facilities.monitors" value={room.facilities.monitors} onChange={handleChange} required />
+                                    </FacilityItem>
+                                    <FacilityItem>
+                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" width="20" height="20" />
+                                        <input type="checkbox" name="facilities.projector" checked={room.facilities.projector} onChange={handleChange} required />
+                                    </FacilityItem>
+                                    <FacilityItem>
+                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" width="20" height="20" />
+                                        <input type="number" name="facilities.computers" value={room.facilities.computers} onChange={handleChange} required />
+                                    </FacilityItem>
+                                </FacilitiesList>
+                            </RightInfo>
+                        </RoomInfo>
+                    </form>
                 </RoomInfoContainer>
             </RoomInformation>
         </>
@@ -135,6 +160,13 @@ const NameBlock = styled.div`
 
 const Block = styled.div`
     margin-bottom: 20px;
+
+    p {
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px 10px 20px 10px;
+    }
 `;
 
 const RightInfo = styled.div`

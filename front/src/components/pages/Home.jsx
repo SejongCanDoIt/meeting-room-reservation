@@ -15,14 +15,14 @@ function Home() {
                 <RightMenu>
                     { authorization ? <UserSpan><IconImg src={userwhite} alt="" /> {loginId}</UserSpan> : <></>}
                     { authorization ? <LinkStyle to="/logout">로그아웃</LinkStyle> : <LinkStyle to="/loginPage">로그인</LinkStyle>}
-                    { authorization ? <LinkStyle to="/ChooseReservationPage">예약하기</LinkStyle> : <LinkStyle to="/RoomListPage">회의실 둘러보기</LinkStyle>}
+                    { authorization ? <LinkStyle to="/selectmeetingroom">예약하기</LinkStyle> : <LinkStyle to="/RoomListPage">회의실 둘러보기</LinkStyle>}
                     { authorization ? <LinkStyle to="/myPage">마이페이지</LinkStyle> : <></>}
                 </RightMenu>
             </NavBarMenu>
 
             <ImgBox>
                 <HomeTitle>세종대학교 회의실예약 시스템</HomeTitle>
-                <Img src="https://images.unsplash.com/photo-1580537782437-8d6a0ca13de6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80" alt="" />
+                <Img src="http://www.sejongpr.ac.kr/dataview/sejong_pr/temp/DEI20210428140436.jpg" alt="" />
             </ImgBox>
 
             <FooterDiv>
@@ -50,6 +50,7 @@ function Home() {
 }
 
 const Nav = styled.div`
+    width: 100%;
     height: 100vh;
     // height: 300px;
     display: flex;

@@ -10,6 +10,7 @@ import TimeTable from "./TimeTable";
 import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 
 // 날짜의 초기값
@@ -167,6 +168,8 @@ export default function RegularReservations() {
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
     const [reservedTime, setReservedTime] = useState([]);
     const [overlap, setOverLap] = useState(0);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [roodId, setRoodId] = useState();
     const [tmpMarks, setTmpMarks] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
@@ -177,6 +180,7 @@ export default function RegularReservations() {
         axios.get('/auth/checkLogin')
             .then((res) => {
                 // console.log("로그인 되어있습니다")
+                isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
             })
             .catch((err) => {
                 navigate('/loginPage')
@@ -202,6 +206,18 @@ export default function RegularReservations() {
     //     // console.log("카운트 불러오기");
     //     createMonthReservedCount();
     // }, [selectedDay.month])
+
+    // 회의실이 선택되지 않았을때 실행되는 함수
+    const isRoomIdSelected = () => {
+        const selectedRoomId = searchParams.get('room_id');
+        if (selectedRoomId === null || selectedRoomId === "null") {
+            alert('회의실을 선택해주세요');
+            navigate('/selectmeetingroom');
+        }
+        else {
+            setRoodId(selectedRoomId);
+        }
+    }
 
 
     // 월별 예약건수를 서버에 요청해 만드는 함수.
@@ -453,7 +469,7 @@ export default function RegularReservations() {
         }  
         
         // console.log("예약 완료");
-        axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
+        axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roodId}})
             .then((res) => {
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
                 navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)

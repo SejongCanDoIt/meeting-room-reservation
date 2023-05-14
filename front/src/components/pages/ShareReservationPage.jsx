@@ -30,13 +30,13 @@ function ShareReservationPage() {
         <div id="shareReservationPageContainer">
             <section id="shareReservationSection">
                 <div id="contentListSpace">
-                    <h1>예약을 확인해드릴게요</h1>
                     <ReserveContent>
+                        <ConfirmDiv>예약을 확인해드릴게요</ConfirmDiv>
                         <ul id="contentList">
-                            <li className="contents">날짜 <p>{serchParams.get('year')}년 {serchParams.get('month')}월 {serchParams.get('date')}일</p></li>
-                            <li className="contents">요일 <p>{dayList[serchParams.get('day')]}요일</p></li>
-                            <li className="contents">시간 <p>{serchParams.get('startTime')}시부터 {serchParams.get('endTime')}시</p></li>
-                            <li className="contents">장소 <p>AI센터 835호</p></li>
+                            <li className="contents"><span>날짜</span> {serchParams.get('year')}년 {serchParams.get('month')}월 {serchParams.get('date')}일</li>
+                            <li className="contents"><span>요일</span> {dayList[serchParams.get('day')]}요일</li>
+                            <li className="contents"><span>시간</span> {serchParams.get('startTime')}시부터 {serchParams.get('endTime')}시</li>
+                            <li className="contents"><span>장소</span> AI센터 {serchParams.get('room_id')}호</li>
                         </ul>
                         <CopyToClipboard text={url}>
                                 <ReserveBtn onClick={onLinkCopyHandler}>링크 복사하기</ReserveBtn>
@@ -47,6 +47,19 @@ function ShareReservationPage() {
         </div>
     );
 }
+
+const ConfirmDiv = styled.div`
+    text-align: center;
+    
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    
+    width: 100%;
+    color: #A1203C;
+    // background-color: #b5e48c;
+    
+`
 
 const ReserveContent = styled.div`
     width: 90%;

@@ -10,6 +10,7 @@ import TimeTable from "./TimeTable";
 import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useSearchParams } from "react-router-dom";
 
 
 // 날짜의 초기값
@@ -137,7 +138,9 @@ export default function Reservation() {
     // 예약 타입, 날짜 선택, 시간 선택의 상태를 다루는 변수들.
     const [selectedDay, dayDispatch] = useReducer(dayReducer, initialDay);
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
-
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [roomId, setRoodId] = useState();
+    const [authority, setAuthority] = useState("");
     const [reservedTime, setReservedTime] = useState([]);
     const [tmpMarks, setTmpMarks] = useState([]);
     const navigate = useNavigate();
@@ -147,16 +150,28 @@ export default function Reservation() {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                console.log("로그인 되어있습니다")
+                isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
             })
             .catch((err) => {
                 navigate('/loginPage')
             })
     }, []);
 
+    // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
+    useEffect(() => {
+        axios.get('/member/18011669')
+            .then((res) => {
+                setAuthority((state) => res.data.authority)
+                // console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
-        console.log(selectedDay.year, selectedDay.month, selectedDay.date);
+        // console.log(selectedDay.year, selectedDay.month, selectedDay.date);
         axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
             .then((res) => {
                 // console.log(res.data);
@@ -172,7 +187,17 @@ export default function Reservation() {
         createMonthReservedCount();
     }, [selectedDay.month])
 
-
+    // 회의실이 선택되지 않았을때 실행되는 함수
+    const isRoomIdSelected = () => {
+        const selectedRoomId = searchParams.get('room_id');
+        if (selectedRoomId === null || selectedRoomId === "null") {
+            alert('회의실을 선택해주세요');
+            navigate('/selectmeetingroom');
+        }
+        else {
+            setRoodId(selectedRoomId);
+        }
+    }
 
     // 월별 예약건수를 서버에 요청해 만드는 함수.
     const createMonthReservedCount = async () => {
@@ -186,12 +211,11 @@ export default function Reservation() {
         let idx = 2;
         let ttt = 0;
         while (idx > 0) {
-            console.log("HIHIHI");
             const currentMonth = selectedDay.month + ttt < 10 ? "0" + (selectedDay.month + ttt).toString() : (selectedDay.month + ttt).toString();
             const todayDay = new Date().getDate();
             const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 1, 0).getDate();
             for (let day=1; day<=lastMonthDay ; day++) {
-                console.log(selectedDay.year, currentMonth, day)
+                // console.log(selectedDay.year, currentMonth, day)
                 // 서버에 해당 날짜의 예약건수 요청.
                 axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
                     .then((res) => {
@@ -303,10 +327,27 @@ export default function Reservation() {
             return true
         }
 
-        // 오늘을 기준으로 1개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용) // 2개월 뒤로할려면  new Date().getMonth() + 1
-        if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth())).format('MM-DD')) {
-            return true
+
+        // 학생인 경우 2일전 예약 가능.
+        if (authority === "UNI_STUDENT") {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
+                return true
+            }
+            
         }
+        // 대학원은 일주일전 예약 가능.
+        else if(authority === "POST_STUDENT") {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7)).format('MM-DD')) {
+                return true
+            }
+        }
+
+        // 교수, 교직원 -> 무제한
+
+        // 오늘을 기준으로 1개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용) // 2개월 뒤로할려면  new Date().getMonth() + 1
+        // if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth())).format('MM-DD')) {
+        //     return true
+        // }
         // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
         //     return true
         // }
@@ -328,11 +369,11 @@ export default function Reservation() {
         }   
 
         console.log(reservationInfo);
-        axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
+        axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roomId}})
             .then((res) => {
                 console.log(res);
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
+                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}&room_id=${roomId}`)
             })
             .catch((err) => {
                 console.log("ERRR");
