@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useReducer } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import axios from "axios";
-import Cookies from "universal-cookie";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import * as React from 'react';
 
 const loginDefault = {
     id: "",
@@ -30,9 +34,15 @@ const loginReducer = (state, action) => {
     }
 }
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
 export default function LoginPage() {
 
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
+    const [loginError, setLoginError] = useState(<></>);
+    const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
 
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
@@ -63,21 +73,39 @@ export default function LoginPage() {
         })
     }
     
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        setIsError(false);
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpen(false);
+    };
+
     // 로그인 버튼이 눌렸을때 세션에 정보를 저장하고, /myPage로 라우팅
-    const onLoginButtonHandler = () => {
+    const onLoginButtonHandler = async () => {
+        handleClick();
+
         const loginInfo = {
             sno: login.id,
             password: login.password,
         }
-        axios
+        await axios
         .post("/auth/login", {...loginInfo})
         .then((res) => {
+            setIsError(false);
             sessionStorage.setItem('Authorization', true);
             sessionStorage.setItem('LoginID', login.id);
             navigate(`/myPage?id=${login.id}`)
         })
-        .catch((err) => {
-            alert("아이디 또는 비밀번호를 확인해주세요");
+        .catch(async (err) => {
+            setIsError(true);
         });
     }
 
@@ -97,6 +125,13 @@ export default function LoginPage() {
                 </InputContainer>
                 <LoginBtn onClick={onLoginButtonHandler}>로그인</LoginBtn>
             </SubContainer>
+            
+            {/* 입력된 정보가 다를때 나오는 알림 */}
+            {isError ? 
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>아이디 또는 비밀번호가 잘못되었습니다.</Alert></Snackbar> 
+                : 
+                <></>
+            }
         </MainContainer>
     );
 }
