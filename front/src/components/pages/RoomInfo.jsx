@@ -1,10 +1,42 @@
 import styled from "styled-components";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link} from 'react-router-dom';
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+import user from "../../assets/user.png";
 
+const initialRoomInfoData = {
+    "bim_projector": 0,
+    "board": 0,
+    "cap": 0,
+    "com": 0,
+    "tv": 0,
+    "wifi": 0,
+}
 
 export default function RoomInfo() {
 
     const [serchParams, setSearchParams] = useSearchParams();
+    const [roomInfoData, setRoomInfoData] = useState(initialRoomInfoData);
+
+    useEffect(() => {
+        axios.get(`/room/detail/${serchParams.get('room_id')}`) 
+            .then((res) => {
+                const data = res.data;
+                const roomData = {
+                    "bim_projector": data.bim_projector,
+                    "board": data.board,
+                    "cap": data.cap,
+                    "com": data.com,
+                    "tv": data.tv,
+                    "wifi": data.wifi,
+                }
+                setRoomInfoData((state) => roomData);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
 
     return (
         <RoomInfoContainer>
@@ -16,36 +48,36 @@ export default function RoomInfo() {
             <ContentContainer>
                 <RoomName>
                     <h2>AI센터 {serchParams.get('room_id')}호 회의실</h2>
-                    <ReserveBtn>예약</ReserveBtn>
+                    <LinkTag to={`/ChooseReservationPage?room_id=${serchParams.get('room_id')}`}><ReserveBtn>예약</ReserveBtn></LinkTag>
                 </RoomName>
                 {/* 보유편의 시설 */}
                 <FacilityContainer>
                     <FacilityBox>
                         <FacilityContent>
-                            <FIcon className="facilityIcon" alt="chair" src="https://cdn-icons-png.flaticon.com/512/664/664374.png"/>
-                            <p>8개</p>
+                            <FIcon className="facilityIcon" alt="chair" src={user}/>
+                            <Ptag>{roomInfoData.cap}명</Ptag>
                         </FacilityContent>
                         <FacilityContent>
                             <FIcon className="facilityIcon" alt="chair" src="https://cdn-icons-png.flaticon.com/512/566/566280.png"/>
-                            <p>8개</p>
+                            {roomInfoData.wifi ? <Ptag>사용가능</Ptag> : <Ptag>사용불가</Ptag>}
                         </FacilityContent>
                         <FacilityContent>
                             <FIcon className="facilityIcon" alt="chair" src="https://cdn-icons-png.flaticon.com/512/4021/4021963.png"/>
-                            <p>8개</p>
+                            {roomInfoData.bim_projector ? <Ptag>사용가능</Ptag> : <Ptag>사용불가</Ptag>}
                         </FacilityContent>
                     </FacilityBox>
                     <FacilityBox>
                         <FacilityContent>
                             <FIcon className="facilityIcon" alt="chair" src="https://cdn-icons-png.flaticon.com/512/8148/8148583.png"/>
-                            <p>8개</p>
+                            <Ptag>{roomInfoData.board}개</Ptag>
                         </FacilityContent>
                         <FacilityContent>
                             <FIcon className="facilityIcon" alt="chair" src="https://cdn-icons-png.flaticon.com/512/81/81793.png"/>
-                            <p>8개</p>
+                            <Ptag>{roomInfoData.tv}개</Ptag>
                         </FacilityContent>
                         <FacilityContent>
                             <FIcon className="facilityIcon" alt="chair" src="https://cdn-icons-png.flaticon.com/512/2004/2004580.png"/>
-                            <p>8개</p>
+                            <Ptag>{roomInfoData.com}개</Ptag>
                         </FacilityContent>
                     </FacilityBox>
                 </FacilityContainer>
@@ -62,6 +94,15 @@ export default function RoomInfo() {
 
     );
 }
+
+const LinkTag = styled(Link)`
+    text-decoration: none;
+`
+
+const Ptag = styled.p`
+    font-size: 11px;
+    // font-weight: bold;
+`
 
 const RoomInfoContainer = styled.div`
     width: 100%;
@@ -180,6 +221,11 @@ const FIcon = styled.img`
 const FacilityContent = styled.div`
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+
+    // background-color: gray;
+
+    width: 100px;
 `
 
 const DescriptionBox = styled.div`

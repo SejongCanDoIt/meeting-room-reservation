@@ -3,7 +3,6 @@ import "../css/CustomCalendar.css";
 import styled from "styled-components";
 import ReservationNav from "./ReservationNav";
 import TimeSelect from "./TimeSelect";
-import RegularOptions from "./RegularOptions";
 import Calendar from "react-calendar";
 import moment from "moment";
 import TimeTable from "./TimeTable";
@@ -153,16 +152,15 @@ export default function Reservation() {
                 isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
             })
             .catch((err) => {
-                navigate('/loginPage')
+                navigate('/loginpage')
             })
     }, []);
 
     // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
     useEffect(() => {
-        axios.get('/member/18011669')
+        axios.get(`/member/${sessionStorage.getItem('LoginID')}`)
             .then((res) => {
                 setAuthority((state) => res.data.authority)
-                // console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -327,7 +325,6 @@ export default function Reservation() {
             return true
         }
 
-
         // 학생인 경우 2일전 예약 가능.
         if (authority === "UNI_STUDENT") {
             if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
@@ -335,6 +332,7 @@ export default function Reservation() {
             }
             
         }
+
         // 대학원은 일주일전 예약 가능.
         else if(authority === "POST_STUDENT") {
             if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7)).format('MM-DD')) {
@@ -373,7 +371,7 @@ export default function Reservation() {
             .then((res) => {
                 console.log(res);
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/ShareReservationPage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}&room_id=${roomId}`)
+                navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}&room_id=${roomId}`)
             })
             .catch((err) => {
                 console.log("ERRR");
