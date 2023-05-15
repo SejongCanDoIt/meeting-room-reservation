@@ -141,8 +141,10 @@ public class ManagementController {
                                                                           @RequestParam("month") int month,
                                                                           @RequestParam("day") int day) {
         // 날짜별 전체 예약 리스트 반환
-        LocalDateTime dateInfo = LocalDateTime.of(year, month, day, 0, 0);
-        
+        LocalDateTime dateStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime dateEnd = LocalDateTime.of(year, month, day+1, 0, 0);
+        List<ReservationsDto> reservationList = reservationService.getReservationListByDate(dateStart, dateEnd);
+        return ResponseEntity.ok(reservationList);
     }
 
 }

@@ -47,6 +47,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.member.studentNo = :studentNo order by r.start DESC ")
     List<Reservation> getReservationListBySno(@Param("studentNo") String studentNo);
 
-
+    @Query("select r from Reservation r where :dateStart <= r.start and r.end < :dateEnd order by r.start DESC ")
+    List<Reservation> getReservationListByDate(@Param("dateStart") LocalDateTime dateStart, @Param("dateEnd") LocalDateTime dateEnd);
 
 }
