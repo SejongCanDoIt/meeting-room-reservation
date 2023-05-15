@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.MemberDto;
 import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
 import sejong.reserve.repository.ReservationRepository;
@@ -22,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -117,6 +119,14 @@ public class MemberService {
         Member member = memberById.get();
         int cnt = member.getCnt();
         member.setCnt(cnt++);
+    }
+
+    public List<MemberDto> findMemberBySnoOrName(String q) {
+        List<Member> memberBySnoOrName = memberRepository.findMemberBySnoOrName(q);
+        List<MemberDto> memberDtoList = memberBySnoOrName.stream()
+                .map(m -> new MemberDto(m))
+                .collect(Collectors.toList());
+        return memberDtoList;
     }
 
 }

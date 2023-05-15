@@ -324,5 +324,19 @@ public class ReservationController {
         return ResponseEntity.ok(todayReserveCnt);
     }
 
+    @GetMapping("/list-using-sno")
+    public ResponseEntity<List<ReservationsDto>> getReservationList(@RequestParam String sno) {
+        Member member = memberService.findByStudentNo(sno);
+        List<ReservationsDto> reservations =
+                reservationService.getReservationListBySno(member.getStudentNo());
+
+        log.info("sno = {}", member);
+        if (!reservations.isEmpty()) {
+            return ResponseEntity.ok(reservations);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
 
 }

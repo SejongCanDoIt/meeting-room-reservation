@@ -191,4 +191,10 @@ public class ReservationService {
         }
         return todayTimeCheck;
     }
+
+    public List<ReservationsDto> getReservationListBySno(String student_no) {
+        List<Reservation> reservations = reservationRepository.getReservationListBySno(student_no);
+        List<ReservationsDto> reservationDtoList = convertToDto(reservations);
+        return reservationDtoList;
+    }
 }
