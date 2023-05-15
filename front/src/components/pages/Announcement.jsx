@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from "styled-components";
 
-const ProfileDiv = styled.div`
+const AnnounceDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,9 +27,9 @@ const Intro = styled.h2`
 export default function Announcement() {
     return (
         <div>
-            <ProfileDiv>
+            <AnnounceDiv>
                 <Intro>공지사항</Intro>
-            </ProfileDiv>
+            </AnnounceDiv>
 
             <div>
                 <Accordion>

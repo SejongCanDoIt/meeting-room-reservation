@@ -31,6 +31,7 @@ function Home() {
                     { authorization ? <LinkStyle to="/logout">로그아웃</LinkStyle> : <LinkStyle to="/loginpage">로그인</LinkStyle>}
                     { authorization ? <LinkStyle to="/selectmeetingroom">예약하기</LinkStyle> : <LinkStyle to="/roomlistpage">회의실 둘러보기</LinkStyle>}
                     { authorization ? <LinkStyle to="/mypage">마이페이지</LinkStyle> : <></>}
+                    { authorization ? <LinkStyle to="/announcement">공지사항</LinkStyle> : <></>}
                 </RightMenu>
             </NavBarMenu>
 
@@ -45,7 +46,7 @@ function Home() {
                     <div>Email: rooster100@naver.com</div>
                 </FooterLeftContent>
                 <FooterRightContent>
-                    <span>김민구, 이병찬, 박지민, 이규훈</span>
+                    <span>개발자: 김민구, 이병찬, 박지민, 이규훈</span>
                 </FooterRightContent>
             </FooterDiv>
         </Nav>
@@ -136,7 +137,7 @@ const FooterLeftContent = styled.div`
 
     border-right: 1px solid white;
 
-  
+    
     flex: 0.5;
 
     color: white;
@@ -187,7 +188,7 @@ const NavBarMenu = styled.div`
 
     @media screen and (max-width: 900px) {
         flex-direction: column;
-        height: 100px;
+        height: 150px;
         align-items: center;
         justify-content: center;
     }

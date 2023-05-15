@@ -168,6 +168,7 @@ export default function RegularReservations() {
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
     const [reservedTime, setReservedTime] = useState([]);
     const [overlap, setOverLap] = useState(0);
+    const [authority, setAuthority] = useState("");
     const [searchParams, setSearchParams] = useSearchParams();
     const [roodId, setRoodId] = useState();
     const [tmpMarks, setTmpMarks] = useState([]);
@@ -186,6 +187,17 @@ export default function RegularReservations() {
                 navigate('/loginpage')
             })
     }, []);
+
+    // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
+    useEffect(() => {
+        axios.get(`/member/${sessionStorage.getItem('LoginID')}`)
+            .then((res) => {
+                setAuthority((state) => res.data.authority)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
 
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
@@ -434,10 +446,25 @@ export default function RegularReservations() {
             return true
         }
 
-        // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
-        if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format('MM-DD')) {
-            return true
+        // 학생인 경우 2일전 예약 가능.
+        if (authority === "UNI_STUDENT") {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
+                return true
+            }
+            
         }
+
+        // 대학원은 일주일전 예약 가능.
+        else if(authority === "POST_STUDENT") {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7)).format('MM-DD')) {
+                return true
+            }
+        }
+
+        // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
+        // if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format('MM-DD')) {
+        //     return true
+        // }
         // // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
         // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 2, new Date().getDate())).format('MM-DD')) {
         //     return true
