@@ -15,6 +15,7 @@ import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
 import RoomInfo from "./components/pages/RoomInfo";
+import Announcement from "./components/pages/Announcement";
 import PrivateRoute from "./components/pages/PrivateRoute";
 import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
@@ -51,6 +52,7 @@ function App() {
           <Route path="/mainpage" element={<MainPage />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
+          <Route path="/announcement" element={<Announcement />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
