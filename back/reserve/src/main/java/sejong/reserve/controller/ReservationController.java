@@ -98,7 +98,7 @@ public class ReservationController {
         }
 
         if(now.plusDays(possibleGap).isBefore(start)) {
-            log.info("예약 가능한 마지막 날= {}", now.plusWeeks(possibleGap));
+            log.info("예약 가능한 마지막 날= {}", now.plusDays(possibleGap));
             log.info("예약 요청한 날 = {}", start);
             throw new NotAvailableReservedException("권한에 부여된 예약 가능 날짜가 아닙니다.");
         }
