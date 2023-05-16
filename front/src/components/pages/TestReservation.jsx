@@ -308,7 +308,7 @@ export default function TestReservation() {
         }   
 
         console.log(reservationInfo);
-        axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roomId}})
+        axios.post('/reserve/', {...reservationInfo}, {params: {room_id: 835}})
             .then((res) => {
                 console.log(res);
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
@@ -325,34 +325,6 @@ export default function TestReservation() {
     const onReservedStatusHandler = () => {
         return reservedTime;
     };
-
-    // 예약 시작 시간
-    // const onTimeSelectHandler = (e) => {
-    //     const start = parseInt(e.target.value);
-    //     timeDispatch({
-    //         type: "START_TIME",
-    //         time: start,
-    //     })
-    //     onReserveTimeHandler(start, selectedTime.rangeTime);
-    // }
-    // // 예약 종료 시간
-    // const onReserveTimeHandler = (s, e) => {
-    //     const end = (s + e);
-    //     timeDispatch({
-    //         type: "END_TIME",
-    //         time: end,
-    //     })
-    // }
-
-    // // 예약 간격 시간
-    // const onRangeTimeHandler = (e) => {
-    //     const range = parseInt(e.target.value);
-    //     timeDispatch({
-    //         type: "END_TIME",
-    //         time: range,
-    //     })
-    //     onReserveTimeHandler(selectedTime.startTime, range);
-    // }
 
     // 예약 시작시간
     const onStartTimeSelectHandler = (hour, minute) => {
@@ -388,10 +360,10 @@ export default function TestReservation() {
             <ReservationNav reserveType={type} message="언제 사용하실 건가요?"/>
             <Calendar onChange={onCalendarHandler} tileClassName={reservedStatus} tileDisabled={tileDisabledHandler}/>
 
-            <TimeBox>
+            {/* <TimeBox>
                 <TimeTable reservedStatusList={onReservedStatusHandler()}/>
                 <Ptag>해당 날짜의 예약 상태입니다.</Ptag>
-            </TimeBox>
+            </TimeBox> */}
             {/* <TimeSlider desc="시간을 선택해주세요" maxValue={23}/>
             <TimeSlider desc="분을 선택해주세요" maxValue={59}/> */}
             <ReservedInfoDiv>

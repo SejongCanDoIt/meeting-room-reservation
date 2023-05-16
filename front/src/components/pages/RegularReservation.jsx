@@ -3,6 +3,7 @@ import "../css/CustomCalendar.css";
 import styled from "styled-components";
 import ReservationNav from "./ReservationNav";
 import TimeSelect from "./TimeSelect";
+import TimeDialog from "./TimeDialog";
 import RegularOptions from "./RegularOptions";
 import Calendar from "react-calendar";
 import moment from "moment";
@@ -82,10 +83,24 @@ const timeReducer = (state, action) => {
             }
         }
 
+        case "START_MINUTE": {
+            return {
+                ...state,
+                startMinute: action.minute
+            }
+        }
+
         case "END_TIME": {
             return {
                 ...state,
                 endTime: action.time,
+            }
+        }
+
+        case "END_MINUTE": {
+            return {
+                ...state,
+                endMinute: action.minute
             }
         }
 
@@ -337,7 +352,7 @@ export default function RegularReservations() {
 
             const selecDay = translateIntToString(yearR, monthR, dateR, dayR);
 
-            makeReservation(selecDay.year, selecDay.month, selecDay.date, dayR, selecDay.startTime, selecDay.endTime);
+            makeReservation(selecDay.year, selecDay.month, selecDay.date, dayR, selecDay.startTime, selecDay.startMinute, selecDay.endTime, selecDay.endMinute);
             for (let cnt=0 ; cnt < regularInfo.count; cnt++) {
                 const nextRegular = onMonthRegularHandler(yearR, monthR, dateR, dayR);
                 yearR = nextRegular.yearR;
@@ -354,7 +369,7 @@ export default function RegularReservations() {
     }
 
     const onMonthRegularHandler = (yearR, monthR, dateR, dayR) => {
-        // console.log("월간 정기예약");
+        console.log("월간 정기예약");
         // console.log(new Date(selectedDay.year, selectedDay.month, 0).getDate());
         // console.log(new Date(selectedDay.year, selectedDay.month, 0));
             
@@ -375,11 +390,12 @@ export default function RegularReservations() {
         const dateString = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
         const dayString = dayR;
         const startTimeR = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const startMinuteR = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
         const endTimeR = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
-        
+        const endMinuteR = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
         // console.log(`${yearR}년 ${monthR}월 ${dateR}일 정기 예약 진행`);
 
-        makeReservation(yearString, monthString, dateString, dayString, startTimeR, endTimeR);
+        makeReservation(yearString, monthString, dateString, dayString, startTimeR, startMinuteR, endTimeR, endMinuteR);
 
         return {
             yearR: tmp.getFullYear(),
@@ -399,13 +415,17 @@ export default function RegularReservations() {
         const dateT = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
         const dayT = selectedDay.day;
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+        const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
         
-        console.log(`${startTime}시 부터, ${endTime}시 까지`);
-        await reservationOverlapHandler(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime)
-            .then((res) => {
-                res ? overLapHandler(yearT, monthT, dateT) : makeReservation(yearT, monthT, dateT, dayT, startTime, endTime);
-            })
+        makeReservation(yearT, monthT, dateT, dayT, startTime, startMinute, endTime, endMinute);
+
+        // console.log(`${startTime}시 부터, ${endTime}시 까지`);
+        // await reservationOverlapHandler(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime)
+        //     .then((res) => {
+        //         res ? overLapHandler(yearT, monthT, dateT) : makeReservation(yearT, monthT, dateT, dayT, startTime, startMinute, endTime, endMinute);
+        //     })
         // console.log(`${yearT}년 ${monthT}월 ${dateT}일 중복여부: ${overlap}`);
         // await makeReservation(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime);
     }
@@ -433,9 +453,11 @@ export default function RegularReservations() {
         const month = monthR < 10 ? "0" + monthR.toString() : monthR.toString();
         const date = dateR < 10 ? "0" + dateR.toString() : dateR.toString();
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+        const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
 
-        return {year,  month, date, startTime, endTime}
+        return {year,  month, date, startTime, startMinute, endTime, endMinute}
     }
 
 
@@ -471,18 +493,18 @@ export default function RegularReservations() {
         // }
     }
 
-    const makeReservation = (year, month, date, day, startTime, endTime) => {
+    const makeReservation = (year, month, date, day, startTime, startMinute, endTime, endMinute) => {
         // console.log(startTime, endTime);
-        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
-        const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
+        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:${startMinute}Z`;
+        const reservationToInfo = `${year}-${month}-${date}T${endTime}:${endMinute}Z`;
         
         console.log(`${year}-${month}-${date} 예약 완료`);
 
         // console.log(reservationFromInfo);
         // console.log(reservationToInfo);
 
-        // console.log(new Date(reservationFromInfo));
-        // console.log(new Date(reservationToInfo));
+        console.log(new Date(reservationFromInfo));
+        console.log(new Date(reservationToInfo));
 
         // console.log("정기예약 정보");
         // console.log(regularInfo.dayWeekMonth, regularInfo.count);
@@ -495,10 +517,10 @@ export default function RegularReservations() {
             regular: true,
         }  
         
-        // console.log("예약 완료");
+        console.log("예약 완료");
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roodId}})
             .then((res) => {
-                alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
+                // alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
                 navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&endTime=${endTime}`)
             })
             .catch((err) => {
@@ -512,33 +534,60 @@ export default function RegularReservations() {
         return reservedTime;
     };
 
-    // 예약 시작 시간
-    const onTimeSelectHandler = (e) => {
-        const start = parseInt(e.target.value);
+    // 예약 시작시간
+    const onStartTimeSelectHandler = (hour, minute) => {
+        console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+        // const start = parseInt(e.target.value);
         timeDispatch({
             type: "START_TIME",
-            time: start,
+            time: hour,
         })
-        onReserveTimeHandler(start, selectedTime.rangeTime);
+        timeDispatch({
+            type: "START_MINUTE",
+            minute: minute,
+        })
     }
-    // 예약 종료 시간
-    const onReserveTimeHandler = (s, e) => {
-        const end = (s + e);
+    // 예약 종료시간
+    const onEndTimeSelectHandler = (hour, minute) => {
+        console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
+        // const start = parseInt(e.target.value);
         timeDispatch({
             type: "END_TIME",
-            time: end,
+            time: hour,
+        })
+        timeDispatch({
+            type: "END_MINUTE",
+            minute: minute,
         })
     }
 
-    // 예약 간격 시간
-    const onRangeTimeHandler = (e) => {
-        const range = parseInt(e.target.value);
-        timeDispatch({
-            type: "END_TIME",
-            time: range,
-        })
-        onReserveTimeHandler(selectedTime.startTime, range);
-    }
+    // 예약 시작 시간
+    // const onTimeSelectHandler = (e) => {
+    //     const start = parseInt(e.target.value);
+    //     timeDispatch({
+    //         type: "START_TIME",
+    //         time: start,
+    //     })
+    //     onReserveTimeHandler(start, selectedTime.rangeTime);
+    // }
+    // // 예약 종료 시간
+    // const onReserveTimeHandler = (s, e) => {
+    //     const end = (s + e);
+    //     timeDispatch({
+    //         type: "END_TIME",
+    //         time: end,
+    //     })
+    // }
+
+    // // 예약 간격 시간
+    // const onRangeTimeHandler = (e) => {
+    //     const range = parseInt(e.target.value);
+    //     timeDispatch({
+    //         type: "END_TIME",
+    //         time: range,
+    //     })
+    //     onReserveTimeHandler(selectedTime.startTime, range);
+    // }
 
     // 일간, 주간, 월간 선택 가져오는 함수
     const onRegularTypeHandler = (e) => {
@@ -569,8 +618,10 @@ export default function RegularReservations() {
                 <Ptag>해당 날짜의 예약 상태입니다.</Ptag>
             </TimeBox>
             <ReservedInfoDiv>
-                <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
-                <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect>
+                <TimeDialog selectType="시작시간 선택하기" onTimeSelectHandler = {onStartTimeSelectHandler}/>
+                <TimeDialog selectType="끝나는 시간 선택하기" onTimeSelectHandler = {onEndTimeSelectHandler}/>
+                {/* <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
+                <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect> */}
             </ReservedInfoDiv>
             
             
