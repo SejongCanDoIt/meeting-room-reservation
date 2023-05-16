@@ -14,7 +14,10 @@ import sejong.reserve.service.ReservationService;
 import sejong.reserve.web.argumentresolver.Login;
 import sejong.reserve.web.exception.NotLoginException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.List;
 
 @Slf4j
@@ -140,9 +143,30 @@ public class ManagementController {
     public ResponseEntity<List<ReservationsDto>> getReservationListByDate(@RequestParam("year") int year,
                                                                           @RequestParam("month") int month,
                                                                           @RequestParam("day") int day) {
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime dateStart = currentTime;
+        LocalDateTime dateEnd = LocalDateTime.of(currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth()+1, 0, 0);
+
+        // 일이 0 -> 월별 기준
+        if(day == 0 && year !=0 && month !=0) { // 월별 검색
+            dateStart = LocalDateTime.of(year, month, 1, 0, 0);
+            dateEnd = LocalDateTime.of(year, month+1, 1, 0, 0);
+        }
+
+        // 일과 월이 0 -> 연별 기준
+        if(day == 0 && month == 0 && year !=0) { // 연도별 검색
+            dateStart = LocalDateTime.of(year, 1, 1, 0, 0);
+            dateEnd = LocalDateTime.of(year+1, 1, 1, 0, 0);
+        }
+
+        // 일별 검색
+        if(day != 0 && month != 0 && year !=0) {
+            dateStart = LocalDateTime.of(year, month, day, 0, 0);
+            dateEnd = LocalDateTime.of(year, month, day+1, 0, 0);
+        }
+
         // 날짜별 전체 예약 리스트 반환
-        LocalDateTime dateStart = LocalDateTime.of(year, month, day, 0, 0);
-        LocalDateTime dateEnd = LocalDateTime.of(year, month, day+1, 0, 0);
         List<ReservationsDto> reservationList = reservationService.getReservationListByDate(dateStart, dateEnd);
         return ResponseEntity.ok(reservationList);
     }
