@@ -3,6 +3,7 @@ import "../css/CustomCalendar.css";
 import styled from "styled-components";
 import ReservationNav from "./ReservationNav";
 import TimeSelect from "./TimeSelect";
+import TimeDialog from "./TimeDialog";
 import Calendar from "react-calendar";
 import moment from "moment";
 import TimeTable from "./TimeTable";
@@ -75,10 +76,24 @@ const timeReducer = (state, action) => {
             }
         }
 
+        case "START_MINUTE": {
+            return {
+                ...state,
+                startMinute: action.minute
+            }
+        }
+
         case "END_TIME": {
             return {
                 ...state,
                 endTime: action.time,
+            }
+        }
+
+        case "END_MINUTE": {
+            return {
+                ...state,
+                endMinute: action.minute
             }
         }
 
@@ -311,12 +326,14 @@ export default function Reservation() {
         const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
         const day = selectedDay.day;
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+        const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
 
         // 예약된 시간이 겹치지 않는것을 확인했다면
         // const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
         // isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
-        makeReservation(year, month, date, day, startTime, endTime);
+        makeReservation(year, month, date, day, startTime, startMinute, endTime, endMinute);
     }
 
     // 지난 날짜는 선택할 수 없도록 그리고 오늘로부터 2개월 뒤에는 선택할 수 없도록
@@ -352,10 +369,10 @@ export default function Reservation() {
         // }
     }
 
-    const makeReservation = (year, month, date, day, startTime, endTime) => {
+    const makeReservation = (year, month, date, day, startTime, startMinute, endTime, endMinute) => {
         console.log(startTime, endTime);
-        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
-        const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
+        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:${startMinute}Z`;
+        const reservationToInfo = `${year}-${month}-${date}T${endTime}:${endMinute}Z`;
     
         console.log(new Date(reservationFromInfo));
         console.log(new Date(reservationToInfo));
@@ -386,33 +403,60 @@ export default function Reservation() {
         return reservedTime;
     };
 
-    // 예약 시작 시간
-    const onTimeSelectHandler = (e) => {
-        const start = parseInt(e.target.value);
+    // 예약 시작시간
+    const onStartTimeSelectHandler = (hour, minute) => {
+        console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+        // const start = parseInt(e.target.value);
         timeDispatch({
             type: "START_TIME",
-            time: start,
+            time: hour,
         })
-        onReserveTimeHandler(start, selectedTime.rangeTime);
+        timeDispatch({
+            type: "START_MINUTE",
+            minute: minute,
+        })
     }
-    // 예약 종료 시간
-    const onReserveTimeHandler = (s, e) => {
-        const end = (s + e);
+    // 예약 종료시간
+    const onEndTimeSelectHandler = (hour, minute) => {
+        console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
+        // const start = parseInt(e.target.value);
         timeDispatch({
             type: "END_TIME",
-            time: end,
+            time: hour,
+        })
+        timeDispatch({
+            type: "END_MINUTE",
+            minute: minute,
         })
     }
 
-    // 예약 간격 시간
-    const onRangeTimeHandler = (e) => {
-        const range = parseInt(e.target.value);
-        timeDispatch({
-            type: "END_TIME",
-            time: range,
-        })
-        onReserveTimeHandler(selectedTime.startTime, range);
-    }
+    // 예약 시작 시간
+    // const onTimeSelectHandler = (e) => {
+    //     const start = parseInt(e.target.value);
+    //     timeDispatch({
+    //         type: "START_TIME",
+    //         time: start,
+    //     })
+    //     onReserveTimeHandler(start, selectedTime.rangeTime);
+    // }
+    // // 예약 종료 시간
+    // const onReserveTimeHandler = (s, e) => {
+    //     const end = (s + e);
+    //     timeDispatch({
+    //         type: "END_TIME",
+    //         time: end,
+    //     })
+    // }
+
+    // // 예약 간격 시간
+    // const onRangeTimeHandler = (e) => {
+    //     const range = parseInt(e.target.value);
+    //     timeDispatch({
+    //         type: "END_TIME",
+    //         time: range,
+    //     })
+    //     onReserveTimeHandler(selectedTime.startTime, range);
+    // }
 
     return (
         <ReservationContainer>
@@ -424,8 +468,10 @@ export default function Reservation() {
                 <Ptag>해당 날짜의 예약 상태입니다.</Ptag>
             </TimeBox>
             <ReservedInfoDiv>
-                <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
-                <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect>
+                <TimeDialog selectType="시작시간 선택하기" onTimeSelectHandler = {onStartTimeSelectHandler}/>
+                <TimeDialog selectType="끝나는 시간 선택하기" onTimeSelectHandler = {onEndTimeSelectHandler}/>
+                {/* <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
+                <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect> */}
             </ReservedInfoDiv>
             <ReserveBtn onClick={onBtnClicked}>예약하기</ReserveBtn>
         </ReservationContainer>
