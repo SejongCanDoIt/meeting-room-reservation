@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import sejong.reserve.web.argumentresolver.LoginMemberArgumentResolver;
+import sejong.reserve.web.interceptor.AdminCheckInterceptor;
 import sejong.reserve.web.interceptor.LogInterceptor;
 import sejong.reserve.web.interceptor.LoginCheckInterceptor;
 
@@ -24,9 +25,19 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/auth/login",
+                .excludePathPatterns(
+                        "/", "/auth/login",
                         "/auth/checkLogin",
                         "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**");
+
+        registry.addInterceptor(new AdminCheckInterceptor())
+                .order(2)
+                .addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/", "/auth/login",
+                        "/auth/checkLogin",
+                        "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**",
+                        "/notice/**", "manage/**");
     }
 
     @Override
