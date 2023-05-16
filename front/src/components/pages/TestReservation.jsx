@@ -2,7 +2,9 @@ import 'react-calendar/dist/Calendar.css'
 import "../css/CustomCalendar.css";
 import styled from "styled-components";
 import ReservationNav from "./ReservationNav";
+import TimeSlider from "./TimeSlider";
 import TimeSelect from "./TimeSelect";
+import TimeDialog from "./TimeDialog";
 import Calendar from "react-calendar";
 import moment from "moment";
 import TimeTable from "./TimeTable";
@@ -10,6 +12,7 @@ import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from "react-router-dom";
+
 
 
 // 날짜의 초기값
@@ -23,7 +26,9 @@ const initialDay = {
 // 시간의 초기값
 const initialTime = {
     startTime: 0,
+    startMinute: 0,
     endTime: 1,
+    endMinute: 0,
     rangeTime: 1,
 }
 
@@ -75,10 +80,24 @@ const timeReducer = (state, action) => {
             }
         }
 
+        case "START_MINUTE": {
+            return {
+                ...state,
+                startMinute: action.minute
+            }
+        }
+
         case "END_TIME": {
             return {
                 ...state,
                 endTime: action.time,
+            }
+        }
+
+        case "END_MINUTE": {
+            return {
+                ...state,
+                endMinute: action.minute
             }
         }
 
@@ -99,39 +118,10 @@ const timeReducer = (state, action) => {
         default: return state
     }
 }
-
-// 예약 관련 더미 데이터
-const marks = [
-    {
-        reservedCount: 3,
-        reservedDate: "15-05-2023"
-    },
-    {
-        reservedCount: 2,
-        reservedDate: "11-05-2023"
-    },
-    {
-        reservedCount: 1,
-        reservedDate: "12-05-2023"
-    },
-    {
-        reservedCount: 3,
-        reservedDate: "01-05-2023"
-    },
-    {
-        reservedCount: 3,
-        reservedDate: "25-05-2023"
-    },
-    {
-        reservedCount: 4,
-        reservedDate: "28-05-2023"
-    },
-];
-
 const timeTable = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
 const reserveTimeTable = ["1", "2", "3"];
 
-export default function Reservation() {
+export default function TestReservation() {
     const type = "일반 예약";
 
     // 예약 타입, 날짜 선택, 시간 선택의 상태를 다루는 변수들.
@@ -149,23 +139,13 @@ export default function Reservation() {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
+                // isRoomIdSelected(); // 회의실이 선택 여부를 다루는 함수
             })
             .catch((err) => {
                 navigate('/loginpage')
             })
     }, []);
 
-    // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
-    useEffect(() => {
-        axios.get(`/member/${sessionStorage.getItem('LoginID')}`)
-            .then((res) => {
-                setAuthority((state) => res.data.authority)
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [])
 
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
@@ -200,12 +180,6 @@ export default function Reservation() {
     // 월별 예약건수를 서버에 요청해 만드는 함수.
     const createMonthReservedCount = async () => {
         setTmpMarks((state) => []);
-
-        // const currentMonth = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
-        // const todayDay = new Date().getDate();
-        // const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 2, 0).getDate();
-        // console.log(currentMonth);
-        
         let idx = 2;
         let ttt = 0;
         while (idx > 0) {
@@ -231,22 +205,6 @@ export default function Reservation() {
             idx -= 1
             ttt += 1
         }
-        // for (let day=1; day<=30 ; day++) {
-        //     console.log(selectedDay.year, currentMonth, day)
-        //     // 서버에 해당 날짜의 예약건수 요청.
-        //     axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
-        //         .then((res) => {
-        //             const cntData = {
-        //                 reservedCount: res.data,
-        //                 reservedDate: `${day}-${currentMonth}-${selectedDay.year}`
-        //             }
-        //             setTmpMarks((state) => [...state, cntData])
-        //         })
-        //         .catch((err) => {
-        //             console.log(err);
-        //         })
-
-        // }
     }
 
     // 날짜가 선택되었을때 실행되는 함수
@@ -274,16 +232,6 @@ export default function Reservation() {
 
      // 예약 건수에 따라 필요한 배경색상을 반환해줌.
      const reservedStatus = ({date, view}) => {
-        // 3건 이상일때 색상 칠하기
-        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
-        //     return "heavy_reservation";
-        // }
-
-
-        // // 1~3건 사이일때의 색상 칠하기
-        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
-        //     return "middle_reservation";
-        // }
 
         if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
             return "heavy_reservation";
@@ -311,12 +259,13 @@ export default function Reservation() {
         const date = selectedDay.date < 10 ? "0" + selectedDay.date.toString() : selectedDay.date.toString();
         const day = selectedDay.day;
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+        const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+        const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
 
         // 예약된 시간이 겹치지 않는것을 확인했다면
-        // const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
-        // isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, endTime);
-        makeReservation(year, month, date, day, startTime, endTime);
+        const isOverlap = reservationOverlapHandler(selectedTime.startTime, selectedTime.endTime);
+        isOverlap ? alert("해당 시간대에는 이미 예약이 있습니다.") : makeReservation(year, month, date, day, startTime, startMinute, endTime, endMinute);
     }
 
     // 지난 날짜는 선택할 수 없도록 그리고 오늘로부터 2개월 뒤에는 선택할 수 없도록
@@ -341,21 +290,12 @@ export default function Reservation() {
             }
         }
 
-        // 교수, 교직원 -> 무제한
-
-        // 오늘을 기준으로 1개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용) // 2개월 뒤로할려면  new Date().getMonth() + 1
-        // if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth())).format('MM-DD')) {
-        //     return true
-        // }
-        // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())).format('MM-DD')) {
-        //     return true
-        // }
     }
 
-    const makeReservation = (year, month, date, day, startTime, endTime) => {
+    const makeReservation = (year, month, date, day, startTime, startMinute, endTime, endMinute) => {
         console.log(startTime, endTime);
-        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:00Z`;
-        const reservationToInfo = `${year}-${month}-${date}T${endTime}:00Z`;
+        const reservationFromInfo = `${year}-${month}-${date}T${startTime}:${startMinute}Z`;
+        const reservationToInfo = `${year}-${month}-${date}T${endTime}:${endMinute}Z`;
     
         console.log(new Date(reservationFromInfo));
         console.log(new Date(reservationToInfo));
@@ -387,31 +327,60 @@ export default function Reservation() {
     };
 
     // 예약 시작 시간
-    const onTimeSelectHandler = (e) => {
-        const start = parseInt(e.target.value);
+    // const onTimeSelectHandler = (e) => {
+    //     const start = parseInt(e.target.value);
+    //     timeDispatch({
+    //         type: "START_TIME",
+    //         time: start,
+    //     })
+    //     onReserveTimeHandler(start, selectedTime.rangeTime);
+    // }
+    // // 예약 종료 시간
+    // const onReserveTimeHandler = (s, e) => {
+    //     const end = (s + e);
+    //     timeDispatch({
+    //         type: "END_TIME",
+    //         time: end,
+    //     })
+    // }
+
+    // // 예약 간격 시간
+    // const onRangeTimeHandler = (e) => {
+    //     const range = parseInt(e.target.value);
+    //     timeDispatch({
+    //         type: "END_TIME",
+    //         time: range,
+    //     })
+    //     onReserveTimeHandler(selectedTime.startTime, range);
+    // }
+
+    // 예약 시작시간
+    const onStartTimeSelectHandler = (hour, minute) => {
+        console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+        // const start = parseInt(e.target.value);
         timeDispatch({
             type: "START_TIME",
-            time: start,
+            time: hour,
         })
-        onReserveTimeHandler(start, selectedTime.rangeTime);
+        timeDispatch({
+            type: "START_MINUTE",
+            minute: minute,
+        })
+        
     }
-    // 예약 종료 시간
-    const onReserveTimeHandler = (s, e) => {
-        const end = (s + e);
+    // 예약 종료시간
+    const onEndTimeSelectHandler = (hour, minute) => {
+        console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
+        // const start = parseInt(e.target.value);
         timeDispatch({
             type: "END_TIME",
-            time: end,
+            time: hour,
         })
-    }
-
-    // 예약 간격 시간
-    const onRangeTimeHandler = (e) => {
-        const range = parseInt(e.target.value);
         timeDispatch({
-            type: "END_TIME",
-            time: range,
+            type: "END_MINUTE",
+            minute: minute,
         })
-        onReserveTimeHandler(selectedTime.startTime, range);
+        
     }
 
     return (
@@ -423,9 +392,13 @@ export default function Reservation() {
                 <TimeTable reservedStatusList={onReservedStatusHandler()}/>
                 <Ptag>해당 날짜의 예약 상태입니다.</Ptag>
             </TimeBox>
+            {/* <TimeSlider desc="시간을 선택해주세요" maxValue={23}/>
+            <TimeSlider desc="분을 선택해주세요" maxValue={59}/> */}
             <ReservedInfoDiv>
-                <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
-                <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect>
+                <TimeDialog selectType="시작시간 선택하기" onTimeSelectHandler = {onStartTimeSelectHandler}/>
+                <TimeDialog selectType="끝나는 시간 선택하기" onTimeSelectHandler = {onEndTimeSelectHandler}/>
+                {/* <TimeSelect onSelectHandler={onTimeSelectHandler} selectData={timeTable} dataType={"시 부터"}></TimeSelect>
+                <TimeSelect onSelectHandler={onRangeTimeHandler} selectData={reserveTimeTable} dataType={"시간"}></TimeSelect> */}
             </ReservedInfoDiv>
             <ReserveBtn onClick={onBtnClicked}>예약하기</ReserveBtn>
         </ReservationContainer>

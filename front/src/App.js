@@ -16,6 +16,7 @@ import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
 import RoomInfo from "./components/pages/RoomInfo";
 import Announcement from "./components/pages/Announcement";
+import TestReservation from "./components/pages/TestReservation";
 import PrivateRoute from "./components/pages/PrivateRoute";
 import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
@@ -56,6 +57,7 @@ function App() {
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
+          <Route path="/test-reservation" element={<TestReservation />}></Route>
           <Route path="/regularReservation" element={<Regularreservations />}></Route>
           <Route path="/AdminMemberManagePage" element={<AdminMemberManagePage />}></Route>
           <Route path="/AdminRoomManagePage" element={<AdminRoomManagePage />}></Route>
