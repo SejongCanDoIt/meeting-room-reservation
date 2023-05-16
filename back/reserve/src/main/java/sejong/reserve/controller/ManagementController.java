@@ -134,7 +134,7 @@ public class ManagementController {
 
 
 
-    @GetMapping("/member-name") // 학생별 검색, 이름과 학번으로 검색
+    @GetMapping("/member") // 학생별 검색, 이름과 학번으로 검색
     public ResponseEntity<List<MemberDto>> findMember(@RequestParam("q") String q) {
         List<MemberDto> memberDtoList = memberService.findMemberBySnoOrName(q);
         return ResponseEntity.ok(memberDtoList);
