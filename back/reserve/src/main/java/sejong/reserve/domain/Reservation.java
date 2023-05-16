@@ -40,16 +40,9 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "wait_id")
-//    private Waiting waiting;
-
     @Column(name = "created_at")
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();;
-
-;
-
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     //==생성 메서드==//
     public static Reservation createReservation(ReservationDto reservationDto, Member member, Room room) {
