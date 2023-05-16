@@ -35,7 +35,7 @@ function ShareReservationPage() {
                         <ul id="contentList">
                             <li className="contents"><span>날짜</span> {serchParams.get('year')}년 {serchParams.get('month')}월 {serchParams.get('date')}일</li>
                             <li className="contents"><span>요일</span> {dayList[serchParams.get('day')]}요일</li>
-                            <li className="contents"><span>시간</span> {serchParams.get('startTime')}시부터 {serchParams.get('endTime')}시</li>
+                            <li className="contents"><span>시간</span> {serchParams.get('startTime')}:{serchParams.get('startMinute')}시 ~ {serchParams.get('endTime')}:{serchParams.get('endMinute')}시</li>
                             <li className="contents"><span>장소</span> AI센터 {serchParams.get('room_id')}호</li>
                         </ul>
                         <CopyToClipboard text={url}>
