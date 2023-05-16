@@ -203,4 +203,10 @@ public class ReservationService {
         List<ReservationsDto> reservationDtoList = convertToDto(reservations);
         return reservationDtoList;
     }
+
+    public List<ReservationsDto> getReservationListByDateAndStatus(LocalDateTime dateStart, LocalDateTime dateEnd, ReservationStatus status) {
+        List<Reservation> reservations = reservationRepository.getReservationListByDateAndStatus(dateStart, dateEnd, status);
+        List<ReservationsDto> reservationDtoList = convertToDto(reservations);
+        return reservationDtoList;
+    }
 }
