@@ -45,7 +45,7 @@ public class ReservationController {
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
-        log.info("loginMember = {}", loginMember);
+//        log.info("loginMember = {}", loginMember);
 
 
 
@@ -68,13 +68,16 @@ public class ReservationController {
 
         // 예약 저장
         Room room = roomService.detail(room_id);
-        log.info("room = {}", room);
+//        log.info("room = {}", room);
         Reservation reservation = Reservation.createReservation(reservationDto, loginMember, room);
-        log.info("reservation = {}", reservation);
+//        log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
 
         // remove Cnt
         memberService.removeCnt(loginMember.getId());
+
+        log.info("요청 예약 시작 시각 = {}", reservation.getStart());
+        log.info("요청 예약 끝 시각 = {}", reservation.getEnd());
 
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
     }
