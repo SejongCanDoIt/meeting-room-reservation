@@ -13,6 +13,9 @@ public class UpdateRequestNoticeDto {
 
     private String content; // 공지 내용
 
+    public UpdateRequestNoticeDto() {
+    }
+
     public UpdateRequestNoticeDto(String title, String content) {
         this.title = title;
         this.content = content;

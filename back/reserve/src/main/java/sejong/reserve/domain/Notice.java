@@ -17,6 +17,7 @@ public class Notice {
 
     private String title; // 공지 제목
 
+    @Lob
     private String content; // 공지 내용
 
     @Column(name = "created_at")

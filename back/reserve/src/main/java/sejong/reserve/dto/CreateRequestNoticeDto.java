@@ -12,6 +12,9 @@ public class CreateRequestNoticeDto {
 
     private String content; // 공지 내용
 
+    public CreateRequestNoticeDto() {
+    }
+
     public CreateRequestNoticeDto(String title, String content) {
         this.title = title;
         this.content = content;

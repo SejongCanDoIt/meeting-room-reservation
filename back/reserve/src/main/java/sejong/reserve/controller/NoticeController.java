@@ -1,6 +1,7 @@
 package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,16 @@ import sejong.reserve.service.NoticeService;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notice")
 public class NoticeController {
     private final NoticeService noticeService;
 
-    @GetMapping("/insert")
+    @PostMapping("/insert")
     public Long insert(@RequestBody CreateRequestNoticeDto noticeInfo) {
+        log.info("notice 정보 = {}", noticeInfo);
         Long noticeId = noticeService.createNotice(noticeInfo);
         return noticeId;
     }
@@ -44,7 +47,7 @@ public class NoticeController {
         }
     }
 
-    @PutMapping("update")
+    @PatchMapping("update")
     public void update(@RequestBody UpdateRequestNoticeDto updateNoticeInfo) {
         noticeService.update(updateNoticeInfo);
     }
