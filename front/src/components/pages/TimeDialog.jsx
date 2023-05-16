@@ -22,11 +22,9 @@ export default function TimeDialog({selectType, onTimeSelectHandler}) {
   };
 
   const selectedHourTime = (hour) => {
-    //   console.log(`선택된 시간은 ${hour}시`);
     setHour(hour);
   }
   const selectedMinuteTime = (minute) => {
-    //   console.log(`선택된 분은 ${minute}시`)
     setMinute(minute);
   }
 
