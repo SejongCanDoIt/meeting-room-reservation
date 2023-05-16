@@ -123,9 +123,20 @@ public class MemberService {
 
     public List<MemberDto> findMemberBySnoOrName(String q) {
         List<Member> memberBySnoOrName = memberRepository.findMemberBySnoOrName(q);
-        List<MemberDto> memberDtoList = memberBySnoOrName.stream()
+        List<MemberDto> memberDtoList = convertMemberToMemberDtoList(memberBySnoOrName);
+        return memberDtoList;
+    }
+
+    private static List<MemberDto> convertMemberToMemberDtoList(List<Member> memberList) {
+        List<MemberDto> memberDtoList = memberList.stream()
                 .map(m -> new MemberDto(m))
                 .collect(Collectors.toList());
+        return memberDtoList;
+    }
+
+    public List<MemberDto> findMemberByNoShow(int noShowCnt) {
+        List<Member> memberByNoShow = memberRepository.findMemberByNoShow(noShowCnt);
+        List<MemberDto> memberDtoList = convertMemberToMemberDtoList(memberByNoShow);
         return memberDtoList;
     }
 

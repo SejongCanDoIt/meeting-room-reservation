@@ -37,4 +37,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value = "select m from Member m where m.studentNo like %:q% or m.name like %:q%")
     List<Member> findMemberBySnoOrName(@Param("q") String q);
 
+    @Query(value = "select m from Member m where m.noshow >= :noShow")
+    List<Member> findMemberByNoShow(@Param("noShow") int noShow);
+
 }

@@ -176,4 +176,10 @@ public class ManagementController {
         return ResponseEntity.ok(reservationList);
     }
 
+    @GetMapping("/no-show")
+    public ResponseEntity<List<MemberDto>> findMemberOverNoShow(@RequestParam("noShowCnt") int noShowCnt) {
+        // 입력된 noShowCnt 이상의 noShowCnt 값을 가지고 있는 멤버리스트 반환
+        List<MemberDto> memberDtoList = memberService.findMemberByNoShow(noShowCnt);
+        return ResponseEntity.ok(memberDtoList);
+    }
 }
