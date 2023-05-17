@@ -36,7 +36,7 @@ public class Reservation {
     private Room room;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
