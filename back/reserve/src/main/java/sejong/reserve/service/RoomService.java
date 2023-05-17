@@ -43,7 +43,7 @@ public class RoomService implements Serv<Room> {
     @Transactional
     public void update(Room roomInfo) {
         Room room = roomRepository.findById(roomInfo.getId());
-        room.setRoom(roomInfo, room);
+        room.setRoom(room, roomInfo);
     }
 
     /**

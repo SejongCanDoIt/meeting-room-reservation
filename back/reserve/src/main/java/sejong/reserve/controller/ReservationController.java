@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.*;
-import sejong.reserve.dto.ReservationDto;
-import sejong.reserve.dto.ReservationsDto;
-import sejong.reserve.dto.TimeDto;
+import sejong.reserve.dto.*;
 import sejong.reserve.service.ManagementService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.service.ReservationService;
@@ -298,45 +296,35 @@ public class ReservationController {
     }
 
     @GetMapping("time-list")
-    public List<TimeDto> timeList(@RequestParam("todayDate") LocalDateTime todayDate) {
-        return reservationService.getTodayTimeList(todayDate);
+    public List<TimeDto> timeList(@RequestBody DateByRoomDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        return reservationService.getTodayTimeList(todayDate, data.getRoomId());
     }
 
-
-
     @GetMapping("today-time-check")
-    public int[] getTodayTimeCheck(@RequestParam("year") int year,
-                                   @RequestParam("month") int month,
-                                   @RequestParam("day") int day) {
-        LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
-        return reservationService.getTodayTimeCheck(todayDate);
+    public int[] getTodayTimeCheck(@RequestBody DateByRoomDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        return reservationService.getTodayTimeCheck(todayDate, data.getRoomId());
     }
 
     @GetMapping("month-reserve-check")
-    public List<Integer> getMonthReserveCheck(@RequestParam("year") int year,
-                                   @RequestParam("month") int month) {
-        return reservationService.getMonthReserveCheck(year, Month.of(month));
+    public List<Integer> getMonthReserveCheck(@RequestBody MonthDateByRoomDto data) {
+        return reservationService.getMonthReserveCheck(data.getYear(), Month.of(data.getMonth()), data.getRoomId());
     }
 
     @GetMapping("today-reserve-cnt")
-    public ResponseEntity<Integer> getTodayReserveCnt(
-            @RequestParam("year") int year,
-            @RequestParam("month") int month,
-            @RequestParam("day") int day) {
-        LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
+    public ResponseEntity<Integer> getTodayReserveCnt(@RequestBody DateByRoomDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
-        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate);
+        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate, data.getRoomId());
         return ResponseEntity.ok(todayReserveCnt);
     }
 
     @GetMapping("past-limitation")
-    public ResponseEntity<Integer> limitPastReservation(
-            @RequestParam("year") int year,
-            @RequestParam("month") int month,
-            @RequestParam("day") int day) {
-        LocalDateTime todayDate = LocalDateTime.of(year, month, day, 0, 0);
+    public ResponseEntity<Integer> limitPastReservation(@RequestBody DateByRoomDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
-        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate);
+        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate,  data.getRoomId());
         return ResponseEntity.ok(todayReserveCnt);
     }
 

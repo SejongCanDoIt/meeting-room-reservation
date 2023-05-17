@@ -39,7 +39,7 @@ public class RoomController {
         }
     }
 
-    @PutMapping("update")
+    @PatchMapping("update")
     public void update(@RequestBody Room room) {
         roomService.update(room);
     }
