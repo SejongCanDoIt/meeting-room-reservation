@@ -33,10 +33,4 @@ public class RoomRepository{
         em.remove(room);
     }
 
-//    @Override
-//    public void update(Room roomInfo) throws PersistenceException {
-//        Room room = em.find(Room.class, roomInfo.getId());
-//        room.setRoom(roomInfo, room);
-//    }
-
 }

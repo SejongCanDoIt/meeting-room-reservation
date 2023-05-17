@@ -123,14 +123,14 @@ public class ReservationService {
         reservationReal.setEnd(null);
     }
 
-    public List<TimeDto> getTodayTimeList(LocalDateTime todayDate) {
+    public List<TimeDto> getTodayTimeList(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
         LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
         LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
 
-        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd, roomId);
         List<TimeDto> timeList = new ArrayList<>();
         for(Reservation reservation:reservations) {
             LocalDateTime start = reservation.getStart();
@@ -141,31 +141,31 @@ public class ReservationService {
         return timeList;
     }
 
-    public int getTodayReserveCnt(LocalDateTime todayDate) {
+    public int getTodayReserveCnt(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
 
         LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
         LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
-        int todayReserveCnt = reservationRepository.getTodayReserveCnt(todayStart, todayEnd);
+        int todayReserveCnt = reservationRepository.getTodayReserveCnt(todayStart, todayEnd, roomId);
         return todayReserveCnt;
     }
 
-    public List<Integer> getMonthReserveCheck(int year, Month month) {
+    public List<Integer> getMonthReserveCheck(int year, Month month, Long roomId) {
         List<Integer> monthCheck = new ArrayList<>();
 
         LocalDateTime today = LocalDateTime.of(year, month, month.minLength(), 0, 0);
         int day = 1;
         while(day <= month.maxLength()) {
             today = LocalDateTime.of(year, month, day++, 0, 0);
-            monthCheck.add(getTodayReserveCnt(today));
+            monthCheck.add(getTodayReserveCnt(today, roomId));
         }
         return monthCheck;
     }
 
 
-    public int[] getTodayTimeCheck(LocalDateTime todayDate) {
+    public int[] getTodayTimeCheck(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
@@ -175,7 +175,7 @@ public class ReservationService {
 
         int[] todayTimeCheck = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd, roomId);
 
         for(Reservation reservation:reservations) {
             LocalDateTime start = reservation.getStart();

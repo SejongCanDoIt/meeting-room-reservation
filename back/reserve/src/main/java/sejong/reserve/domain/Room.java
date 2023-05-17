@@ -15,10 +15,10 @@ import java.util.List;
 
 @Entity
 @Data
-@DynamicInsert
+//@DynamicInsert
 @Table(name = "room")
 @ToString(exclude = "reservationLogs")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
@@ -31,6 +31,7 @@ public class Room {
     @ColumnDefault("0")
     private int cap; // 수용인원
 
+    @ColumnDefault("meeting room specific information")
     private String info; // 회의실 상세정보
 
     @ColumnDefault("0")
@@ -64,12 +65,12 @@ public class Room {
     public static Room createRoom(Room roomInfo) {
         Room room = new Room();
 
-        setRoom(roomInfo, room);
+        setRoom(room, roomInfo);
 
         return room;
     }
 
-    public static void setRoom(Room roomInfo, Room room) {
+    public static void setRoom(Room room, Room roomInfo) {
         room.setName(roomInfo.getName());
         room.setLoc(roomInfo.getLoc());
         room.setCap(roomInfo.getCap());
