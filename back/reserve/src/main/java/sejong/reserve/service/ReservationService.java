@@ -26,21 +26,27 @@ public class ReservationService {
 
     @Transactional
     public Long makeReservation(Reservation reservation) {
+        log.info("예약 시작: {}", reservation);
         Reservation savedReservation = reservationRepository.save(reservation);
+        log.info("예약 완료: {}", savedReservation);
         return savedReservation.getId();
     }
 
 
     // 전체 예약 리스트
     public List<Reservation> managerList() {
+        log.info("전체 예약 리스트 조회 시작");
+        List<Reservation> resultList = reservationRepository.findAll();
+        log.info("전체 예약 리스트 조회 완료: {}개의 예약이 있습니다.", resultList.size());
         return reservationRepository.findAll();
     }
 
     // 학생별 예약 리스트
     public List<ReservationsDto> userList(String student_no) {
-
+        log.info("학생별 예약 리스트 조회 시작: 학생 번호 {}", student_no);
         List<Reservation> reservations = reservationRepository.findByStudentNo(student_no);
         List<ReservationsDto> reservationDtoList = convertToDto(reservations);
+        log.info("학생별 예약 리스트 조회 완료: {}개의 예약이 있습니다.", reservationDtoList.size());
         return reservationDtoList;
     }
 
@@ -90,37 +96,53 @@ public class ReservationService {
 
     @Transactional
     public void setStatus(ReservationStatus status, Long reservation_id) {
+        log.info("예약 상태 변경 시작: 예약 ID = {}, 상태 = {}", reservation_id, status);
         Optional<Reservation> reservation = reservationRepository.findById(reservation_id);
         Reservation reservationReal = reservation.get();
         reservationReal.setStatus(status);
+        log.info("예약 상태 변경 완료");
+
     }
 
     @Transactional
     public void deleteOne(Long reservation_id) {
+        log.info("예약 삭제 시작: 예약 ID = {}", reservation_id);
         reservationRepository.deleteById(reservation_id);
+        log.info("예약 삭제 완료");
+
     }
 
     @Transactional
     public void deleteAll(String student_no) {
+        log.info("학생의 모든 예약 삭제 시작: 학생 번호 = {}", student_no);
         List<Reservation> reservations = reservationRepository.findByStudentNo(student_no);
         reservationRepository.deleteAll(reservations);
+        log.info("학생의 모든 예약 삭제 완료");
+
     }
 
     @Transactional
     public void reset() {
+        log.info("모든 예약 삭제 시작");
         reservationRepository.deleteAll();
+        log.info("모든 예약 삭제 완료");
     }
 
     public List<Reservation> getStatusList(String student_no, ReservationStatus status) {
+        log.info("학생의 예약 상태 리스트 조회 시작: 학생 번호 = {}, 상태 = {}", student_no, status);
+        List<Reservation> resultList = reservationRepository.getStatusList(student_no, status);
+        log.info("학생의 예약 상태 리스트 조회 완료: {}개의 예약이 있습니다.", resultList.size());
         return reservationRepository.getStatusList(student_no, status);
     }
 
     @Transactional
     public void cancel(Long reservation_id) {
+        log.info("예약 취소 시작: 예약 ID = {}", reservation_id);
         Optional<Reservation> reservation = reservationRepository.findById(reservation_id);
         Reservation reservationReal = reservation.get();
         reservationReal.setStart(null);
         reservationReal.setEnd(null);
+        log.info("예약 취소 완료");
     }
 
     public List<TimeDto> getTodayTimeList(LocalDateTime todayDate) {

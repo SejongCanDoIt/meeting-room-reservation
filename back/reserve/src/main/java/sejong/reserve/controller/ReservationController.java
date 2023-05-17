@@ -45,7 +45,12 @@ public class ReservationController {
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
+<<<<<<< HEAD
 //        log.info("loginMember = {}", loginMember);
+=======
+        log.info("loginMember = {}", loginMember);
+        log.info("room_id = {}", room_id); // 예약된 방의 id를 로깅합니다.
+>>>>>>> back-hun11
 
 
 
@@ -53,17 +58,25 @@ public class ReservationController {
         LocalDateTime end = reservationDto.getEnd();
         AuthState authority = loginMember.getAuthority();
 
+        log.info("start = {}", start); // 예약 시작 시간을 로깅합니다.
+        log.info("end = {}", end); // 예약 종료 시간을 로깅합니다.
+        log.info("authority = {}", authority); // 사용자 권한을 로깅합니다.
+
         if(authority == AuthState.UNI_STUDENT && reservationDto.getRegular()==true) {
             throw new NotAvailableReservedException("학부생은 정기예약을 진행할 수 없습니다.");
         }
 
         // 정기 및 일반 예약에 대한 달이 적합한지?
+        log.info("checkStateLimitation 실행 : 정기 및 일반 예약에 대한 달이 적합한지?");
         checkStateLimitation(start, authority);
         // 예약할 날짜가 오늘보다 이전 날짜인지?
+        log.info("checkPastDate 실행 : 예약할 날짜가 오늘보다 이전 날짜인지?");
         checkPastDate(start);
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
+        log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
         checkDuplicateReservation(start, end);
         // 예약 시간 gap 이 권한에 적합한지?
+        log.info("checkTimeGap:  예약 시간 gap 이 권한에 적합한지?");
         checkTimeGap(start, end, authority);
 
         // 예약 저장
