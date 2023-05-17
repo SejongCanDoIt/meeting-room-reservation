@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.*;
-import sejong.reserve.dto.DateByRoomDto;
-import sejong.reserve.dto.ReservationDto;
-import sejong.reserve.dto.ReservationsDto;
-import sejong.reserve.dto.TimeDto;
+import sejong.reserve.dto.*;
 import sejong.reserve.service.ManagementService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.service.ReservationService;
@@ -298,7 +295,7 @@ public class ReservationController {
     }
 
     @GetMapping("month-reserve-check")
-    public List<Integer> getMonthReserveCheck(@RequestBody DateByRoomDto data) {
+    public List<Integer> getMonthReserveCheck(@RequestBody MonthDateByRoomDto data) {
         return reservationService.getMonthReserveCheck(data.getYear(), Month.of(data.getMonth()), data.getRoomId());
     }
 
