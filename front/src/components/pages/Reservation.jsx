@@ -290,11 +290,12 @@ export default function Reservation() {
             for (let day=1; day<=lastMonthDay ; day++) {
                 // console.log(selectedDay.year, currentMonth, day)
                 // 서버에 해당 날짜의 예약건수 요청.
+                const dayString = day < 10 ? "0" + day.toString() : day.toString();
                 axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
                     .then((res) => {
                         const cntData = {
                             reservedCount: res.data,
-                            reservedDate: `${day}-${currentMonth}-${selectedDay.year}`
+                            reservedDate: `${dayString}-${currentMonth}-${selectedDay.year}`
                         }
                         setTmpMarks((state) => [...state, cntData])
                     })
@@ -359,7 +360,6 @@ export default function Reservation() {
         // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
         //     return "middle_reservation";
         // }
-
         if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
             return "heavy_reservation";
         }
