@@ -43,14 +43,8 @@ public class ReservationController {
         if(loginMember == null) {
             throw new NotLoginException("로그인이 안되어 있는 상태입니다.");
         }
-<<<<<<< HEAD
-//        log.info("loginMember = {}", loginMember);
-=======
         log.info("loginMember = {}", loginMember);
         log.info("room_id = {}", room_id); // 예약된 방의 id를 로깅합니다.
->>>>>>> back-hun11
-
-
 
         LocalDateTime start = reservationDto.getStart();
         LocalDateTime end = reservationDto.getEnd();
