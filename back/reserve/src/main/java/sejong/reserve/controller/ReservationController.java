@@ -292,24 +292,24 @@ public class ReservationController {
         reservationService.cancel(reservation_id);
     }
 
-    @GetMapping("/time-list")
+    @PostMapping("/time-list")
     public List<TimeDto> timeList(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         return reservationService.getTodayTimeList(todayDate, data.getRoomId());
     }
 
-    @GetMapping("/today-time-check")
+    @PostMapping("/today-time-check")
     public int[] getTodayTimeCheck(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         return reservationService.getTodayTimeCheck(todayDate, data.getRoomId());
     }
 
-    @GetMapping("/month-reserve-check")
+    @PostMapping("/month-reserve-check")
     public List<Integer> getMonthReserveCheck(@RequestBody MonthDateByRoomDto data) {
         return reservationService.getMonthReserveCheck(data.getYear(), Month.of(data.getMonth()), data.getRoomId());
     }
 
-    @GetMapping("/today-reserve-cnt")
+    @PostMapping("/today-reserve-cnt")
     public ResponseEntity<Integer> getTodayReserveCnt(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
@@ -317,7 +317,7 @@ public class ReservationController {
         return ResponseEntity.ok(todayReserveCnt);
     }
 
-    @GetMapping("/past-limitation")
+    @PostMapping("/past-limitation")
     public ResponseEntity<Integer> limitPastReservation(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
