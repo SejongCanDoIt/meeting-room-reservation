@@ -14,6 +14,7 @@ export default function AdminRoomInfoPage() {
             try {
                 const response = await axios.get(`/room/detail/${id}`);
                 setRoominfo(response.data);
+                console.log("Room Info Page: ", response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -35,20 +36,16 @@ export default function AdminRoomInfoPage() {
                 <RoomInfoContainer>
                     <Header>
                         <h1>회의실 정보</h1>
-                        <Link
-                            to={{
-                                pathname: `/AdminRoomModifyPage/${roominfo.id}`,
-                                state: { roomInfo: roominfo }
-                            }}
-                        >
+                        <Link to={`/AdminRoomModifyPage/${roominfo.id}`}                        >
                             <button>수정하기</button>
                         </Link>
                     </Header>
                     <RoomInfo>
                         <LeftInfo>
                             <NameBlock>
-                                <StyledH2>회의실 이름</StyledH2>
+                                <StyledH2>회의실 이름과 ID</StyledH2>
                                 <p>{roominfo.name}</p>
+                                <p>ID: {roominfo.id}</p>
                                 <hr></hr>
                             </NameBlock>
                             <Block>
@@ -57,41 +54,41 @@ export default function AdminRoomInfoPage() {
                             </Block>
                             <Block>
                                 <StyledH2>회의실 위치</StyledH2>
-                                <StyledP>{roominfo.loc}</StyledP>
+                                <StyledP>{roominfo.name}은 {roominfo.loc} {roominfo.id}호에 위치하고 있습니다.</StyledP>
                             </Block>
                         </LeftInfo>
                         <RightInfo>
                             <RoomImg src={roominfo.picture} alt={`이미지: ${roominfo.name}`} />
                             <FacilitiesList>
                                 <FacilityItem>
-                                    <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" />
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" />
                                     {roominfo.cap}명
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" />
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" />
                                     {roominfo.wifi ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" />
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" />
                                     {roominfo.board ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />
                                     {roominfo.tv}개
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" />
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" />
                                     {roominfo.bim_projector ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilitiesIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" />
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" />
                                     {roominfo.com}개
                                 </FacilityItem>
                             </FacilitiesList>
                         </RightInfo>
                     </RoomInfo>
                 </RoomInfoContainer>
-            </RoomInformation>
+            </RoomInformation >
         </>
     );
 };
@@ -221,7 +218,7 @@ const FacilityItem = styled.li`
     margin-bottom: 10px;
 `;
 
-const FacilitiesIcon = styled.img`
+const FacilityIcon = styled.img`
 display: inline-block;
 width: 40px;
 height: 40px;

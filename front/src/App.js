@@ -29,6 +29,7 @@ import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
 import AdminSettingPage from './components/pages/AdminSettingPage';
 import AdminReservManagePage from './components/pages/AdminReservManagePage';
 import AdminRoomInfoPage from './components/pages/AdminRoomInfoPage';
+import AdminRoomAddPage from './components/pages/AdminRoomAddPage';
 import AdminRoomModifyPage from './components/pages/AdminRoomModifyPage';
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
           <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>
           <Route path="/AdminReservManagePage" element={<AdminReservManagePage />}></Route>
           <Route path="/AdminRoomInfoPage/:id" element={<AdminRoomInfoPage />} />
+          <Route path="/AdminRoomAddPage" element={<AdminRoomAddPage />}></Route>
           <Route path="/AdminRoomModifyPage/:id" element={<AdminRoomModifyPage />}></Route>
           <Route path="/RoomInfo" element={<RoomInfo />}></Route>
         </Routes>

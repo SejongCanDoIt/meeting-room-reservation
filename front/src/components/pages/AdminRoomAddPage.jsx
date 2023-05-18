@@ -1,48 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
+import axios from 'axios'
 
-export default function AdminRoomModifyPage() {
-    const { id } = useParams();
-    const [roomData, setRoomData] = useState(null);
-    const [roomId, setRoomId] = useState("");
-    const [roomName, setRoomName] = useState("");
-    const [roomInfo, setRoomInfo] = useState("");
-    const [roomLocation, setRoomLocation] = useState("");
-    const [roomFacilities, setRoomFacilities] = useState({});
-
-    useEffect(() => {
-        const fetchRoomData = async () => {
-            try {
-                const response = await axios.get(`/room/detail/${id}`);
-                setRoomData(response.data);
-                setRoomId(response.data.id);
-                setRoomName(response.data.name);
-                setRoomInfo(response.data.info);
-                setRoomLocation(response.data.loc);
-                setRoomFacilities({
-                    bim_projector: response.data.bim_projector,
-                    board: response.data.board,
-                    cap: response.data.cap,
-                    com: response.data.com,
-                    wifi: response.data.wifi,
-                    tv: response.data.tv
-                });
-                console.log("Room Modify Page: ", response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchRoomData();
-    }, [id]);
-
-    if (!roomData) {
-        return <p>Loading...</p>;
-    }
+export default function AdminRoomAddPage() {
+    const [roomId, setRoomId] = useState();
+    const [roomName, setRoomName] = useState('');
+    const [roomInfo, setRoomInfo] = useState('');
+    const [roomLocation, setRoomLocation] = useState('');
+    const [roomFacilities, setRoomFacilities] = useState({
+        cap: 0,
+        wifi: 0,
+        board: 0,
+        tv: 0,
+        bim_projector: 0,
+        com: 0,
+    });
+    const [roomImage, setRoomImage] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -54,20 +29,22 @@ export default function AdminRoomModifyPage() {
             loc: roomLocation,
             ...roomFacilities,
             empty: true,
-            picture: roomData.picture
+            picture: roomImage,
         };
 
-        // Log data to console before sending it
         console.log(dataToSend);
 
         try {
-            await axios.put(`/room/update`, dataToSend);
-            alert("회의실 정보가 성공적으로 변경되었습니다.");
+            await axios.post(`/room/insert`, dataToSend);
+            alert("회의실 정보가 성공적으로 추가되었습니다.");
         } catch (error) {
-            console.error("회의실 정보 변경에 실패하였습니다.", error);
+            console.error("회의실 정보 추가에 실패하였습니다.", error);
         }
     };
 
+    const handleImageChange = (event) => {
+        setRoomImage(event.target.value);
+    };
 
     return (
         <>
@@ -78,7 +55,7 @@ export default function AdminRoomModifyPage() {
                 <RoomInfoContainer>
                     <Header>
                         <h1>회의실 정보</h1>
-                        <button onClick={handleSubmit}>변경하기</button>
+                        <button onClick={handleSubmit}>추가하기</button>
                     </Header>
                     <form onSubmit={handleSubmit}>
                         <RoomInfo>
@@ -90,7 +67,11 @@ export default function AdminRoomModifyPage() {
                                         value={roomName}
                                         onChange={(e) => setRoomName(e.target.value)}
                                     />
-                                    <p>ID: {roomId}</p>
+                                    <input
+                                        type="test"
+                                        value={roomId}
+                                        onChange={(e) => setRoomId(parseInt(e.target.value))}
+                                    />
                                     <hr></hr>
                                 </NameBlock>
                                 <Block>
@@ -110,9 +91,15 @@ export default function AdminRoomModifyPage() {
                                 </Block>
                             </LeftInfo>
                             <RightInfo>
-                                <RoomImg src={roomData.picture} alt={`이미지: ${roomData.name}`} />
+                                <RoomImgContianer roomImage={roomImage} />
                                 <ButtonContainer>
-                                    <RoomAddButton>사진 추가하기</RoomAddButton>
+                                    <StyledInput
+                                        type="text"
+                                        placeholder="Image URL"
+                                        value={roomImage}
+                                        onChange={handleImageChange}
+                                    />
+                                    <RoomAddButton>사진 URL 추가하기</RoomAddButton>
                                 </ButtonContainer>
                                 <FacilitiesList>
                                     <FacilityItem>
@@ -320,7 +307,9 @@ const StyledP = styled.p`
 `;
 */
 
-const RoomImg = styled.img`
+const RoomImgContianer = styled.img.attrs(props => ({
+    src: props.roomImage
+}))`
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -334,18 +323,22 @@ const ButtonContainer = styled.div`
 `;
 
 const RoomAddButton = styled.button`
-    width: 150px;
+    width: 200px;
     background-color: #A1203C;
     color: white;
     border: none;
     border-radius: 4px;
     padding: 10px 15px;
     font-size: 16px;
-    cursor: pointer;
-    
-    &:hover {
-        background-color: #8B1B34;
-    }
+`;
+
+const StyledInput = styled.input`
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
 `;
 
 const FacilitiesList = styled.ul`
