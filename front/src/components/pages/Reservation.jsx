@@ -245,7 +245,13 @@ export default function Reservation() {
     // 서버로부터 선택된 날짜에 예약 시간 리스트를 받아옴
     useEffect(() => {
         // console.log(selectedDay.year, selectedDay.month, selectedDay.date);
-        axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
+        const timeCheckInfo = {
+            year: selectedDay.year,
+            month: selectedDay.month,
+            day: selectedDay.date,
+            roomId: searchParams.get('room_id')
+        }
+        axios.post('/reserve/today-time-check', {...timeCheckInfo})
             .then((res) => {
                 // console.log(res.data);
                 setReservedTime((state) => [...res.data]);
@@ -288,17 +294,16 @@ export default function Reservation() {
             const todayDay = new Date().getDate();
             const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 1, 0).getDate();
             for (let day=1; day<=lastMonthDay ; day++) {
-                // console.log(selectedDay.year, currentMonth, day)
                 // 서버에 해당 날짜의 예약건수 요청.
                 const dayString = day < 10 ? "0" + day.toString() : day.toString();
                 const requestDayInfo = {
-                    year: selectedDay.year,
-                    month: currentMonth,
-                    day:day,
-                    roomID: searchParams.get('room_id'),
+                    year: selectedDay.year.toString(),
+                    month: selectedDay.month.toString(),
+                    day: dayString,
+                    roomId: searchParams.get('room_id'),
                 }
-                console.log(requestDayInfo);
-                axios.get('/reserve/today-reserve-cnt', {...requestDayInfo})
+
+                axios.post('/reserve/today-reserve-cnt', {...requestDayInfo})
                     .then((res) => {
                         const cntData = {
                             reservedCount: res.data,
@@ -309,17 +314,6 @@ export default function Reservation() {
                     .catch((err) => {
                         console.log(err);
                     })
-                // axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
-                //     .then((res) => {
-                //         const cntData = {
-                //             reservedCount: res.data,
-                //             reservedDate: `${dayString}-${currentMonth}-${selectedDay.year}`
-                //         }
-                //         setTmpMarks((state) => [...state, cntData])
-                //     })
-                //     .catch((err) => {
-                //         console.log(err);
-                //     })
     
             }
             idx -= 1
