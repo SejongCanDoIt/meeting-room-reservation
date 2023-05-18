@@ -1,24 +1,17 @@
 package sejong.reserve.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import sejong.reserve.repository.RoomRepository;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
-//@DynamicInsert
 @Table(name = "room")
 @ToString(exclude = "reservationLogs")
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
@@ -26,12 +19,13 @@ public class Room {
 
     private String name; // 회의실 이름
 
-    private String loc; // 회의실 위치
+    @Enumerated(EnumType.STRING)
+    @Column(name = "building_name")
+    private SejongBuildingName buildingName; // 회의실 빌딩이름
 
     @ColumnDefault("0")
     private int cap; // 수용인원
 
-    @ColumnDefault("meeting room specific information")
     private String info; // 회의실 상세정보
 
     @ColumnDefault("0")
@@ -72,7 +66,7 @@ public class Room {
 
     public static void setRoom(Room room, Room roomInfo) {
         room.setName(roomInfo.getName());
-        room.setLoc(roomInfo.getLoc());
+        room.setBuildingName(roomInfo.getBuildingName());
         room.setCap(roomInfo.getCap());
         room.setInfo(roomInfo.getInfo());
         room.setBoard(roomInfo.getBoard());
