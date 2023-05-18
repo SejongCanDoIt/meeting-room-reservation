@@ -18,12 +18,12 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth/")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
   private final MemberService memberService;
 
-  @PostMapping("login")
+  @PostMapping("/login")
   public ResponseEntity<?> login(
           @RequestBody LoginDto loginInfo,
           HttpServletResponse response,
@@ -49,13 +49,13 @@ public class AuthController {
     }
   }
 
-  @GetMapping("logout")
+  @GetMapping("/logout")
   public ResponseEntity<?> logout(HttpSession httpSession) throws Exception {
     httpSession.invalidate();
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("checkLogin")
+  @GetMapping("/checkLogin")
   public ResponseEntity<String> checkLogin(HttpSession session) throws Exception {
     log.info("checkLogin-test");
     Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);

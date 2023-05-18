@@ -29,7 +29,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/reserve/")
+@RequestMapping("/reserve")
 public class ReservationController {
     private final ReservationService reservationService;
     private final ManagementService managementService;
@@ -149,14 +149,14 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("time-check")
+    @GetMapping("/time-check")
     public Boolean timeCheck(@RequestParam LocalDateTime start,
                              @RequestParam LocalDateTime end) {
         return reservationService.isPossibleTime(start, end);
     }
 
 
-    @GetMapping("get")
+    @GetMapping("/get")
     public ResponseEntity<Optional<Reservation>> getReservation(@RequestParam Long reservation_id) {
         Optional<Reservation> reservation = reservationService.getReservation(reservation_id);
         if (!reservation.isEmpty()) {
@@ -166,7 +166,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("manager-list")
+    @GetMapping("/manager-list")
     public ResponseEntity<List<Reservation>> managerList() {
         List<Reservation> reservations = reservationService.managerList();
         if (!reservations.isEmpty()) {
@@ -176,7 +176,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("user-list")
+    @GetMapping("/user-list")
     public ResponseEntity<List<ReservationsDto>> userList(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
@@ -194,7 +194,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("user-list-reserved")
+    @GetMapping("/user-list-reserved")
     public ResponseEntity<List<ReservationsDto>> userListReserved(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
@@ -212,7 +212,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("user-list-finished")
+    @GetMapping("/user-list-finished")
     public ResponseEntity<List<ReservationsDto>> userListFinished(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
@@ -230,7 +230,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("user-list-canceled")
+    @GetMapping("/user-list-canceled")
     public ResponseEntity<List<ReservationsDto>> userListCanceled(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
@@ -248,17 +248,17 @@ public class ReservationController {
         }
     }
 
-    @DeleteMapping("delete-one")
+    @DeleteMapping("/delete-one")
     public void deleteOne(@RequestParam("reservation_id") Long reservation_id) {
         reservationService.deleteOne(reservation_id);
     }
 
-    @DeleteMapping("delete-all")
+    @DeleteMapping("/delete-all")
     public void deleteAll(@RequestParam("sno") String student_no) {
         reservationService.deleteAll(student_no);
     }
 
-    @DeleteMapping("login-delete-all")
+    @DeleteMapping("/login-delete-all")
     public void deleteAll(@Login Member loginMember) {
         log.info("loginMember = {}", loginMember);
         if(loginMember == null) {
@@ -267,46 +267,46 @@ public class ReservationController {
         reservationService.deleteAll(loginMember.getStudentNo());
     }
 
-    @PostMapping("reset")
+    @PostMapping("/reset")
     public void deleteAll() {
         reservationService.reset();
     }
 
 
-    @PutMapping("set-status-reserved")
+    @PutMapping("/set-status-reserved")
     public void updateStatusReserved(@RequestParam Long reservation_id) {
         reservationService.setStatus(ReservationStatus.RESERVED, reservation_id);
     }
 
-    @PutMapping("set-status-finished")
+    @PutMapping("/set-status-finished")
     public void updateStatusFinished(@RequestParam Long reservation_id) {
         reservationService.setStatus(ReservationStatus.FINISHED, reservation_id);
     }
 
-    @PutMapping("set-status-canceled")
+    @PutMapping("/set-status-canceled")
     public void updateStatusCanceled(@RequestParam Long reservation_id) {
         reservationService.setStatus(ReservationStatus.CANCELED, reservation_id);
         reservationService.cancel(reservation_id);
     }
 
-    @GetMapping("time-list")
+    @GetMapping("/time-list")
     public List<TimeDto> timeList(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         return reservationService.getTodayTimeList(todayDate, data.getRoomId());
     }
 
-    @GetMapping("today-time-check")
+    @GetMapping("/today-time-check")
     public int[] getTodayTimeCheck(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         return reservationService.getTodayTimeCheck(todayDate, data.getRoomId());
     }
 
-    @GetMapping("month-reserve-check")
+    @GetMapping("/month-reserve-check")
     public List<Integer> getMonthReserveCheck(@RequestBody MonthDateByRoomDto data) {
         return reservationService.getMonthReserveCheck(data.getYear(), Month.of(data.getMonth()), data.getRoomId());
     }
 
-    @GetMapping("today-reserve-cnt")
+    @GetMapping("/today-reserve-cnt")
     public ResponseEntity<Integer> getTodayReserveCnt(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
@@ -314,7 +314,7 @@ public class ReservationController {
         return ResponseEntity.ok(todayReserveCnt);
     }
 
-    @GetMapping("past-limitation")
+    @GetMapping("/past-limitation")
     public ResponseEntity<Integer> limitPastReservation(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);

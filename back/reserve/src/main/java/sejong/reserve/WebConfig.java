@@ -28,7 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/", "/auth/login",
                         "/auth/checkLogin",
-                        "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**");
+                        "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**",
+                        "/room/list");
 
         registry.addInterceptor(new AdminCheckInterceptor())
                 .order(2)
@@ -37,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/", "/auth/login",
                         "/auth/checkLogin",
                         "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**",
-                        "/notice/**", "manage/**");
+                        "/member/**", "/reserve/**", "/room/list");
     }
 
     @Override

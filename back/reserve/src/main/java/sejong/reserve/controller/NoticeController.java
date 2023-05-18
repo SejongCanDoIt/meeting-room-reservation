@@ -27,7 +27,7 @@ public class NoticeController {
         return noticeId;
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public ResponseEntity<List<Notice>> list() {
         List<Notice> noticeList = noticeService.list();
         if (!noticeList.isEmpty()) {
@@ -37,7 +37,7 @@ public class NoticeController {
         }
     }
 
-    @GetMapping("detail/{notice_id}")
+    @GetMapping("/detail/{notice_id}")
     public ResponseEntity<Notice> detail(@PathVariable Long notice_id) {
         Notice notice = noticeService.detail(notice_id);
         if (notice != null) {
@@ -47,13 +47,13 @@ public class NoticeController {
         }
     }
 
-    @PatchMapping("update")
+    @PatchMapping("/update")
     public void update(@RequestBody UpdateRequestNoticeDto updateNoticeInfo) {
         noticeService.update(updateNoticeInfo);
     }
 
 
-    @DeleteMapping("delete/{notice_id}")
+    @DeleteMapping("/delete/{notice_id}")
     public void delete(@PathVariable Long notice_id) {
         noticeService.delete(notice_id);
     }
