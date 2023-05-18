@@ -291,7 +291,14 @@ export default function Reservation() {
                 // console.log(selectedDay.year, currentMonth, day)
                 // 서버에 해당 날짜의 예약건수 요청.
                 const dayString = day < 10 ? "0" + day.toString() : day.toString();
-                axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
+                const requestDayInfo = {
+                    year: selectedDay.year,
+                    month: currentMonth,
+                    day:day,
+                    roomID: searchParams.get('room_id'),
+                }
+                console.log(requestDayInfo);
+                axios.get('/reserve/today-reserve-cnt', {...requestDayInfo})
                     .then((res) => {
                         const cntData = {
                             reservedCount: res.data,
@@ -302,6 +309,17 @@ export default function Reservation() {
                     .catch((err) => {
                         console.log(err);
                     })
+                // axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
+                //     .then((res) => {
+                //         const cntData = {
+                //             reservedCount: res.data,
+                //             reservedDate: `${dayString}-${currentMonth}-${selectedDay.year}`
+                //         }
+                //         setTmpMarks((state) => [...state, cntData])
+                //     })
+                //     .catch((err) => {
+                //         console.log(err);
+                //     })
     
             }
             idx -= 1

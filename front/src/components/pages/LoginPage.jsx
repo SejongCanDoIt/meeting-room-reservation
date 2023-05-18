@@ -154,8 +154,10 @@ const SubContainer = styled.div`
     justify-content: space-around;
     
     // background-color: gray;
-    height: 70vh;
-    width: 100vw;
+    
+    
+    height: 50vh;
+    width: 100%;
 `
 
 const InputContainer = styled.div`
