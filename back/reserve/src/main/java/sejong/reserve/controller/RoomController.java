@@ -14,7 +14,7 @@ import java.util.List;
 public class RoomController {
     private final RoomService roomService;
 
-    @GetMapping("insert")
+    @PostMapping("insert")
     public Long insert(@RequestBody Room room) {
         return roomService.create(room);
     }

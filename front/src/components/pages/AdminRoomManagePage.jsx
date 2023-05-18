@@ -13,7 +13,7 @@ export default function AdminRoomManagePage() {
             try {
                 const response = await axios.get(`/room/list`); // 실제 API 엔드포인트와 room id를 조합하여 요청
                 setRoomList(response.data); // 받아온 데이터로 roomInfo 상태 업데이트
-                console.log(response.data);
+                console.log("Room Manage Page: ", response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -35,7 +35,9 @@ export default function AdminRoomManagePage() {
                 <MeetingRoomContainer>
                     <Header>
                         <h1>회의실 관리</h1>
-                        <button>회의실 추가</button>
+                        <Link to="/AdminRoomAddPage">
+                            <button>회의실 추가</button>
+                        </Link>
                     </Header>
                     <RoomList>
                         {roomList.map(room => (

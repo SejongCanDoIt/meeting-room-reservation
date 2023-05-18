@@ -1,238 +1,38 @@
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 import styled from 'styled-components';
+import axios from "axios"
+import React, { useEffect, useState } from 'react';
 
 export default function AdminMemberManagePage() {
-    const members = [
-        {
-            id: 1,
-            department: '컴퓨터공학과',
-            studentId: '12345678',
-            name: '홍길동',
-            phoneNumber: '010-1234-5678'
-        },
-        {
-            id: 2,
-            department: '컴퓨터공학과',
-            studentId: '23456789',
-            name: '이병찬',
-            phoneNumber: '010-2345-6789'
-        },
-        {
-            id: 3,
-            department: '컴퓨터공학과',
-            studentId: '34567890',
-            name: '박지민',
-            phoneNumber: '010-3456-7890'
-        },
-        {
-            id: 4,
-            department: '컴퓨터공학과',
-            studentId: '45678901',
-            name: '이규훈',
-            phoneNumber: '010-4567-8901'
-        },
-        {
-            id: 5,
-            department: '컴퓨터공학과',
-            studentId: '56789012',
-            name: '김민구',
-            phoneNumber: '010-5678-9012'
-        },
-        {
-            id: 6,
-            department: '컴퓨터공학과',
-            studentId: '67890123',
-            name: '마리오',
-            phoneNumber: '010-6789-0123'
-        },
-        {
-            id: 7,
-            department: '컴퓨터공학과',
-            studentId: '78901234',
-            name: '루이지',
-            phoneNumber: '010-7890-1234'
-        },
-        {
-            id: 8,
-            department: '컴퓨터공학과',
-            studentId: '89012345',
-            name: '피이치',
-            phoneNumber: '010-8901-2345'
-        },
-        {
-            id: 1,
-            department: '컴퓨터공학과',
-            studentId: '12345678',
-            name: '홍길동',
-            phoneNumber: '010-1234-5678'
-        },
-        {
-            id: 2,
-            department: '컴퓨터공학과',
-            studentId: '23456789',
-            name: '이병찬',
-            phoneNumber: '010-2345-6789'
-        },
-        {
-            id: 3,
-            department: '컴퓨터공학과',
-            studentId: '34567890',
-            name: '박지민',
-            phoneNumber: '010-3456-7890'
-        },
-        {
-            id: 4,
-            department: '컴퓨터공학과',
-            studentId: '45678901',
-            name: '이규훈',
-            phoneNumber: '010-4567-8901'
-        },
-        {
-            id: 5,
-            department: '컴퓨터공학과',
-            studentId: '56789012',
-            name: '김민구',
-            phoneNumber: '010-5678-9012'
-        },
-        {
-            id: 6,
-            department: '컴퓨터공학과',
-            studentId: '67890123',
-            name: '마리오',
-            phoneNumber: '010-6789-0123'
-        },
-        {
-            id: 7,
-            department: '컴퓨터공학과',
-            studentId: '78901234',
-            name: '루이지',
-            phoneNumber: '010-7890-1234'
-        },
-        {
-            id: 8,
-            department: '컴퓨터공학과',
-            studentId: '89012345',
-            name: '피이치',
-            phoneNumber: '010-8901-2345'
-        },
-        {
-            id: 1,
-            department: '컴퓨터공학과',
-            studentId: '12345678',
-            name: '홍길동',
-            phoneNumber: '010-1234-5678'
-        },
-        {
-            id: 2,
-            department: '컴퓨터공학과',
-            studentId: '23456789',
-            name: '이병찬',
-            phoneNumber: '010-2345-6789'
-        },
-        {
-            id: 3,
-            department: '컴퓨터공학과',
-            studentId: '34567890',
-            name: '박지민',
-            phoneNumber: '010-3456-7890'
-        },
-        {
-            id: 4,
-            department: '컴퓨터공학과',
-            studentId: '45678901',
-            name: '이규훈',
-            phoneNumber: '010-4567-8901'
-        },
-        {
-            id: 5,
-            department: '컴퓨터공학과',
-            studentId: '56789012',
-            name: '김민구',
-            phoneNumber: '010-5678-9012'
-        },
-        {
-            id: 6,
-            department: '컴퓨터공학과',
-            studentId: '67890123',
-            name: '마리오',
-            phoneNumber: '010-6789-0123'
-        },
-        {
-            id: 7,
-            department: '컴퓨터공학과',
-            studentId: '78901234',
-            name: '루이지',
-            phoneNumber: '010-7890-1234'
-        },
-        {
-            id: 8,
-            department: '컴퓨터공학과',
-            studentId: '89012345',
-            name: '피이치',
-            phoneNumber: '010-8901-2345'
-        },
-        {
-            id: 1,
-            department: '컴퓨터공학과',
-            studentId: '12345678',
-            name: '홍길동',
-            phoneNumber: '010-1234-5678'
-        },
-        {
-            id: 2,
-            department: '컴퓨터공학과',
-            studentId: '23456789',
-            name: '이병찬',
-            phoneNumber: '010-2345-6789'
-        },
-        {
-            id: 3,
-            department: '컴퓨터공학과',
-            studentId: '34567890',
-            name: '박지민',
-            phoneNumber: '010-3456-7890'
-        },
-        {
-            id: 4,
-            department: '컴퓨터공학과',
-            studentId: '45678901',
-            name: '이규훈',
-            phoneNumber: '010-4567-8901'
-        },
-        {
-            id: 5,
-            department: '컴퓨터공학과',
-            studentId: '56789012',
-            name: '김민구',
-            phoneNumber: '010-5678-9012'
-        },
-        {
-            id: 6,
-            department: '컴퓨터공학과',
-            studentId: '67890123',
-            name: '마리오',
-            phoneNumber: '010-6789-0123'
-        },
-        {
-            id: 7,
-            department: '컴퓨터공학과',
-            studentId: '78901234',
-            name: '루이지',
-            phoneNumber: '010-7890-1234'
-        },
-        {
-            id: 8,
-            department: '컴퓨터공학과',
-            studentId: '89012345',
-            name: '피이치',
-            phoneNumber: '010-8901-2345'
-        },
-    ];
-
     const handleAddMember = () => {
         // 회원 추가 기능 구현
     };
+
+    const handleEditMember = (memberId) => {
+        // 회원 수정 기능 구현
+        console.log(`Edit member with id: ${memberId}`);
+    };
+
+    const [memberList, setMemberList] = useState(null);
+
+    useEffect(() => {
+        const fetchMemberListData = async () => {
+            try {
+                const response = await axios.get(`/member/list`);
+                setMemberList(response.data);
+                console.log("Member Manage Page: ", response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMemberListData(); // 데이터 받아오기 함수 호출
+    }, []);
+
+    if (!memberList) {
+        return <p>Loading...</p>; // 데이터 로딩 중에는 로딩 메시지 표시
+    }
 
     return (
         <>
@@ -252,14 +52,18 @@ export default function AdminMemberManagePage() {
                             <span>학번</span>
                             <span>이름</span>
                             <span>전화번호</span>
+                            <span>이메일</span>
+                            <span>노쇼 횟수</span>
                         </MemberListHeader>
-                        {members.map(member => (
-                            <MemberRow key={member.id}>
-                                <span>{member.department}</span>
-                                <span>{member.studentId}</span>
+                        {memberList.map(member => (
+                            <MemberRow key={member.member_id}>
+                                <span>{member.major === 1 ? '컴퓨터공학부' : '기타'}</span>
+                                <span>{member.studentNo}</span>
                                 <span>{member.name}</span>
-                                <span>{member.phoneNumber}</span>
-                                <DeleteIcon>🗑️</DeleteIcon>
+                                <span>{member.phoneNo}</span>
+                                <span>{member.email}</span>
+                                <span>{member.noshow}</span>
+                                <EditButton onClick={() => handleEditMember(member.member_id)}>수정하기</EditButton>
                             </MemberRow>
                         ))}
                     </MemberList>
@@ -306,7 +110,7 @@ const MemberList = styled.div`
 
 const MemberListHeader = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1.5fr 2fr 1fr;
+    grid-template-columns: 1.5fr 1.5fr 1fr 2fr 2fr 1fr 0.7fr;
     grid-gap: 10px;
     align-items: center;
     padding: 10px;
@@ -320,7 +124,7 @@ const MemberListHeader = styled.div`
 
 const MemberRow = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1.5fr 2fr 1fr;
+    grid-template-columns: 1.5fr 1.5fr 1fr 2fr 2fr 1fr 0.7fr;
     grid-gap: 10px;
     align-items: center;
     padding: 10px;
@@ -328,6 +132,16 @@ const MemberRow = styled.div`
     height: 6vh;
 `;
 
-const DeleteIcon = styled.span`
+const EditButton = styled.button`
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 16px;
     cursor: pointer;
+
+    &:hover {
+        background-color: #8B1B34;
+    }
 `;

@@ -1,38 +1,67 @@
 import styled from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
+import axios from "axios"
+import React, { useEffect, useState } from 'react';
 
 export default function AdminSettingPage() {
-    const settings = [
-        {
-            id: 1,
-            role: '학부생',
-            reservations: '4번',
-            reservationPeriod: '일주일',
-            availableTime: '2시간'
-        },
-        {
-            id: 2,
-            role: '대학원생',
-            reservations: '제한없음',
-            reservationPeriod: '2주일',
-            availableTime: '4시간'
-        },
-        {
-            id: 3,
-            role: '교수',
-            reservations: '제한없음',
-            reservationPeriod: '3개월',
-            availableTime: '제한없음'
-        },
-        {
-            id: 4,
-            role: '학과 사무실',
-            reservations: '제한없음',
-            reservationPeriod: '3개월',
-            availableTime: '제한없음'
-        }
-    ];
+    const [settingList, setSettingList] = useState(null);
+
+    const processData = (data) => {
+        return [
+            {
+                id: data.id,
+                role: '대학생',
+                cnt: `${data.univ_cnt}번`,
+                period_time: `${data.univ_hour_gap}시간`,
+                period_day:  `${data.univ_hour_gap}일`,
+                period_week: `${data.univ_week_gap}주`
+            },
+            {
+                id: data.id,
+                role: '대학원생',
+                cnt: `${data.post_cnt}번`,
+                period_time: `${data.post_hour_gap}시간`,
+                period_day:  `${data.post_hour_gap}일`,
+                period_week: `${data.post_week_gap}주`
+            },
+            {
+                id: data.id,
+                role: '교수',
+                cnt: `${data.pro_cnt}번`,
+                period_time: `${data.pro_hour_gap}시간`,
+                period_day:  `${data.pro_hour_gap}일`,
+                period_week: `${data.pro_week_gap}주`
+            },
+            {
+                id: data.id,
+                role: '학과 사무실',
+                cnt: `${data.office_cnt}번`,
+                period_time: `${data.office_hour_gap}시간`,
+                period_day:  `${data.office_hour_gap}일`,
+                period_week: `${data.office_week_gap}주`
+            }
+        ];
+    };
+
+    useEffect(() => {
+        const fetchSettingListData = async () => {
+            try {
+                const response = await axios.get(`/manage/`);
+                const processedData = processData(response.data);
+                setSettingList(processedData);
+                console.log(processedData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchSettingListData(); // 데이터 받아오기 함수 호출
+    }, []);
+
+    if (!settingList) {
+        return <p>Loading...</p>; // 데이터 로딩 중에는 로딩 메시지 표시
+    }
 
     return (
         <>
@@ -49,16 +78,18 @@ export default function AdminSettingPage() {
                     <SettingsList>
                         <SettingsListHeader>
                             <span>권한</span>
-                            <span>예약 횟수 설정</span>
-                            <span>예약 가능 시간 설정</span>
-                            <span>사용 가능 시간 설정</span>
+                            <span>예약 가능 횟수 설정</span>
+                            <span>예약 시간 간격 기준: 시간</span>
+                            <span>예약 시간 간격 기준: 일</span>
+                            <span>예약 시간 간격 기준: 주</span>
                         </SettingsListHeader>
-                        {settings.map(setting => (
+                        {settingList.map(setting => (
                             <SettingsRow key={setting.id}>
                                 <span>{setting.role}</span>
-                                <span>{setting.reservations}</span>
-                                <span>{setting.reservationPeriod} 전</span>
-                                <span>{setting.availableTime}</span>
+                                <span>{setting.cnt}</span>
+                                <span>{setting.period_time}</span>
+                                <span>{setting.period_day}</span>
+                                <span>{setting.period_week}</span>
                             </SettingsRow>
                         ))}
                     </SettingsList>
@@ -110,7 +141,7 @@ const SettingsListHeader = styled.div`
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
     align-items: center;
 `;
@@ -123,7 +154,7 @@ const SettingsRow = styled.div`
         border-bottom: none;
     }
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
     align-items: center;
 `;
