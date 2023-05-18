@@ -139,6 +139,7 @@ export default function MyPage() {
 const MainPageContainer = styled.div`
     display: flex;
     flex-direction: column;
+    // justify-content: flex-start;
     height: 100vh;
 
 `
@@ -185,6 +186,12 @@ const MenuContainer = styled.div`
     justify-content: flex-end;
     // background-color: gray;
     flex: 1;
+
+    @media screen and (min-height: 1000px) {
+        justify-content: flex-start;
+        flex: 0.5;
+        // background-color: gray;
+    }
 `
 
 const Intro = styled.h2`

@@ -18,6 +18,7 @@ import RoomInfo from "./components/pages/RoomInfo";
 import Announcement from "./components/pages/Announcement";
 import TestReservation from "./components/pages/TestReservation";
 import PrivateRoute from "./components/pages/PrivateRoute";
+import ShowRegularReservation from "./components/pages/ShowRegularReservation";
 import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
 import ShowReservation from "./components/pages/ShowReservation";
@@ -48,6 +49,7 @@ function App() {
           <Route path="/selectmeetingroom" element={<SelectMeetingRoom />}></Route>
           <Route path="/reservationcompletepage" element={<ReservationCompletePage />}></Route>
           <Route path="/sharereservationpage" element={<ShareReservationPage />}></Route>
+          <Route path="/showregularreservation" element={<ShowRegularReservation />}></Route>
           <Route path="/startpage" element={<StartPage />}></Route>
           <Route path="/loginpage" element={<LoginPage />}></Route>
           <Route path="/mainpage" element={<MainPage />}></Route>

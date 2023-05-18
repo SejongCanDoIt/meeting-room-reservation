@@ -17,9 +17,7 @@ export default function ShowReservation() {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
             .then((res) => {
-                // console.log(res);
                 setLoginId((id) => res.data);
-                // console.log("로그인 되어있습니다")
             })
             .catch((err) => {
                 navigate('/loginPage')
@@ -29,7 +27,7 @@ export default function ShowReservation() {
     useEffect(() => {
         axios.get('/reserve/user-list')
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 const info = makeReserveList(res.data);
 
                 // 같은 날일때는 시간이 앞선 것부터.
@@ -59,6 +57,11 @@ export default function ShowReservation() {
             const endTime = endTmp[1].split(':');
             const isExpire = new Date(el.start) < new Date(); // 만료된 예약인지 확인.
             // console.log(isExpire);
+            
+            const isNew = new Date(el.created_at) > new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay(), new Date().getHours(), new Date().getMinutes() - 3);
+            console.log(new Date(el.created_at));
+            console.log(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), new Date().getMinutes() - 3));
+            console.log(isNew);
 
             const info = {
                 reservationId: el.reservation_id,
