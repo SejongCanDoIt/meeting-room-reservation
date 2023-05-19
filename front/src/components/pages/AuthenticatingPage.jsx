@@ -84,7 +84,7 @@ export default function AuthenticatingPage() {
             password: login.password,
         }
         
-        console.log("서버로 노쇼 인증을 보냅니다.");
+        // console.log("서버로 노쇼 인증을 보냅니다.");
         // setIsCheckFail(true);
         // setIsCheckSuccess(true);
         // await axios
