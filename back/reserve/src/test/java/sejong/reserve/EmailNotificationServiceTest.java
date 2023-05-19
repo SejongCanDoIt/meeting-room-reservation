@@ -7,13 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
-import sejong.reserve.service.EmailNotificationService;
+import sejong.reserve.service.EmailReminderService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class EmailNotificationServiceTest {
     @Autowired
-    EmailNotificationService emailNotificationService;
+    EmailReminderService emailNotificationService;
 
     @MockBean
     JavaMailSender javaMailSender;

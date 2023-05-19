@@ -13,6 +13,8 @@ import java.util.List;
 @Table(name = "room")
 @ToString(exclude = "reservationLogs")
 public class Room {
+
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
     private Long id; // 회의실 id
