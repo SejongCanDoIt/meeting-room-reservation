@@ -50,6 +50,10 @@ dependencies {
 	implementation 'org.apache.poi:poi:5.2.2'
 	implementation 'org.apache.poi:poi-ooxml:5.2.2'
 
+
+	// 구글 캘린더 라이브러리
+	implementation 'com.google.api-client:google-api-client:2.2.0'
+	implementation 'com.google.apis:google-api-services-calendar:v3-rev20220715-2.0.0'
 }
 
 tasks.named('test') {

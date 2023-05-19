@@ -44,6 +44,15 @@ public class Reservation {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+
+
+
+    //메일이 보내졌는지 확인하기 위한 플래그
+    @Column(name ="reminderSent")
+    private boolean reminderSent = false;
+
+
+
     @Column(columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
     private Boolean noShowCheck; // 노쇼 확인 여부
@@ -57,6 +66,7 @@ public class Reservation {
         reservation.setEnd(reservationDto.getEnd());
         reservation.setRegular(reservationDto.getRegular());
         reservation.setStatus(ReservationStatus.RESERVED);
+        reservation.setReminderSent(false);
         reservation.setNoShowCheck(false);
         return reservation;
     }

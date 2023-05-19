@@ -1,6 +1,7 @@
 package sejong.reserve.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -62,4 +63,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select r from Reservation r where r.member.studentNo = :studentNo and r.status = :status")
     List<Reservation> getReservationListBySnoAndStatus(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
+
+    @Query("select r from Reservation r where r.start >= :start and r.end <= :end and r.reminderSent = false")
+    List<Reservation> findByStartTimeBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    @Modifying
+    @Query("update Reservation r set r.reminderSent = true where r.id = :id")
+    void setReminderSent(@Param("id") Long id);
 }
