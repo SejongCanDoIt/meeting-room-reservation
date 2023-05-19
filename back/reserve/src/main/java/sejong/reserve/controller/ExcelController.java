@@ -2,6 +2,8 @@ package sejong.reserve.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,14 +26,14 @@ public class ExcelController {
     private final ExcelService excelService;
 
     @PostMapping("/upload")
-    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file) {
 
         Map<String, Object> result = new HashMap<>();
 
         if (file.isEmpty()) {
             result.put("success", false);
             result.put("message", "Please select a file to upload");
-            return result;
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -46,8 +48,9 @@ public class ExcelController {
 
             result.put("success", false);
             result.put("message", "File upload failed: " + e.getMessage());
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return result;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
