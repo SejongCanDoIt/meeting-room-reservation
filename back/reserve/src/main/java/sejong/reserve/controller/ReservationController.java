@@ -343,5 +343,26 @@ public class ReservationController {
         }
     }
 
+    @PatchMapping("/check-noshow")
+    public ResponseEntity<Integer> checkNoShow(@Login Member loginMember) {
+        LocalDateTime now = LocalDateTime.now();
+        List<ReservationsDto> reservationList = reservationService.getReservationListBySno(loginMember.getStudentNo());
+        for(ReservationsDto reservation : reservationList) {
+            if(reservation.getEnd().isAfter(now)) {
+                memberService.addNoShowCnt(loginMember.getStudentNo());
+            }
+        }
+        return ResponseEntity.ok(loginMember.getNoshow());
+    }
+
+    @GetMapping("/get-noshow/{sno}")
+    public ResponseEntity<Integer> getNoShowCnt(@PathVariable("sno") String sno) {
+        return ResponseEntity.ok(memberService.getNoShowCnt(sno));
+    }
+
+    @PatchMapping("/reset-noshow/{sno}")
+    public void checkNoShow(@PathVariable("sno") String sno) {
+        memberService.resetNoShowCnt(sno);
+    }
 
 }
