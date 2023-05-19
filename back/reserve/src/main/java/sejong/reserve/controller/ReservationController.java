@@ -9,10 +9,7 @@ import sejong.reserve.domain.*;
 import sejong.reserve.dto.*;
 import sejong.reserve.service.*;
 import sejong.reserve.web.argumentresolver.Login;
-import sejong.reserve.web.exception.AlreadyReservedException;
-import sejong.reserve.web.exception.AuthorityException;
-import sejong.reserve.web.exception.NotAvailableReservedException;
-import sejong.reserve.web.exception.NotLoginException;
+import sejong.reserve.web.exception.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -343,16 +340,19 @@ public class ReservationController {
         }
     }
 
-    @PatchMapping("/check-noshow")
-    public ResponseEntity<Integer> checkNoShow(@Login Member loginMember) {
+    @GetMapping("/check-noshow")
+    public ResponseEntity<Boolean> checkNoShow(@Login Member loginMember) {
         LocalDateTime now = LocalDateTime.now();
         List<ReservationsDto> reservationList = reservationService.getReservationListBySno(loginMember.getStudentNo());
         for(ReservationsDto reservation : reservationList) {
-            if(reservation.getEnd().isAfter(now)) {
+            if (reservation.getStart().isBefore(now) && reservation.getEnd().isAfter(now)) {
+                reservationService.checkNoShow(reservation.getReservation_id(), true);
+            } else {
                 memberService.addNoShowCnt(loginMember.getStudentNo());
+                throw new NotAvailableNoShowCheckException("인증 시간이 아니므로 인증이 되지 않습니다.");
             }
         }
-        return ResponseEntity.ok(loginMember.getNoshow());
+        return ResponseEntity.ok(true);
     }
 
     @GetMapping("/get-noshow/{sno}")

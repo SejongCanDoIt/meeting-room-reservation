@@ -44,6 +44,10 @@ public class Reservation {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column(columnDefinition = "TINYINT(1)", nullable = false)
+    @ColumnDefault("0")
+    private Boolean noShowCheck; // 노쇼 확인 여부
+
     //==생성 메서드==//
     public static Reservation createReservation(ReservationDto reservationDto, Member member, Room room) {
         Reservation reservation = new Reservation();

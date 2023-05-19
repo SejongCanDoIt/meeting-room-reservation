@@ -232,6 +232,11 @@ public class ReservationService {
         return reservationDtoList;
     }
 
+    public void checkNoShow(Long reservation_id, boolean check) {
+        Reservation reservation = reservationRepository.findById(reservation_id).get();
+        reservation.setNoShowCheck(check);
+    }
+
 
 
 }

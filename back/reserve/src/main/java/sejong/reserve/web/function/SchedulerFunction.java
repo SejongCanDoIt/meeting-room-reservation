@@ -48,6 +48,9 @@ public class SchedulerFunction {
             if(reservationsDto.getEnd().isBefore(now)) {
                 Long reservation_id = reservationsDto.getReservation_id();
                 reservationService.setStatus(ReservationStatus.FINISHED, reservation_id);
+                if(reservationsDto.getNoShowCheck() == false) { // 예약이 끝난 시간까지 노쇼가 안되어 있을 경우
+                    memberService.addNoShowCnt(reservationsDto.getMember_sno());
+                }
             }
         }
     }

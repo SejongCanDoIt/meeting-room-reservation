@@ -63,7 +63,11 @@ public class ExceptionControllerAdvice {
         return new ErrorResponse(HttpStatus.CONFLICT.value(),e.getMessage());
     }
 
-
+    @ExceptionHandler(value = {NotAvailableNoShowCheckException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse NotAvailableNoShowCheckException(NotAvailableNoShowCheckException e) {
+        return new ErrorResponse(HttpStatus.CONFLICT.value(),e.getMessage());
+    }
 
 
 }
