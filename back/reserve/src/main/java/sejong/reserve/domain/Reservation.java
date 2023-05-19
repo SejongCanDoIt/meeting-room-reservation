@@ -44,7 +44,7 @@ public class Reservation {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(columnDefinition = "TINYINT(1)", nullable = false)
+    @Column(columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
     private Boolean noShowCheck; // 노쇼 확인 여부
 
@@ -57,6 +57,7 @@ public class Reservation {
         reservation.setEnd(reservationDto.getEnd());
         reservation.setRegular(reservationDto.getRegular());
         reservation.setStatus(ReservationStatus.RESERVED);
+        reservation.setNoShowCheck(false);
         return reservation;
     }
 }

@@ -31,8 +31,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     LocalDateTime getEndTime(@Param("id") Long reservation_id);
 
 
-    @Query("select count(r) from Reservation r where r.start > :start and r.end < :end and r.status = 'RESERVED'")
+    @Query("select count(r) from Reservation r where r.start < :end and r.end > :start and r.status = 'RESERVED'")
     int isPossibleTime(@Param("start")LocalDateTime start, @Param("end")LocalDateTime end);
+
 
 
     @Query("select r from Reservation r where r.member.studentNo =:studentNo and r.status =:status")
@@ -58,6 +59,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> getReservationListByDateAndStatus(@Param("dateStart") LocalDateTime dateStart, @Param("dateEnd") LocalDateTime dateEnd, @Param("status") ReservationStatus status);
 
 
-    @Query("select r from Reservation r where r.member.studentNo = :studentNo and r.status = :status order by r.start DESC ")
+    @Query("select r from Reservation r where r.member.studentNo = :studentNo and r.status = :status")
     List<Reservation> getReservationListBySnoAndStatus(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
 }
