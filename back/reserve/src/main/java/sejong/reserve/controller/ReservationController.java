@@ -340,7 +340,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("/check-noshow")
+    @PatchMapping("/check-noshow")
     public ResponseEntity<Boolean> checkNoShow(@Login Member loginMember) {
         LocalDateTime now = LocalDateTime.now();
         List<ReservationsDto> reservationList = reservationService.getReservationListBySno(loginMember.getStudentNo());
