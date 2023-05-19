@@ -94,7 +94,7 @@ export default function AuthenticatingPage() {
             setIsError(false);
             await axios
                 .patch("/reserve/check-noshow")
-                .then((res) => {
+                .then(async (res) => {
                     console.log(res.data, "Inner");
                     setIsCheckSuccess(true);
                 })
@@ -103,6 +103,12 @@ export default function AuthenticatingPage() {
                     setErrMsg(err.response.data.message);
                     setIsCheckFail(true);
                 });
+            
+            // 회의실 인증시 로그인했을때 로그아웃을 요청해서 원래상태 유지.
+            await axios.get("/auth/logout")
+                .then(() => {
+                    sessionStorage.clear();
+                })
             
         })
         .catch(async (err) => {
