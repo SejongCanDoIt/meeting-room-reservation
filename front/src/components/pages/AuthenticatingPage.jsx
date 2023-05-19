@@ -41,9 +41,10 @@ export default function AuthenticatingPage() {
 
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
     const [loginError, setLoginError] = useState(<></>);
+    const [errMsg, setErrMsg] = useState("인증에 실패하였습니다.");
+    const [isError, setIsError] = useState(false);
     const [isCheckFail, setIsCheckFail] = useState(false);
     const [isCheckSuccess, setIsCheckSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
 
     const onLoginIdHandler = (e) => {
@@ -87,17 +88,27 @@ export default function AuthenticatingPage() {
         // console.log("서버로 노쇼 인증을 보냅니다.");
         // setIsCheckFail(true);
         // setIsCheckSuccess(true);
-        // await axios
-        // .post("/auth/login", {...loginInfo})
-        // .then((res) => {
-        //     setIsError(false);
-        //     sessionStorage.setItem('Authorization', true);
-        //     sessionStorage.setItem('LoginID', login.id);
-        //     navigate(`/myPage?id=${login.id}`)
-        // })
-        // .catch(async (err) => {
-        //     setIsError(true);
-        // });
+        await axios
+        .post("/auth/login", {...loginInfo})
+        .then(async (res) => {
+            setIsError(false);
+            await axios
+                .patch("/reserve/check-noshow")
+                .then((res) => {
+                    console.log(res.data, "Inner");
+                    setIsCheckSuccess(true);
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message);
+                    setErrMsg(err.response.data.message);
+                    setIsCheckFail(true);
+                });
+            
+        })
+        .catch(async (err) => {
+            setIsError(true);
+            // console.log("로그인 아이디 오류");
+        });
     }
 
 
@@ -121,10 +132,16 @@ export default function AuthenticatingPage() {
             </SubContainer>
             {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
             
+            {/* 입력된 정보가 다를때 나오는 알림 */}
+            {isError ? 
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>아이디 또는 비밀번호가 잘못되었습니다.</Alert></Snackbar> 
+                : 
+                <></>
+            }
             {/* 인증에 관련된 알림 */}
             {
                 isCheckFail ? 
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>인증에 실패하였습니다.</Alert></Snackbar> 
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>{errMsg}</Alert></Snackbar> 
                 : 
                 <></>
             }
