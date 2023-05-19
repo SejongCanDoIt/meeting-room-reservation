@@ -67,7 +67,7 @@ public class ReservationController {
         checkPastDate(start);
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
         log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
-        checkDuplicateReservation(start, end);
+        checkDuplicateReservation(start, end, room_id);
         // 예약 시간 gap 이 권한에 적합한지?
         log.info("checkTimeGap:  예약 시간 gap 이 권한에 적합한지?");
         checkTimeGap(start, end, authority);
@@ -126,8 +126,8 @@ public class ReservationController {
 
     }
 
-    private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end) {
-        if(!reservationService.isPossibleTime(start, end)) {
+    private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end, Long roomId) {
+        if(!reservationService.isPossibleTime(start, end, roomId)) {
             throw new AlreadyReservedException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
         }
     }
@@ -164,8 +164,9 @@ public class ReservationController {
 
     @GetMapping("/time-check")
     public Boolean timeCheck(@RequestParam LocalDateTime start,
-                             @RequestParam LocalDateTime end) {
-        return reservationService.isPossibleTime(start, end);
+                             @RequestParam LocalDateTime end,
+                             @RequestParam Long roomId) {
+        return reservationService.isPossibleTime(start, end, roomId);
     }
 
 

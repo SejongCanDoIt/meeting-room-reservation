@@ -75,10 +75,10 @@ public class ReservationService {
         return reservation;
     }
 
-    public Boolean isPossibleTime(LocalDateTime start, LocalDateTime end) {
+    public Boolean isPossibleTime(LocalDateTime start, LocalDateTime end, Long roomId) {
         ZoneId localZone = ZoneId.systemDefault();
         log.info("localZone = {}", localZone);
-        int timeCnt = reservationRepository.isPossibleTime(start, end);
+        int timeCnt = reservationRepository.isPossibleTime(start, end, roomId);
         if(timeCnt == 0) {
             return true;
         } else {
