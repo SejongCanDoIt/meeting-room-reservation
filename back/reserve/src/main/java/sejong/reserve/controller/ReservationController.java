@@ -343,10 +343,12 @@ public class ReservationController {
     @PatchMapping("/check-noshow")
     public ResponseEntity<Boolean> checkNoShow(@Login Member loginMember) {
         LocalDateTime now = LocalDateTime.now();
-        List<ReservationsDto> reservationList = reservationService.getReservationListBySno(loginMember.getStudentNo());
+        List<ReservationsDto> reservationList = reservationService.getReservationListBySnoAndStatus(loginMember.getStudentNo(), ReservationStatus.RESERVED);
         for(ReservationsDto reservation : reservationList) {
+            log.info("예약 시작 시간: {}, 예약 끝나는 시간: {}, 예약 노쇼 체크 = {}", reservation.getStart(), reservation.getEnd(), reservation.getNoShowCheck());
             if (reservation.getStart().isBefore(now) && reservation.getEnd().isAfter(now)) {
                 reservationService.checkNoShow(reservation.getReservation_id(), true);
+                return ResponseEntity.ok(reservation.getNoShowCheck());
             } else {
                 memberService.addNoShowCnt(loginMember.getStudentNo());
                 throw new NotAvailableNoShowCheckException("인증 시간이 아니므로 인증이 되지 않습니다.");

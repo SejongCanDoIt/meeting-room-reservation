@@ -237,6 +237,12 @@ public class ReservationService {
         reservation.setNoShowCheck(check);
     }
 
+    public List<ReservationsDto> getReservationListBySnoAndStatus(String student_no, ReservationStatus status) {
+        List<Reservation> reservations = reservationRepository.getReservationListBySnoAndStatus(student_no, status);
+        List<ReservationsDto> reservationDtoList = convertToDto(reservations);
+        return reservationDtoList;
+    }
+
 
 
 }
