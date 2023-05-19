@@ -41,6 +41,8 @@ export default function AuthenticatingPage() {
 
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
     const [loginError, setLoginError] = useState(<></>);
+    const [isCheckFail, setIsCheckFail] = useState(false);
+    const [isCheckSuccess, setIsCheckSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
 
@@ -82,7 +84,9 @@ export default function AuthenticatingPage() {
             password: login.password,
         }
         
-        console.log("서버로 노쇼 인증을 보냅니다.");
+        // console.log("서버로 노쇼 인증을 보냅니다.");
+        // setIsCheckFail(true);
+        // setIsCheckSuccess(true);
         // await axios
         // .post("/auth/login", {...loginInfo})
         // .then((res) => {
@@ -99,7 +103,7 @@ export default function AuthenticatingPage() {
 
     return (
         <MainContainer>
-            <SubContainer>
+            <SubContainer isCheckSuccess = {isCheckSuccess}>
                 <Alert variant="outlined" severity="info" sx={{ width:"80%" , maxWidth: "500px"}}>인증을위해 아이디와 비밀번호를 입력해주세요</Alert>
                 <InputContainer>
                     <InputBox>
@@ -117,9 +121,16 @@ export default function AuthenticatingPage() {
             </SubContainer>
             {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
             
-            {/* 입력된 정보가 다를때 나오는 알림 */}
-            {isError ? 
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>아이디 또는 비밀번호가 잘못되었습니다.</Alert></Snackbar> 
+            {/* 인증에 관련된 알림 */}
+            {
+                isCheckFail ? 
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>인증에 실패하였습니다.</Alert></Snackbar> 
+                : 
+                <></>
+            }
+            {
+                isCheckSuccess ?
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}><Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>인증에 성공하였습니다.</Alert></Snackbar> 
                 : 
                 <></>
             }
@@ -141,6 +152,7 @@ const SubContainer = styled.div`
     justify-content: space-around;
     
     // background-color: gray;
+
     
     
     height: 50vh;
