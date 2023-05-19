@@ -2,13 +2,12 @@ package sejong.reserve.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import sejong.reserve.domain.Member;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.dto.ReservationDto;
-import sejong.reserve.dto.ReservationsDto;
 import sejong.reserve.repository.ReservationRepository;
 
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class EmailNotificationService {
+public class EmailReminderService {
     private JavaMailSender javaMailSender;
     private final ReservationRepository reservationRepository;
     private final EmailService emailService;

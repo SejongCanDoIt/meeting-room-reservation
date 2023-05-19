@@ -22,7 +22,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ReservationService {
     private final ReservationRepository reservationRepository;
-
+    private final EmailReminderService emailNotificationService;
 
     @Transactional
     public Long makeReservation(Reservation reservation) {
@@ -231,4 +231,7 @@ public class ReservationService {
         List<ReservationsDto> reservationDtoList = convertToDto(reservations);
         return reservationDtoList;
     }
+
+
+
 }
