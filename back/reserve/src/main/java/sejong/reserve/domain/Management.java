@@ -2,6 +2,7 @@ package sejong.reserve.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import sejong.reserve.dto.ManagementDto;
 import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.RoomRepository;
 
@@ -54,17 +55,10 @@ public class Management {
     private int pro_week_gap; // 교수
 
     //==생성 메서드==//
-    public static Management createManagement(Management managementInfo) {
-        Management management = new Management();
-
-        setManagement(managementInfo, management);
-
-        return management;
-    }
-
-    public static void setManagement(Management managementInfo, Management management) {
+    public static void setManagement(Management management, ManagementDto managementInfo) {
         management.setUniv_cnt(managementInfo.getUniv_cnt());
         management.setPost_cnt(managementInfo.getPost_cnt());
+        management.setOffice_cnt(managementInfo.getOffice_cnt());
         management.setPro_cnt(managementInfo.getPro_cnt());
         management.setUniv_hour_gap(managementInfo.getUniv_hour_gap());
         management.setPost_hour_gap(managementInfo.getPost_hour_gap());

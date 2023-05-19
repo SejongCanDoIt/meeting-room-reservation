@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.Management;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.ManagementDto;
 import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
 
@@ -22,9 +23,9 @@ public class ManagementService{
     }
 
     @Transactional
-    public void update(Management managementInfo) {
+    public void update(ManagementDto managementInfo) {
         Management management = managementRepository.findOne();
-        management.setManagement(managementInfo, management);
+        management.setManagement(management, managementInfo);
     }
 
 
