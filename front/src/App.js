@@ -23,6 +23,7 @@ import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
 import ShowReservation from "./components/pages/ShowReservation";
 import Logout from './components/pages/Logout';
+import AuthenticatingPage from './components/pages/AuthenticatingPage';
 import styled from 'styled-components';
 import AdminMemberManagePage from './components/pages/AdminMemberManagePage';
 import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
@@ -57,6 +58,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/announcement" element={<Announcement />}></Route>
+          <Route path="/authenticating" element={<AuthenticatingPage />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
