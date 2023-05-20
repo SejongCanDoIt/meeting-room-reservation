@@ -472,8 +472,9 @@ export default function Reservation() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roomId}})
             .then((res) => {
                 console.log(res);
+                const reservationId = res.data;
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&startMinute=${startMinute}&endTime=${endTime}&endMinute=${endMinute}&room_id=${roomId}`)
+                navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&startMinute=${startMinute}&endTime=${endTime}&endMinute=${endMinute}&room_id=${roomId}&reservationId=${reservationId}`)
             })
             .catch((err) => {
                 console.log("ERRR");
