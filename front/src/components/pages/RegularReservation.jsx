@@ -267,11 +267,6 @@ export default function RegularReservations() {
     // 월별 예약건수를 서버에 요청해 만드는 함수.
     const createMonthReservedCount = () => {
         setTmpMarks((state) => []);
-
-        // const currentMonth = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
-        // const todayDay = new Date().getDate();
-        // const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 2, 0).getDate();
-        // console.log(currentMonth);
         
         let idx = 2;
         let ttt = 0;
