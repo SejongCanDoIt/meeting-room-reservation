@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
@@ -11,8 +11,9 @@ export default function AdminRoomModifyPage() {
     const [roomId, setRoomId] = useState("");
     const [roomName, setRoomName] = useState("");
     const [roomInfo, setRoomInfo] = useState("");
-    const [roomLocation, setRoomLocation] = useState("");
+    const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRoomData = async () => {
@@ -22,7 +23,7 @@ export default function AdminRoomModifyPage() {
                 setRoomId(response.data.id);
                 setRoomName(response.data.name);
                 setRoomInfo(response.data.info);
-                setRoomLocation(response.data.loc);
+                setRoomBuilding(response.data.buildingName);
                 setRoomFacilities({
                     bim_projector: response.data.bim_projector,
                     board: response.data.board,
@@ -51,23 +52,22 @@ export default function AdminRoomModifyPage() {
             id: roomId,
             name: roomName,
             info: roomInfo,
-            loc: roomLocation,
+            buildingName: roomBuilding,
             ...roomFacilities,
             empty: true,
             picture: roomData.picture
         };
 
-        // Log data to console before sending it
-        console.log(dataToSend);
+        console.log("Data to send: ", dataToSend);
 
         try {
-            await axios.put(`/room/update`, dataToSend);
+            await axios.patch(`/room/update`, dataToSend);
             alert("회의실 정보가 성공적으로 변경되었습니다.");
+            navigate('/AdminRoomManagePage');
         } catch (error) {
             console.error("회의실 정보 변경에 실패하였습니다.", error);
         }
     };
-
 
     return (
         <>
@@ -102,11 +102,30 @@ export default function AdminRoomModifyPage() {
                                 </Block>
                                 <Block>
                                     <StyledH2>회의실 위치</StyledH2>
-                                    <input
-                                        type="text"
-                                        value={roomLocation}
-                                        onChange={(e) => setRoomLocation(e.target.value)}
-                                    />
+                                    <select
+                                        value={roomBuilding}
+                                        onChange={(e) => setRoomBuilding(e.target.value)}
+                                    >
+                                        <option value="집현관">집현관</option>
+                                        <option value="대양홀">대양홀</option>
+                                        <option value="모짜르트홀">모짜르트홀</option>
+                                        <option value="군자관">군자관</option>
+                                        <option value="광개토관">광개토관</option>
+                                        <option value="이당관">이당관</option>
+                                        <option value="진관홀">진관홀</option>
+                                        <option value="용덕관">용덕관</option>
+                                        <option value="영실관">영실관</option>
+                                        <option value="충무관">충무관</option>
+                                        <option value="율곡관">율곡관</option>
+                                        <option value="다산관">다산관</option>
+                                        <option value="학술정보원">학술정보원</option>
+                                        <option value="우정당">우정당</option>
+                                        <option value="대양AI센터">대양AI센터</option>
+                                        <option value="세종관">세종관</option>
+                                        <option value="학생회">학생회관</option>
+                                        <option value="새날관">새날관</option>
+                                        <option value="무방관">무방관</option>
+                                    </select>
                                 </Block>
                             </LeftInfo>
                             <RightInfo>

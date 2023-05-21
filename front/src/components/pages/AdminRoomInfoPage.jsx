@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 export default function AdminRoomInfoPage() {
     const { id } = useParams();
     const [roominfo, setRoominfo] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRoomData = async () => {
@@ -27,6 +28,19 @@ export default function AdminRoomInfoPage() {
         return <p>Loading...</p>;
     }
 
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`/room/delete/${id}`);
+                alert('삭제되었습니다!');
+                navigate('/AdminRoomManagePage');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
     return (
         <>
             <GlobalStyle />
@@ -36,7 +50,8 @@ export default function AdminRoomInfoPage() {
                 <RoomInfoContainer>
                     <Header>
                         <h1>회의실 정보</h1>
-                        <Link to={`/AdminRoomModifyPage/${roominfo.id}`}                        >
+                        <button onClick={handleDelete}>삭제하기</button>
+                        <Link to={`/AdminRoomModifyPage/${roominfo.id}`}>
                             <button>수정하기</button>
                         </Link>
                     </Header>
@@ -54,7 +69,7 @@ export default function AdminRoomInfoPage() {
                             </Block>
                             <Block>
                                 <StyledH2>회의실 위치</StyledH2>
-                                <StyledP>{roominfo.name}은 {roominfo.loc} {roominfo.id}호에 위치하고 있습니다.</StyledP>
+                                <StyledP>{roominfo.name}은 {roominfo.buildingName} {roominfo.id}호에 위치하고 있습니다.</StyledP>
                             </Block>
                         </LeftInfo>
                         <RightInfo>

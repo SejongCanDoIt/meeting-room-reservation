@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
+import axios from "axios"
 
 export default function AdminReservManagePage() {
     const reservations = [
@@ -123,6 +124,26 @@ export default function AdminReservManagePage() {
         // 예약 취소 기능 구현
     };
 
+    const [reservList, setReservList] = useState(null);
+
+    useEffect(() => {
+        const fetchReservListData = async () => {
+            try {
+                const response = await axios.get(`/reserve/manager-list`);
+                setReservList(response.data);
+                console.log("Reserv Manage Page: ", response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchReservListData(); // 데이터 받아오기 함수 호출
+    }, []);
+
+    if (!reservList) {
+        return <p>Loading...</p>; // 데이터 로딩 중에는 로딩 메시지 표시
+    }
+
     return (
         <>
             <AdminTopContainer />
@@ -138,13 +159,14 @@ export default function AdminReservManagePage() {
                             <span>학번</span>
                             <span>이름</span>
                             <span>예약 시간</span>
+                            <span>회의실</span>
                         </ReservationListHeader>
-                        {reservations.map(reservation => (
-                            <ReservationRow key={reservation.id}>
-                                <span>{reservation.department}</span>
-                                <span>{reservation.studentId}</span>
-                                <span>{reservation.name}</span>
-                                <span>{reservation.reservationTime}</span>
+                        {reservList.map(reservation => (
+                            <ReservationRow key={reservation.id} status={reservation.status}>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span>{reservation.start} ~ {reservation.end}</span>
                                 <CancelReservation onClick={handleCancelReservation}>
                                     예약 취소
                                 </CancelReservation>
@@ -192,6 +214,7 @@ const ReservationListHeader = styled.div`
 `;
 
 const ReservationRow = styled(ReservationListHeader)`
+    background-color: ${props => props.status === 'FINISHED' ? '#d3d3d3' : 'white'};
     & span {
         font-weight: normal;
     }

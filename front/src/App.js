@@ -27,6 +27,7 @@ import styled from 'styled-components';
 import AdminMemberManagePage from './components/pages/AdminMemberManagePage';
 import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
 import AdminSettingPage from './components/pages/AdminSettingPage';
+import AdminSettingModifyPage from './components/pages/AdminSettingModifyPage';
 import AdminReservManagePage from './components/pages/AdminReservManagePage';
 import AdminRoomInfoPage from './components/pages/AdminRoomInfoPage';
 import AdminRoomAddPage from './components/pages/AdminRoomAddPage';
@@ -65,6 +66,7 @@ function App() {
           <Route path="/AdminMemberManagePage" element={<AdminMemberManagePage />}></Route>
           <Route path="/AdminRoomManagePage" element={<AdminRoomManagePage />}></Route>
           <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>
+          <Route path="/AdminSettingModifyPage" element={<AdminSettingModifyPage />}></Route>
           <Route path="/AdminReservManagePage" element={<AdminReservManagePage />}></Route>
           <Route path="/AdminRoomInfoPage/:id" element={<AdminRoomInfoPage />} />
           <Route path="/AdminRoomAddPage" element={<AdminRoomAddPage />}></Route>
