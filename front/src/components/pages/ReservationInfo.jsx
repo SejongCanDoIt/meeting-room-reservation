@@ -99,6 +99,7 @@ export default function ReservationInfo({subTitle, info, recentData}) {
             regular: false,
         }   
 
+
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: recentData.room_id}})
             .then((res) => {
                 console.log(res);
