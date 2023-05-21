@@ -1,5 +1,5 @@
 package sejong.reserve.domain;
 
 public enum ReservationStatus {
-    RESERVED, FINISHED
+    RESERVED, FINISHED, CANCELED
 }

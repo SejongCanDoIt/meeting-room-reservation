@@ -1,0 +1,74 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+.sidebar {
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed; /* 추가 */
+    top: 10vh; /* 추가 */
+    left: 0; /* 추가 */
+    bottom: 0; /* 추가 */
+    z-index: 1000; /* 추가 */
+}
+
+.sidebar a {
+    text-decoration: none; /* 링크에 밑줄 제거 */
+    color: inherit; /* 링크 색상을 부모 요소의 색상과 동일하게 설정 */
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.menu-item {
+    display: block;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.submenu-item {
+    display: block;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.menu-item:hover,
+.submenu-item:hover {
+    color: #A1203C; /* 마우스 오버 시 색상 변경 */
+}
+
+.submenu {
+    display: none;
+}
+
+.menu-item.reservation::after {
+    content: '';
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.3s;
+}
+
+.menu-item.reservation.active::after {
+    transform: rotate(135deg);
+}
+
+
+.menu-item.reservation.active+.submenu {
+    display: block;
+}

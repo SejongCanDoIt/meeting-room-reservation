@@ -1,19 +1,17 @@
 package sejong.reserve.domain;
 
-import lombok.AccessLevel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import sejong.reserve.repository.RoomRepository;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
-@DynamicInsert
 @Table(name = "room")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(exclude = "reservationLogs")
 public class Room {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
@@ -21,7 +19,9 @@ public class Room {
 
     private String name; // 회의실 이름
 
-    private String loc; // 회의실 위치
+    @Enumerated(EnumType.STRING)
+    @Column(name = "building_name")
+    private SejongBuildingName buildingName; // 회의실 빌딩이름
 
     @ColumnDefault("0")
     private int cap; // 수용인원
@@ -39,7 +39,7 @@ public class Room {
 
     private String picture; // 사진 경로
 
-    @Column(columnDefinition = "TINYINT(1)", nullable = false)
+    @Column(columnDefinition = "TINYINT(1)", nullable = false, name = "empty1")
     @ColumnDefault("0")
     private Boolean empty; // 회의실 예약 가능 여부
 
@@ -51,13 +51,31 @@ public class Room {
     @ColumnDefault("0")
     private Boolean bim_projector; // 빔프로젝터 여부
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
+    private List<Reservation> reservationLogs;
+
     //==생성 메서드==//
     public static Room createRoom(Room roomInfo) {
         Room room = new Room();
 
-        RoomRepository.setRoom(roomInfo, room);
+        setRoom(room, roomInfo);
 
         return room;
+    }
+
+    public static void setRoom(Room room, Room roomInfo) {
+        room.setName(roomInfo.getName());
+        room.setBuildingName(roomInfo.getBuildingName());
+        room.setCap(roomInfo.getCap());
+        room.setInfo(roomInfo.getInfo());
+        room.setBoard(roomInfo.getBoard());
+        room.setTv(roomInfo.getTv());
+        room.setPicture(roomInfo.getPicture());
+        room.setEmpty(roomInfo.getEmpty());
+        room.setEmpty(roomInfo.getEmpty());
+        room.setWifi(roomInfo.getWifi());
+        room.setBim_projector(roomInfo.getBim_projector());
     }
 
 }

@@ -42,7 +42,8 @@ public class RoomService implements Serv<Room> {
      */
     @Transactional
     public void update(Room roomInfo) {
-        roomRepository.update(roomInfo);
+        Room room = roomRepository.findById(roomInfo.getId());
+        room.setRoom(room, roomInfo);
     }
 
     /**

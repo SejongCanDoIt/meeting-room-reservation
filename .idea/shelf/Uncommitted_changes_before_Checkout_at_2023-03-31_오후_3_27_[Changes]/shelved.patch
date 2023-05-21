@@ -1,0 +1,14 @@
+Index: back/reserve/src/main/java/sejong/reserve/vo/Management.java
+===================================================================
+diff --git a/back/reserve/src/main/java/sejong/reserve/vo/Management.java b/back/reserve/src/main/java/sejong/reserve/vo/Management.java
+--- a/back/reserve/src/main/java/sejong/reserve/vo/Management.java	
++++ b/back/reserve/src/main/java/sejong/reserve/vo/Management.java	
+@@ -9,7 +9,7 @@
+ @Table(name = "MANAGEMENT")
+ public class Management {
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long id;
++    private long id;
+     // 예약 가능 횟수
+     private int univ_cnt; // 대학생
+     private int post_cnt; // 대학원생

@@ -1,0 +1,46 @@
+#topContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 1px solid black;
+    position: fixed; /* 추가 */
+    top: 0; /* 추가 */
+    left: 0; /* 추가 */
+    right: 0; /* 추가 */
+    background-color: white; /* 추가 */
+    z-index: 1000; /* 추가 */
+}
+
+#logo {
+    height: 10vh;
+    width: auto;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+}
+
+.admin-info p {
+    font-size: 40px;
+}
+
+.admin-info p:first-child {
+    font-weight: bold;
+}
+
+.admin-info p:last-of-type {
+    margin-right: 0.4em;
+}
+
+.admin-info button {
+    background-color: transparent;
+    border: none;
+}
+
+.admin-info button img {
+    height: 4vh;
+    width: auto;
+    margin-right: 1vw;
+}
