@@ -79,10 +79,6 @@ public class ReservationController {
         log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
 
-        // 예약 완료 이메일 보내기
-//        String emailSubject = "예약이 완료되었습니다.";// 메일의 제목을 여기에다 적으면 됩니다.
-//        String emailText = "예약이 완료되었습니다.\n 시작시간: " + start + "\n 종료시간: " + end+"\n장소: "+room_id; //이메일에 들어갈 문장들 여기에 적으면 됩니다.
-//        emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText); // 이메일 보내기
         // remove Cnt
         memberService.removeCnt(loginMember.getId());
 
