@@ -532,13 +532,16 @@ export default function RegularReservations() {
     const ShowSelectedStartTime = () => {
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
         const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
+        const isAmOrPm = selectedTime.startTime < 12 ? "AM" : "PM";
 
-        return `${startTime}:${startMinute}`
+        return `${startTime}:${startMinute} ${isAmOrPm}`
     }
     const ShowSelectedEndTime = () => {
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
         const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
-        return `${endTime}:${endMinute}`
+        const isAmOrPm = selectedTime.endTime < 12 ? "AM" : "PM";
+
+        return `${endTime}:${endMinute} ${isAmOrPm}`
     }
 
     const makeReservation = (year, month, date, day, startTime, startMinute, endTime, endMinute) => {
