@@ -96,7 +96,6 @@ export default function AdminSettingModifyPage() {
         event.preventDefault();
 
         const dataToSend = {
-            id: Id,
             ...univSetting,
             ...postSetting,
             ...proSetting,
