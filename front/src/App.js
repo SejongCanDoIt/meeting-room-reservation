@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import houseIcon from "./assets/houseIcon.png";
 import Home from './components/pages/Home';
 import RoomListPage from './components/pages/RoomListPage';
 import RoomInformationPage from './components/pages/RoomInformationPage';
@@ -38,7 +39,7 @@ function App() {
     <BrowserRouter>
       <RootContainer>
         <NavBar>
-          <LinkStyle to="/">예약 시스템</LinkStyle>
+          <LinkStyle to="/">예약 시스템 <HouseIcon src={houseIcon} alt=""/></LinkStyle>
         </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -77,6 +78,11 @@ function App() {
     </BrowserRouter>
   );
 }
+
+const HouseIcon = styled.img`
+  width: 20px;
+  height: 20px;
+`
 
 const RootContainer = styled.div`
   display: flex;

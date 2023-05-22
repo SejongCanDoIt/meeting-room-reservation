@@ -3,6 +3,7 @@ import '../css/ShareReservationPageStyle.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 function ShareReservationPage() {
     const [serchParams, setSearchParams] = useSearchParams();
@@ -15,6 +16,16 @@ function ShareReservationPage() {
         const copyedUrl = "http://localhost:3000/" + location.pathname + location.search;
         setUrl((url) => copyedUrl);
     }, [])
+
+    useEffect(() => {
+        axios.post('/reserve/email', null, {params: {reservation_id: serchParams.get('reservationId')}})
+            .then((res) => {
+                console.log('이메일 전송 요청');
+            })
+            .catch((err) => {
+                console.log("이메일 전송 요청 실패");
+            })
+    }, []);
 
     const makeFullLink = () => {
         return "http://localhost:3000/" + location.pathname + location.search;
