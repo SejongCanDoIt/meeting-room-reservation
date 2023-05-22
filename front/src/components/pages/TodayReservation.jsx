@@ -2,17 +2,12 @@ import styled from "styled-components";
 
 const TodayContainer = styled.div`
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    flex: 0.6;
+    display: flex;;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0.9;
 
-    @media screen and (max-width: 1200px) {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        flex: 0.9;
-        // background-color: gray;
-    }
 
 `
 
@@ -22,20 +17,16 @@ const TodayBox = styled.div`
     align-items: center;
     color: white;
 
-    width: 300px;
-    height: 300px;
-
     font-weight: bold;
     font-size: 20px;
     border-radius: 20px;
 
     background-color: #52b788;
 
-    @media screen and (max-width: 1200px) {
-        width: 95%;
-        height: 100px;
-        border-radius: 10px;
-    }
+    width: 95%;
+    height: 100px;
+    border-radius: 10px;
+
 `
 
 const ContentBox = styled.div`

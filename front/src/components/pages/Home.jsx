@@ -39,7 +39,7 @@ function Home() {
             <TodayReservationList/>
 
 
-            <FooterDiv>
+            {/* <FooterDiv>
                 <FooterLeftContent>
                     <div>세종대학교 예약관리 시스템</div>
                     <div>Email: rooster100@naver.com</div>
@@ -47,7 +47,7 @@ function Home() {
                 <FooterRightContent>
                     <span>개발자: 김민구, 이병찬, 박지민, 이규훈</span>
                 </FooterRightContent>
-            </FooterDiv>
+            </FooterDiv> */}
         </Nav>
     );
 }
