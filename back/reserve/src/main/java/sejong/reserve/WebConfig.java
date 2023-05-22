@@ -38,7 +38,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/", "/auth/login",
                         "/auth/checkLogin",
                         "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**",
-                        "/member/**", "/reserve/**", "/room/list");
+                        "/member/**", "/reserve/**",
+                        "/room/list", "/room/detail/**");
     }
 
     @Override
