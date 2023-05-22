@@ -303,7 +303,7 @@ export default function Reservation() {
                     roomId: searchParams.get('room_id'),
                 }
 
-                axios.post('/reserve/today-reserve-cnt', {...requestDayInfo})
+                axios.post('/reserve/today-reserve-cnt-room', {...requestDayInfo})
                     .then((res) => {
                         const cntData = {
                             reservedCount: res.data,

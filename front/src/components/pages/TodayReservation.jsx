@@ -65,19 +65,10 @@ export default function TodayReservationList() {
 
         console.log(requestDayInfo);
 
-        axios.post('/reserve/today-reserve-cnt', {...requestDayInfo})
+        axios.post('/reserve/today-reserve-cnt-all', {...requestDayInfo})
             .then((res) => {
                 console.log(res, '835')
                 setCnt(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-
-        axios.post('/reserve/today-reserve-cnt', {...requestDayInfo2})
-            .then((res) => {
-                console.log(res, '836')
-                setCnt((cnt) => cnt + res.data);
             })
             .catch((err) => {
                 console.log(err);

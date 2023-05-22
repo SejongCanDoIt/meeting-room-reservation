@@ -281,10 +281,9 @@ export default function RegularReservations() {
                     year: selectedDay.year.toString(),
                     month: selectedDay.month.toString(),
                     day: dayString,
-                    roomId: searchParams.get('room_id'),
                 }
 
-                axios.post('/reserve/today-reserve-cnt', {...requestDayInfo})
+                axios.post('/reserve/today-reserve-cnt-room', {...requestDayInfo})
                     .then((res) => {
                         const cntData = {
                             reservedCount: res.data,
