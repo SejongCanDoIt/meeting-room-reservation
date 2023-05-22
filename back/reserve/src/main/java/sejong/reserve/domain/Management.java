@@ -65,7 +65,7 @@ public class Management {
         management.setOffice_hour_gap(managementInfo.getOffice_hour_gap());
         management.setPro_hour_gap(managementInfo.getPro_hour_gap());
         management.setUniv_day_gap(managementInfo.getUniv_day_gap());
-        management.setPost_day_gap(managementInfo.getPost_day_gap();
+        management.setPost_day_gap(managementInfo.getPost_day_gap());
         management.setOffice_day_gap(managementInfo.getOffice_day_gap());
         management.setPro_day_gap(managementInfo.getPro_day_gap());
         management.setUniv_week_gap(managementInfo.getUniv_week_gap());
