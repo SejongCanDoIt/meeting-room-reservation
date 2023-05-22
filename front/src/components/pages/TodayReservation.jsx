@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState, useEffect, useReducer } from "react";
+import axios from 'axios';
 
 const TodayContainer = styled.div`
     width: 100%;
@@ -37,11 +39,56 @@ const ContentBox = styled.div`
 `
 
 export default function TodayReservationList() {
+    const [cnt, setCnt] = useState(0);
+
+    useEffect(() => {
+        createMonthReservedCount();
+    }, [])
+    // 월별 예약건수를 서버에 요청해 만드는 함수.
+    const createMonthReservedCount = async () => {
+        const year = new Date().getFullYear().toString();
+        const month = new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth()+1).toString() : (new Date().getMonth()+1).toString();
+        const day = new Date().getDate() < 10 ? "0" + new Date().getDate().toString() : new Date().getDate().toString();
+
+        const requestDayInfo = {
+            year: year,
+            month: month,
+            day: day,
+            roomId: '835',
+        }
+        const requestDayInfo2 = {
+            year: year,
+            month: month,
+            day: day,
+            roomId: '836',
+        }
+
+        console.log(requestDayInfo);
+
+        axios.post('/reserve/today-reserve-cnt', {...requestDayInfo})
+            .then((res) => {
+                console.log(res, '835')
+                setCnt(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+        axios.post('/reserve/today-reserve-cnt', {...requestDayInfo2})
+            .then((res) => {
+                console.log(res, '836')
+                setCnt((cnt) => cnt + res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
     return (
         <TodayContainer>
             <ContentBox>
                 <h2>오늘의 예약</h2>
-                <TodayBox>3건이 있어요</TodayBox>
+                <TodayBox>{cnt}건이 있어요</TodayBox>
             </ContentBox>
             <ContentBox>
                 <h2>현재 운영중인 회의실</h2>
