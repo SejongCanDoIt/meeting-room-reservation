@@ -316,11 +316,19 @@ public class ReservationController {
         return reservationService.getMonthReserveCheck(data.getYear(), Month.of(data.getMonth()), data.getRoomId());
     }
 
-    @PostMapping("/today-reserve-cnt")
-    public ResponseEntity<Integer> getTodayReserveCnt(@RequestBody DateByRoomDto data) {
+    @PostMapping("/today-reserve-cnt-room")
+    public ResponseEntity<Integer> getTodayReserveCntByRoom(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
-        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate, data.getRoomId());
+        int todayReserveCnt = reservationService.getTodayReserveCntByRoom(todayDate, data.getRoomId());
+        return ResponseEntity.ok(todayReserveCnt);
+    }
+
+    @PostMapping("/today-reserve-cnt-all")
+    public ResponseEntity<Integer> getTodayReserveCntAll(@RequestBody DateDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        log.info("date = {}", todayDate);
+        int todayReserveCnt = reservationService.getTodayReserveCntAll(todayDate);
         return ResponseEntity.ok(todayReserveCnt);
     }
 
@@ -328,7 +336,7 @@ public class ReservationController {
     public ResponseEntity<Integer> limitPastReservation(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
-        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate,  data.getRoomId());
+        int todayReserveCnt = reservationService.getTodayReserveCntByRoom(todayDate,  data.getRoomId());
         return ResponseEntity.ok(todayReserveCnt);
     }
 

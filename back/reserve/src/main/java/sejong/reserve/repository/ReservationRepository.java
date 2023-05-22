@@ -47,9 +47,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                                        @Param("roomId")Long roomId);
 
     @Query("select count(r) from Reservation r where r.start >= :todayStart and r.end <= :todayEnd and r.room.id = :roomId")
-   int getTodayReserveCnt(@Param("todayStart")LocalDateTime todayStart,
-                          @Param("todayEnd")LocalDateTime todayEnd,
-                          @Param("roomId")Long roomId);
+    int getTodayReserveCntByRoom(
+            @Param("todayStart")LocalDateTime todayStart,
+            @Param("todayEnd")LocalDateTime todayEnd,
+            @Param("roomId")Long roomId);
+
+    @Query("select count(r) from Reservation r where r.start >= :todayStart and r.end <= :todayEnd")
+    int getTodayReserveCntAll(
+            @Param("todayStart")LocalDateTime todayStart,
+            @Param("todayEnd")LocalDateTime todayEnd);
 
     @Query("select r from Reservation r where r.member.studentNo = :studentNo order by r.start DESC ")
     List<Reservation> getReservationListBySno(@Param("studentNo") String studentNo);

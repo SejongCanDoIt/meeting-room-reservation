@@ -163,14 +163,25 @@ public class ReservationService {
         return timeList;
     }
 
-    public int getTodayReserveCnt(LocalDateTime todayDate, Long roomId) {
+    public int getTodayReserveCntByRoom(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
 
         LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
         LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
-        int todayReserveCnt = reservationRepository.getTodayReserveCnt(todayStart, todayEnd, roomId);
+        int todayReserveCnt = reservationRepository.getTodayReserveCntByRoom(todayStart, todayEnd, roomId);
+        return todayReserveCnt;
+    }
+
+    public int getTodayReserveCntAll(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+        int todayReserveCnt = reservationRepository.getTodayReserveCntAll(todayStart, todayEnd);
         return todayReserveCnt;
     }
 
@@ -181,7 +192,7 @@ public class ReservationService {
         int day = 1;
         while(day <= month.maxLength()) {
             today = LocalDateTime.of(year, month, day++, 0, 0);
-            monthCheck.add(getTodayReserveCnt(today, roomId));
+            monthCheck.add(getTodayReserveCntByRoom(today, roomId));
         }
         return monthCheck;
     }
