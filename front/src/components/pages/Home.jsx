@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import userwhite from "../../assets/userwhite.png";
+import TodayReservationList from "./TodayReservation";
 import axios from "axios";
 
 function Home() {
@@ -27,7 +28,7 @@ function Home() {
             <NavBarMenu>
                 <LeftMenu><LinkStyle to="/">세종대학교</LinkStyle></LeftMenu>
                 <RightMenu>
-                    { authorization ? <UserSpan><IconImg src={userwhite} alt="" /> {loginId} </UserSpan> : <></>}
+                    { authorization ? <UserSpan><IconImg src={userwhite} alt="" /> {loginId}님 </UserSpan> : <></>}
                     { authorization ? <LinkStyle to="/logout">로그아웃</LinkStyle> : <LinkStyle to="/loginpage">로그인</LinkStyle>}
                     { authorization ? <LinkStyle to="/selectmeetingroom">예약하기</LinkStyle> : <LinkStyle to="/roomlistpage">회의실 둘러보기</LinkStyle>}
                     { authorization ? <LinkStyle to="/mypage">마이페이지</LinkStyle> : <></>}
@@ -35,12 +36,10 @@ function Home() {
                 </RightMenu>
             </NavBarMenu>
 
-            <ImgBox>
-                <HomeTitle>세종대학교 회의실예약 시스템</HomeTitle>
-                <Img src="http://www.sejongpr.ac.kr/dataview/sejong_pr/temp/DEI20210428140436.jpg" alt="" />
-            </ImgBox>
+            <TodayReservationList/>
 
-            <FooterDiv>
+
+            {/* <FooterDiv>
                 <FooterLeftContent>
                     <div>세종대학교 예약관리 시스템</div>
                     <div>Email: rooster100@naver.com</div>
@@ -48,7 +47,7 @@ function Home() {
                 <FooterRightContent>
                     <span>개발자: 김민구, 이병찬, 박지민, 이규훈</span>
                 </FooterRightContent>
-            </FooterDiv>
+            </FooterDiv> */}
         </Nav>
     );
 }
@@ -68,50 +67,6 @@ const UserSpan = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-`
-
-const ImgBox = styled.div`
-    width: 100%;
-    margin: 0px;
-
-    @media screen and (max-width: 600px) {
-        display: none;
-    }
-`
-
-const HomeTitle = styled.div`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    position: absolute; /* 상위 요소인 .image-container를 기준으로 위치 조정 */
-    top: 50%; /* 요소의 높이 기준으로 중앙 정렬 */
-    left: 50%; /* 요소의 너비 기준으로 중앙 정렬 */
-    transform: translate(-50%, -50%); /* 정렬된 위치에서 좌측 상단 꼭짓점을 기준으로 요소 위치 조정 */
-    z-index: 1; /* 텍스트를 이미지 위로 겹쳐서 쓰기 위해 z-index 속성을 설정 */
-
-    color: black;
-    font-size: 50px;
-    font-weight: bold;
-
-
-    @media screen and (max-width: 900px) {
-        font-size: 40px;
-        top: 35%; /* 요소의 높이 기준으로 중앙 정렬 */
-        left: 50%; /* 요소의 너비 기준으로 중앙 정렬 */
-    }
-`
-
-const Img = styled.img`
-    position: relative;
-    width: 100%;
-    opacity: 0.5;
-    height: auto;
-
-    z-index: -1;
-
-    @media screen and (max-width: 900px) {
-        height: 700px;
-    }
 `
 
 const FooterDiv = styled.div`
@@ -186,9 +141,9 @@ const NavBarMenu = styled.div`
     font-size: 17px;
     // padding: 10px;
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
         flex-direction: column;
-        height: 150px;
+        height: 180px;
         align-items: center;
         justify-content: center;
     }
@@ -198,10 +153,13 @@ const LeftMenu = styled.div`
     display: flex;
     flex: 1;
 
+    padding: 10px;
+
     font-weight: bold;
+    font-size: 20px;
 
     margin-left: 10px;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
         display: none;
         
     }
@@ -214,9 +172,12 @@ const RightMenu = styled.div`
 
     font-weight: bold;
 
-    flex: 0.5;
+    flex: 0.7;
 
-    @media screen and (max-width: 900px) {
+    padding: 10px;
+    font-size: 20px;
+
+    @media screen and (max-width: 1200px) {
         flex-direction: column;
         font-size: 20px;
     }

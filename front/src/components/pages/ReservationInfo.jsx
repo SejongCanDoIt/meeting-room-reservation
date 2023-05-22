@@ -64,13 +64,13 @@ export default function ReservationInfo({subTitle, info, recentData}) {
         
         // 최근 예약 일 === 오늘 일 -> 오늘 날짜 그대로 반환
         if (recentDay === nowDay) {
-            console.log('최근 예약 일 < 오늘 일');
-            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
+            console.log('최근 예약 일 == 오늘 일');
+            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7)
         }
         // 최근 예약 일 < 오늘 일 -> (7 - (오늘 일 - 최근 예약 일)) % 7
         if (recentDay < nowDay) {
             console.log('최근 예약 일 < 오늘 일');
-            return new Date(new Date().getFullYear(), new Date().getMonth(), 7 - (new Date().getDate() - recentData.date)% 7);
+            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (new Date().getDate() - recentData.date) + 1);
         }
         // 최근 예약 일 > 오늘 일 -> (최근 예약 일 - 오늘 일)
         if (recentDay > nowDay) {
@@ -84,13 +84,15 @@ export default function ReservationInfo({subTitle, info, recentData}) {
         const yearString = recentFullDay.getFullYear().toString();
         const monthString = (recentFullDay.getMonth() + 1) < 10 ? "0" + (recentFullDay.getMonth() + 1).toString() : (recentFullDay.getMonth() + 1).toString();
         const dateString = (recentFullDay.getDate()) < 10 ? "0" + recentFullDay.getDate().toString() : recentFullDay.getDate().toString();
-        const dayString = dayList[recentFullDay.getDay()];
+        const dayString = recentFullDay.getDay();
 
         const reservationFromInfo = `${yearString}-${monthString}-${dateString}T${recentData.startHour}:${recentData.startMinute}Z`;
         const reservationToInfo = `${yearString}-${monthString}-${dateString}T${recentData.endHour}:${recentData.endMinute}Z`;
-    
-        console.log(new Date(reservationFromInfo));
-        console.log(new Date(reservationToInfo));
+        
+        console.log(reservationFromInfo);
+        console.log(reservationToInfo);
+        // console.log(new Date(reservationFromInfo));
+        // console.log(new Date(reservationToInfo));
 
         const reservationInfo = {
             start: new Date(reservationFromInfo),
