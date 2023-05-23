@@ -264,4 +264,9 @@ public class ReservationService {
         return reserveCntByAuthority;
     }
 
+    public Integer getReserveCntBySno(String sno) {
+        int reserveCntByAuthority = reservationRepository.getReserveCntBySno(sno, ReservationStatus.FINISHED);
+        return reserveCntByAuthority;
+    }
+
 }

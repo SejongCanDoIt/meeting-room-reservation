@@ -82,4 +82,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select count(r) from Reservation r where r.member.authority = :authority and r.status = :status")
     int getReserveCntByAuthority(@Param("authority")AuthState authority, @Param("status") ReservationStatus status);
+
+    @Query("select count(r) from Reservation r where r.member.studentNo = :sno and r.status = :status")
+    int getReserveCntBySno(@Param("sno")String sno, @Param("status") ReservationStatus status);
 }

@@ -357,6 +357,9 @@ public class ReservationController {
     @PatchMapping("/check-noshow")
     public ResponseEntity<Boolean> checkNoShow(@Login Member loginMember) {
         LocalDateTime now = LocalDateTime.now();
+        if(reservationService.getReserveCntBySno(loginMember.getStudentNo()) == 0) {
+            throw new NotAvailableNoShowCheckException("예약 내역이 존재하지 않은 회원입니다.");
+        }
         List<ReservationsDto> reservationList = reservationService.getReservationListBySnoAndStatus(loginMember.getStudentNo(), ReservationStatus.RESERVED);
         for(ReservationsDto reservation : reservationList) {
             log.info("예약 시작 시간: {}, 예약 끝나는 시간: {}, 예약 노쇼 체크 = {}", reservation.getStart(), reservation.getEnd(), reservation.getNoShowCheck());
