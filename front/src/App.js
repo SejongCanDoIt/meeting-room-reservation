@@ -102,7 +102,7 @@ const NavBar = styled.div`
   justify-content: center;
   align-items: center;
 
-  // font-weight: bold;
+  font-weight: bold;
   font-size: 25px;
 
   // padding: 15px;

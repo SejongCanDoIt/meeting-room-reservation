@@ -23,13 +23,13 @@ const ReservationTopNav = styled.div`
 
 const MainMsg = styled.div`
     font-size: 2em;
-    // font-weight: bold;
+    font-weight: bold;
 
     margin-bottom: 10px;
 `
 const SubMsg = styled.div`
     font-size: 1.3em;
-    // font-weight: bold;
+    font-weight: bold;
 
     margin-bottom: 15px;
 `

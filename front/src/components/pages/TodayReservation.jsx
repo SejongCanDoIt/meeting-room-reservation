@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
+import univ from "../../assets/univ.jpg";
+import univ_library from "../../assets/univ_library.jpg";
 
 const TodayContainer = styled.div`
     width: 100%;
@@ -9,8 +11,6 @@ const TodayContainer = styled.div`
     align-items: center;
     justify-content: flex-start;
     flex: 0.9;
-
-
 `
 
 const TodayBox = styled.div`
@@ -20,14 +20,48 @@ const TodayBox = styled.div`
     color: white;
 
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 20px;
 
-    background-color: #52b788;
-
+    // background-color: #52b788;
+    background-image: url(${univ_library});
+    background-size : cover;
+    
     width: 95%;
     height: 100px;
     border-radius: 10px;
+
+`
+
+const ImgBox = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: white;
+
+    width: 95%;
+    height: 95%;
+
+    border-radius: 10px;
+    background-size : cover;
+    font-weight: bold;
+
+    background-repeat: no-repeat;
+    // background-image: url(${univ});
+    // background-image: url(${univ_library});
+    background-image: url('https://images.unsplash.com/photo-1558636815-1978d0419bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    // background-image: url('https://images.unsplash.com/photo-1564981797816-1043664bf78d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80');
+
+    @media screen and (max-width: 900px) {
+        font-size: 30px;
+        // font-weight: bold;
+        text-align: center;
+        // color: white;
+        height: 300px;
+
+        margin-top: 30px;
+    }
 
 `
 
@@ -77,6 +111,7 @@ export default function TodayReservationList() {
     }
     return (
         <TodayContainer>
+            <ImgBox>예약 시스템을 이용해 <br/> 회의실을 예약해보세요</ImgBox>
             <ContentBox>
                 <h2>오늘의 예약</h2>
                 <TodayBox>{cnt}건이 있어요</TodayBox>
@@ -84,6 +119,8 @@ export default function TodayReservationList() {
             <ContentBox>
                 <h2>현재 운영중인 회의실</h2>
                 <TodayBox>AI센터에 2곳이 운영중에요.</TodayBox>
+            </ContentBox>
+            <ContentBox>
             </ContentBox>
         </TodayContainer>
     );

@@ -113,6 +113,7 @@ export default function ShowReservation() {
 
 const WhoDIv = styled.div`
     font-size: 28px;
+    font-weight: bold;
 `
 
 const ShowContainer = styled.div`
