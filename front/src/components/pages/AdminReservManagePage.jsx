@@ -7,7 +7,7 @@ import axios from "axios"
 export default function AdminReservManagePage() {
     const handleCancelReservation = async (id) => {
         try {
-            await axios.delete(`/reserve/${id}`);
+            await axios.delete(`/reserve/delete-one`, { params: { reservation_id: id } });
             setReservList(reservList.filter(reservation => reservation.id !== id));
         } catch (error) {
             console.error(error);
