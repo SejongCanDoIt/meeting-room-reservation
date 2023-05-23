@@ -65,6 +65,17 @@ const ImgBox = styled.div`
 
 `
 
+const ContentContainer = styled.div`
+    display: flex;
+    width: 95%;
+    margin-bottom: 15px;
+
+    @media screen and (max-width: 500px) {
+        flex-direction: column;
+        // margin-bottom: 0px;
+    }
+`
+
 const ContentBox = styled.div`
     width: 100%;
     display: flex;
@@ -112,16 +123,16 @@ export default function TodayReservationList() {
     return (
         <TodayContainer>
             <ImgBox>예약 시스템을 이용해 <br/> 회의실을 예약해보세요</ImgBox>
-            <ContentBox>
-                <h2>오늘의 예약</h2>
-                <TodayBox>{cnt}건이 있어요</TodayBox>
-            </ContentBox>
-            <ContentBox>
-                <h2>현재 운영중인 회의실</h2>
-                <TodayBox>AI센터에 2곳이 운영중에요.</TodayBox>
-            </ContentBox>
-            <ContentBox>
-            </ContentBox>
+            <ContentContainer>
+                <ContentBox>
+                    <h2>오늘의 예약</h2>
+                    <TodayBox>{cnt}건이 있어요</TodayBox>
+                </ContentBox>
+                <ContentBox>
+                    <h2>현재 운영중인 회의실</h2>
+                    <TodayBox>AI센터에 2곳이 운영중에요.</TodayBox>
+                </ContentBox>
+            </ContentContainer>
         </TodayContainer>
     );
 }
