@@ -1,14 +1,34 @@
 import React from "react";
 import styled from 'styled-components';
+import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminTopContainer() {
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get(`/auth/logout`);
+            if (response.status === 200) {
+                // 로그아웃 요청이 성공하면 클라이언트에서 토큰 삭제
+                localStorage.removeItem("token");
+                // 로그아웃 후에 Home으로 이동
+                navigate("/");
+            } else {
+                console.log('Logout failed.');
+            }
+        } catch (err) {
+            console.log('Logout error:', err);
+        }
+    };
+
     return (
         <TopContainer>
             <Logo src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblEw8g%2FbtqyceLBuz2%2Fe3A21p8V2gwd9hK8X6dC00%2Fimg.jpg" alt="세종대학교 로고" />
             <AdminInfo>
                 <AdminInfoText>관리자</AdminInfoText>
                 <AdminInfoText>님</AdminInfoText>
-                <LogoutButton>
+                <LogoutButton onClick={handleLogout}>
                     <LogoutImage src="https://cdn-icons-png.flaticon.com/512/3580/3580175.png" alt="로그아웃" />
                 </LogoutButton>
             </AdminInfo>
@@ -55,6 +75,12 @@ const AdminInfoText = styled.p`
 const LogoutButton = styled.button`
     background-color: transparent;
     border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        opacity: 0.7;
+    }
 `;
 
 const LogoutImage = styled.img`
