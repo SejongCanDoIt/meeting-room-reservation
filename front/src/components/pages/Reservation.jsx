@@ -303,7 +303,7 @@ export default function Reservation() {
                     roomId: searchParams.get('room_id'),
                 }
 
-                axios.post('/reserve/today-reserve-cnt', {...requestDayInfo})
+                axios.post('/reserve/today-reserve-cnt-room', {...requestDayInfo})
                     .then((res) => {
                         const cntData = {
                             reservedCount: res.data,
@@ -444,13 +444,16 @@ export default function Reservation() {
     const ShowSelectedStartTime = () => {
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
         const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
+        const isAmOrPm = selectedTime.startTime < 12 ? "AM" : "PM";
 
-        return `${startTime}:${startMinute}`
+        return `${startTime}:${startMinute} ${isAmOrPm}`
     }
     const ShowSelectedEndTime = () => {
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
         const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
-        return `${endTime}:${endMinute}`
+        const isAmOrPm = selectedTime.endTime < 12 ? "AM" : "PM";
+
+        return `${endTime}:${endMinute} ${isAmOrPm}`
     }
 
     const makeReservation = (year, month, date, day, startTime, startMinute, endTime, endMinute) => {
@@ -472,8 +475,9 @@ export default function Reservation() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roomId}})
             .then((res) => {
                 console.log(res);
+                const reservationId = res.data;
                 alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&startMinute=${startMinute}&endTime=${endTime}&endMinute=${endMinute}&room_id=${roomId}`)
+                navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&startMinute=${startMinute}&endTime=${endTime}&endMinute=${endMinute}&room_id=${roomId}&reservationId=${reservationId}`)
             })
             .catch((err) => {
                 console.log("ERRR");

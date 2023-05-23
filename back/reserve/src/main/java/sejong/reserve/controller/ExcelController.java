@@ -2,11 +2,10 @@ package sejong.reserve.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sejong.reserve.service.ExcelService;
@@ -16,35 +15,42 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/excel")
 public class ExcelController {
+
     private final ExcelService excelService;
-    @GetMapping("/upload")
-    public String uploadPage() {
-        return "uploadPage";
-    }
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file) {
+
+        Map<String, Object> result = new HashMap<>();
+
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:/excel/upload";        }
+            result.put("success", false);
+            result.put("message", "Please select a file to upload");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
 
         try {
             // Get the InputStream and pass it to the ExcelService
             InputStream in = file.getInputStream();
             excelService.importExcelFile(in);
 
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
+            result.put("success", true);
+            result.put("message", "You successfully uploaded '" + file.getOriginalFilename() + "'");
         } catch (IOException e) {
             e.printStackTrace();
+
+            result.put("success", false);
+            result.put("message", "File upload failed: " + e.getMessage());
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return "redirect:/excel/upload";    }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
-

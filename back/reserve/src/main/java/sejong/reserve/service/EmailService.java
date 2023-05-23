@@ -20,13 +20,21 @@ public class EmailService {
     @Transactional
     public void sendReservationReminder(String recipientEmail, ReservationDto reservation){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("your-email@example.com"); // 여기에 발신 이메일 주소를 넣으세요
+        message.setFrom("sejongreservation1234@gmail.com"); // 여기에 발신 이메일 주소를 넣으세요
         message.setTo(recipientEmail);
-        message.setSubject("Reservation Reminder");
-        message.setText("You have a reservation at " + reservation.getReservationTime());
+        message.setSubject("당신의 예약이 1시간 남았습니다!");
+        message.setText("예약 시작 시간: " + reservation.getReservationTime());
         mailSender.send(message);
     }
 
 
-
+@Transactional
+    public void sendSimpleMessage(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("sejongreservation1234@gmail.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        mailSender.send(message);
+    }
 }

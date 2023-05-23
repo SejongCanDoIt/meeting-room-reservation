@@ -54,8 +54,9 @@ const ChooseReservationContainer = styled.div`
     // background-color: gray;
 `
 
-const TitleH = styled.h3`
-    font-size: 30px;
+const TitleH = styled.div`
+    font-size: 25px;
+    font-weight: bold;
 `
 
 const BtnBox = styled.div`

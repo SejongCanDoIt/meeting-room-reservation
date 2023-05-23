@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import houseIcon from "./assets/houseIcon.png";
 import Home from './components/pages/Home';
 import RoomListPage from './components/pages/RoomListPage';
 import RoomInformationPage from './components/pages/RoomInformationPage';
@@ -23,6 +24,7 @@ import Reservation from "./components/pages/Reservation";
 import Regularreservations from "./components/pages/RegularReservation";
 import ShowReservation from "./components/pages/ShowReservation";
 import Logout from './components/pages/Logout';
+import AuthenticatingPage from './components/pages/AuthenticatingPage';
 import styled from 'styled-components';
 import AdminMemberManagePage from './components/pages/AdminMemberManagePage';
 import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
@@ -38,7 +40,7 @@ function App() {
     <BrowserRouter>
       <RootContainer>
         <NavBar>
-          <LinkStyle to="/">예약 시스템</LinkStyle>
+          <LinkStyle to="/">예약 시스템 <HouseIcon src={houseIcon} alt=""/></LinkStyle>
         </NavBar>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -58,6 +60,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/announcement" element={<Announcement />}></Route>
+          <Route path="/authenticating" element={<AuthenticatingPage />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
@@ -77,6 +80,11 @@ function App() {
     </BrowserRouter>
   );
 }
+
+const HouseIcon = styled.img`
+  width: 20px;
+  height: 20px;
+`
 
 const RootContainer = styled.div`
   display: flex;

@@ -140,4 +140,20 @@ public class MemberService {
         return memberDtoList;
     }
 
+    public void resetNoShowCnt(String studentNo) {
+        Member member = memberRepository.findByStudentNo(studentNo);
+        member.setNoshow(0);
+    }
+    public Integer addNoShowCnt(String studentNo) {
+        Member member = memberRepository.findByStudentNo(studentNo);
+        int noShowCnt = member.getNoshow();
+        member.setNoshow(noShowCnt++);
+        return member.getNoshow();
+    }
+
+    public Integer getNoShowCnt(String studentNo) {
+        Member member = memberRepository.findByStudentNo(studentNo);
+        return member.getNoshow();
+    }
+
 }

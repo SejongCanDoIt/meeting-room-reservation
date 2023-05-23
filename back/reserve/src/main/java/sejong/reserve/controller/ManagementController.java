@@ -2,10 +2,12 @@ package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.Management;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.ManagementDto;
 import sejong.reserve.dto.MemberDto;
 import sejong.reserve.dto.ReservationsDto;
 import sejong.reserve.service.ManagementService;
@@ -29,6 +31,13 @@ public class ManagementController {
     private final ManagementService managementService;
     private final ReservationService reservationService;
     private final MemberService memberService;
+
+
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateManagement(@RequestBody ManagementDto managementDto) {
+        managementService.update(managementDto);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
     @PutMapping("/update-cnt")
     public void updateCnt(@RequestParam int univ_cnt, @RequestParam int post_cnt, @RequestParam int pro_cnt, @RequestParam int office_cnt) {

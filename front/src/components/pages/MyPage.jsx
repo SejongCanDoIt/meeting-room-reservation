@@ -111,6 +111,28 @@ export default function MyPage() {
         return message;
     }
 
+    const recentListPropsFunction = () => {
+        let message = "최근 예약내역이 없습니다."
+        for (let el of reserveList) {
+            console.log(el);
+            if (el.isExpire) {
+                const recentData = {
+                    year: el.year,
+                    month: el.month,
+                    date: el.date,
+                    room_id: el.room_id,
+                    day: el.day,
+                    startHour: el.startHour,
+                    startMinute: el.startMinute,
+                    endHour: el.endHour,
+                    endMinute: el.endMinute,
+                };
+                return recentData;
+            }
+        }
+        return {};
+    }
+
     return (
         <MainPageContainer>
             <ProfileDiv>
@@ -124,8 +146,8 @@ export default function MyPage() {
                 </IntroBox>
             </ProfileDiv>
             <MenuContainer>
-                {reserveList[0] ? <ReservationInfo subTitle={"오늘의 예약"} info={todayList()}/> : <ReservationInfo subTitle={"오늘의 예약"} info="예약 내역을 불러오고 있어요"/>}
-                {reserveList[0] ? <ReservationInfo subTitle={"가장 최근 이용 내역"} info={recentList()}/> : <ReservationInfo subTitle={"가장 최근 이용 내역"} info="최근 예약 내역을 불러오고 있어요"/>}
+                {reserveList[0] ? <ReservationInfo subTitle={"오늘의 예약"} info={todayList()}/> : <ReservationInfo subTitle={"오늘의 예약"} info="오늘은 예약이 없어요."/>}
+                {reserveList[0] ? <ReservationInfo subTitle={"가장 최근 이용 내역"} recentData={recentListPropsFunction()} info={recentList()}/> : <ReservationInfo subTitle={"가장 최근 이용 내역"} info="최근 예약 내역이 없어요."/>}
                 {/* <ReservationInfo subTitle={"가장 최근 이용 내역"} info={"2023년 1월 12일 월요일 15:00 ~ 16:00"}/> */}
                 <MainPageMenu icon={calendar} title={"예약하기"} where={"/selectmeetingroom"}/>
                 <MainPageMenu icon={search} title={"예약내역 확인하기"} where={"/show"}/>

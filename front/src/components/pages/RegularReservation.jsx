@@ -220,7 +220,13 @@ export default function RegularReservations() {
     useEffect(() => {
         // console.log(selectedDay.year, selectedDay.month, selectedDay.date, '선택한 날짜의 예약 시간 정보를 가져옵니다');
         // console.log(selectedDay.year, selectedDay.month, selectedDay.date);
-        axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
+        const timeCheckInfo = {
+            year: selectedDay.year,
+            month: selectedDay.month,
+            day: selectedDay.date,
+            roomId: searchParams.get('room_id')
+        }
+        axios.post('/reserve/today-time-check', {...timeCheckInfo})
             .then((res) => {
                 // console.log(res.data);
                 setReservedTime((state) => [...res.data]);
@@ -228,13 +234,22 @@ export default function RegularReservations() {
             .catch((err) => {
                 console.log("통신실패");
             })
+        
+        // axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
+        //     .then((res) => {
+        //         // console.log(res.data);
+        //         setReservedTime((state) => [...res.data]);
+        //     })
+        //     .catch((err) => {
+        //         console.log("통신실패");
+        //     })
     }, [selectedDay.date])
 
     // 의존성은 임시로 월별을 클릭했을때 변경되도록 함. -> 달력을 클릭했을때 바뀌는 걸로 수정해야함.
-    // useEffect(() => {
-    //     // console.log("카운트 불러오기");
-    //     createMonthReservedCount();
-    // }, [selectedDay.month])
+    useEffect(() => {
+        // console.log("카운트 불러오기");
+        createMonthReservedCount();
+    }, [selectedDay.month])
 
     // 회의실이 선택되지 않았을때 실행되는 함수
     const isRoomIdSelected = () => {
@@ -251,20 +266,38 @@ export default function RegularReservations() {
 
     // 월별 예약건수를 서버에 요청해 만드는 함수.
     const createMonthReservedCount = () => {
-        for (let i=1; i<=30 ; i++) {
-            // 서버에 해당 날짜의 예약건수 요청.
-            axios.get('/reserve/today-reserve-cnt', {params: {year: "2023", month: "06", day:i}})
-                .then(async (res) => {
-                    const cntData = {
-                        reservedCount: res.data,
-                        reservedDate: `${i}-06-2023`
-                    }
-                    await setTmpMarks((state) => [...state, cntData])
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+        setTmpMarks((state) => []);
+        
+        let idx = 2;
+        let ttt = 0;
+        while (idx > 0) {
+            const currentMonth = selectedDay.month + ttt < 10 ? "0" + (selectedDay.month + ttt).toString() : (selectedDay.month + ttt).toString();
+            const todayDay = new Date().getDate();
+            const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 1, 0).getDate();
+            for (let day=1; day<=lastMonthDay ; day++) {
+                // 서버에 해당 날짜의 예약건수 요청.
+                const dayString = day < 10 ? "0" + day.toString() : day.toString();
+                const requestDayInfo = {
+                    year: selectedDay.year.toString(),
+                    month: selectedDay.month.toString(),
+                    day: dayString,
+                }
 
+                axios.post('/reserve/today-reserve-cnt-room', {...requestDayInfo})
+                    .then((res) => {
+                        const cntData = {
+                            reservedCount: res.data,
+                            reservedDate: `${dayString}-${currentMonth}-${selectedDay.year}`
+                        }
+                        setTmpMarks((state) => [...state, cntData])
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+    
+            }
+            idx -= 1
+            ttt += 1
         }
     }
 
@@ -498,13 +531,16 @@ export default function RegularReservations() {
     const ShowSelectedStartTime = () => {
         const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
         const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
+        const isAmOrPm = selectedTime.startTime < 12 ? "AM" : "PM";
 
-        return `${startTime}:${startMinute}`
+        return `${startTime}:${startMinute} ${isAmOrPm}`
     }
     const ShowSelectedEndTime = () => {
         const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
         const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
-        return `${endTime}:${endMinute}`
+        const isAmOrPm = selectedTime.endTime < 12 ? "AM" : "PM";
+
+        return `${endTime}:${endMinute} ${isAmOrPm}`
     }
 
     const makeReservation = (year, month, date, day, startTime, startMinute, endTime, endMinute) => {

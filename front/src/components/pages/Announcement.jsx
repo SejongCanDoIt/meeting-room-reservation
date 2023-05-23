@@ -23,6 +23,13 @@ const Intro = styled.h2`
     justify-content: center;
     // background-color: gray;
 `
+const AccDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    width: 100%;
+`
 
 export default function Announcement() {
     return (
@@ -31,8 +38,8 @@ export default function Announcement() {
                 <Intro>공지사항</Intro>
             </AnnounceDiv>
 
-            <div>
-                <Accordion>
+            <AccDiv>
+                <Accordion sx={{width: "100%", maxWidth: "520px"}}>
                     <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -51,7 +58,24 @@ export default function Announcement() {
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
-            </div>
+                <Accordion sx={{width: "100%", maxWidth: "520px"}}>
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    >
+                    <Typography>AI센터 회의실이 오픈하였습니다.</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>
+                        <ul>
+                            <li>835호 836호 두개의 회의실이 운영중입니다.</li>
+                            <li>추가적인 문의사항은 컴퓨터공학과 조교에게 연락주세요.</li>
+                        </ul>
+                    </Typography>
+                    </AccordionDetails>
+                </Accordion>
+            </AccDiv>
         </div>
 
     );

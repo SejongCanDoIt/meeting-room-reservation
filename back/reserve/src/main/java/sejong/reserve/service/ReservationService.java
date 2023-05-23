@@ -22,7 +22,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ReservationService {
     private final ReservationRepository reservationRepository;
-
+    private final EmailReminderService emailNotificationService;
 
     @Transactional
     public Long makeReservation(Reservation reservation) {
@@ -75,10 +75,10 @@ public class ReservationService {
         return reservation;
     }
 
-    public Boolean isPossibleTime(LocalDateTime start, LocalDateTime end) {
+    public Boolean isPossibleTime(LocalDateTime start, LocalDateTime end, Long roomId) {
         ZoneId localZone = ZoneId.systemDefault();
         log.info("localZone = {}", localZone);
-        int timeCnt = reservationRepository.isPossibleTime(start, end);
+        int timeCnt = reservationRepository.isPossibleTime(start, end, roomId);
         if(timeCnt == 0) {
             return true;
         } else {
@@ -163,14 +163,25 @@ public class ReservationService {
         return timeList;
     }
 
-    public int getTodayReserveCnt(LocalDateTime todayDate, Long roomId) {
+    public int getTodayReserveCntByRoom(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
 
         LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
         LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
-        int todayReserveCnt = reservationRepository.getTodayReserveCnt(todayStart, todayEnd, roomId);
+        int todayReserveCnt = reservationRepository.getTodayReserveCntByRoom(todayStart, todayEnd, roomId);
+        return todayReserveCnt;
+    }
+
+    public int getTodayReserveCntAll(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+        int todayReserveCnt = reservationRepository.getTodayReserveCntAll(todayStart, todayEnd);
         return todayReserveCnt;
     }
 
@@ -181,7 +192,7 @@ public class ReservationService {
         int day = 1;
         while(day <= month.maxLength()) {
             today = LocalDateTime.of(year, month, day++, 0, 0);
-            monthCheck.add(getTodayReserveCnt(today, roomId));
+            monthCheck.add(getTodayReserveCntByRoom(today, roomId));
         }
         return monthCheck;
     }
@@ -231,4 +242,18 @@ public class ReservationService {
         List<ReservationsDto> reservationDtoList = convertToDto(reservations);
         return reservationDtoList;
     }
+
+    public void checkNoShow(Long reservation_id, boolean check) {
+        Reservation reservation = reservationRepository.findById(reservation_id).get();
+        reservation.setNoShowCheck(check);
+    }
+
+    public List<ReservationsDto> getReservationListBySnoAndStatus(String student_no, ReservationStatus status) {
+        List<Reservation> reservations = reservationRepository.getReservationListBySnoAndStatus(student_no, status);
+        List<ReservationsDto> reservationDtoList = convertToDto(reservations);
+        return reservationDtoList;
+    }
+
+
+
 }

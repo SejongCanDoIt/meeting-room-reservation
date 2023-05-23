@@ -1,21 +1,16 @@
 package sejong.reserve.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.*;
 import sejong.reserve.dto.*;
-import sejong.reserve.service.ManagementService;
-import sejong.reserve.service.MemberService;
-import sejong.reserve.service.ReservationService;
-import sejong.reserve.service.RoomService;
+import sejong.reserve.service.*;
 import sejong.reserve.web.argumentresolver.Login;
-import sejong.reserve.web.exception.AlreadyReservedException;
-import sejong.reserve.web.exception.AuthorityException;
-import sejong.reserve.web.exception.NotAvailableReservedException;
-import sejong.reserve.web.exception.NotLoginException;
+import sejong.reserve.web.exception.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -35,6 +30,9 @@ public class ReservationController {
     private final ManagementService managementService;
     private final RoomService roomService;
     private final MemberService memberService;
+
+    private final EmailService emailService;
+
 
     @PostMapping
     public ResponseEntity<Long> makeReservation(@RequestBody ReservationDto reservationDto,
@@ -69,7 +67,7 @@ public class ReservationController {
         checkPastDate(start);
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
         log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
-        checkDuplicateReservation(start, end);
+        checkDuplicateReservation(start, end, room_id);
         // 예약 시간 gap 이 권한에 적합한지?
         log.info("checkTimeGap:  예약 시간 gap 이 권한에 적합한지?");
         checkTimeGap(start, end, authority);
@@ -78,7 +76,7 @@ public class ReservationController {
         Room room = roomService.detail(room_id);
 //        log.info("room = {}", room);
         Reservation reservation = Reservation.createReservation(reservationDto, loginMember, room);
-//        log.info("reservation = {}", reservation);
+        log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
 
         // remove Cnt
@@ -88,6 +86,14 @@ public class ReservationController {
         log.info("요청 예약 끝 시각 = {}", reservation.getEnd());
 
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
+    }
+
+    @PostMapping("/email")
+    private void sendEmail(@Login Member loginMember, @RequestParam("reservation_id") Long reservationId) {
+        Reservation reservation = reservationService.getReservation(reservationId).get();
+        String emailSubject = "예약이 완료되었습니다.";// 메일의 제목을 여기에다 적으면 됩니다.
+        String emailText = "예약이 완료되었습니다.\n 시작시간: " + reservation.getStart() + "\n 종료시간: " + reservation.getEnd()+"\n장소: "+reservation.getId(); //이메일에 들어갈 문장들 여기에 적으면 됩니다.
+        emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText); // 이메일 보내기
     }
 
     private void checkStateLimitation(LocalDateTime start, AuthState authority) {
@@ -116,8 +122,8 @@ public class ReservationController {
 
     }
 
-    private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end) {
-        if(!reservationService.isPossibleTime(start, end)) {
+    private void checkDuplicateReservation(LocalDateTime start, LocalDateTime end, Long roomId) {
+        if(!reservationService.isPossibleTime(start, end, roomId)) {
             throw new AlreadyReservedException("이미 다른 예약이 되어있는 시간입니다. 다른 시간대를 선택해주십시오.");
         }
     }
@@ -154,8 +160,9 @@ public class ReservationController {
 
     @GetMapping("/time-check")
     public Boolean timeCheck(@RequestParam LocalDateTime start,
-                             @RequestParam LocalDateTime end) {
-        return reservationService.isPossibleTime(start, end);
+                             @RequestParam LocalDateTime end,
+                             @RequestParam Long roomId) {
+        return reservationService.isPossibleTime(start, end, roomId);
     }
 
 
@@ -309,11 +316,19 @@ public class ReservationController {
         return reservationService.getMonthReserveCheck(data.getYear(), Month.of(data.getMonth()), data.getRoomId());
     }
 
-    @PostMapping("/today-reserve-cnt")
-    public ResponseEntity<Integer> getTodayReserveCnt(@RequestBody DateByRoomDto data) {
+    @PostMapping("/today-reserve-cnt-room")
+    public ResponseEntity<Integer> getTodayReserveCntByRoom(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
-        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate, data.getRoomId());
+        int todayReserveCnt = reservationService.getTodayReserveCntByRoom(todayDate, data.getRoomId());
+        return ResponseEntity.ok(todayReserveCnt);
+    }
+
+    @PostMapping("/today-reserve-cnt-all")
+    public ResponseEntity<Integer> getTodayReserveCntAll(@RequestBody DateDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        log.info("date = {}", todayDate);
+        int todayReserveCnt = reservationService.getTodayReserveCntAll(todayDate);
         return ResponseEntity.ok(todayReserveCnt);
     }
 
@@ -321,7 +336,7 @@ public class ReservationController {
     public ResponseEntity<Integer> limitPastReservation(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         log.info("date = {}", todayDate);
-        int todayReserveCnt = reservationService.getTodayReserveCnt(todayDate,  data.getRoomId());
+        int todayReserveCnt = reservationService.getTodayReserveCntByRoom(todayDate,  data.getRoomId());
         return ResponseEntity.ok(todayReserveCnt);
     }
 
@@ -339,5 +354,31 @@ public class ReservationController {
         }
     }
 
+    @PatchMapping("/check-noshow")
+    public ResponseEntity<Boolean> checkNoShow(@Login Member loginMember) {
+        LocalDateTime now = LocalDateTime.now();
+        List<ReservationsDto> reservationList = reservationService.getReservationListBySnoAndStatus(loginMember.getStudentNo(), ReservationStatus.RESERVED);
+        for(ReservationsDto reservation : reservationList) {
+            log.info("예약 시작 시간: {}, 예약 끝나는 시간: {}, 예약 노쇼 체크 = {}", reservation.getStart(), reservation.getEnd(), reservation.getNoShowCheck());
+            if (reservation.getStart().isBefore(now) && reservation.getEnd().isAfter(now)) {
+                reservationService.checkNoShow(reservation.getReservation_id(), true);
+                return ResponseEntity.ok(reservation.getNoShowCheck());
+            } else {
+                memberService.addNoShowCnt(loginMember.getStudentNo());
+                throw new NotAvailableNoShowCheckException("인증 시간이 아니므로 인증이 되지 않습니다.");
+            }
+        }
+        return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("/get-noshow/{sno}")
+    public ResponseEntity<Integer> getNoShowCnt(@PathVariable("sno") String sno) {
+        return ResponseEntity.ok(memberService.getNoShowCnt(sno));
+    }
+
+    @PatchMapping("/reset-noshow/{sno}")
+    public void checkNoShow(@PathVariable("sno") String sno) {
+        memberService.resetNoShowCnt(sno);
+    }
 
 }

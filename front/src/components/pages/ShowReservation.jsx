@@ -95,7 +95,7 @@ export default function ShowReservation() {
     return (
         <ShowContainer>
             <ProfileDiv>
-                <h1>{loginId}님의 <br/> 예약내역입니다.</h1>
+                <WhoDIv>{loginId}님의 <br/> 예약내역입니다.</WhoDIv>
             </ProfileDiv>
             {reserveList.map((it, idx) => (
                 <ShowDiv key={idx} isExpire={it.isExpire}>
@@ -110,6 +110,11 @@ export default function ShowReservation() {
         </ShowContainer>
     )
 }
+
+const WhoDIv = styled.div`
+    font-size: 28px;
+    font-weight: bold;
+`
 
 const ShowContainer = styled.div`
     display: flex;
