@@ -5,8 +5,39 @@ import axios from "axios"
 import React, { useEffect, useState } from 'react';
 
 export default function AdminMemberManagePage() {
-    const handleAddMember = () => {
-        // 회원 추가 기능 구현
+    const [file, setFile] = useState(null);
+
+    const handleFileUpload = (event) => {
+        setFile(event.target.files[0]);
+    };
+
+    const handleAddMember = async (event) => {
+        event.preventDefault();
+
+        if (!file) {
+            console.log('No file selected.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const fileResponse = await axios.post("/excel/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            // Handle server response here
+            if (fileResponse.data.success) {
+                console.log(fileResponse.data.message);
+            } else {
+                console.log(fileResponse.data.message);
+            }
+        } catch (err) {
+            console.log('An error occurred while uploading file.');
+        }
     };
 
     const handleEditMember = (memberId) => {
@@ -42,9 +73,13 @@ export default function AdminMemberManagePage() {
                 <MemberManagementContainer>
                     <Header>
                         <h1>회원 관리</h1>
-                        <AddMemberButton onClick={handleAddMember}>
-                            회원 추가
-                        </AddMemberButton>
+                        <ButtonContainer>
+                            <FileInputLabel htmlFor="fileInput">
+                                {file ? file.name : '파일 선택'}
+                            </FileInputLabel>
+                            <FileInput id="fileInput" type="file" onChange={handleFileUpload} />
+                            <AddMemberButton type="submit">회원 추가</AddMemberButton>
+                        </ButtonContainer>
                     </Header>
                     <MemberList>
                         <MemberListHeader>
@@ -87,6 +122,29 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
+
+const FileInput = styled.input`
+    display: none; 
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    gap: 10px;
+`;
+
+const FileInputLabel = styled.label`
+    background-color: #A1203C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #8B1B34;
+    }
 `;
 
 const AddMemberButton = styled.button`
