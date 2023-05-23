@@ -177,10 +177,10 @@ public class ReservationController {
     }
 
     @GetMapping("/manager-list")
-    public ResponseEntity<List<Reservation>> managerList() {
-        List<Reservation> reservations = reservationService.managerList();
-        if (!reservations.isEmpty()) {
-            return ResponseEntity.ok(reservations);
+    public ResponseEntity<List<ReservationsDto>> managerList() {
+        List<ReservationsDto> reservationsDtoList = reservationService.managerList();
+        if (!reservationsDtoList.isEmpty()) {
+            return ResponseEntity.ok(reservationsDtoList);
         } else {
             return ResponseEntity.noContent().build();
         }

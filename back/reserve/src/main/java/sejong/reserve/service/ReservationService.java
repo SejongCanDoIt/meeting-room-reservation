@@ -34,11 +34,12 @@ public class ReservationService {
 
 
     // 전체 예약 리스트
-    public List<Reservation> managerList() {
+    public List<ReservationsDto> managerList() {
         log.info("전체 예약 리스트 조회 시작");
         List<Reservation> resultList = reservationRepository.findAll();
+        List<ReservationsDto> reservationsDtoList = convertToDto(resultList);
         log.info("전체 예약 리스트 조회 완료: {}개의 예약이 있습니다.", resultList.size());
-        return reservationRepository.findAll();
+        return reservationsDtoList;
     }
 
     // 학생별 예약 리스트

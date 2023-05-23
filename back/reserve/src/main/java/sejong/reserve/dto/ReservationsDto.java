@@ -1,5 +1,6 @@
 package sejong.reserve.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter @Getter @ToString
+@Data
 public class ReservationsDto {
     private Long reservation_id;
     private LocalDateTime start; // 예약 시작 시간
