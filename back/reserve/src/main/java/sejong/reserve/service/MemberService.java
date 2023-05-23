@@ -140,10 +140,19 @@ public class MemberService {
         return memberDtoList;
     }
 
-    public void resetNoShowCnt(String studentNo) {
+    public void resetNoShowCntBySNo(String studentNo) {
         Member member = memberRepository.findByStudentNo(studentNo);
         member.setNoshow(0);
     }
+
+    public void resetNoShowCntAll() {
+        List<Member> memberList = memberRepository.findAll();
+        for (Member member : memberList) {
+            member.setNoshow(0);
+        }
+    }
+
+
     public Integer addNoShowCnt(String studentNo) {
         Member member = memberRepository.findByStudentNo(studentNo);
         int noShowCnt = member.getNoshow();
@@ -151,9 +160,29 @@ public class MemberService {
         return member.getNoshow();
     }
 
+    // 해당 학번 멤버의 노쇼 횟수 얻기
     public Integer getNoShowCnt(String studentNo) {
         Member member = memberRepository.findByStudentNo(studentNo);
         return member.getNoshow();
+    }
+
+    // 해당 권한의 멤버들 반환
+    public List<MemberDto> findMemberByAuthState(AuthState authority) {
+        List<Member> memberList = memberRepository.findMemberByAuthState(authority);
+        List<MemberDto> memberDtoList = convertMemberToMemberDtoList(memberList);
+        return memberDtoList;
+    }
+
+    // 권한별 노쇼 횟수 반환
+    public Integer getNoShowCntByState(AuthState authority) {
+        Integer sumOfNoShowCnt = memberRepository.sumOfNoShowCntByAuthState(authority);
+        return sumOfNoShowCnt;
+    }
+
+    // 전체 노쇼 횟수 반환
+    public Integer sumOfNoShowCntAll() {
+        Integer sumOfNoShowCnt = memberRepository.sumOfNoShowCntAll();
+        return sumOfNoShowCnt;
     }
 
 }

@@ -371,14 +371,15 @@ public class ReservationController {
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("/get-noshow/{sno}")
-    public ResponseEntity<Integer> getNoShowCnt(@PathVariable("sno") String sno) {
-        return ResponseEntity.ok(memberService.getNoShowCnt(sno));
+
+    @GetMapping("/get-reserve-cnt-all")
+    public ResponseEntity<Integer> getReserveCntAll() {
+        return ResponseEntity.ok(reservationService.getReserveCntAll());
     }
 
-    @PatchMapping("/reset-noshow/{sno}")
-    public void checkNoShow(@PathVariable("sno") String sno) {
-        memberService.resetNoShowCnt(sno);
+    @GetMapping("/get-reserve-cnt-authority")
+    public ResponseEntity<Integer> getReserveCntByAuthority(@RequestParam AuthState authority) {
+        return ResponseEntity.ok(reservationService.getReserveCntByAuthority(authority));
     }
 
 }

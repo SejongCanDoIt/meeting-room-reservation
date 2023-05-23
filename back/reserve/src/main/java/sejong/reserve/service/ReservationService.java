@@ -254,6 +254,14 @@ public class ReservationService {
         return reservationDtoList;
     }
 
+    public Integer getReserveCntAll() {
+        int reserveCntAll = reservationRepository.getReserveCntAll(ReservationStatus.FINISHED);
+        return reserveCntAll;
+    }
 
+    public Integer getReserveCntByAuthority(AuthState authority) {
+        int reserveCntByAuthority = reservationRepository.getReserveCntByAuthority(authority, ReservationStatus.FINISHED);
+        return reserveCntByAuthority;
+    }
 
 }

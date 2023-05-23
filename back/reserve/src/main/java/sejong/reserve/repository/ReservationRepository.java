@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.domain.ReservationStatus;
 
@@ -75,4 +76,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Modifying
     @Query("update Reservation r set r.reminderSent = true where r.id = :id")
     void setReminderSent(@Param("id") Long id);
+
+    @Query("select count(r) from Reservation r where r.status = :status")
+    int getReserveCntAll(@Param("status") ReservationStatus status);
+
+    @Query("select count(r) from Reservation r where r.member.authority = :authority and r.status = :status")
+    int getReserveCntByAuthority(@Param("authority")AuthState authority, @Param("status") ReservationStatus status);
 }
