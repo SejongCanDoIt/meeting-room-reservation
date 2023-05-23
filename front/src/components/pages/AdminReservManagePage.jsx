@@ -45,14 +45,17 @@ export default function AdminReservManagePage() {
                     </Header>
                     <ReservationList>
                         <ReservationListHeader>
-                            <span>예약자 번호</span>
-                            <span>예약 시간</span>
+                            <span>예약자 학번</span>
+                            <span>예약 시작 시간</span>
+                            <span>예약 종료 시간</span>
                             <span>회의실</span>
                         </ReservationListHeader>
                         {reservList.map(reservation => (
                             <ReservationRow key={reservation.id} status={reservation.status}>
-                                <span>{reservation.member_id}</span>
-                                <span>{reservation.start} ~ {reservation.end}</span>
+                                <span>{reservation.member_sno}</span>
+                                <span>{reservation.start}</span>
+                                <span>{reservation.end}</span>
+                                <span>{reservation.room_id}</span>
                                 <CancelReservation onClick={() => handleCancelReservation(reservation.id)}>
                                     예약 취소
                                 </CancelReservation>

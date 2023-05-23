@@ -40,11 +40,6 @@ export default function AdminMemberManagePage() {
         }
     };
 
-    const handleEditMember = (memberId) => {
-        // 회원 수정 기능 구현
-        console.log(`Edit member with id: ${memberId}`);
-    };
-
     const [memberList, setMemberList] = useState(null);
 
     useEffect(() => {
@@ -78,7 +73,7 @@ export default function AdminMemberManagePage() {
                                 {file ? file.name : '파일 선택'}
                             </FileInputLabel>
                             <FileInput id="fileInput" type="file" onChange={handleFileUpload} />
-                            <AddMemberButton type="submit">회원 추가</AddMemberButton>
+                            <AddMemberButton type="submit" onClick={handleAddMember}>회원 추가</AddMemberButton>
                         </ButtonContainer>
                     </Header>
                     <MemberList>
@@ -98,7 +93,6 @@ export default function AdminMemberManagePage() {
                                 <span>{member.phoneNo}</span>
                                 <span>{member.email}</span>
                                 <span>{member.noshow}</span>
-                                <EditButton onClick={() => handleEditMember(member.member_id)}>수정하기</EditButton>
                             </MemberRow>
                         ))}
                     </MemberList>
@@ -188,18 +182,4 @@ const MemberRow = styled.div`
     padding: 10px;
     border-bottom: 1px solid #ddd;
     height: 6vh;
-`;
-
-const EditButton = styled.button`
-    background-color: #A1203C;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 10px;
-    font-size: 16px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #8B1B34;
-    }
 `;
