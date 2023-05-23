@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 export default function AdminRoomInfoPage() {
     const { id } = useParams();
-    const [roominfo, setRoominfo] = useState(null);
+    const [roomInfo, setRoomInfo] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
                 const response = await axios.get(`/room/detail/${id}`);
-                setRoominfo(response.data);
+                setRoomInfo(response.data);
                 console.log("Room Info Page: ", response.data);
             } catch (error) {
                 console.error(error);
@@ -23,9 +24,22 @@ export default function AdminRoomInfoPage() {
         fetchRoomData();
     }, [id]);
 
-    if (!roominfo) {
+    if (!roomInfo) {
         return <p>Loading...</p>;
     }
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`/room/delete/${id}`);
+                alert('삭제되었습니다!');
+                navigate('/AdminRoomManagePage');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     return (
         <>
@@ -36,7 +50,8 @@ export default function AdminRoomInfoPage() {
                 <RoomInfoContainer>
                     <Header>
                         <h1>회의실 정보</h1>
-                        <Link to={`/AdminRoomModifyPage/${roominfo.id}`}                        >
+                        <button onClick={handleDelete}>삭제하기</button>
+                        <Link to={`/AdminRoomModifyPage/${roomInfo.id}`}>
                             <button>수정하기</button>
                         </Link>
                     </Header>
@@ -44,45 +59,45 @@ export default function AdminRoomInfoPage() {
                         <LeftInfo>
                             <NameBlock>
                                 <StyledH2>회의실 이름과 ID</StyledH2>
-                                <p>{roominfo.name}</p>
-                                <p>ID: {roominfo.id}</p>
+                                <p>{roomInfo.name}</p>
+                                <p>ID: {roomInfo.id}</p>
                                 <hr></hr>
                             </NameBlock>
                             <Block>
                                 <StyledH2>회의실 설명</StyledH2>
-                                <StyledP>{roominfo.info}</StyledP>
+                                <StyledP>{roomInfo.info}</StyledP>
                             </Block>
                             <Block>
                                 <StyledH2>회의실 위치</StyledH2>
-                                <StyledP>{roominfo.name}은 {roominfo.loc} {roominfo.id}호에 위치하고 있습니다.</StyledP>
+                                <StyledP>{roomInfo.name}은 {roomInfo.buildingName} {roomInfo.id}호에 위치하고 있습니다.</StyledP>
                             </Block>
                         </LeftInfo>
                         <RightInfo>
-                            <RoomImg src={roominfo.picture} alt={`이미지: ${roominfo.name}`} />
+                            <RoomImg src={roomInfo.picture} alt={`이미지: ${roomInfo.name}`} />
                             <FacilitiesList>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" />
-                                    {roominfo.cap}명
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/664/664374.png" alt="의자 아이콘" />
+                                    {roomInfo.cap}명
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" />
-                                    {roominfo.wifi ? '있음' : '없음'}
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/3562/3562383.png" alt="와이파이 아이콘" />
+                                    {roomInfo.wifi ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" />
-                                    {roominfo.board ? '있음' : '없음'}
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/8148/8148583.png" alt="화이트보드 아이콘" />
+                                    {roomInfo.board ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
                                     <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />
-                                    {roominfo.tv}개
+                                    {roomInfo.tv}개
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" />
-                                    {roominfo.bim_projector ? '있음' : '없음'}
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/4021/4021963.png" alt="빔 프로젝터 아이콘" />
+                                    {roomInfo.bim_projector ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" />
-                                    {roominfo.com}개
+                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/3667/3667881.png" alt="컴퓨터 아이콘" />
+                                    {roomInfo.com}개
                                 </FacilityItem>
                             </FacilitiesList>
                         </RightInfo>
