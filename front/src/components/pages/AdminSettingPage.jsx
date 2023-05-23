@@ -3,6 +3,7 @@ import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 import axios from "axios"
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function AdminSettingPage() {
     const [settingList, setSettingList] = useState(null);
@@ -14,7 +15,7 @@ export default function AdminSettingPage() {
                 role: '대학생',
                 cnt: `${data.univ_cnt}번`,
                 period_time: `${data.univ_hour_gap}시간`,
-                period_day:  `${data.univ_hour_gap}일`,
+                period_day: `${data.univ_day_gap}일`,
                 period_week: `${data.univ_week_gap}주`
             },
             {
@@ -22,7 +23,7 @@ export default function AdminSettingPage() {
                 role: '대학원생',
                 cnt: `${data.post_cnt}번`,
                 period_time: `${data.post_hour_gap}시간`,
-                period_day:  `${data.post_hour_gap}일`,
+                period_day: `${data.post_day_gap}일`,
                 period_week: `${data.post_week_gap}주`
             },
             {
@@ -30,7 +31,7 @@ export default function AdminSettingPage() {
                 role: '교수',
                 cnt: `${data.pro_cnt}번`,
                 period_time: `${data.pro_hour_gap}시간`,
-                period_day:  `${data.pro_hour_gap}일`,
+                period_day: `${data.pro_day_gap}일`,
                 period_week: `${data.pro_week_gap}주`
             },
             {
@@ -38,7 +39,7 @@ export default function AdminSettingPage() {
                 role: '학과 사무실',
                 cnt: `${data.office_cnt}번`,
                 period_time: `${data.office_hour_gap}시간`,
-                period_day:  `${data.office_hour_gap}일`,
+                period_day: `${data.office_day_gap}일`,
                 period_week: `${data.office_week_gap}주`
             }
         ];
@@ -48,6 +49,7 @@ export default function AdminSettingPage() {
         const fetchSettingListData = async () => {
             try {
                 const response = await axios.get(`/manage/`);
+                console.log("Setting Page: ", response.data);
                 const processedData = processData(response.data);
                 setSettingList(processedData);
                 console.log(processedData);
@@ -71,9 +73,9 @@ export default function AdminSettingPage() {
                 <SettingsManagementContainer>
                     <Header>
                         <h1>세부 설정</h1>
-                        <EditSettingsButton>
-                            수정하기
-                        </EditSettingsButton>
+                        <Link to={`/AdminSettingModifyPage/`}>
+                            <EditSettingsButton>수정하기</EditSettingsButton>
+                        </Link>
                     </Header>
                     <SettingsList>
                         <SettingsListHeader>
