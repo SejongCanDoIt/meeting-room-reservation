@@ -147,10 +147,10 @@ export default function AdminRoomAddPage() {
                                         <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/3562/3562383.png" alt="와이파이 아이콘" />
                                         <select
                                             value={roomFacilities.wifi}
-                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, wifi: parseInt(e.target.value) }))}
+                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, wifi: e.target.value }))}
                                         >
-                                            <option value={0}>없음</option>
-                                            <option value={1}>있음</option>
+                                            <option value={false}>없음</option>
+                                            <option value={true}>있음</option>
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
@@ -159,8 +159,10 @@ export default function AdminRoomAddPage() {
                                             value={roomFacilities.board}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, board: parseInt(e.target.value) }))}
                                         >
-                                            <option value={0}>없음</option>
-                                            <option value={1}>있음</option>
+                                            <option value={0}>0</option>
+                                            <option value={1}>1</option>
+                                            <option value={2}>2</option>
+                                            <option value={3}>3</option>
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
@@ -186,10 +188,10 @@ export default function AdminRoomAddPage() {
                                         <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/4021/4021963.png" alt="빔 프로젝터 아이콘" />
                                         <select
                                             value={roomFacilities.bim_projector}
-                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, bim_projector: parseInt(e.target.value) }))}
+                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, bim_projector: e.target.value }))}
                                         >
-                                            <option value={0}>없음</option>
-                                            <option value={1}>있음</option>
+                                            <option value={false}>없음</option>
+                                            <option value={true}>있음</option>
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>

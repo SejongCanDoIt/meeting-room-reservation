@@ -85,7 +85,7 @@ export default function AdminRoomInfoPage() {
                                 </FacilityItem>
                                 <FacilityItem>
                                     <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/8148/8148583.png" alt="화이트보드 아이콘" />
-                                    {roomInfo.board ? '있음' : '없음'}
+                                    {roomInfo.board}개
                                 </FacilityItem>
                                 <FacilityItem>
                                     <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />

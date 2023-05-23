@@ -15,7 +15,7 @@ import java.util.List;
 public class Room {
 
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     @Column(name = "room_id")
     private Long id; // 회의실 id
 
@@ -74,7 +74,7 @@ public class Room {
         room.setBoard(roomInfo.getBoard());
         room.setTv(roomInfo.getTv());
         room.setPicture(roomInfo.getPicture());
-        room.setEmpty(roomInfo.getEmpty());
+        room.setCom(roomInfo.getCom());
         room.setEmpty(roomInfo.getEmpty());
         room.setWifi(roomInfo.getWifi());
         room.setBim_projector(roomInfo.getBim_projector());
