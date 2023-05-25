@@ -3,6 +3,8 @@ import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
 import univ from "../../assets/univ.jpg";
 import univ_library from "../../assets/univ_library.jpg";
+import homeback2 from "../../assets/homeback2.jpg";
+import homelibrary from "../../assets/homelibrary.jpg";
 
 const TodayContainer = styled.div`
     width: 100%;
@@ -24,7 +26,7 @@ const TodayBox = styled.div`
     border-radius: 20px;
 
     // background-color: #52b788;
-    background-image: url(${univ_library});
+    background-image: url(${homeback2});
     background-size : cover;
     
     width: 95%;
@@ -48,9 +50,8 @@ const ImgBox = styled.div`
     font-weight: bold;
 
     background-repeat: no-repeat;
-    // background-image: url(${univ});
-    // background-image: url(${univ_library});
-    background-image: url('https://images.unsplash.com/photo-1558636815-1978d0419bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-image: url(${homelibrary});
+    // background-image: url('https://images.unsplash.com/photo-1558636815-1978d0419bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
     // background-image: url('https://images.unsplash.com/photo-1564981797816-1043664bf78d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80');
 
     @media screen and (max-width: 900px) {
