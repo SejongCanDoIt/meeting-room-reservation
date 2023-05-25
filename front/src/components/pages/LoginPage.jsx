@@ -92,7 +92,7 @@ export default function LoginPage() {
     // 로그인 버튼이 눌렸을때 세션에 정보를 저장하고, /myPage로 라우팅
     const onLoginButtonHandler = async () => {
         handleClick();
-
+    
         const loginInfo = {
             sno: login.id,
             password: login.password,
@@ -103,7 +103,13 @@ export default function LoginPage() {
                 setIsError(false);
                 sessionStorage.setItem('Authorization', true);
                 sessionStorage.setItem('LoginID', login.id);
-                navigate(`/myPage?id=${login.id}`)
+    
+                // id가 "admin"인 경우 AdminMemberPage로 이동
+                if(login.id === "admin") {
+                    navigate('/AdminMemberManagePage')
+                } else {
+                    navigate(`/myPage?id=${login.id}`)
+                }
             })
             .catch(async (err) => {
                 setIsError(true);

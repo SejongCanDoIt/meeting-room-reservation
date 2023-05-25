@@ -36,7 +36,7 @@ export default function AdminSideBar() {
                             className={`submenu-item ${activeMenu === "reservation-history" ? "active" : ""}`}
                             onClick={() => setActiveMenu("reservation-history")}
                         >
-                            예약 내역
+                            <LinkStyled to="/AdminReservHistoryPage">예약 내역</LinkStyled>
                         </SubmenuItem>
                         <SubmenuItem
                             className={`submenu-item ${activeMenu === "reservation-management" ? "active" : ""}`}

@@ -85,13 +85,12 @@ export default function AdminRoomModifyPage() {
                         <RoomInfo>
                             <LeftInfo>
                                 <NameBlock>
-                                    <StyledH2>회의실 이름과 ID</StyledH2>
+                                    <StyledH2>회의실 이름</StyledH2>
                                     <input
                                         type="text"
                                         value={roomName}
                                         onChange={(e) => setRoomName(e.target.value)}
                                     />
-                                    <p>ID: {roomId}</p>
                                     <hr></hr>
                                 </NameBlock>
                                 <Block>

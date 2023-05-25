@@ -7,7 +7,6 @@ import axios from 'axios'
 
 export default function AdminRoomAddPage() {
     const navigate = useNavigate();
-    const [roomId, setRoomId] = useState();
     const [roomName, setRoomName] = useState('');
     const [roomInfo, setRoomInfo] = useState('');
     const [roomBuilding, setRoomBuilding] = useState("");
@@ -25,7 +24,6 @@ export default function AdminRoomAddPage() {
         event.preventDefault();
 
         const dataToSend = {
-            id: roomId,
             name: roomName,
             info: roomInfo,
             buildingName: roomBuilding,
@@ -64,16 +62,11 @@ export default function AdminRoomAddPage() {
                         <RoomInfo>
                             <LeftInfo>
                                 <NameBlock>
-                                    <StyledH2>회의실 이름과 ID</StyledH2>
+                                    <StyledH2>회의실 이름</StyledH2>
                                     <input
                                         type="text"
                                         value={roomName}
                                         onChange={(e) => setRoomName(e.target.value)}
-                                    />
-                                    <input
-                                        type="number"
-                                        value={roomId}
-                                        onChange={(e) => setRoomId(parseInt(e.target.value))}
                                     />
                                     <hr></hr>
                                 </NameBlock>
