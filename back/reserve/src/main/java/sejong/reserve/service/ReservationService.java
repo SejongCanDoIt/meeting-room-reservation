@@ -146,7 +146,7 @@ public class ReservationService {
         log.info("예약 취소 완료");
     }
 
-    public List<TimeDto> getTodayTimeList(LocalDateTime todayDate, Long roomId) {
+    public List<TimeDto> getTodayTimeListRoom(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
@@ -297,4 +297,22 @@ public class ReservationService {
         return todayTimeCheck;
     }
 
+    public List<ReservationsDto> getTodayTimeList(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+        List<ReservationsDto> reservationsDtoList = convertToDto(reservations);
+
+        return reservationsDtoList;
+    }
+
+    @Transactional
+    public void setNoShowStatus(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId).get();
+        reservation.setNoShowCheck(true);
+    }
 }

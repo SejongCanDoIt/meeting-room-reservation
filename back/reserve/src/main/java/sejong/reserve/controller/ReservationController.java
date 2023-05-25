@@ -299,10 +299,16 @@ public class ReservationController {
         reservationService.cancel(reservation_id);
     }
 
-    @PostMapping("/time-list")
+    @PostMapping("/time-list-room")
     public List<TimeDto> timeList(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
-        return reservationService.getTodayTimeList(todayDate, data.getRoomId());
+        return reservationService.getTodayTimeListRoom(todayDate, data.getRoomId());
+    }
+
+    @PostMapping("/get-reserve-list-all")
+    public List<ReservationsDto> getTodayReserveList(@RequestBody DateByRoomDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        return reservationService.getTodayTimeList(todayDate);
     }
 
     @PostMapping("/today-time-check-room")

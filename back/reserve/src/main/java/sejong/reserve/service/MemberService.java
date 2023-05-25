@@ -153,10 +153,11 @@ public class MemberService {
     }
 
 
+    @Transactional
     public Integer addNoShowCnt(String studentNo) {
         Member member = memberRepository.findByStudentNo(studentNo);
         int noShowCnt = member.getNoshow();
-        member.setNoshow(noShowCnt++);
+        member.setNoshow(noShowCnt+1);
         return member.getNoshow();
     }
 
