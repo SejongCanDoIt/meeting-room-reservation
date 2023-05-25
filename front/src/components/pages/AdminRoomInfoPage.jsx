@@ -58,9 +58,8 @@ export default function AdminRoomInfoPage() {
                     <RoomInfo>
                         <LeftInfo>
                             <NameBlock>
-                                <StyledH2>회의실 이름과 ID</StyledH2>
+                                <StyledH2>회의실 이름</StyledH2>
                                 <p>{roomInfo.name}</p>
-                                <p>ID: {roomInfo.id}</p>
                                 <hr></hr>
                             </NameBlock>
                             <Block>
@@ -69,7 +68,7 @@ export default function AdminRoomInfoPage() {
                             </Block>
                             <Block>
                                 <StyledH2>회의실 위치</StyledH2>
-                                <StyledP>{roomInfo.name}은 {roomInfo.buildingName} {roomInfo.id}호에 위치하고 있습니다.</StyledP>
+                                <StyledP>{roomInfo.name}은 {roomInfo.buildingName}에 위치하고 있습니다.</StyledP>
                             </Block>
                         </LeftInfo>
                         <RightInfo>
