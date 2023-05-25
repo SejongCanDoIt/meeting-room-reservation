@@ -306,7 +306,7 @@ public class ReservationController {
     }
 
     @PostMapping("/get-reserve-list-all")
-    public List<ReservationsDto> getTodayReserveList(@RequestBody DateByRoomDto data) {
+    public List<ReservationsDto> getTodayReserveList(@RequestBody DateDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
         return reservationService.getTodayTimeList(todayDate);
     }
