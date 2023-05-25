@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import axios from 'axios'
 import ReservationNav from "./ReservationNav";
 import Calendar from "react-calendar";
-import TimeTable from "./TimeTable";
+import AdminTimeTable from "./AdminTimeTable";
 import moment from "moment";
 
 // 날짜의 초기값
@@ -117,9 +117,8 @@ export default function AdminReservHistoryPage() {
             year: selectedDay.year,
             month: selectedDay.month,
             day: selectedDay.date,
-            roomId: searchParams.get('room_id')
         }
-        axios.post('/reserve/today-time-check-room', { ...timeCheckInfo })
+        axios.post('/reserve/today-time-check', { ...timeCheckInfo })
             .then((res) => {
                 console.log(res.data);
                 setReservedTime((state) => [...res.data]);
@@ -133,35 +132,95 @@ export default function AdminReservHistoryPage() {
         <>
             <AdminTopContainer />
             <AdminSideBar />
-            <ReservationContainer>
-                <ReservationNav message="언제 사용하실 건가요?" />
-                <Calendar onChange={onCalendarHandler} tileClassName={reservedStatus} />
-                <TimeBox>
-                    <TimeTable reservedStatusList={onReservedStatusHandler()} />
-                    <Ptag>해당 날짜의 예약 상태입니다.</Ptag>
-                </TimeBox>
-            </ReservationContainer>
+            <ReservationHistory>
+                <ReservationContainer>
+                    <Header>
+                        <h1>예약 내역</h1>
+                    </Header>
+                    <DayInfo>
+                        <LeftInfo>
+                            <StyledCalendar onChange={onCalendarHandler} tileClassName={reservedStatus} />
+                            <TimeBox>
+                                <AdminTimeTable reservedStatusList={onReservedStatusHandler()} />
+                                <Ptag>해당 날짜의 예약 상태입니다.</Ptag>
+                            </TimeBox>
+                        </LeftInfo>
+                        <RightInfo>
+
+                        </RightInfo>
+                    </DayInfo>
+                </ReservationContainer>
+            </ReservationHistory>
         </>
     );
 }
 
+const ReservationHistory = styled.div`
+    max-width: 100%;
+    padding-left: 200px;
+    padding-top: 7vh;
+`;
+
 const ReservationContainer = styled.div`
-    height: 95vh;
+    padding: 20px;
+`
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const DayInfo = styled.div`
+    display: flex;
+    justify-content: space-between;
+    height: 70vh;
+`;
+
+const LeftInfo = styled.div`
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+const StyledCalendar = styled(Calendar)`
     width: 100%;
-    // max-height: 1000px;
+    height: 70%;
+    max-width: 100%;
+    background: white;
+    border-radius: 10px;
+    font-size: 20px;
+    line-height: 1.2em;
+    color: #000000;
+
+    & .react-calendar__navigation__label {
+        font-size: 20px;
+    }
+
+    & .react-calendar__tile {
+        height: 50px;
+        font-size: 20px;
+    }
+
+    & .react-calendar__tile--active {
+        background: #6fa8dc;
+        color: white;
+    }
+
+    & .react-calendar__month-view__days__day--weekend {
+        color: #d10000;
+    }
+`;
+
+const TimeBox = styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`
-
-const TimeBox = styled.div`
-    width: 100%;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
     margin: 10px 0px;
 `
 
@@ -169,3 +228,14 @@ const Ptag = styled.p`
     color: #929292;
     margin-top: 7px;
 `
+
+const RightInfo = styled.div`
+    flex: 1;
+    margin: 0 20px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+`;
