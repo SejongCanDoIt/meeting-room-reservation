@@ -305,10 +305,16 @@ public class ReservationController {
         return reservationService.getTodayTimeList(todayDate, data.getRoomId());
     }
 
-    @PostMapping("/today-time-check")
-    public int[] getTodayTimeCheck(@RequestBody DateByRoomDto data) {
+    @PostMapping("/today-time-check-room")
+    public int[] getTodayTimeCheckRoom(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
-        return reservationService.getTodayTimeCheck(todayDate, data.getRoomId());
+        return reservationService.getTodayTimeCheckRoom(todayDate, data.getRoomId());
+    }
+
+    @PostMapping("/today-time-check")
+    public int[] getTodayTimeCheck(@RequestBody DateDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        return reservationService.getTodayTimeCheck(todayDate);
     }
 
     @PostMapping("/month-reserve-check")
