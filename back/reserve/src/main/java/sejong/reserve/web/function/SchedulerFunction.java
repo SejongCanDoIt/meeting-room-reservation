@@ -55,15 +55,14 @@ public class SchedulerFunction {
     @Scheduled(cron = "0 * * * * ?") // 매분 확인
     public void noShowCheck() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime todayDate = LocalDateTime.of(now.getYear(), now.getMonth().minus(1).getValue(), now.getDayOfMonth(), 0, 0, 0);
+        LocalDateTime todayDate = LocalDateTime.of(now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), 0, 0, 0);
         LocalDateTime nextDate = LocalDateTime.of(now.getYear(), now.getMonth().getValue(), now.plusDays(1).getDayOfMonth(), 0, 0, 0);
 
-        // 현재 시각 한시간 전부터 현재 시각까지의 예약 리스트에서 예약이 끝난 상태인 것만 가져오기
+        // 하루동안의 현재 시각까지의 예약 리스트에서 예약이 끝난 상태인 것만 가져오기
         List<ReservationsDto> reservationsDtoList = reservationService.getReservationListByDateAndStatus(todayDate, nextDate, ReservationStatus.FINISHED);
         for(ReservationsDto reservationsDto: reservationsDtoList) {
             if(reservationsDto.getNoShowCheck() == false) { // 예약이 끝난 시간까지 노쇼가 안되어 있을 경우
                 memberService.addNoShowCnt(reservationsDto.getMember_sno());
-                log.info("member 의 noshow 개수 증가여부 = {}", memberService.findByStudentNo(reservationsDto.getMember_sno()).getNoshow());
                 reservationService.setNoShowStatus(reservationsDto.getReservation_id());
             }
         }
