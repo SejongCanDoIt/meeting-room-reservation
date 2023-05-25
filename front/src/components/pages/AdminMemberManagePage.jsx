@@ -83,6 +83,7 @@ export default function AdminMemberManagePage() {
                             <span>이름</span>
                             <span>전화번호</span>
                             <span>이메일</span>
+                            <span>예약 가능 횟수</span>
                             <span>노쇼 횟수</span>
                         </MemberListHeader>
                         {memberList.map(member => (
@@ -92,6 +93,7 @@ export default function AdminMemberManagePage() {
                                 <span>{member.name}</span>
                                 <span>{member.phoneNo}</span>
                                 <span>{member.email}</span>
+                                <span>{member.cnt}</span>
                                 <span>{member.noshow}</span>
                             </MemberRow>
                         ))}
@@ -162,7 +164,7 @@ const MemberList = styled.div`
 
 const MemberListHeader = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 2fr 2fr 1fr 0.7fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr;
     grid-gap: 10px;
     align-items: center;
     padding: 10px;
@@ -176,7 +178,7 @@ const MemberListHeader = styled.div`
 
 const MemberRow = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 2fr 2fr 1fr 0.7fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr;
     grid-gap: 10px;
     align-items: center;
     padding: 10px;
