@@ -29,7 +29,7 @@ function RoomListPage() {
             <BtnBox>
                 {
                     room.map((it, idx) => (
-                        <LinkStyle to={`/RoomInfo?room_id=${it.id}&location=${it.buildingName}`}><BtnStyle><h3>{it.buildingName}{it.name}호</h3></BtnStyle></LinkStyle>
+                        <LinkStyle to={`/RoomInfo?room_id=${it.id}&location=${it.buildingName}`}><BtnStyle><h3>{it.buildingName}{it.name}</h3></BtnStyle></LinkStyle>
                     ))
                 }
             </BtnBox>
