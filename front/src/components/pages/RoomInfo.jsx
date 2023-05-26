@@ -47,7 +47,7 @@ export default function RoomInfo() {
             {/* 회의실 이름 */}
             <ContentContainer>
                 <RoomName>
-                    <h2>AI센터 {serchParams.get('room_id')}호 회의실</h2>
+                    <h2>{serchParams.get('location')} {serchParams.get('room_id')}호 회의실</h2>
                     <LinkTag to={`/ChooseReservationPage?room_id=${serchParams.get('room_id')}`}><ReserveBtn>예약</ReserveBtn></LinkTag>
                 </RoomName>
                 {/* 보유편의 시설 */}

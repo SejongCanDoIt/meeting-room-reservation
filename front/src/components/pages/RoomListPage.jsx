@@ -1,15 +1,37 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 function RoomListPage() {
+    const [room, setRoom] = useState([]);
+
+    useEffect(() => {
+        console.log(room);
+    }, [room])
+
+    useEffect(() => {
+        axios.get('/room/list')
+            .then((res) => {
+                console.log(res.data);
+                setRoom((state) => res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
     return (
         <ChooseReservationContainer>
             <div>
                 <TitleH>회의실을 둘러보세요</TitleH>
             </div>
             <BtnBox>
-                <LinkStyle to={`/RoomInfo?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
-                <LinkStyle to={`/RoomInfo?room_id=${836}`}><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
+                {
+                    room.map((it, idx) => (
+                        <LinkStyle to={`/RoomInfo?room_id=${it.id}&location=${it.buildingName}`}><BtnStyle><h3>{it.buildingName}{it.name}호</h3></BtnStyle></LinkStyle>
+                    ))
+                }
             </BtnBox>
             <div>
                 <Ptag>선택시 다음 화면으로 넘어가요</Ptag>
