@@ -55,6 +55,7 @@ export default function AdminReservHistoryPage() {
     const timeTable = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
     const [selectedDay, dayDispatch] = useReducer(dayReducer, initialDay);
     const [reservedTime, setReservedTime] = useState([]);
+    const [reservations, setReservations] = useState([]);
     const [tmpMarks, setTmpMarks] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -118,6 +119,15 @@ export default function AdminReservHistoryPage() {
             month: selectedDay.month,
             day: selectedDay.date,
         }
+        axios.post('/reserve/get-reserve-list-all', { ...timeCheckInfo })
+            .then((res) => {
+                console.log(res.data);
+                setReservations(res.data);
+            })
+            .catch((err) => {
+                console.log("통신실패");
+            })
+
         axios.post('/reserve/today-time-check', { ...timeCheckInfo })
             .then((res) => {
                 console.log(res.data);
@@ -146,7 +156,40 @@ export default function AdminReservHistoryPage() {
                             </TimeBox>
                         </LeftInfo>
                         <RightInfo>
+                            {reservations.map(reservation => {
+                                const startDate = new Date(reservation.start);
+                                const endDate = new Date(reservation.end);
+                                const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes()}`;
+                                const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes()}`;
 
+                                let reservationStatus;
+                                switch (reservation.status) {
+                                    case "RESERVED":
+                                        reservationStatus = "예약됨";
+                                        break;
+                                    case "FINISHED":
+                                        reservationStatus = "종료됨";
+                                        break;
+                                    case "CANCELED":
+                                        reservationStatus = "취소됨";
+                                        break;
+                                    default:
+                                        reservationStatus = "상태 미지정";
+                                }
+
+                                return (
+                                    <ReservationItem>
+                                        <div>예약 종류: {reservation.regular ? "정기 예약" : "일반 예약"}</div>
+                                        <div>예약 ID: {reservation.reservation_id}</div>
+                                        <div>예약자 학번: {reservation.member_sno}</div>
+                                        <div>노쇼 여부: {reservation.noShowCheck ? "있음" : "없음"}</div>
+                                        <div>예약 시작 시간: {startString}</div>
+                                        <div>예약 종료 시간: {endString}</div>
+                                        <div>회의실 ID: {reservation.room_id}</div>
+                                        <div>예약 상태: {reservationStatus}</div>
+                                    </ReservationItem>
+                                );
+                            })}
                         </RightInfo>
                     </DayInfo>
                 </ReservationContainer>
@@ -238,4 +281,13 @@ const RightInfo = styled.div`
     padding: 20px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+`;
+
+const ReservationItem = styled.div`
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: white;
 `;
