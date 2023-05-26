@@ -10,7 +10,9 @@ import Snackbar from '@mui/material/Snackbar';
 function ChangePasswordPage() {
   const [newPassword, setNewPassword] = useState("");
   const [checkNewPassword, setCheckNewPassword] = useState("");
+  const [password, setPassword] = useState();
   const [isPasswordOk, setIsPasswordOk] = useState(false);
+  const [isPrevPasswordOk, setIsPrevPasswordOk] = useState(false);
   const [loginId, setLoginId] = useState("");
   const navigate = useNavigate();
 
@@ -36,10 +38,19 @@ function ChangePasswordPage() {
     }
   }, [isPasswordOk])
 
+  // 기존 비밀번호
+  const onPrevPasswordHandler = (e) => {
+    const password = e.target.value;
+    setPassword((state) => password)
+  }
+  
+  // 새 비밀번호
   const onPasswordHandler = (e) => {
     const password = e.target.value;
     setNewPassword((state) => password);
   };
+
+  // 새 비밀번호 확인
   const onCheckPasswordHandler = (e) => {
     const password = e.target.value; 
     setCheckNewPassword((state) => password);
@@ -48,9 +59,22 @@ function ChangePasswordPage() {
 
   const onPasswordSubmitHandler = (e) => {
     e.preventDefault();
-
-    newPassword === checkNewPassword ? requestChangePassword() : resetPassword();
+    checkPrevPassword();
   };
+
+  const checkPrevPassword = () => {
+    const loginInfo = {
+      sno: sessionStorage.getItem('LoginID'),
+      password: password,
+  }
+    axios.post("/auth/login", { ...loginInfo })
+      .then((res) => {
+        (newPassword === checkNewPassword) ? requestChangePassword() : resetPassword();
+      })
+      .catch((err) => {
+        alert("기존 비밀번호가 틀렸습니다.")
+      })
+  }
 
   const resetPassword = () => {
     alert("비밀번호 변경에 실패하였습니다. 비밀번호를 확인해주세요.")
@@ -81,6 +105,7 @@ function ChangePasswordPage() {
               variant="standard"
               type="password"
               sx={{ m: 1, width: "100%" }}
+              onChange={onPrevPasswordHandler}
             />
           </InputBox>
           <InputBox>
