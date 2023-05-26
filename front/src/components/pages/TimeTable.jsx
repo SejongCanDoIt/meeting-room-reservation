@@ -17,7 +17,6 @@ const TimeContainer = styled.div`
     width: 100%;
     max-width: 360px;
     justify-content: center;
-
     // background-color: gray;
 `
 
