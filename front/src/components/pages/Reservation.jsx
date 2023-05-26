@@ -417,7 +417,7 @@ export default function Reservation() {
 
         // 학생인 경우 2일전 예약 가능.
         if (authority === "UNI_STUDENT") {
-            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1)).format('MM-DD')) {
                 return true
             }
             

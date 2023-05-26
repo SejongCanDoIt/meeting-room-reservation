@@ -29,7 +29,7 @@ function SelectMeetingRoom() {
             <BtnBox>
                 {
                     room.map((it, idx) => (
-                        <LinkStyle to={`/choosereservationpage?room_id=${it.id}`}><BtnStyle><h3>{it.buildingName}{it.name}</h3></BtnStyle></LinkStyle>
+                        <LinkStyle to={`/choosereservationpage?room_id=${it.id}`}><BtnStyle><h3>{it.buildingName} <br/> {it.name}</h3></BtnStyle></LinkStyle>
                     ))
                 }
                 {/* <LinkStyle to={`/choosereservationpage?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
