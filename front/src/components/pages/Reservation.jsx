@@ -251,9 +251,9 @@ export default function Reservation() {
             day: selectedDay.date,
             roomId: searchParams.get('room_id')
         }
-        axios.post('/reserve/today-time-check', {...timeCheckInfo})
+        axios.post('/reserve/today-time-check-room', {...timeCheckInfo})
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 setReservedTime((state) => [...res.data]);
             })
             .catch((err) => {
