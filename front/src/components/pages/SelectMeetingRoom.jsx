@@ -1,7 +1,19 @@
+import axios from 'axios';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SelectMeetingRoom() {
+
+    useEffect(() => {
+        axios.get('/room/list')
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    })
     return (
         <ChooseReservationContainer>
             <div>

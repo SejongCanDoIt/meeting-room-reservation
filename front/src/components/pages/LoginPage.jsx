@@ -89,10 +89,12 @@ export default function LoginPage() {
         setOpen(false);
     };
 
+
     // 로그인 버튼이 눌렸을때 세션에 정보를 저장하고, /myPage로 라우팅
-    const onLoginButtonHandler = async () => {
+    const onLoginButtonHandler = async (e) => {
         handleClick();
-    
+        
+        e.preventDefault();
         const loginInfo = {
             sno: login.id,
             password: login.password,
@@ -119,7 +121,7 @@ export default function LoginPage() {
 
     return (
         <MainContainer>
-            <SubContainer>
+            <SubContainer onSubmit={onLoginButtonHandler}>
                 <InputContainer>
                     <InputBox>
                         {/* <Ptag>학번</Ptag> */}
@@ -132,7 +134,7 @@ export default function LoginPage() {
                         {/* <Input type="password" onChange={onLoginPasswordHandler}/> */}
                     </InputBox>
                 </InputContainer>
-                <LoginBtn onClick={onLoginButtonHandler}>로그인</LoginBtn>
+                <LoginBtn>로그인</LoginBtn>
             </SubContainer>
             {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
 
@@ -153,7 +155,7 @@ const MainContainer = styled.div`
     height: 100vh;
 `
 
-const SubContainer = styled.div`
+const SubContainer = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,7 +194,7 @@ const Input = styled.input`
 
 
 
-const LoginBtn = styled.div`
+const LoginBtn = styled.button`
     display: flex;
     justify-content: center;
 
