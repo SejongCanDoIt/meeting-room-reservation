@@ -43,6 +43,7 @@ export default function LoginPage() {
 
     const [login, loginDispatch] = useReducer(loginReducer, loginDefault);
     const [loginError, setLoginError] = useState(<></>);
+    const [open, setOpen] = useState(false);
     const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ export default function LoginPage() {
         })
     }
 
-    const [open, setOpen] = useState(false);
+    
 
     const handleClick = () => {
         setOpen(true);
@@ -201,7 +202,7 @@ const LoginBtn = styled.button`
 
     background-color: #A1203C;
     color: white;
-    font-size: 1.7em;
+    font-size: 25px;
     width: 80%;
     max-width: 500px;
 
