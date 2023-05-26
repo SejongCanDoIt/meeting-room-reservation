@@ -75,7 +75,7 @@ export default function ReservationInfo({subTitle, info, recentData}) {
         // 최근 예약 일 > 오늘 일 -> (최근 예약 일 - 오늘 일)
         if (recentDay > nowDay) {
             console.log('최근 예약 일 > 오늘 일');
-            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + dayList.indexOf(recentData.day));
+            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (recentDay - nowDay));
         }
     }
 
