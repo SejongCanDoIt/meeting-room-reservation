@@ -122,6 +122,7 @@ public class ReservationController {
     private void sendRegularEmail(@Login Member loginMember, @RequestParam("reservation_id") Long reservationId,
                                   @RequestParam("repeat_type") String repeatType, @RequestParam("repeat_count") int repeatCount) {
 
+        log.info("repeat_count ={}",repeatCount);
         // 해당 reservation 가져오기
         Reservation reservation = reservationService.getReservation(reservationId).get();
         String emailSubject = loginMember.getName()+"님의 정기예약이 완료되었습니다.";
@@ -137,8 +138,11 @@ public class ReservationController {
             repeat = repeatType;
         }
 
-        String emailText = "정기예약이 "+repeat+" "+repeatCount+"번으로 설정되었습니다. "
-                + "예약 시작일: "+ reservation.getStart() + ", 예약 종료일: "+ reservation.getEnd();
+        String emailText = "정기예약이 "+repeat+" "+repeatCount+"회로 설정되었습니다.\n"
+                + "예약 시작일: "+ reservation.getStart() +"\n"+
+                "예약 반복시간은"+reservation.getStart().getHour()+"시 "+reservation.getStart().getMinute()+"분부터 "
+                + reservation.getEnd().getHour()+"시"
+                +reservation.getEnd().getMinute()+ "입니다.";
 
         emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText);
     }
