@@ -86,6 +86,7 @@ const ContentBox = styled.div`
 
 export default function TodayReservationList() {
     const [cnt, setCnt] = useState(0);
+    const [roomCnt, setRoomCnt] = useState(0);
 
     useEffect(() => {
         createMonthReservedCount();
@@ -119,7 +120,15 @@ export default function TodayReservationList() {
             .catch((err) => {
                 console.log(err);
             })
-
+        
+        axios.get('/room/list')
+            .then((res) => {
+                setRoomCnt(res.data.length);
+                // console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
     return (
         <TodayContainer>
@@ -131,7 +140,7 @@ export default function TodayReservationList() {
                 </ContentBox>
                 <ContentBox>
                     <h2>현재 운영중인 회의실</h2>
-                    <TodayBox>AI센터에 2곳이 운영중에요.</TodayBox>
+                    <TodayBox>{roomCnt}곳이 운영중이에요</TodayBox>
                 </ContentBox>
             </ContentContainer>
         </TodayContainer>

@@ -59,6 +59,8 @@ const BtnBox = styled.div`
     justify-content: center;
     width: 100%;
     margin: 20px;
+
+    flex-wrap: wrap;
     // background-color: gray;
 `
 
