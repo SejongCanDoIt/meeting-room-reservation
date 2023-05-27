@@ -1,0 +1,27 @@
+
+r	java:S117v"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šæº©úÿÿÿÿ8¥»İº…1
+s	java:S117‚"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( Áñƒùÿÿÿÿ8§»İº…1
+ƒ
+java:S1488Œ"eImmediately return this expression instead of assigning it to the temporary variable "memberDtoList".(»ÉÕè8©»İº…1
+ƒ
+java:S1488’"eImmediately return this expression instead of assigning it to the temporary variable "memberDtoList".(ÿìĞÆ8ª»İº…1
+ˆ
+java:S1488›"eImmediately return this expression instead of assigning it to the temporary variable "memberDtoList".(Õ²ÏÁÿÿÿÿÿ8«»İº…1
+ƒ
+java:S1488¿"eImmediately return this expression instead of assigning it to the temporary variable "memberDtoList".(¥å•8îõÍº…1
+„
+java:S1488Å"fImmediately return this expression instead of assigning it to the temporary variable "sumOfNoShowCnt".(…Ş‚¦8ïõÍº…1
+‰
+java:S1488Ë"fImmediately return this expression instead of assigning it to the temporary variable "sumOfNoShowCnt".(ı×ü²øÿÿÿÿ8ïõÍº…1
+w
+java:S3655„"TCall "memberById.isPresent()" or "!memberById.isEmpty()" before accessing the value.(“êŸ³øÿÿÿÿ8×»İº…1
+v
+java:S3655x"TCall "memberById.isPresent()" or "!memberById.isEmpty()" before accessing the value.(“êŸ³øÿÿÿÿ8Ö»İº…1
+N
+java:S1602)",Remove useless curly braces around statement(îÍªíøÿÿÿÿ8İ»İº…1
+e
+java:S1612)"CReplace this lambda with method reference 'memberRepository::save'.(îÍªíøÿÿÿÿ8İ»İº…1
+U
+java:S1854†"7Remove this useless assignment to local variable "cnt".(Ìƒ¿Í8í»İº…1
+Y
+java:S1612“";Replace this lambda with method reference 'MemberDto::new'.(±áá8ô»İº…1

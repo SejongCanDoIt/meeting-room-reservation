@@ -1,63 +1,60 @@
+/*
 package sejong.reserve;
 
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import sejong.reserve.controller.ReservationController;
+import sejong.reserve.domain.Member;
+import sejong.reserve.domain.Reservation;
+import sejong.reserve.service.EmailService;
+import sejong.reserve.service.MemberService;
+import sejong.reserve.service.ReservationService;
 
-import javax.mail.internet.MimeMessage;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 
-public class MockMailSender implements JavaMailSender {
-    private List<String> requests = new ArrayList<>();
+@SpringBootTest
+public class EmailTest {
 
-    public List<String> getRequests() {
-        return requests;
+    @Autowired
+    private ReservationController reservationController;
+
+    @MockBean
+    private EmailService emailService;
+
+    @MockBean
+    private ReservationService reservationService;
+
+    @MockBean
+    private MemberService memberService;
+
+    @Test
+    public void testSendRegularEmail() {
+        Member loginMember = new Member();
+        loginMember.setEmail("wxyz0904@naver.com");
+        loginMember.setName("Test User");
+
+        Reservation reservation = new Reservation();
+        reservation.setStart(LocalDateTime.now());
+        reservation.setEnd(LocalDateTime.now().plusDays(7));
+
+        Mockito.when(memberService.getLoginMember()).thenReturn(loginMember);
+        Mockito.when(reservationService.getReservation(any(Long.class))).thenReturn(Optional.of(reservation));
+
+        emailController.sendRegularEmail(loginMember, 1L, "weekly", 3);
+
+        verify(emailService).sendSimpleMessage(
+                eq("wxyz0904@naver.com"),
+                eq("Test User님의 정기예약이 완료되었습니다."),
+                any(String.class)
+        );
     }
-
-    @Override
-    public void send(SimpleMailMessage... simpleMessages) throws MailException {
-        for (SimpleMailMessage simpleMessage : simpleMessages) {
-            requests.add(simpleMessage.getTo()[0]); // 수신자 메일 주소를 저장
-        }
-    }
-
-    @Override
-    public MimeMessage createMimeMessage() {
-        return null;
-    }
-
-    @Override
-    public MimeMessage createMimeMessage(InputStream contentStream) throws MailException {
-        return null;
-    }
-
-    @Override
-    public void send(MimeMessage mimeMessage) throws MailException {
-
-    }
-
-    @Override
-    public void send(MimeMessage... mimeMessages) throws MailException {
-
-    }
-
-    @Override
-    public void send(MimeMessagePreparator mimeMessagePreparator) throws MailException {
-
-    }
-
-    @Override
-    public void send(MimeMessagePreparator... mimeMessagePreparators) throws MailException {
-
-    }
-
-    @Override
-    public void send(SimpleMailMessage simpleMessage) throws MailException {
-
-    }
-
 }
+*/

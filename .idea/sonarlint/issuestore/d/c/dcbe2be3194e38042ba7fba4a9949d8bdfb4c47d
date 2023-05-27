@@ -1,0 +1,8 @@
+
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñá‹«ıÿÿÿÿ
+k	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉºÌşÿÿÿÿ
+g
+java:S1128"ERemove this unused import 'org.springframework.data.domain.Pageable'.(‡ë‚Öıÿÿÿÿ8œª—Å…1
+[
+java:S1128
+"9Remove this unused import 'sejong.reserve.domain.Member'.(Ğú˜ùÿÿÿÿ8œª—Å…1

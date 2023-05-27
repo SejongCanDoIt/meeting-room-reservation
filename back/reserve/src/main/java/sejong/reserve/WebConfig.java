@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/", "/auth/login",
                         "/auth/checkLogin",
                         "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**",
-                        "/room/list", "/room/detail/**",
+                        "/room/list", "/room/detail/**", "/notice/**",
                         "/reserve/today-reserve-cnt-all");
 
         registry.addInterceptor(new AdminCheckInterceptor())
@@ -39,7 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/", "/auth/login",
                         "/auth/checkLogin",
                         "/auth/logout", "/css/**", "/*.ico", "/error","/excel/**",
-                        "/member/**", "/reserve/**",
+                        "/member/**", "/reserve/**", "/notice/**",
                         "/room/list", "/room/detail/**");
     }
 

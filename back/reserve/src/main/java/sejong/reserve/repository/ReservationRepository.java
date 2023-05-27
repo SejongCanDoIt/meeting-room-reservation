@@ -1,11 +1,13 @@
 package sejong.reserve.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import sejong.reserve.domain.AuthState;
+import sejong.reserve.domain.Member;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.domain.ReservationStatus;
 
@@ -89,6 +91,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select count(r) from Reservation r where r.member.studentNo = :sno and r.status = :status")
     int getReserveCntBySno(@Param("sno")String sno, @Param("status") ReservationStatus status);
-
 
 }
