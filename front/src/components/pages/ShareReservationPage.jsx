@@ -34,7 +34,7 @@ function ShareReservationPage() {
             .then((res) => {
                 console.log(res);
                 setLoc(res.data.buildingName);
-                setRoomNumber(res.data.name);
+                setRoomNumber(res.data.name)
             })
             .catch((err) => {
                 console.log(err);
@@ -61,7 +61,7 @@ function ShareReservationPage() {
                             <li className="contents"><span>날짜</span> {serchParams.get('year')}년 {serchParams.get('month')}월 {serchParams.get('date')}일</li>
                             <li className="contents"><span>요일</span> {dayList[serchParams.get('day')]}요일</li>
                             <li className="contents"><span>시간</span> {serchParams.get('startTime')}시{serchParams.get('startMinute')}분 ~ {serchParams.get('endTime')}시{serchParams.get('endMinute')}분</li>
-                            <li className="contents"><span>장소</span> {loc} {roomNumber}호</li>
+                            <li className="contents"><span>장소</span> {loc} {roomNumber}</li>
                         </ul>
                         <CopyToClipboard text={url}>
                                 <ReserveBtn onClick={onLinkCopyHandler}>링크 복사하기</ReserveBtn>

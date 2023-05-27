@@ -13,7 +13,7 @@ export default function ShowRegularReservation() {
     }
     
     useEffect(() => {
-        axios.post('/reserve/email', null, {params: {reservation_id: serchParams.get('reservationId')}})
+        axios.post('/reserve/email-regular', null, {params: {reservation_id: serchParams.get('reservation_id'), repeat_type: serchParams.get('repeat_type'), repeat_count: serchParams.get('repeat_count')}})
             .then((res) => {
                 console.log('이메일 전송 요청');
             })

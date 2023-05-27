@@ -33,7 +33,7 @@ const initialTime = {
 
 // 정기예약 정보 초기값
 const initialRegular = {
-    dayWeekMonth: "일간",
+    dayWeekMonth: "daily",
     dayRepeat: 1,
     count: 1,
 }
@@ -385,13 +385,13 @@ export default function RegularReservations() {
     // 예약 버튼이 클릭되었을때.
     const onBtnClicked = () => {
         // 주간 정기예약
-        if (regularInfo.dayWeekMonth === "week") {
+        if (regularInfo.dayWeekMonth === "weekly") {
             for (let day=0 ; day <= regularInfo.count*7; day += 7) {
                 onWeekRegularHandler(day);
             }
         }
         // 월간 정기예약
-        else if (regularInfo.dayWeekMonth === "month") {
+        else if (regularInfo.dayWeekMonth === "monthly") {
             let yearR = selectedDay.year;
             let monthR = selectedDay.month;
             let dateR = selectedDay.date;
@@ -623,7 +623,8 @@ export default function RegularReservations() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roomId}})
             .then((res) => {
                 // alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/showregularreservation`)
+                const reservationId = res.data;
+                navigate(`/showregularreservation?reservation_id=${reservationId}&repeat_type=${regularInfo.dayWeekMonth}&repeat_count=${regularInfo.dayRepeat}`)
             })
             .catch((err) => {
                 alert(`${err.response.data.message}`);

@@ -6,9 +6,9 @@ export default function RegularOptions({month, date, isDayReservation, onRegular
             <h3>{month}월 {date}일부터</h3>
             <SeletedTagBox>
                 <SeletedTag name="regularType" id="regular" onChange={onRegularTypeHandler}>
-                    <option value="day">일간</option>
-                    <option value="week">주간</option>
-                    <option value="month">월간</option>
+                    <option value="daily">일간</option>
+                    <option value="weekly">주간</option>
+                    <option value="monthly">월간</option>
                 </SeletedTag>
             </SeletedTagBox>
             {
