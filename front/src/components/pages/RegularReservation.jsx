@@ -410,7 +410,7 @@ export default function RegularReservations() {
         }
         // 일간 정기예약
         else {
-            console.log("일간 정기예약");
+            console.log("일간 정기예약", regularInfo.dayRepeat);
             onRegularDayReservation(regularInfo.dayRepeat, regularInfo.count);
         }
     }
@@ -423,7 +423,7 @@ export default function RegularReservations() {
         const todayDay = selectedDay.day;
 
         let day = parseInt(dayRepeat);
-
+        console.log(regularInfo.dayRepeat);
         for (let i=0 ; i<=count ; i++) {
             if (i === 0) {
                 const selecDay = translateIntToString(todayYear, todayMonth, todayDate, todayDay);
@@ -623,7 +623,7 @@ export default function RegularReservations() {
             .then((res) => {
                 // alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
                 const reservationId = res.data;
-                navigate(`/showregularreservation?reservation_id=${reservationId}&repeat_type=${regularInfo.dayWeekMonth}&repeat_count=${regularInfo.dayRepeat}`)
+                navigate(`/showregularreservation?reservation_id=${reservationId}&repeat_type=${regularInfo.dayWeekMonth}&repeat_count=${regularInfo.count}`)
             })
             .catch((err) => {
                 alert(`${err.response.data.message}`);
@@ -697,7 +697,7 @@ export default function RegularReservations() {
     const onRegularTypeHandler = (e) => {
         const dayType = e.target.value;
         
-        dayType === "day" ? setIsDayReservation(true) : setIsDayReservation(false);
+        dayType === "daily" ? setIsDayReservation(true) : setIsDayReservation(false);
         
         regularDispatch({
             type: "R_TYPE",
@@ -708,6 +708,7 @@ export default function RegularReservations() {
     // 일간 정기예약시 n일을 가져오는 함수
     const onRegularDay = (e) => {
         const dayRepeat = e.target.value;
+        console.log(dayRepeat);
 
         regularDispatch({
             type: "REPEAT",
