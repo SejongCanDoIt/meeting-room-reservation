@@ -22,8 +22,6 @@ p
 @back/reserve/src/main/java/sejong/reserve/dto/ManagementDto.java,6\9\69f9320dd37c4545b26d67a208daf888aedd8e5e
 z
 Jback/reserve/src/main/java/sejong/reserve/controller/NoticeController.java,d\9\d9a64ceb8a7a9a3e45f7463fd3f379aa8b82dc56
-{
-Kback/reserve/src/main/java/sejong/reserve/service/EmailReminderService.java,e\1\e10d3c6be571b7eef703fa9ad83dd59b5c7e41e7
 l
 <back/reserve/src/main/java/sejong/reserve/domain/Member.java,b\b\bb69527011b7f607ca2ff190a1e5ce92bb432a0f
 G
@@ -44,14 +42,8 @@ y
 Iback/reserve/src/main/java/sejong/reserve/controller/ExcelController.java,3\d\3d7ea323fecb2bc8c2119841fc01664af2745d3a
 t
 Dback/reserve/src/main/java/sejong/reserve/service/MemberService.java,1\4\1410e27fdc2e822e1bad0c301913be6174005e72
-x
-Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
-q
-Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
 s
 Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
-s
-Cback/reserve/src/main/java/sejong/reserve/service/EmailService.java,2\1\211d191b0f5cd9839bb3c14c4b5354070b1a6077
 q
 Aback/reserve/src/main/java/sejong/reserve/domain/Reservation.java,9\5\955b62d91f075c100403d0acb3078b2bbfca390e
 q
@@ -60,5 +52,21 @@ Aback/reserve/src/main/java/sejong/reserve/dto/ReservationDto.java,a\f\af3306f2
 Oback/reserve/src/main/java/sejong/reserve/repository/ReservationRepository.java,d\c\dcbe2be3194e38042ba7fba4a9949d8bdfb4c47d
 y
 Iback/reserve/src/main/java/sejong/reserve/service/ReservationService.java,8\c\8caba592b04442a009b1cb844ad91abe403dd92c
+h
+8back/reserve/src/main/java/sejong/reserve/WebConfig.java,2\1\2160ffb53bc2795147f40acc716645f283d11f14
+{
+Kback/reserve/src/main/java/sejong/reserve/service/EmailReminderService.java,e\1\e10d3c6be571b7eef703fa9ad83dd59b5c7e41e7
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+x
+Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
+m
+=back/reserve/src/test/java/sejong/reserve/MockMailSender.java,2\a\2a942a5c8b0580c8ab20dd2648748286b59b8760
+v
+Fback/reserve/src/test/java/sejong/reserve/ReserveApplicationTests.java,8\f\8f37575a33a4814928fc3efe6a8ab70b99b2daaf
+q
+Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
+s
+Cback/reserve/src/main/java/sejong/reserve/service/EmailService.java,2\1\211d191b0f5cd9839bb3c14c4b5354070b1a6077
 
 Oback/reserve/src/main/java/sejong/reserve/controller/ReservationController.java,1\3\1373b1eb4f45c8945bdf28c50a05002054978f15
