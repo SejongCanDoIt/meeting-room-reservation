@@ -6,8 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sejong.reserve.domain.Admin;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.AdminDto;
 import sejong.reserve.dto.LoginDto;
+import sejong.reserve.service.AdminService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.web.SessionConst;
 import sejong.reserve.web.exception.NotLoginException;
@@ -22,18 +25,33 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class AuthController {
   private final MemberService memberService;
+  private final AdminService adminService;
 
   @PostMapping("/login")
   public ResponseEntity<?> login(
           @RequestBody LoginDto loginInfo,
           HttpServletResponse response,
           HttpSession session) throws Exception {
-    String student_no = loginInfo.getSno();
+    String loginId = loginInfo.getSno();
     String password = loginInfo.getPassword();
 
-    log.info("login sno = {}, password = {}", student_no, password);
+    log.info("login loginId = {}, password = {}", loginId, password);
 
-    Member member = memberService.findMemberForLogin(student_no, password);
+    if(loginId.equals(SessionConst.ADMIN_MEMBER)) { //
+      log.info("관리자 로그인 시도"); // 관리자 로그인인 경우
+      AdminDto admin = adminService.findAdminForLogin(loginId, password);
+      log.info("admin = {}", admin);
+      if(admin != null) {
+        session.setAttribute(SessionConst.LOGIN_MEMBER, admin);
+        return ResponseEntity.ok().build();
+      } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username or password is incorrect");
+      }
+    }
+
+
+    // 일반 사용자 로그인인 경우
+    Member member = memberService.findMemberForLogin(loginId, password);
 
 
     if (member != null) {
@@ -66,4 +84,6 @@ public class AuthController {
       return new ResponseEntity<>(member.getStudentNo(), HttpStatus.OK);
     }
   }
+
+
 }
