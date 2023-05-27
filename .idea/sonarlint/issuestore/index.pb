@@ -56,3 +56,17 @@ h
 8back/reserve/src/main/java/sejong/reserve/WebConfig.java,2\1\2160ffb53bc2795147f40acc716645f283d11f14
 {
 Kback/reserve/src/main/java/sejong/reserve/service/EmailReminderService.java,e\1\e10d3c6be571b7eef703fa9ad83dd59b5c7e41e7
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+x
+Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
+m
+=back/reserve/src/test/java/sejong/reserve/MockMailSender.java,2\a\2a942a5c8b0580c8ab20dd2648748286b59b8760
+v
+Fback/reserve/src/test/java/sejong/reserve/ReserveApplicationTests.java,8\f\8f37575a33a4814928fc3efe6a8ab70b99b2daaf
+q
+Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
+s
+Cback/reserve/src/main/java/sejong/reserve/service/EmailService.java,2\1\211d191b0f5cd9839bb3c14c4b5354070b1a6077
+
+Oback/reserve/src/main/java/sejong/reserve/controller/ReservationController.java,1\3\1373b1eb4f45c8945bdf28c50a05002054978f15
