@@ -98,7 +98,7 @@ export default function MyPage() {
             const date = parseInt(el.date);
             // console.log(moment(new Date(year, month, date)).format("YYYY-MM-DD"), moment(new Date()).format("YYYY-MM-DD"));
             if (moment(new Date(year, month, date)).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD") && !el.isExpire) {
-                message = `${el.buildingName} ${el.roomName}호 ${el.startHour}시${el.startMinute}분 ~ ${el.endHour}시${el.endMinute}분 오늘 예약이 있어요`;
+                message = `[${el.buildingName} ${el.roomName}] ${el.startHour}시${el.startMinute}분 ~ ${el.endHour}시${el.endMinute}분 오늘 예약이 있어요`;
             }
         }
         return message;
@@ -108,7 +108,7 @@ export default function MyPage() {
         let message = "최근 예약내역이 없습니다."
         for (let el of reserveList) {
             if (el.isExpire) {
-                return `${el.buildingName} ${el.roomName}호 ${el.year}년 ${el.month}월 ${el.date}일 ${el.day}요일 ${el.startHour}시${el.startMinute}분 ~ ${el.endHour}시${el.endMinute}분`;
+                return `[${el.buildingName} ${el.roomName}] ${el.year}년 ${el.month}월 ${el.date}일 ${el.day}요일 ${el.startHour}시${el.startMinute}분 ~ ${el.endHour}시${el.endMinute}분`;
             }
         }
         return message;

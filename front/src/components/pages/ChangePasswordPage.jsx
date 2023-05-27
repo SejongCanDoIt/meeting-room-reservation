@@ -170,7 +170,7 @@ const LoginBtn = styled.button`
 
     background-color: #A1203C;
     color: white;
-    font-size: 25px;
+    font-size: 23px;
     width: 80%;
     max-width: 500px;
 

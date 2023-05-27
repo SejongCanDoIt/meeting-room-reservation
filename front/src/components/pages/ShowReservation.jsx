@@ -58,10 +58,6 @@ export default function ShowReservation() {
             const isExpire = new Date(el.start) < new Date(); // 만료된 예약인지 확인.
             // console.log(isExpire);
             
-            const isNew = new Date(el.created_at) > new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay(), new Date().getHours(), new Date().getMinutes() - 3);
-            console.log(new Date(el.created_at));
-            console.log(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), new Date().getMinutes() - 3));
-            console.log(isNew);
 
             const info = {
                 reservationId: el.reservation_id,
@@ -74,6 +70,8 @@ export default function ShowReservation() {
                 endHour: endTime[0],
                 endMinute: endTime[1],
                 isExpire: isExpire,
+                buildingName: el.room_building_name,
+                roomName: el.room_name,
             }
             infoData.push(info);
             // console.log(info);
@@ -99,9 +97,9 @@ export default function ShowReservation() {
             </ProfileDiv>
             {reserveList.map((it, idx) => (
                 <ShowDiv key={idx} isExpire={it.isExpire}>
-                    {it.isExpire ? <Ptag isExpire={it.isExpire}>만료된 예약</Ptag> : <Ptag isExpire={it.isExpire}>예정된 예약</Ptag>}
+                    {it.isExpire ? <Ptag isExpire={it.isExpire}>만료된 예약: {it.buildingName} {it.roomName}</Ptag> : <Ptag isExpire={it.isExpire}>예정된 예약: {it.buildingName} {it.roomName}</Ptag>}
                     <ContentDiv>
-                        <ContentInfo>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}시{it.startMinute}분 ~ {it.endHour}시{it.endMinute}분</ContentInfo>
+                        <ContentInfo> {it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}시{it.startMinute}분 ~ {it.endHour}시{it.endMinute}분</ContentInfo>
                         {it.isExpire ? <></> : <ImgBox><ImgTag src={deleteIcon} alt="" onClick={() => onReservationDeleteHandler(it.reservationId)}/></ImgBox>}
                         
                     </ContentDiv>
@@ -130,8 +128,11 @@ const ContentDiv = styled.div`
     justify-content: center;
 `
 
-const ContentInfo = styled.h3`
+const ContentInfo = styled.div`
     width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+
 `
 
 const ImgBox = styled.div`
@@ -149,7 +150,7 @@ const ProfileDiv = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    // padding: 20px;
 
     border-bottom: 1px solid black;
 
@@ -167,7 +168,7 @@ const ShowDiv = styled.div`
     width: 100%;
     max-width: 500px;
     border-bottom: 1px solid black;
-    padding: 3px;
+    // padding: 3px;
     
     background-color: ${(props) => (props.isExpire ? "#FAFAFA" : "#FFFFFF")};
     color: ${(props) => (props.isExpire ? "#dee2e6" : "black")};
@@ -178,6 +179,6 @@ const ShowDiv = styled.div`
 const Ptag = styled.p`
     width: 100%;
     text-align: left;
-    margin-left: 10px;
+    // margin-left: 10px;
     color: ${(props) => (props.isExpire ? "#dee2e6" : "#838383")};
 `

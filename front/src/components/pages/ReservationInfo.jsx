@@ -44,7 +44,7 @@ const MessageInfo = styled.div`
     width: 80%;
 
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
     // background-color: red;
 `
