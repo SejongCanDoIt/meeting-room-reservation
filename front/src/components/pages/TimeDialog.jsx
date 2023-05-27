@@ -5,12 +5,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TimeSlider from "./TimeSlider";
 import TimeSelect from "./TimeSelect";
+import TimeComponent from "./TimeComponent";
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function TimeDialog({selectType, onTimeSelectHandler}) {
   const [open, setOpen] = useState(false);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
+  const [morning, setMorning] = useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,14 +21,19 @@ export default function TimeDialog({selectType, onTimeSelectHandler}) {
 
   const handleClose = () => {
     setOpen(false);
-    onTimeSelectHandler(hour, minute);
+    onTimeSelectHandler(morning, hour, minute);
   };
 
+  const selectedMorningTime = (isMorning) => {
+    isMorning === "오전" ? setMorning(true) : setMorning(false);
+  }
   const selectedHourTime = (hour) => {
-    setHour(hour);
+    const time = parseInt(hour);
+    setHour(time);
   }
   const selectedMinuteTime = (minute) => {
-    setMinute(minute);
+    const time = parseInt(minute);
+    setMinute(time);
   }
 
   return (
@@ -45,8 +53,9 @@ export default function TimeDialog({selectType, onTimeSelectHandler}) {
           {selectType}
         </DialogTitle>
         <DialogContent>
-          <TimeSlider desc="시간을 선택해주세요" maxValue={23} selectHandler = {selectedHourTime}/>
-          <TimeSlider desc="분을 선택해주세요" maxValue={59} selectHandler = {selectedMinuteTime}/>
+          <TimeComponent handleClose={handleClose} selectMorningHandler={selectedMorningTime} selectHourHandler={selectedHourTime} selectMinuteHandler={selectedMinuteTime}/>
+          {/* <TimeSlider desc="시간을 선택해주세요" maxValue={23} selectHandler = {selectedHourTime}/>
+          <TimeSlider desc="분을 선택해주세요" maxValue={59} selectHandler = {selectedMinuteTime}/> */}
           {/* <DialogContentText id="alert-dialog-description">
             Let Google help apps determine location. This means sending anonymous
             location data to Google, even when no apps are running.
