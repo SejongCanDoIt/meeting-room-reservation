@@ -411,7 +411,6 @@ export default function RegularReservations() {
         // 일간 정기예약
         else {
             console.log("일간 정기예약");
-            console.log(regularInfo);
             onRegularDayReservation(regularInfo.dayRepeat, regularInfo.count);
         }
     }
@@ -428,14 +427,14 @@ export default function RegularReservations() {
         for (let i=0 ; i<=count ; i++) {
             if (i === 0) {
                 const selecDay = translateIntToString(todayYear, todayMonth, todayDate, todayDay);
-                
                 makeReservation(selecDay.year, selecDay.month, selecDay.date, todayDay, selecDay.startTime, selecDay.startMinute, selecDay.endTime, selecDay.endMinute);
                 todayDate += day
             }
             else {
-                const dayRegular = new Date(todayYear, todayMonth, todayDate);
+                const dayRegular = new Date(todayYear, todayMonth-1, todayDate);
+                console.log(dayRegular);
                 const yearString = dayRegular.getFullYear().toString();
-                const monthString = (dayRegular.getMonth() < 10) ? "0" + (dayRegular.getMonth()).toString() : (dayRegular.getMonth()).toString();
+                const monthString = (dayRegular.getMonth() + 1 < 10) ? "0" + (dayRegular.getMonth()+1).toString() : (dayRegular.getMonth()+1).toString();
                 const dateString = (dayRegular.getDate()) < 10 ? "0" + dayRegular.getDate().toString() : dayRegular.getDate().toString();
                 const dayString = dayRegular.getDay();
                 const startTimeR = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
