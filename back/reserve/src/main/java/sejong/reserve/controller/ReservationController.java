@@ -96,7 +96,7 @@ public class ReservationController {
 
     private static void checkStartEnd(LocalDateTime start, LocalDateTime end) {
         if(start.isAfter(end)) {
-            throw new NotAvailableReservedException("예약의 시작시간은 끝 시간 보다 앞서야 합니다");
+            throw new NotAvailableReservedException("예약의 시작 시간은 끝 시간 보다 앞서야 합니다");
         }
     }
 
