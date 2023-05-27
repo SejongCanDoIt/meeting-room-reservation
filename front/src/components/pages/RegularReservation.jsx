@@ -637,30 +637,58 @@ export default function RegularReservations() {
     };
 
     // 예약 시작시간
-    const onStartTimeSelectHandler = (hour, minute) => {
-        console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
-        // const start = parseInt(e.target.value);
-        timeDispatch({
-            type: "START_TIME",
-            time: hour,
-        })
-        timeDispatch({
-            type: "START_MINUTE",
-            minute: minute,
-        })
+    const onStartTimeSelectHandler = (morning, hour, minute) => {
+        if (morning) {
+            console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
+        else {
+            console.log(`선택된 시작시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour+12,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
     }
     // 예약 종료시간
-    const onEndTimeSelectHandler = (hour, minute) => {
-        console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
-        // const start = parseInt(e.target.value);
-        timeDispatch({
-            type: "END_TIME",
-            time: hour,
-        })
-        timeDispatch({
-            type: "END_MINUTE",
-            minute: minute,
-        })
+    const onEndTimeSelectHandler = (morning, hour, minute) => {
+        if (morning) {
+            console.log(`선택된 종료시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
+        else {
+            console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour + 12,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
     }
 
 

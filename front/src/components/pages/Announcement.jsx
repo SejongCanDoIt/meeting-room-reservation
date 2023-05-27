@@ -3,8 +3,10 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import { useState, useEffect, useReducer } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from "styled-components";
+import axios from 'axios';
 
 const AnnounceDiv = styled.div`
     display: flex;
@@ -32,6 +34,17 @@ const AccDiv = styled.div`
 `
 
 export default function Announcement() {
+
+    useEffect(() => {
+        axios.get('/notice/list')
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
     return (
         <div>
             <AnnounceDiv>

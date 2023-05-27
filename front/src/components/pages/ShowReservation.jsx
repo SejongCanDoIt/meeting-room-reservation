@@ -101,7 +101,7 @@ export default function ShowReservation() {
                 <ShowDiv key={idx} isExpire={it.isExpire}>
                     {it.isExpire ? <Ptag isExpire={it.isExpire}>만료된 예약</Ptag> : <Ptag isExpire={it.isExpire}>예정된 예약</Ptag>}
                     <ContentDiv>
-                        <ContentInfo>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}:{it.startMinute}시 ~ {it.endHour}:{it.endMinute}시</ContentInfo>
+                        <ContentInfo>{it.year}년 {it.month}월 {it.date}일 {it.day}요일<br/> {it.startHour}시{it.startMinute}분 ~ {it.endHour}시{it.endMinute}분</ContentInfo>
                         {it.isExpire ? <></> : <ImgBox><ImgTag src={deleteIcon} alt="" onClick={() => onReservationDeleteHandler(it.reservationId)}/></ImgBox>}
                         
                     </ContentDiv>
