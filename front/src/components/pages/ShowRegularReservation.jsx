@@ -1,14 +1,26 @@
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom"
-
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 export default function ShowRegularReservation() {
     const location = useLocation();
+    const [serchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const onLinkCopyHandler = () => {
         navigate('/show', {replace: true});
     }
+    
+    useEffect(() => {
+        axios.post('/reserve/email', null, {params: {reservation_id: serchParams.get('reservationId')}})
+            .then((res) => {
+                console.log('이메일 전송 요청');
+            })
+            .catch((err) => {
+                console.log("이메일 전송 요청 실패");
+            })
+    }, []);
     
     return (
         <div id="shareReservationPageContainer">
