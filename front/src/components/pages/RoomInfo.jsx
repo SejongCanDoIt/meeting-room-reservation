@@ -23,6 +23,7 @@ export default function RoomInfo() {
         axios.get(`/room/detail/${serchParams.get('room_id')}`) 
             .then((res) => {
                 const data = res.data;
+                console.log(data);
                 const roomData = {
                     "bim_projector": data.bim_projector,
                     "board": data.board,
@@ -30,6 +31,7 @@ export default function RoomInfo() {
                     "com": data.com,
                     "tv": data.tv,
                     "wifi": data.wifi,
+                    "picture": data.picture.length ? data.picture : "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
                 }
                 setRoomInfoData((state) => roomData);
             })
@@ -42,7 +44,7 @@ export default function RoomInfo() {
         <RoomInfoContainer>
             {/* 회의실 사진 */}
             <ImgContainer>
-                <ImgStlye src="https://images.unsplash.com/photo-1503423571797-2d2bb372094a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80" alt="" />
+                <ImgStlye src={roomInfoData.picture} alt="" />
             </ImgContainer>
             {/* 회의실 이름 */}
             <ContentContainer>
@@ -143,8 +145,10 @@ const ImgStlye = styled.img`
 
     z-index: -1;
 
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
+
+    // border-bottom-right-radius: 10px;
+    // border-bottom-left-radius: 10px;
     // background-color: gray;
 
     
