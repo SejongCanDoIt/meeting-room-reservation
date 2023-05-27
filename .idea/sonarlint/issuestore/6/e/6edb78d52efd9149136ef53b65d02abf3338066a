@@ -1,0 +1,17 @@
+
+h	java:S116"SRename this field "univ_cnt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ó§ú÷
+m	java:S116"SRename this field "post_cnt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‘ºĞúÿÿÿÿ
+o	java:S116"URename this field "office_cnt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨ÂÎÛûÿÿÿÿ
+l	java:S116"RRename this field "pro_cnt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉÜ€Öúÿÿÿÿ
+r	java:S116"XRename this field "univ_hour_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€Û§ğùÿÿÿÿ
+r	java:S116"XRename this field "post_hour_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óùÔ‰şÿÿÿÿ
+t	java:S116!"ZRename this field "office_hour_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾®¤ıÿÿÿÿ
+q	java:S116#"WRename this field "pro_hour_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½É‰¸úÿÿÿÿ
+l	java:S116'"WRename this field "univ_day_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ·¯
+q	java:S116)"WRename this field "post_day_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥É­Áüÿÿÿÿ
+m	java:S116+"YRename this field "office_day_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßïİR
+k	java:S116-"VRename this field "pro_day_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ĞúŒ
+r	java:S1161"XRename this field "univ_week_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®©üÿÿÿÿÿ
+m	java:S1163"XRename this field "post_week_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ì ïÄ
+t	java:S1165"ZRename this field "office_week_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡¹¸Şúÿÿÿÿ
+l	java:S1167"WRename this field "pro_week_gap" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îšß

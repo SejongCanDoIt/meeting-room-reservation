@@ -1,0 +1,50 @@
+
+f	java:S117/"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹à®Ç
+f	java:S117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹±¢Ù
+k	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸ËÛƒıÿÿÿÿ
+k	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø‡µôûÿÿÿÿ
+f	java:S117_"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°À¿È
+f	java:S117d"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßœ˜
+e	java:S117n"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼ºÓ7
+e	java:S117v"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥¾è6
+g	java:S117…"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ä¤ì©
+l	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…—Ñÿşÿÿÿÿ
+g	java:S117æ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ù²¾ê
+l	java:S117ø"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªÿîüÿÿÿÿ
+l	java:S117ı"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï™Ÿ­ùÿÿÿÿ
+…
+java:S1488F"jImmediately return this expression instead of assigning it to the temporary variable "reservationDtoList".(Ü¸ÜÓøÿÿÿÿ
+~
+java:S1488L"cImmediately return this expression instead of assigning it to the temporary variable "reservation".(÷¨·©ÿÿÿÿÿ
+ƒ
+java:S1488¯"gImmediately return this expression instead of assigning it to the temporary variable "todayReserveCnt".(±³åƒùÿÿÿÿ
+~
+java:S1488º"gImmediately return this expression instead of assigning it to the temporary variable "todayReserveCnt".(ŒÃ¹Í
+†
+java:S1488è"jImmediately return this expression instead of assigning it to the temporary variable "reservationDtoList".(Ü¸ÜÓøÿÿÿÿ
+†
+java:S1488î"jImmediately return this expression instead of assigning it to the temporary variable "reservationDtoList".(Ü¸ÜÓøÿÿÿÿ
+†
+java:S1488ô"jImmediately return this expression instead of assigning it to the temporary variable "reservationDtoList".(Ü¸ÜÓøÿÿÿÿ
+†
+java:S1488ÿ"jImmediately return this expression instead of assigning it to the temporary variable "reservationDtoList".(Ü¸ÜÓøÿÿÿÿ
+ƒ
+java:S1488„"eImmediately return this expression instead of assigning it to the temporary variable "reserveCntAll".(·§¢»8ÏÛùÄ…1
+‹
+java:S1488‰"mImmediately return this expression instead of assigning it to the temporary variable "reserveCntByAuthority".(Š˜İ8ĞÛùÄ…1
+‹
+java:S1488"mImmediately return this expression instead of assigning it to the temporary variable "reserveCntByAuthority".(¢›ê±8ĞÛùÄ…1
+
+java:S1488µ"kImmediately return this expression instead of assigning it to the temporary variable "reservationsDtoList".(Í¸ìîÿÿÿÿÿ8ĞÛùÄ…1
+n
+java:S3655¼"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ËÇ‹8¤İùÄ…1
+m
+java:S3655"VCall "reservation.isPresent()" or "!reservation.isEmpty()" before accessing the value.(½Êì‹
+f
+java:S3655ù"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¡²äq
+l
+java:S3655g"VCall "reservation.isPresent()" or "!reservation.isEmpty()" before accessing the value.(½Êì‹
+W
+java:S1126T"AReplace this if-then-else statement by a single return statement.(ÚÁÁÀ
+U
+java:S1854Á"9Remove this useless assignment to local variable "today".(¡¢µüÿÿÿÿ
