@@ -62,6 +62,8 @@ public class ReservationController {
             throw new NotAvailableReservedException("학부생은 정기예약을 진행할 수 없습니다.");
         }
 
+        // 시작 시간이 끝 시간 보다 앞인지?
+        checkStartEnd(start, end);
         // 정기 및 일반 예약에 대한 달이 적합한지?
         log.info("checkStateLimitation 실행 : 정기 및 일반 예약에 대한 달이 적합한지?");
         checkStateLimitation(start, authority);
@@ -74,10 +76,11 @@ public class ReservationController {
         // 예약 시간 gap 이 권한에 적합한지?
         log.info("checkTimeGap:  예약 시간 gap 이 권한에 적합한지?");
         checkTimeGap(start, end, authority);
+        // 예약이 다음날로 넘어가는지?
+        checkIsNextDay(start, end);
 
         // 예약 저장
         Room room = roomService.detail(room_id);
-//        log.info("room = {}", room);
         Reservation reservation = Reservation.createReservation(reservationDto, loginMember, room);
         log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
@@ -89,6 +92,21 @@ public class ReservationController {
         log.info("요청 예약 끝 시각 = {}", reservation.getEnd());
 
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
+    }
+
+    private static void checkStartEnd(LocalDateTime start, LocalDateTime end) {
+        if(start.isAfter(end)) {
+            throw new NotAvailableReservedException("예약의 시작시간은 끝 시간 보다 앞서야 합니다");
+        }
+    }
+
+    private static void checkIsNextDay(LocalDateTime start, LocalDateTime end) {
+        log.info("start.getDayOfMonth() = {}", start.getDayOfMonth());
+        log.info("end.getDayOfMonth() = {}", end.getDayOfMonth());
+
+        if(end.getDayOfMonth() > start.getDayOfMonth()) {
+            throw new NotAvailableReservedException("예약은 오늘 날짜 안에서만 가능합니다.");
+        }
     }
 
     @PostMapping("/email")
