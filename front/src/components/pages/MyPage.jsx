@@ -1,6 +1,7 @@
 import MainPageMenu from "./MainPageMenu";
 import ReservationInfo from "./ReservationInfo";
 import user from "../../assets/user.png";
+import sejongLogo from "../../assets/sejongLogo.png";
 import search from "../../assets/search-interface-symbol.png";
 import moment from "moment";
 import calendar from "../../assets/calendar.png";
@@ -139,7 +140,7 @@ export default function MyPage() {
     return (
         <MainPageContainer>
             <ProfileDiv>
-                <UserIcon src={user} alt="" />
+                <UserIcon src={sejongLogo} alt="" />
                 <IntroBox>
                     <Intro>{loginId}님</Intro>
                     <div>
