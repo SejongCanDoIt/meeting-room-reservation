@@ -77,18 +77,27 @@ public class AuthController {
   public ResponseEntity<String> checkLogin(HttpSession session) throws Exception {
     log.info("checkLogin-test");
 
-    if (session instanceof AdminDto) {
+    Object sessionAttribute = session.getAttribute(SessionConst.LOGIN_MEMBER);
+//    log.info("session member instance = {}", sessionAttribute instanceof Member);
+//    log.info("session admin instance = {}", sessionAttribute instanceof AdminDto);
+
+    if (sessionAttribute instanceof AdminDto) {
       AdminDto admin = (AdminDto) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//      log.info("checkLogin session = {}", admin);
       if (admin == null) {
         throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
       } else {
+        log.info("admin login success");
         return new ResponseEntity<>(admin.getLoginId(), HttpStatus.OK);
       }
-    } else if (session instanceof Member) {
+    } else if (sessionAttribute instanceof Member) {
       Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//      log.info("checkLogin session = {}", member);
+
       if (member == null) {
         throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
       } else {
+        log.info("member login success");
         return new ResponseEntity<>(member.getStudentNo(), HttpStatus.OK);
       }
     } else{

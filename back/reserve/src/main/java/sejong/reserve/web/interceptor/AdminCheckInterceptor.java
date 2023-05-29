@@ -19,8 +19,9 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
         log.info("관리자 인증 실행 = {}", requestURI);
 
         HttpSession session = request.getSession();
+        Object sessionAttribute = session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        if(session instanceof AdminDto){
+        if(sessionAttribute instanceof AdminDto){
             AdminDto admin = (AdminDto) session.getAttribute(SessionConst.LOGIN_MEMBER);
             if(!admin.getLoginId().equals(SessionConst.ADMIN_MEMBER)) {
                 log.info("미인증 관리자 사용자 요청");
@@ -29,7 +30,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
                 response.sendError(HttpStatus.UNAUTHORIZED.value());
                 return false;
             }
-        } else if(session instanceof Member){
+        } else if(sessionAttribute instanceof Member){
             if(session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
                 log.info("관리자가 아닌 사용자의 관리자 요청");
                 response.sendError(HttpStatus.UNAUTHORIZED.value());
