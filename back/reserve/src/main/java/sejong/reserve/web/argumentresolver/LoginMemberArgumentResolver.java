@@ -6,6 +6,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import sejong.reserve.domain.Admin;
 import sejong.reserve.domain.Member;
 import sejong.reserve.web.SessionConst;
 
@@ -20,7 +21,8 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
 
         boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
-        return hasLoginAnnotation && hasMemberType;
+        boolean hasAdminType = Admin.class.isAssignableFrom(parameter.getParameterType());
+        return hasLoginAnnotation && hasMemberType || hasLoginAnnotation && hasAdminType;
     }
 
     @Override

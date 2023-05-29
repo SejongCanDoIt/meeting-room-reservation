@@ -1,16 +1,29 @@
 import styled from "styled-components";
 
-export default function RegularOptions({month, date, onRegularTypeHandler, onRegularCountHandler}) {
+export default function RegularOptions({month, date, isDayReservation, onRegularDay, onRegularTypeHandler, onRegularCountHandler}) {
     return (
         <RegularContainer>
             <h3>{month}월 {date}일부터</h3>
             <SeletedTagBox>
                 <SeletedTag name="regularType" id="regular" onChange={onRegularTypeHandler}>
-                    <option value="day">일간</option>
-                    <option value="week">주간</option>
-                    <option value="month">월간</option>
+                    <option value="daily">일간</option>
+                    <option value="weekly">주간</option>
+                    <option value="monthly">월간</option>
                 </SeletedTag>
             </SeletedTagBox>
+            {
+                isDayReservation ? 
+                <SeletedTagBox>
+                    <SeletedTag name="times" id="times" onChange={onRegularDay}>
+                        <option value="1">1일</option>
+                        <option value="2">2일</option>
+                        <option value="3">3일</option>
+                        <option value="4">4일</option>
+                        <option value="5">5일</option>
+                    </SeletedTag>
+                </SeletedTagBox> :
+                <></>
+            }
             <SeletedTagBox>
                 <SeletedTag name="times" id="times" onChange={onRegularCountHandler}>
                     <option value="1">1회</option>
@@ -43,7 +56,7 @@ const SeletedTagBox = styled.div`
     justify-content: flex-end;
     align-items: center;
 
-    width: 100%;
+    width: 10%;
 
     flex: 0.5;
     

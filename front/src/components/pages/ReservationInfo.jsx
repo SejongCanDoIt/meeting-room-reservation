@@ -44,7 +44,7 @@ const MessageInfo = styled.div`
     width: 80%;
 
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
     // background-color: red;
 `
@@ -70,12 +70,12 @@ export default function ReservationInfo({subTitle, info, recentData}) {
         // 최근 예약 일 < 오늘 일 -> (7 - (오늘 일 - 최근 예약 일)) % 7
         if (recentDay < nowDay) {
             console.log('최근 예약 일 < 오늘 일');
-            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (new Date().getDate() - recentData.date) + 1);
+            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7 - (nowDay - recentDay));
         }
         // 최근 예약 일 > 오늘 일 -> (최근 예약 일 - 오늘 일)
         if (recentDay > nowDay) {
             console.log('최근 예약 일 > 오늘 일');
-            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + dayList.indexOf(recentData.day));
+            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (recentDay - nowDay));
         }
     }
 

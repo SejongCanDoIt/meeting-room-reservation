@@ -1,10 +1,13 @@
 package sejong.reserve.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import sejong.reserve.domain.AuthState;
+import sejong.reserve.domain.Member;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.domain.ReservationStatus;
 
@@ -42,9 +45,13 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> getStatusList(@Param("studentNo") String studentNo, @Param("status") ReservationStatus status);
 
     @Query("select r from Reservation r where r.start >= :todayStart and r.end <= :todayEnd and r.room.id =:roomId")
+    List<Reservation> getTodayTimeListRoom(@Param("todayStart")LocalDateTime todayStart,
+                                           @Param("todayEnd")LocalDateTime todayEnd,
+                                           @Param("roomId")Long roomId);
+
+    @Query("select r from Reservation r where r.start >= :todayStart and r.end <= :todayEnd")
     List<Reservation> getTodayTimeList(@Param("todayStart")LocalDateTime todayStart,
-                                       @Param("todayEnd")LocalDateTime todayEnd,
-                                       @Param("roomId")Long roomId);
+                                       @Param("todayEnd")LocalDateTime todayEnd);
 
     @Query("select count(r) from Reservation r where r.start >= :todayStart and r.end <= :todayEnd and r.room.id = :roomId")
     int getTodayReserveCntByRoom(
@@ -75,4 +82,16 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Modifying
     @Query("update Reservation r set r.reminderSent = true where r.id = :id")
     void setReminderSent(@Param("id") Long id);
+
+    @Query("select count(r) from Reservation r where r.status = :status")
+    int getReserveCntAll(@Param("status") ReservationStatus status);
+
+    @Query("select count(r) from Reservation r where r.member.authority = :authority and r.status = :status")
+    int getReserveCntByAuthority(@Param("authority")AuthState authority, @Param("status") ReservationStatus status);
+
+    @Query("select count(r) from Reservation r where r.member.studentNo = :sno and r.status = :status")
+    int getReserveCntBySno(@Param("sno")String sno, @Param("status") ReservationStatus status);
+
+
+
 }

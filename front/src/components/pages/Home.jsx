@@ -9,7 +9,7 @@ function Home() {
 
     const [authorization, setAuthorization] = useState(sessionStorage.getItem('Authorization'));
     const [loginId, setLoginId] = useState(sessionStorage.getItem('LoginID'));
-
+    
     // login이 되어있는지 확인
     useEffect(() => {
         // 서버로부터 로그인 여부 확인

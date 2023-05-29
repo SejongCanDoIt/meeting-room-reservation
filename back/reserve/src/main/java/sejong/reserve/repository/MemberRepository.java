@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
 
 import javax.persistence.EntityManager;
@@ -22,9 +23,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("delete from Member m where m.studentNo = :studentNo")
     void deleteByStudentNo(@Param("studentNo") String studentNo);
 
-//    @Query("update Member m set m.password = :newPassword where m.studentNo = :studentNo")
-//    void updatePasswordByStudentNo(@Param("studentNo") String studentNo, @Param("newPassword") String newPassword);
-
     @Query("select substring(m.phoneNo, length(m.phoneNo) - 3) from Member m where m.studentNo = :studentNo")
     String findPhoneNoByStudentNo(@Param("studentNo") String studentNo);
 
@@ -39,5 +37,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query(value = "select m from Member m where m.noshow >= :noShow")
     List<Member> findMemberByNoShow(@Param("noShow") int noShow);
+
+    @Query(value = "select m from Member m where m.authority >= :authority")
+    List<Member> findMemberByAuthState(@Param("authority")AuthState authority);
+
+    @Query(value = "select sum(m.noshow) from Member m where m.authority >= :authority")
+    Integer sumOfNoShowCntByAuthState(@Param("authority")AuthState authority);
+    @Query(value = "select sum(m.noshow) from Member m")
+    Integer sumOfNoShowCntAll();
 
 }

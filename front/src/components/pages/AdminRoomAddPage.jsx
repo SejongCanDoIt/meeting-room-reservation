@@ -4,11 +4,24 @@ import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 import axios from 'axios'
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/lab/Alert';
+import monitor from "../../assets/monitor.png";
+import wifi from "../../assets/wifi2.png";
+import whiteboard from "../../assets/blackboard.png";
+import computer from "../../assets/computer.png";
+import projector from "../../assets/projector.png";
+import chair from "../../assets/office-chair.png";
 
 export default function AdminRoomAddPage() {
+    // 스낵바 관련
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
     const navigate = useNavigate();
-    const [roomId, setRoomId] = useState();
+    // 회의실 정보 관련
     const [roomName, setRoomName] = useState('');
+    const [roomImage, setRoomImage] = useState('');
     const [roomInfo, setRoomInfo] = useState('');
     const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({
@@ -19,16 +32,30 @@ export default function AdminRoomAddPage() {
         bim_projector: 0,
         com: 0,
     });
-    const [roomImage, setRoomImage] = useState('');
 
+    // 스낵바 관련
+    const handleClickSnackbar = (message, severity) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    // 회의실 추가 관련
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const dataToSend = {
-            id: roomId,
             name: roomName,
             info: roomInfo,
-            building_name: roomBuilding,
+            buildingName: roomBuilding,
             ...roomFacilities,
             empty: true,
             picture: roomImage,
@@ -38,10 +65,12 @@ export default function AdminRoomAddPage() {
 
         try {
             await axios.post(`/room/insert`, dataToSend);
-            alert("회의실 정보가 성공적으로 추가되었습니다.");
-            navigate('/AdminRoomManagePage');
+            handleClickSnackbar('회의실 추가가 완료되었습니다', 'success');
+            setTimeout(() => {
+                navigate('/AdminRoomManagePage');
+            }, 2000); // 2초의 딜레이를 준 후 페이지 이동
         } catch (error) {
-            console.error("회의실 정보 추가에 실패하였습니다.", error);
+            console.error("회의실 추가에 실패하였습니다.", error);
         }
     };
 
@@ -64,16 +93,11 @@ export default function AdminRoomAddPage() {
                         <RoomInfo>
                             <LeftInfo>
                                 <NameBlock>
-                                    <StyledH2>회의실 이름과 ID</StyledH2>
+                                    <StyledH2>회의실 이름</StyledH2>
                                     <input
                                         type="text"
                                         value={roomName}
                                         onChange={(e) => setRoomName(e.target.value)}
-                                    />
-                                    <input
-                                        type="number"
-                                        value={roomId}
-                                        onChange={(e) => setRoomId(parseInt(e.target.value))}
                                     />
                                     <hr></hr>
                                 </NameBlock>
@@ -125,7 +149,7 @@ export default function AdminRoomAddPage() {
                                 </ButtonContainer>
                                 <FacilitiesList>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" />
+                                        <FacilityIcon src={chair} alt="의자 아이콘" />
                                         <select
                                             value={roomFacilities.cap}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, cap: parseInt(e.target.value) }))}
@@ -144,27 +168,29 @@ export default function AdminRoomAddPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" />
+                                        <FacilityIcon src={wifi} alt="와이파이 아이콘" />
                                         <select
                                             value={roomFacilities.wifi}
-                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, wifi: parseInt(e.target.value) }))}
+                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, wifi: e.target.value }))}
                                         >
-                                            <option value={0}>없음</option>
-                                            <option value={1}>있음</option>
+                                            <option value={false}>없음</option>
+                                            <option value={true}>있음</option>
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" />
+                                        <FacilityIcon src={whiteboard} alt="화이트보드 아이콘" />
                                         <select
                                             value={roomFacilities.board}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, board: parseInt(e.target.value) }))}
                                         >
-                                            <option value={0}>없음</option>
-                                            <option value={1}>있음</option>
+                                            <option value={0}>0</option>
+                                            <option value={1}>1</option>
+                                            <option value={2}>2</option>
+                                            <option value={3}>3</option>
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />
+                                        <FacilityIcon src={monitor} alt="모니터 아이콘" />
                                         <select
                                             value={roomFacilities.tv}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, tv: parseInt(e.target.value) }))}
@@ -183,17 +209,17 @@ export default function AdminRoomAddPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" />
+                                        <FacilityIcon src={projector} alt="빔 프로젝터 아이콘" />
                                         <select
                                             value={roomFacilities.bim_projector}
-                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, bim_projector: parseInt(e.target.value) }))}
+                                            onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, bim_projector: e.target.value }))}
                                         >
-                                            <option value={0}>없음</option>
-                                            <option value={1}>있음</option>
+                                            <option value={false}>없음</option>
+                                            <option value={true}>있음</option>
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" />
+                                        <FacilityIcon src={computer} alt="컴퓨터 아이콘" />
                                         <select
                                             value={roomFacilities.com}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, com: parseInt(e.target.value) }))}
@@ -217,6 +243,11 @@ export default function AdminRoomAddPage() {
                     </form>
                 </RoomInfoContainer>
             </RoomInformation>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <CustomAlert onClose={handleCloseSnackbar} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </CustomAlert>
+            </Snackbar>
         </>
     );
 };
@@ -385,4 +416,23 @@ const FacilityIcon = styled.img`
     display: inline-block;
     width: 40px;
     height: 40px;
+`;
+
+const CustomAlert = styled(MuiAlert)`
+    &.MuiAlert-standardSuccess {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardError {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardWarning {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardInfo {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
 `;

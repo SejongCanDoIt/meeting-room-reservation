@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import axios from 'axios';
 
 function ChooseReservationPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
+    const [authority, setAuthority] = useState(true);
+
     useEffect(() => {
         // 서버로부터 로그인 여부 확인
         axios.get('/auth/checkLogin')
@@ -16,6 +18,18 @@ function ChooseReservationPage() {
             })
             .catch((err) => {
                 navigate('/loginPage')
+            })
+    }, [])
+
+    // 사용자 권한을 얻어옴. UNI_STUDENT, PROFESSOR, POST_STUDENT, OFFICE
+    useEffect(() => {
+        axios.get(`/member/${sessionStorage.getItem('LoginID')}`)
+            .then((res) => {
+                res.data.authority === "UNI_STUDENT" ? setAuthority(false) : setAuthority(true);
+                // setAuthority((state) => res.data.authority)
+            })
+            .catch((err) => {
+                console.log(err);
             })
     }, [])
 
@@ -34,7 +48,7 @@ function ChooseReservationPage() {
                 <TitleH>예약방법을 선택해주세요</TitleH>
             </div>
             <BtnBox>
-                <LinkStyle to={`/regularreservation?room_id=${searchParams.get('room_id')}`}><BtnStyle><h3>정기 예약</h3></BtnStyle></LinkStyle>
+                { authority ? <LinkStyle to={`/regularreservation?room_id=${searchParams.get('room_id')}`}><BtnStyle><h3>정기 예약</h3></BtnStyle></LinkStyle> : <></>}
                 <LinkStyle to={`/reservation?room_id=${searchParams.get('room_id')}`}><BtnStyle><h3>일반 예약</h3></BtnStyle></LinkStyle>
             </BtnBox>
             <div>

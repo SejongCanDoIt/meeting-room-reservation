@@ -3,10 +3,32 @@ import AdminSideBar from './AdminSideBar';
 import styled from 'styled-components';
 import axios from "axios"
 import React, { useEffect, useState } from 'react';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/lab/Alert';
+
 
 export default function AdminMemberManagePage() {
     const [file, setFile] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
 
+    // snackbar 관련
+    const handleClickSnackbar = (message, severity) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    // 파일 업로드 관련
     const handleFileUpload = (event) => {
         setFile(event.target.files[0]);
     };
@@ -15,7 +37,13 @@ export default function AdminMemberManagePage() {
         event.preventDefault();
 
         if (!file) {
-            console.log('No file selected.');
+            handleClickSnackbar('파일이 선택되지 않았습니다.', 'error');
+            return;
+        }
+
+        const confirmAddMember = window.confirm('회원을 추가하시겠습니까?');
+
+        if (!confirmAddMember) {
             return;
         }
 
@@ -31,20 +59,17 @@ export default function AdminMemberManagePage() {
 
             // Handle server response here
             if (fileResponse.data.success) {
-                console.log(fileResponse.data.message);
+                handleClickSnackbar('회원 추가가 완료되었습니다', 'success');
+                window.location.reload();
             } else {
-                console.log(fileResponse.data.message);
+                handleClickSnackbar(fileResponse.data.message, 'error');
             }
         } catch (err) {
-            console.log('An error occurred while uploading file.');
+            handleClickSnackbar('파일을 업로드하는 동안 오류가 발생했습니다', 'error');
         }
     };
 
-    const handleEditMember = (memberId) => {
-        // 회원 수정 기능 구현
-        console.log(`Edit member with id: ${memberId}`);
-    };
-
+    // 멤버 받아오기
     const [memberList, setMemberList] = useState(null);
 
     useEffect(() => {
@@ -78,7 +103,7 @@ export default function AdminMemberManagePage() {
                                 {file ? file.name : '파일 선택'}
                             </FileInputLabel>
                             <FileInput id="fileInput" type="file" onChange={handleFileUpload} />
-                            <AddMemberButton type="submit">회원 추가</AddMemberButton>
+                            <AddMemberButton type="submit" onClick={handleAddMember}>회원 추가</AddMemberButton>
                         </ButtonContainer>
                     </Header>
                     <MemberList>
@@ -88,6 +113,7 @@ export default function AdminMemberManagePage() {
                             <span>이름</span>
                             <span>전화번호</span>
                             <span>이메일</span>
+                            <span>예약 가능 횟수</span>
                             <span>노쇼 횟수</span>
                         </MemberListHeader>
                         {memberList.map(member => (
@@ -97,13 +123,18 @@ export default function AdminMemberManagePage() {
                                 <span>{member.name}</span>
                                 <span>{member.phoneNo}</span>
                                 <span>{member.email}</span>
+                                <span>{member.cnt}</span>
                                 <span>{member.noshow}</span>
-                                <EditButton onClick={() => handleEditMember(member.member_id)}>수정하기</EditButton>
                             </MemberRow>
                         ))}
                     </MemberList>
                 </MemberManagementContainer>
             </MemberManagement>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <CustomAlert onClose={handleCloseSnackbar} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </CustomAlert>
+            </Snackbar>
         </>
     );
 };
@@ -168,7 +199,7 @@ const MemberList = styled.div`
 
 const MemberListHeader = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 2fr 2fr 1fr 0.7fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr;
     grid-gap: 10px;
     align-items: center;
     padding: 10px;
@@ -182,7 +213,7 @@ const MemberListHeader = styled.div`
 
 const MemberRow = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 2fr 2fr 1fr 0.7fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr;
     grid-gap: 10px;
     align-items: center;
     padding: 10px;
@@ -190,16 +221,21 @@ const MemberRow = styled.div`
     height: 6vh;
 `;
 
-const EditButton = styled.button`
-    background-color: #A1203C;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 10px;
-    font-size: 16px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #8B1B34;
+const CustomAlert = styled(MuiAlert)`
+    &.MuiAlert-standardSuccess {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardError {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardWarning {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardInfo {
+        background-color: #A1203C;
+        color: #FFFFFF;
     }
 `;

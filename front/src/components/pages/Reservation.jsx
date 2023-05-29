@@ -251,9 +251,9 @@ export default function Reservation() {
             day: selectedDay.date,
             roomId: searchParams.get('room_id')
         }
-        axios.post('/reserve/today-time-check', {...timeCheckInfo})
+        axios.post('/reserve/today-time-check-room', {...timeCheckInfo})
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 setReservedTime((state) => [...res.data]);
             })
             .catch((err) => {
@@ -417,7 +417,7 @@ export default function Reservation() {
 
         // 학생인 경우 2일전 예약 가능.
         if (authority === "UNI_STUDENT") {
-            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)).format('MM-DD')) {
+            if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1)).format('MM-DD')) {
                 return true
             }
             
@@ -476,7 +476,7 @@ export default function Reservation() {
             .then((res) => {
                 console.log(res);
                 const reservationId = res.data;
-                alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
+                // alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
                 navigate(`/sharereservationpage?year=${year}&month=${month}&date=${date}&day=${day}&startTime=${startTime}&startMinute=${startMinute}&endTime=${endTime}&endMinute=${endMinute}&room_id=${roomId}&reservationId=${reservationId}`)
             })
             .catch((err) => {
@@ -492,30 +492,58 @@ export default function Reservation() {
     };
 
     // 예약 시작시간
-    const onStartTimeSelectHandler = (hour, minute) => {
-        console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
-        // const start = parseInt(e.target.value);
-        timeDispatch({
-            type: "START_TIME",
-            time: hour,
-        })
-        timeDispatch({
-            type: "START_MINUTE",
-            minute: minute,
-        })
+    const onStartTimeSelectHandler = (morning, hour, minute) => {
+        if (morning) {
+            console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
+        else {
+            console.log(`선택된 시작시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour+12,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
     }
     // 예약 종료시간
-    const onEndTimeSelectHandler = (hour, minute) => {
-        console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
-        // const start = parseInt(e.target.value);
-        timeDispatch({
-            type: "END_TIME",
-            time: hour,
-        })
-        timeDispatch({
-            type: "END_MINUTE",
-            minute: minute,
-        })
+    const onEndTimeSelectHandler = (morning, hour, minute) => {
+        if (morning) {
+            console.log(`선택된 종료시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
+        else {
+            console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour + 12,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
     }
 
     return (

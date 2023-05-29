@@ -1,15 +1,39 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SelectMeetingRoom() {
+
+    const [room, setRoom] = useState([]);
+
+    useEffect(() => {
+        console.log(room);
+    }, [room])
+
+    useEffect(() => {
+        axios.get('/room/list')
+            .then((res) => {
+                console.log(res.data);
+                setRoom((state) => res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
     return (
         <ChooseReservationContainer>
             <div>
                 <TitleH>회의실을 선택해주세요</TitleH>
             </div>
             <BtnBox>
-                <LinkStyle to={`/choosereservationpage?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
-                <LinkStyle to={`/choosereservationpage?room_id=${836}`}><BtnStyle><h3>836</h3></BtnStyle></LinkStyle>
+                {
+                    room.map((it, idx) => (
+                        <LinkStyle to={`/choosereservationpage?room_id=${it.id}`}><BtnStyle><h3>{it.buildingName} <br/> {it.name}</h3></BtnStyle></LinkStyle>
+                    ))
+                }
+                {/* <LinkStyle to={`/choosereservationpage?room_id=${835}`}><BtnStyle><h3>835</h3></BtnStyle></LinkStyle>
+                <LinkStyle to={`/choosereservationpage?room_id=${836}`}><BtnStyle><h3>836</h3></BtnStyle></LinkStyle> */}
             </BtnBox>
             <div>
                 <Ptag>선택시 예약 화면으로 넘어가요</Ptag>
@@ -38,6 +62,8 @@ const BtnBox = styled.div`
     justify-content: center;
     width: 100%;
     margin: 20px;
+    
+    flex-wrap: wrap;
     // background-color: gray;
 `
 

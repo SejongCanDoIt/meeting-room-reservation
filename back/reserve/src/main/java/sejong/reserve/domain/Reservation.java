@@ -49,7 +49,8 @@ public class Reservation {
 
     //메일이 보내졌는지 확인하기 위한 플래그
     @Column(name ="reminderSent")
-    private boolean reminderSent = false;
+    @ColumnDefault("0")
+    private boolean reminderSent;
 
 
 

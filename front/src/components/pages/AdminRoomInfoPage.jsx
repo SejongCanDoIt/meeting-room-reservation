@@ -3,40 +3,73 @@ import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/lab/Alert';
 import axios from 'axios'
+import monitor from "../../assets/monitor.png";
+import wifi from "../../assets/wifi2.png";
+import whiteboard from "../../assets/blackboard.png";
+import computer from "../../assets/computer.png";
+import projector from "../../assets/projector.png";
+import chair from "../../assets/office-chair.png";
 
 export default function AdminRoomInfoPage() {
     const { id } = useParams();
-    const [roominfo, setRoominfo] = useState(null);
+    const [roomInfo, setRoomInfo] = useState(null);
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
 
+    // 스낵바 관련
+    const handleClickSnackbar = (message, severity) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    // 정보 요청 관련
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
                 const response = await axios.get(`/room/detail/${id}`);
-                setRoominfo(response.data);
+                console.log("API response: ", response);
+                setRoomInfo(response.data);
                 console.log("Room Info Page: ", response.data);
             } catch (error) {
-                console.error(error);
+                console.error("Error response: ", error.response);
+                handleClickSnackbar('Error fetching room data', 'error');
             }
         };
 
         fetchRoomData();
     }, [id]);
 
-    if (!roominfo) {
+    if (!roomInfo) {
         return <p>Loading...</p>;
     }
 
+    // 회의실 삭제 관련
     const handleDelete = async () => {
         const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
         if (confirmDelete) {
             try {
                 await axios.delete(`/room/delete/${id}`);
-                alert('삭제되었습니다!');
-                navigate('/AdminRoomManagePage');
+                handleClickSnackbar('회의실 삭제가 완료되었습니다', 'success');
+                setTimeout(() => {
+                    navigate('/AdminRoomManagePage');
+                }, 2000); // 2초의 딜레이를 준 후 페이지 이동
             } catch (error) {
                 console.error(error);
+                handleClickSnackbar('회의실을 삭제하는 동안 오류가 발생했습니다', 'error');
             }
         }
     };
@@ -51,59 +84,63 @@ export default function AdminRoomInfoPage() {
                     <Header>
                         <h1>회의실 정보</h1>
                         <button onClick={handleDelete}>삭제하기</button>
-                        <Link to={`/AdminRoomModifyPage/${roominfo.id}`}>
+                        <Link to={`/AdminRoomModifyPage/${roomInfo.id}`}>
                             <button>수정하기</button>
                         </Link>
                     </Header>
                     <RoomInfo>
                         <LeftInfo>
                             <NameBlock>
-                                <StyledH2>회의실 이름과 ID</StyledH2>
-                                <p>{roominfo.name}</p>
-                                <p>ID: {roominfo.id}</p>
+                                <StyledH2>회의실 이름</StyledH2>
+                                <p>{roomInfo.name}</p>
                                 <hr></hr>
                             </NameBlock>
                             <Block>
                                 <StyledH2>회의실 설명</StyledH2>
-                                <StyledP>{roominfo.info}</StyledP>
+                                <StyledP>{roomInfo.info}</StyledP>
                             </Block>
                             <Block>
                                 <StyledH2>회의실 위치</StyledH2>
-                                <StyledP>{roominfo.name}은 {roominfo.buildingName} {roominfo.id}호에 위치하고 있습니다.</StyledP>
+                                <StyledP>{roomInfo.name}은 {roomInfo.buildingName}에 위치하고 있습니다.</StyledP>
                             </Block>
                         </LeftInfo>
                         <RightInfo>
-                            <RoomImg src={roominfo.picture} alt={`이미지: ${roominfo.name}`} />
+                            <RoomImg src={roomInfo.picture} alt={`이미지: ${roomInfo.name}`} />
                             <FacilitiesList>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="의자 아이콘" />
-                                    {roominfo.cap}명
+                                    <FacilityIcon src={chair} alt="의자 아이콘" />
+                                    {roomInfo.cap}명
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="와이파이 아이콘" />
-                                    {roominfo.wifi ? '있음' : '없음'}
+                                    <FacilityIcon src={wifi} alt="와이파이 아이콘" />
+                                    {roomInfo.wifi ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="화이트보드 아이콘" />
-                                    {roominfo.board ? '있음' : '없음'}
+                                    <FacilityIcon src={whiteboard} alt="화이트보드 아이콘" />
+                                    {roomInfo.board}개
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />
-                                    {roominfo.tv}개
+                                    <FacilityIcon src={monitor} alt="모니터 아이콘" />
+                                    {roomInfo.tv}개
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="빔 프로젝터 아이콘" />
-                                    {roominfo.bim_projector ? '있음' : '없음'}
+                                    <FacilityIcon src={projector} alt="빔 프로젝터 아이콘" />
+                                    {roomInfo.bim_projector ? '있음' : '없음'}
                                 </FacilityItem>
                                 <FacilityItem>
-                                    <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="컴퓨터 아이콘" />
-                                    {roominfo.com}개
+                                    <FacilityIcon src={computer} alt="컴퓨터 아이콘" />
+                                    {roomInfo.com}개
                                 </FacilityItem>
                             </FacilitiesList>
                         </RightInfo>
                     </RoomInfo>
                 </RoomInfoContainer>
             </RoomInformation >
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <CustomAlert onClose={handleCloseSnackbar} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </CustomAlert>
+            </Snackbar>
         </>
     );
 };
@@ -237,4 +274,23 @@ const FacilityIcon = styled.img`
 display: inline-block;
 width: 40px;
 height: 40px;
+`;
+
+const CustomAlert = styled(MuiAlert)`
+    &.MuiAlert-standardSuccess {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardError {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardWarning {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardInfo {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
 `;

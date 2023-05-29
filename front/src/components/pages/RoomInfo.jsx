@@ -23,13 +23,16 @@ export default function RoomInfo() {
         axios.get(`/room/detail/${serchParams.get('room_id')}`) 
             .then((res) => {
                 const data = res.data;
+                console.log(data);
                 const roomData = {
+                    "info": data.info,
                     "bim_projector": data.bim_projector,
                     "board": data.board,
                     "cap": data.cap,
                     "com": data.com,
                     "tv": data.tv,
                     "wifi": data.wifi,
+                    "picture": data.picture.length ? data.picture : "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
                 }
                 setRoomInfoData((state) => roomData);
             })
@@ -42,12 +45,12 @@ export default function RoomInfo() {
         <RoomInfoContainer>
             {/* 회의실 사진 */}
             <ImgContainer>
-                <ImgStlye src="https://images.unsplash.com/photo-1503423571797-2d2bb372094a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80" alt="" />
+                <ImgStlye src={roomInfoData.picture} alt="" />
             </ImgContainer>
             {/* 회의실 이름 */}
             <ContentContainer>
                 <RoomName>
-                    <h2>AI센터 {serchParams.get('room_id')}호 회의실</h2>
+                    <h2>{serchParams.get('location')} {serchParams.get('room_id')}호 회의실</h2>
                     <LinkTag to={`/ChooseReservationPage?room_id=${serchParams.get('room_id')}`}><ReserveBtn>예약</ReserveBtn></LinkTag>
                 </RoomName>
                 {/* 보유편의 시설 */}
@@ -83,12 +86,12 @@ export default function RoomInfo() {
                 </FacilityContainer>
                 {/* 설명 */}
                 <DescriptionBox>
-                    <ContentP>회의실의 규모는 최대 8명까지 수용이 가능하며 화이트보드와 빔 프로젝트가 포함되어 있는 회의에 최적화된 장소입니다.</ContentP>
+                    <ContentP>{roomInfoData.info}</ContentP>
                 </DescriptionBox>
                 {/* 위치 */}
-                <LocationBox>
+                {/* <LocationBox>
                     <ContentP>대양 AI센터 835호 회의실은 세종대학교 대양AI센터 8층에 위치해 있습니다.</ContentP>
-                </LocationBox>
+                </LocationBox> */}
             </ContentContainer>
         </RoomInfoContainer>
 
@@ -143,8 +146,10 @@ const ImgStlye = styled.img`
 
     z-index: -1;
 
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
+
+    // border-bottom-right-radius: 10px;
+    // border-bottom-left-radius: 10px;
     // background-color: gray;
 
     
@@ -235,9 +240,10 @@ const DescriptionBox = styled.div`
 
 
     // align-items: center;
-    justify-content: center;
+    // justify-content: center;
+    text-align: center;
 
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 `
 
 const LocationBox = styled.div`

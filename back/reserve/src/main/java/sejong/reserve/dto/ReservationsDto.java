@@ -1,16 +1,18 @@
 package sejong.reserve.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import sejong.reserve.domain.Reservation;
 import sejong.reserve.domain.ReservationStatus;
+import sejong.reserve.domain.SejongBuildingName;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter @Getter @ToString
+@Data
 public class ReservationsDto {
     private Long reservation_id;
     private LocalDateTime start; // 예약 시작 시간
@@ -21,6 +23,9 @@ public class ReservationsDto {
     private Long room_id; // 예약된 방의 아이디
 
     private String member_sno; // 예약한 사람의 아이디
+
+    private String room_name; // 예약된 방의 이름
+    private SejongBuildingName room_building_name; // 예약된 방의 건물 이름
 
     private Boolean noShowCheck;
 
@@ -37,6 +42,8 @@ public class ReservationsDto {
         this.room_id = reservation.getRoom().getId();
         this.noShowCheck = reservation.getNoShowCheck();
         this.member_sno = reservation.getMember().getStudentNo();
+        this.room_name = reservation.getRoom().getName();
+        this.room_building_name = reservation.getRoom().getBuildingName();
     }
 
     public List<ReservationsDto> reservationsDtoList(List<Reservation> reservations) {

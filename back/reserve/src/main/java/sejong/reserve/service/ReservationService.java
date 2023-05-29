@@ -2,6 +2,7 @@ package sejong.reserve.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.reserve.domain.*;
@@ -34,11 +35,12 @@ public class ReservationService {
 
 
     // 전체 예약 리스트
-    public List<Reservation> managerList() {
+    public List<ReservationsDto> managerList() {
         log.info("전체 예약 리스트 조회 시작");
         List<Reservation> resultList = reservationRepository.findAll();
+        List<ReservationsDto> reservationsDtoList = convertToDto(resultList);
         log.info("전체 예약 리스트 조회 완료: {}개의 예약이 있습니다.", resultList.size());
-        return reservationRepository.findAll();
+        return reservationsDtoList;
     }
 
     // 학생별 예약 리스트
@@ -145,14 +147,14 @@ public class ReservationService {
         log.info("예약 취소 완료");
     }
 
-    public List<TimeDto> getTodayTimeList(LocalDateTime todayDate, Long roomId) {
+    public List<TimeDto> getTodayTimeListRoom(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
         LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
         LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
 
-        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd, roomId);
+        List<Reservation> reservations = reservationRepository.getTodayTimeListRoom(todayStart, todayEnd, roomId);
         List<TimeDto> timeList = new ArrayList<>();
         for(Reservation reservation:reservations) {
             LocalDateTime start = reservation.getStart();
@@ -198,7 +200,7 @@ public class ReservationService {
     }
 
 
-    public int[] getTodayTimeCheck(LocalDateTime todayDate, Long roomId) {
+    public int[] getTodayTimeCheckRoom(LocalDateTime todayDate, Long roomId) {
         int year = todayDate.getYear();
         Month month = todayDate.getMonth();
         int day = todayDate.getDayOfMonth();
@@ -208,7 +210,7 @@ public class ReservationService {
 
         int[] todayTimeCheck = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd, roomId);
+        List<Reservation> reservations = reservationRepository.getTodayTimeListRoom(todayStart, todayEnd, roomId);
 
         for(Reservation reservation:reservations) {
             LocalDateTime start = reservation.getStart();
@@ -252,6 +254,67 @@ public class ReservationService {
         List<Reservation> reservations = reservationRepository.getReservationListBySnoAndStatus(student_no, status);
         List<ReservationsDto> reservationDtoList = convertToDto(reservations);
         return reservationDtoList;
+    }
+
+    public Integer getReserveCntAll() {
+        int reserveCntAll = reservationRepository.getReserveCntAll(ReservationStatus.FINISHED);
+        return reserveCntAll;
+    }
+
+    public Integer getReserveCntByAuthority(AuthState authority) {
+        int reserveCntByAuthority = reservationRepository.getReserveCntByAuthority(authority, ReservationStatus.FINISHED);
+        return reserveCntByAuthority;
+    }
+
+    public Integer getReserveCntBySno(String sno) {
+        int reserveCntByAuthority = reservationRepository.getReserveCntBySno(sno, ReservationStatus.FINISHED);
+        return reserveCntByAuthority;
+    }
+
+    public int[] getTodayTimeCheck(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+
+
+        int[] todayTimeCheck = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+
+        for(Reservation reservation:reservations) {
+            LocalDateTime start = reservation.getStart();
+            LocalDateTime end = reservation.getEnd();
+            log.info("start = {}, end = {}", start, end);
+
+            int startHour = start.getHour();
+            int endHour = end.getHour();
+
+            for(int i=startHour;i<=endHour;i++) {
+                todayTimeCheck[i] = 1;
+            }
+        }
+        return todayTimeCheck;
+    }
+
+    public List<ReservationsDto> getTodayTimeList(LocalDateTime todayDate) {
+        int year = todayDate.getYear();
+        Month month = todayDate.getMonth();
+        int day = todayDate.getDayOfMonth();
+        LocalDateTime todayStart = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime todayEnd = LocalDateTime.of(year, month, day, 23, 59);
+
+        List<Reservation> reservations = reservationRepository.getTodayTimeList(todayStart, todayEnd);
+        List<ReservationsDto> reservationsDtoList = convertToDto(reservations);
+
+        return reservationsDtoList;
+    }
+
+    @Transactional
+    public void setNoShowStatus(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId).get();
+        reservation.setNoShowCheck(true);
     }
 
 

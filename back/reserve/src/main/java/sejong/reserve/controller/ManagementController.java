@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Management;
 import sejong.reserve.domain.Member;
 import sejong.reserve.dto.ManagementDto;
@@ -190,5 +191,31 @@ public class ManagementController {
         // 입력된 noShowCnt 이상의 noShowCnt 값을 가지고 있는 멤버리스트 반환
         List<MemberDto> memberDtoList = memberService.findMemberByNoShow(noShowCnt);
         return ResponseEntity.ok(memberDtoList);
+    }
+
+    // 해당 학번의 멤버의 노쇼 횟수 반환
+    @GetMapping("/get-noshow/{sno}")
+    public ResponseEntity<Integer> getNoShowCntBySno(@PathVariable("sno") String sno) {
+        return ResponseEntity.ok(memberService.getNoShowCnt(sno));
+    }
+
+    @GetMapping("/get-noshow-all")
+    public ResponseEntity<Integer> getNoShowCntAll() {
+        return ResponseEntity.ok(memberService.sumOfNoShowCntAll());
+    }
+
+    @PatchMapping("/reset-noshow/{sno}")
+    public void resetNoShowBySno(@PathVariable("sno") String sno) {
+        memberService.resetNoShowCntBySNo(sno);
+    }
+
+    @PatchMapping("/reset-noshow-all")
+    public void resetNoShowAll() {
+        memberService.resetNoShowCntAll();
+    }
+
+    @GetMapping("/get-noshow-authority")
+    public ResponseEntity<Integer> getNoShowCntByAuthority(@RequestParam AuthState authority) {
+        return ResponseEntity.ok(memberService.getNoShowCntByState(authority));
     }
 }

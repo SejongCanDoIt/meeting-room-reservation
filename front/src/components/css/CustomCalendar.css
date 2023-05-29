@@ -9,3 +9,7 @@
 .time_clicked {
     background-color: #84a59d;
 }
+
+.selected_day {
+    background-color: #43aa8b;
+}

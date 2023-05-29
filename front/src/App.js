@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import houseIcon from "./assets/houseIcon.png";
 import Home from './components/pages/Home';
+import NotFound from './components/pages/NotFound';
 import RoomListPage from './components/pages/RoomListPage';
 import RoomInformationPage from './components/pages/RoomInformationPage';
 import ChangePasswordPage from './components/pages/ChangePasswordPage';
@@ -17,6 +18,7 @@ import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
 import RoomInfo from "./components/pages/RoomInfo";
 import Announcement from "./components/pages/Announcement";
+import NoShowTest from "./components/pages/NoShowTest";
 import TestReservation from "./components/pages/TestReservation";
 import PrivateRoute from "./components/pages/PrivateRoute";
 import ShowRegularReservation from "./components/pages/ShowRegularReservation";
@@ -30,6 +32,7 @@ import AdminMemberManagePage from './components/pages/AdminMemberManagePage';
 import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
 import AdminSettingPage from './components/pages/AdminSettingPage';
 import AdminSettingModifyPage from './components/pages/AdminSettingModifyPage';
+import AdminReservHistoryPage from './components/pages/AdminReservHistoryPage';
 import AdminReservManagePage from './components/pages/AdminReservManagePage';
 import AdminRoomInfoPage from './components/pages/AdminRoomInfoPage';
 import AdminRoomAddPage from './components/pages/AdminRoomAddPage';
@@ -61,6 +64,7 @@ function App() {
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/announcement" element={<Announcement />}></Route>
           <Route path="/authenticating" element={<AuthenticatingPage />}></Route>
+          <Route path="/noshow" element={<NoShowTest />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
@@ -70,11 +74,14 @@ function App() {
           <Route path="/AdminRoomManagePage" element={<AdminRoomManagePage />}></Route>
           <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>
           <Route path="/AdminSettingModifyPage" element={<AdminSettingModifyPage />}></Route>
+          <Route path="/AdminReservHistoryPage" element={<AdminReservHistoryPage />}></Route>
           <Route path="/AdminReservManagePage" element={<AdminReservManagePage />}></Route>
           <Route path="/AdminRoomInfoPage/:id" element={<AdminRoomInfoPage />} />
           <Route path="/AdminRoomAddPage" element={<AdminRoomAddPage />}></Route>
           <Route path="/AdminRoomModifyPage/:id" element={<AdminRoomModifyPage />}></Route>
           <Route path="/RoomInfo" element={<RoomInfo />}></Route>
+          <Route path="/*" element={<NotFound />}></Route>
+
         </Routes>
       </RootContainer>
     </BrowserRouter>

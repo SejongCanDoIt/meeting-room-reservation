@@ -33,7 +33,8 @@ const initialTime = {
 
 // 정기예약 정보 초기값
 const initialRegular = {
-    dayWeekMonth: "일간",
+    dayWeekMonth: "daily",
+    dayRepeat: 1,
     count: 1,
 }
 
@@ -134,6 +135,14 @@ const regularInfoReducer = (state, action) => {
                 dayWeekMonth: action.dayWeekMonth
             }
         }
+
+        case "REPEAT": {
+            return {
+                ...state,
+                dayRepeat: action.dayRepeat,
+            }
+        }
+
         case "C_TYPE": {
             return {
                 ...state,
@@ -184,6 +193,7 @@ export default function RegularReservations() {
     const [regularInfo, regularDispatch] = useReducer(regularInfoReducer, initialRegular);
     const [selectedTime, timeDispatch] = useReducer(timeReducer, initialTime);
     const [reservedTime, setReservedTime] = useState([]);
+    const [isDayReservation, setIsDayReservation] = useState(true);
     const [overlap, setOverLap] = useState(0);
     const [authority, setAuthority] = useState("");
     const [searchParams, setSearchParams] = useSearchParams();
@@ -226,7 +236,7 @@ export default function RegularReservations() {
             day: selectedDay.date,
             roomId: searchParams.get('room_id')
         }
-        axios.post('/reserve/today-time-check', {...timeCheckInfo})
+        axios.post('/reserve/today-time-check-room', {...timeCheckInfo})
             .then((res) => {
                 // console.log(res.data);
                 setReservedTime((state) => [...res.data]);
@@ -374,12 +384,14 @@ export default function RegularReservations() {
 
     // 예약 버튼이 클릭되었을때.
     const onBtnClicked = () => {
-        if (regularInfo.dayWeekMonth === "week") {
+        // 주간 정기예약
+        if (regularInfo.dayWeekMonth === "weekly") {
             for (let day=0 ; day <= regularInfo.count*7; day += 7) {
                 onWeekRegularHandler(day);
             }
         }
-        else if (regularInfo.dayWeekMonth === "month") {
+        // 월간 정기예약
+        else if (regularInfo.dayWeekMonth === "monthly") {
             let yearR = selectedDay.year;
             let monthR = selectedDay.month;
             let dateR = selectedDay.date;
@@ -396,6 +408,45 @@ export default function RegularReservations() {
                 dayR = nextRegular.dayR;
             }
         }
+        // 일간 정기예약
+        else {
+            console.log("일간 정기예약", regularInfo.dayRepeat);
+            onRegularDayReservation(regularInfo.dayRepeat, regularInfo.count);
+        }
+    }
+
+    const onRegularDayReservation = (dayRepeat, count) => {
+
+        const todayYear = selectedDay.year;
+        const todayMonth = selectedDay.month;
+        let todayDate = selectedDay.date;
+        const todayDay = selectedDay.day;
+
+        let day = parseInt(dayRepeat);
+        console.log(regularInfo.dayRepeat);
+        for (let i=0 ; i<=count ; i++) {
+            if (i === 0) {
+                const selecDay = translateIntToString(todayYear, todayMonth, todayDate, todayDay);
+                makeReservation(selecDay.year, selecDay.month, selecDay.date, todayDay, selecDay.startTime, selecDay.startMinute, selecDay.endTime, selecDay.endMinute);
+                todayDate += day
+            }
+            else {
+                const dayRegular = new Date(todayYear, todayMonth-1, todayDate);
+                console.log(dayRegular);
+                const yearString = dayRegular.getFullYear().toString();
+                const monthString = (dayRegular.getMonth() + 1 < 10) ? "0" + (dayRegular.getMonth()+1).toString() : (dayRegular.getMonth()+1).toString();
+                const dateString = (dayRegular.getDate()) < 10 ? "0" + dayRegular.getDate().toString() : dayRegular.getDate().toString();
+                const dayString = dayRegular.getDay();
+                const startTimeR = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
+                const startMinuteR = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
+                const endTimeR = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
+                const endMinuteR = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
+                makeReservation(yearString, monthString, dateString, dayString, startTimeR, startMinuteR, endTimeR, endMinuteR);
+                
+                todayDate += day;
+            }
+        }
+
     }
 
     const overLapHandler = (year, month, date) => {
@@ -571,12 +622,13 @@ export default function RegularReservations() {
         axios.post('/reserve/', {...reservationInfo}, {params: {room_id: roomId}})
             .then((res) => {
                 // alert(`${year}년 ${month}월 ${date}일 ${startTime}시 부터 ${endTime}까지 예약을 완료했습니다`);
-                navigate(`/showregularreservation`)
+                const reservationId = res.data;
+                navigate(`/showregularreservation?reservation_id=${reservationId}&repeat_type=${regularInfo.dayWeekMonth}&repeat_count=${regularInfo.count}`)
             })
             .catch((err) => {
                 alert(`${err.response.data.message}`);
             })
-        // onReservedStatusHandler();
+        onReservedStatusHandler();
     }
 
     // 선택된 날짜의 예약 리스트를 반환하는 함수
@@ -585,42 +637,85 @@ export default function RegularReservations() {
     };
 
     // 예약 시작시간
-    const onStartTimeSelectHandler = (hour, minute) => {
-        console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
-        // const start = parseInt(e.target.value);
-        timeDispatch({
-            type: "START_TIME",
-            time: hour,
-        })
-        timeDispatch({
-            type: "START_MINUTE",
-            minute: minute,
-        })
+    const onStartTimeSelectHandler = (morning, hour, minute) => {
+        if (morning) {
+            console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
+        else {
+            console.log(`선택된 시작시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour+12,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
     }
     // 예약 종료시간
-    const onEndTimeSelectHandler = (hour, minute) => {
-        console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
-        // const start = parseInt(e.target.value);
-        timeDispatch({
-            type: "END_TIME",
-            time: hour,
-        })
-        timeDispatch({
-            type: "END_MINUTE",
-            minute: minute,
-        })
+    const onEndTimeSelectHandler = (morning, hour, minute) => {
+        if (morning) {
+            console.log(`선택된 종료시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
+        else {
+            console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour + 12,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
     }
 
 
 
     // 일간, 주간, 월간 선택 가져오는 함수
     const onRegularTypeHandler = (e) => {
-        console.log(e.target.value);
+        const dayType = e.target.value;
+        
+        dayType === "daily" ? setIsDayReservation(true) : setIsDayReservation(false);
+        
         regularDispatch({
             type: "R_TYPE",
-            dayWeekMonth: e.target.value,
+            dayWeekMonth: dayType,
         })
     }
+
+    // 일간 정기예약시 n일을 가져오는 함수
+    const onRegularDay = (e) => {
+        const dayRepeat = e.target.value;
+        console.log(dayRepeat);
+
+        regularDispatch({
+            type: "REPEAT",
+            dayRepeat: dayRepeat,
+        })
+    }
+
     // 일간, 주간, 월간의 횟수를 가져오는 함수
     const onRegularCountHandler = (e) => {
         console.log(e.target.value);
@@ -635,7 +730,7 @@ export default function RegularReservations() {
         <ReservationContainer>
             <ReservationNav reserveType={type} message="언제 사용하실 건가요?"/>
             <Calendar onChange={onCalendarHandler} tileClassName={reservedStatus} tileDisabled={tileDisabledHandler}/>
-            <RegularOptions month={selectedDay.month} date={selectedDay.date} onRegularTypeHandler={onRegularTypeHandler} onRegularCountHandler={onRegularCountHandler}></RegularOptions>
+            <RegularOptions month={selectedDay.month} date={selectedDay.date} isDayReservation={isDayReservation} onRegularDay={onRegularDay} onRegularTypeHandler={onRegularTypeHandler} onRegularCountHandler={onRegularCountHandler}></RegularOptions>
 
             <TimeBox>
                 <TimeTable reservedStatusList={onReservedStatusHandler()}/>

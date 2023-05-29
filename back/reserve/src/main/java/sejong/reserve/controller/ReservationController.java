@@ -3,6 +3,7 @@ package sejong.reserve.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,8 @@ import java.time.chrono.ChronoLocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,6 +62,8 @@ public class ReservationController {
             throw new NotAvailableReservedException("학부생은 정기예약을 진행할 수 없습니다.");
         }
 
+        // 시작 시간이 끝 시간 보다 앞인지?
+        checkStartEnd(start, end);
         // 정기 및 일반 예약에 대한 달이 적합한지?
         log.info("checkStateLimitation 실행 : 정기 및 일반 예약에 대한 달이 적합한지?");
         checkStateLimitation(start, authority);
@@ -71,10 +76,11 @@ public class ReservationController {
         // 예약 시간 gap 이 권한에 적합한지?
         log.info("checkTimeGap:  예약 시간 gap 이 권한에 적합한지?");
         checkTimeGap(start, end, authority);
+        // 예약이 다음날로 넘어가는지?
+        checkIsNextDay(start, end);
 
         // 예약 저장
         Room room = roomService.detail(room_id);
-//        log.info("room = {}", room);
         Reservation reservation = Reservation.createReservation(reservationDto, loginMember, room);
         log.info("reservation = {}", reservation);
         reservationService.makeReservation(reservation);
@@ -88,12 +94,57 @@ public class ReservationController {
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
     }
 
+    private static void checkStartEnd(LocalDateTime start, LocalDateTime end) {
+        if(start.isAfter(end)) {
+            throw new NotAvailableReservedException("예약의 시작 시간은 끝 시간 보다 앞서야 합니다");
+        }
+    }
+
+    private static void checkIsNextDay(LocalDateTime start, LocalDateTime end) {
+        log.info("start.getDayOfMonth() = {}", start.getDayOfMonth());
+        log.info("end.getDayOfMonth() = {}", end.getDayOfMonth());
+
+        if(end.getDayOfMonth() > start.getDayOfMonth()) {
+            throw new NotAvailableReservedException("예약은 오늘 날짜 안에서만 가능합니다.");
+        }
+    }
+
     @PostMapping("/email")
     private void sendEmail(@Login Member loginMember, @RequestParam("reservation_id") Long reservationId) {
         Reservation reservation = reservationService.getReservation(reservationId).get();
-        String emailSubject = "예약이 완료되었습니다.";// 메일의 제목을 여기에다 적으면 됩니다.
-        String emailText = "예약이 완료되었습니다.\n 시작시간: " + reservation.getStart() + "\n 종료시간: " + reservation.getEnd()+"\n장소: "+reservation.getId(); //이메일에 들어갈 문장들 여기에 적으면 됩니다.
+        log.info("reservation = {}", reservationService.getReservation(reservationId).get());
+        String emailSubject = loginMember.getName()+"님의 예약이 완료되었습니다.";// 메일의 제목을 여기에다 적으면 됩니다.
+        String emailText = "예약이 완료되었습니다.\n 시작시간: " + reservation.getStart() + "\n 종료시간: " + reservation.getEnd()+"\n장소: "+reservation.getRoom().getName(); //이메일에 들어갈 문장들 여기에 적으면 됩니다.
         emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText); // 이메일 보내기
+    }
+
+    @PostMapping("/email-regular")
+    private void sendRegularEmail(@Login Member loginMember, @RequestParam("reservation_id") Long reservationId,
+                                  @RequestParam("repeat_type") String repeatType, @RequestParam("repeat_count") int repeatCount) {
+
+        log.info("repeat_count ={}",repeatCount);
+        // 해당 reservation 가져오기
+        Reservation reservation = reservationService.getReservation(reservationId).get();
+        String emailSubject = loginMember.getName()+"님의 정기예약이 완료되었습니다.";
+
+        String repeat;
+        if(repeatType.equals("daily")){
+            repeat = "일간";
+        } else if (repeatType.equals("weekly")) {
+            repeat = "주간";
+        }else if(repeatType.equals("monthly")){
+            repeat = "월간";
+        }else{
+            repeat = repeatType;
+        }
+
+        String emailText = "정기예약이 "+repeat+" "+repeatCount+"회로 설정되었습니다.\n"
+                + "예약 시작일: "+ reservation.getStart() +"\n"+
+                "예약 반복시간은 "+reservation.getStart().getHour()+"시 "+reservation.getStart().getMinute()+"분부터 "
+                + reservation.getEnd().getHour()+"시"
+                +reservation.getEnd().getMinute()+ "분 입니다.";
+
+        emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText);
     }
 
     private void checkStateLimitation(LocalDateTime start, AuthState authority) {
@@ -177,10 +228,10 @@ public class ReservationController {
     }
 
     @GetMapping("/manager-list")
-    public ResponseEntity<List<Reservation>> managerList() {
-        List<Reservation> reservations = reservationService.managerList();
-        if (!reservations.isEmpty()) {
-            return ResponseEntity.ok(reservations);
+    public ResponseEntity<List<ReservationsDto>> managerList() {
+        List<ReservationsDto> reservationsDtoList = reservationService.managerList();
+        if (!reservationsDtoList.isEmpty()) {
+            return ResponseEntity.ok(reservationsDtoList);
         } else {
             return ResponseEntity.noContent().build();
         }
@@ -299,16 +350,28 @@ public class ReservationController {
         reservationService.cancel(reservation_id);
     }
 
-    @PostMapping("/time-list")
+    @PostMapping("/time-list-room")
     public List<TimeDto> timeList(@RequestBody DateByRoomDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
-        return reservationService.getTodayTimeList(todayDate, data.getRoomId());
+        return reservationService.getTodayTimeListRoom(todayDate, data.getRoomId());
+    }
+
+    @PostMapping("/get-reserve-list-all")
+    public List<ReservationsDto> getTodayReserveList(@RequestBody DateDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        return reservationService.getTodayTimeList(todayDate);
+    }
+
+    @PostMapping("/today-time-check-room")
+    public int[] getTodayTimeCheckRoom(@RequestBody DateByRoomDto data) {
+        LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
+        return reservationService.getTodayTimeCheckRoom(todayDate, data.getRoomId());
     }
 
     @PostMapping("/today-time-check")
-    public int[] getTodayTimeCheck(@RequestBody DateByRoomDto data) {
+    public int[] getTodayTimeCheck(@RequestBody DateDto data) {
         LocalDateTime todayDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), 0, 0);
-        return reservationService.getTodayTimeCheck(todayDate, data.getRoomId());
+        return reservationService.getTodayTimeCheck(todayDate);
     }
 
     @PostMapping("/month-reserve-check")
@@ -357,6 +420,9 @@ public class ReservationController {
     @PatchMapping("/check-noshow")
     public ResponseEntity<Boolean> checkNoShow(@Login Member loginMember) {
         LocalDateTime now = LocalDateTime.now();
+        if(reservationService.getReserveCntBySno(loginMember.getStudentNo()) == 0) {
+            throw new NotAvailableNoShowCheckException("예약 내역이 존재하지 않은 회원입니다.");
+        }
         List<ReservationsDto> reservationList = reservationService.getReservationListBySnoAndStatus(loginMember.getStudentNo(), ReservationStatus.RESERVED);
         for(ReservationsDto reservation : reservationList) {
             log.info("예약 시작 시간: {}, 예약 끝나는 시간: {}, 예약 노쇼 체크 = {}", reservation.getStart(), reservation.getEnd(), reservation.getNoShowCheck());
@@ -371,14 +437,15 @@ public class ReservationController {
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("/get-noshow/{sno}")
-    public ResponseEntity<Integer> getNoShowCnt(@PathVariable("sno") String sno) {
-        return ResponseEntity.ok(memberService.getNoShowCnt(sno));
+
+    @GetMapping("/get-reserve-cnt-all")
+    public ResponseEntity<Integer> getReserveCntAll() {
+        return ResponseEntity.ok(reservationService.getReserveCntAll());
     }
 
-    @PatchMapping("/reset-noshow/{sno}")
-    public void checkNoShow(@PathVariable("sno") String sno) {
-        memberService.resetNoShowCnt(sno);
+    @GetMapping("/get-reserve-cnt-authority")
+    public ResponseEntity<Integer> getReserveCntByAuthority(@RequestParam AuthState authority) {
+        return ResponseEntity.ok(reservationService.getReserveCntByAuthority(authority));
     }
 
 }

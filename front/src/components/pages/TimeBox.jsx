@@ -10,7 +10,7 @@ export default function TimeBox({id, reservedStatusList}) {
 const TBox = styled.div`
     width: 100%;
     height: 30px;
-    border: 1px solid black;
+    // border: 1px solid black;
 
     background-color: ${props => props.reserved ? "#e63946" : ""}
 `

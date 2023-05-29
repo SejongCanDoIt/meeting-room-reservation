@@ -3,6 +3,8 @@ import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
 import univ from "../../assets/univ.jpg";
 import univ_library from "../../assets/univ_library.jpg";
+import homeback2 from "../../assets/homeback2.jpg";
+import homelibrary from "../../assets/homelibrary.jpg";
 
 const TodayContainer = styled.div`
     width: 100%;
@@ -24,7 +26,7 @@ const TodayBox = styled.div`
     border-radius: 20px;
 
     // background-color: #52b788;
-    background-image: url(${univ_library});
+    background-image: url(${homeback2});
     background-size : cover;
     
     width: 95%;
@@ -48,9 +50,8 @@ const ImgBox = styled.div`
     font-weight: bold;
 
     background-repeat: no-repeat;
-    // background-image: url(${univ});
-    // background-image: url(${univ_library});
-    background-image: url('https://images.unsplash.com/photo-1558636815-1978d0419bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-image: url(${homelibrary});
+    // background-image: url('https://images.unsplash.com/photo-1558636815-1978d0419bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
     // background-image: url('https://images.unsplash.com/photo-1564981797816-1043664bf78d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80');
 
     @media screen and (max-width: 900px) {
@@ -85,6 +86,7 @@ const ContentBox = styled.div`
 
 export default function TodayReservationList() {
     const [cnt, setCnt] = useState(0);
+    const [roomCnt, setRoomCnt] = useState(0);
 
     useEffect(() => {
         createMonthReservedCount();
@@ -118,7 +120,15 @@ export default function TodayReservationList() {
             .catch((err) => {
                 console.log(err);
             })
-
+        
+        axios.get('/room/list')
+            .then((res) => {
+                setRoomCnt(res.data.length);
+                // console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
     return (
         <TodayContainer>
@@ -130,7 +140,7 @@ export default function TodayReservationList() {
                 </ContentBox>
                 <ContentBox>
                     <h2>현재 운영중인 회의실</h2>
-                    <TodayBox>AI센터에 2곳이 운영중에요.</TodayBox>
+                    <TodayBox>{roomCnt}곳이 운영중이에요</TodayBox>
                 </ContentBox>
             </ContentContainer>
         </TodayContainer>
