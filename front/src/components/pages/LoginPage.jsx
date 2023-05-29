@@ -53,7 +53,7 @@ export default function LoginPage() {
         axios.get('/auth/checkLogin')
             .then((res) => {
                 console.log(res);
-                console.log("로그인 되어있습니다")
+                console.log("로그인 되어있습니다");
                 navigate('/myPage')
             })
             .catch((err) => {
