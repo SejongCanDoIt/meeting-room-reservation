@@ -45,7 +45,6 @@
       "react-app/jest"
     ]
   },
-  "predeploy": "CI= npm run build",
   "browserslist": {
     "production": [
       ">0.2%",
