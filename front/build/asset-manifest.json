@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.56db60c5.css",
+    "main.js": "/static/js/main.4192b96f.js",
+    "static/media/univ_library.jpg": "/static/media/univ_library.1989f6f11015b63fd1b7.jpg",
+    "static/media/homelibrary.jpg": "/static/media/homelibrary.3c7272086bd6dd1e45ad.jpg",
+    "static/media/univ.jpg": "/static/media/univ.55e003324647db129261.jpg",
+    "static/media/sejongLogo.png": "/static/media/sejongLogo.55fc41861169fd9dd6d9.png",
+    "static/media/homeback2.jpg": "/static/media/homeback2.bda1a8a83879beee956d.jpg",
+    "static/media/sejong_logo.jpg": "/static/media/sejong_logo.fa65a20000798889d81a.jpg",
+    "static/media/whiteuser.png": "/static/media/whiteuser.b805b90dc3910c04b38b.png",
+    "static/media/user.png": "/static/media/user.557587208eb9e232f2ca.png",
+    "static/media/userwhite.png": "/static/media/userwhite.57d426a321e14675afef.png",
+    "static/media/visibility.png": "/static/media/visibility.92a22d6e0108cb9ac62b.png",
+    "static/media/booking.png": "/static/media/booking.f7a751b28ebff0c983ac.png",
+    "static/media/search-interface-symbol.png": "/static/media/search-interface-symbol.5db17c64bebadd622ba7.png",
+    "static/media/calendar.png": "/static/media/calendar.7e7f16be2a624aa298b5.png",
+    "static/media/office-chair.png": "/static/media/office-chair.6dabcfcbe177316fe9c7.png",
+    "static/media/meeting.png": "/static/media/meeting.fc5d8e5c6540b6400671.png",
+    "static/media/projector.png": "/static/media/projector.5bf2cc207bba42e5b466.png",
+    "static/media/wifi2.png": "/static/media/wifi2.f5928b9408bc8780565a.png",
+    "static/media/houseIcon.png": "/static/media/houseIcon.106951e289154707b603.png",
+    "static/media/logout_black.png": "/static/media/logout_black.0becdbc391b7088ace83.png",
+    "index.html": "/index.html",
+    "main.56db60c5.css.map": "/static/css/main.56db60c5.css.map",
+    "main.4192b96f.js.map": "/static/js/main.4192b96f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.56db60c5.css",
+    "static/js/main.4192b96f.js"
+  ]
+}
