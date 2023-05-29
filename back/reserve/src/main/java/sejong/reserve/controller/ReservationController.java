@@ -140,9 +140,9 @@ public class ReservationController {
 
         String emailText = "정기예약이 "+repeat+" "+repeatCount+"회로 설정되었습니다.\n"
                 + "예약 시작일: "+ reservation.getStart() +"\n"+
-                "예약 반복시간은"+reservation.getStart().getHour()+"시 "+reservation.getStart().getMinute()+"분부터 "
+                "예약 반복시간은 "+reservation.getStart().getHour()+"시 "+reservation.getStart().getMinute()+"분부터 "
                 + reservation.getEnd().getHour()+"시"
-                +reservation.getEnd().getMinute()+ "입니다.";
+                +reservation.getEnd().getMinute()+ "분 입니다.";
 
         emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText);
     }

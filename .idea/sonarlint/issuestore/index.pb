@@ -2,8 +2,6 @@
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-r
-Bback/reserve/src/main/java/sejong/reserve/service/RoomService.java,4\f\4f84c77c9bea201c75e324825ee9a0f9908106ce
 o
 ?back/reserve/src/main/java/sejong/reserve/domain/AuthState.java,1\f\1f3e3015877e54a8b9b7c71748e1ff9eac402f0f
 x
@@ -32,18 +30,12 @@ o
 ?back/reserve/src/main/java/sejong/reserve/web/SessionConst.java,3\c\3c005f4efdff4fefbe1d7d681ad1210eeae1d7e7
 }
 Mback/reserve/src/main/java/sejong/reserve/web/interceptor/LogInterceptor.java,7\5\75e79f873e939dbff00a2e989c8b5ef81e80e377
-ƒ
-Sback/reserve/src/main/java/sejong/reserve/GoogleCalendar/GoogleCalendarService.java,4\0\409ecfe9ea253de861d6899117a00e1202750080
-|
-Lback/reserve/src/main/java/sejong/reserve/GoogleCalendar/getGredentials.java,f\4\f42be250d185c88f997d2292b80c32e685923a07
 j
 :back/reserve/src/main/java/sejong/reserve/domain/Room.java,0\4\046e267f7c349b4b974ae421b8ba0fe6091863c4
 y
 Iback/reserve/src/main/java/sejong/reserve/controller/ExcelController.java,3\d\3d7ea323fecb2bc8c2119841fc01664af2745d3a
 t
 Dback/reserve/src/main/java/sejong/reserve/service/MemberService.java,1\4\1410e27fdc2e822e1bad0c301913be6174005e72
-s
-Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
 q
 Aback/reserve/src/main/java/sejong/reserve/domain/Reservation.java,9\5\955b62d91f075c100403d0acb3078b2bbfca390e
 q
@@ -54,19 +46,15 @@ y
 Iback/reserve/src/main/java/sejong/reserve/service/ReservationService.java,8\c\8caba592b04442a009b1cb844ad91abe403dd92c
 h
 8back/reserve/src/main/java/sejong/reserve/WebConfig.java,2\1\2160ffb53bc2795147f40acc716645f283d11f14
-{
-Kback/reserve/src/main/java/sejong/reserve/service/EmailReminderService.java,e\1\e10d3c6be571b7eef703fa9ad83dd59b5c7e41e7
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 x
 Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
-m
-=back/reserve/src/test/java/sejong/reserve/MockMailSender.java,2\a\2a942a5c8b0580c8ab20dd2648748286b59b8760
-v
-Fback/reserve/src/test/java/sejong/reserve/ReserveApplicationTests.java,8\f\8f37575a33a4814928fc3efe6a8ab70b99b2daaf
 q
 Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
 s
-Cback/reserve/src/main/java/sejong/reserve/service/EmailService.java,2\1\211d191b0f5cd9839bb3c14c4b5354070b1a6077
-
-Oback/reserve/src/main/java/sejong/reserve/controller/ReservationController.java,1\3\1373b1eb4f45c8945bdf28c50a05002054978f15
+Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
+k
+;back/reserve/src/main/java/sejong/reserve/service/Serv.java,7\6\766a5fc9df58012e1d7013f3cce9158839a38d0e
+r
+Bback/reserve/src/main/java/sejong/reserve/service/RoomService.java,4\f\4f84c77c9bea201c75e324825ee9a0f9908106ce
+{
+Kback/reserve/src/main/java/sejong/reserve/service/EmailReminderService.java,e\1\e10d3c6be571b7eef703fa9ad83dd59b5c7e41e7
