@@ -25,6 +25,7 @@ export default function RoomInfo() {
                 const data = res.data;
                 console.log(data);
                 const roomData = {
+                    "info": data.info,
                     "bim_projector": data.bim_projector,
                     "board": data.board,
                     "cap": data.cap,
@@ -85,12 +86,12 @@ export default function RoomInfo() {
                 </FacilityContainer>
                 {/* 설명 */}
                 <DescriptionBox>
-                    <ContentP>회의실의 규모는 최대 8명까지 수용이 가능하며 화이트보드와 빔 프로젝트가 포함되어 있는 회의에 최적화된 장소입니다.</ContentP>
+                    <ContentP>{roomInfoData.info}</ContentP>
                 </DescriptionBox>
                 {/* 위치 */}
-                <LocationBox>
+                {/* <LocationBox>
                     <ContentP>대양 AI센터 835호 회의실은 세종대학교 대양AI센터 8층에 위치해 있습니다.</ContentP>
-                </LocationBox>
+                </LocationBox> */}
             </ContentContainer>
         </RoomInfoContainer>
 
@@ -239,9 +240,10 @@ const DescriptionBox = styled.div`
 
 
     // align-items: center;
-    justify-content: center;
+    // justify-content: center;
+    text-align: center;
 
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 `
 
 const LocationBox = styled.div`
