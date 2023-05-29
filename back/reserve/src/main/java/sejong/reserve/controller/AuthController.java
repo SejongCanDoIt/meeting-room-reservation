@@ -76,13 +76,25 @@ public class AuthController {
   @GetMapping("/checkLogin")
   public ResponseEntity<String> checkLogin(HttpSession session) throws Exception {
     log.info("checkLogin-test");
-    Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-    log.info("member = {}", member);
-    if(member == null) {
-      throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
-    } else {
-      return new ResponseEntity<>(member.getStudentNo(), HttpStatus.OK);
+
+    if (session instanceof AdminDto) {
+      AdminDto admin = (AdminDto) session.getAttribute(SessionConst.LOGIN_MEMBER);
+      if (admin == null) {
+        throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
+      } else {
+        return new ResponseEntity<>(admin.getLoginId(), HttpStatus.OK);
+      }
+    } else if (session instanceof Member) {
+      Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+      if (member == null) {
+        throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
+      } else {
+        return new ResponseEntity<>(member.getStudentNo(), HttpStatus.OK);
+      }
     }
+
+
+    return null;
   }
 
 
