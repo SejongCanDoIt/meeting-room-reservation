@@ -3,10 +3,32 @@ import AdminSideBar from './AdminSideBar';
 import styled from 'styled-components';
 import axios from "axios"
 import React, { useEffect, useState } from 'react';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/lab/Alert';
+
 
 export default function AdminMemberManagePage() {
     const [file, setFile] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
 
+    // snackbar 관련
+    const handleClickSnackbar = (message, severity) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    // 파일 업로드 관련
     const handleFileUpload = (event) => {
         setFile(event.target.files[0]);
     };
@@ -15,7 +37,7 @@ export default function AdminMemberManagePage() {
         event.preventDefault();
 
         if (!file) {
-            console.log('파일이 선택되지 않았습니다.');
+            handleClickSnackbar('파일이 선택되지 않았습니다.', 'error');
             return;
         }
 
@@ -37,17 +59,17 @@ export default function AdminMemberManagePage() {
 
             // Handle server response here
             if (fileResponse.data.success) {
-                console.log(fileResponse.data.message);
-                window.alert('회원 추가가 완료되었습니다');
+                handleClickSnackbar('회원 추가가 완료되었습니다', 'success');
                 window.location.reload();
             } else {
-                console.log(fileResponse.data.message);
+                handleClickSnackbar(fileResponse.data.message, 'error');
             }
         } catch (err) {
-            console.log('파일을 업로드하는 동안 오류가 발생했습니다.');
+            handleClickSnackbar('파일을 업로드하는 동안 오류가 발생했습니다', 'error');
         }
     };
 
+    // 멤버 받아오기
     const [memberList, setMemberList] = useState(null);
 
     useEffect(() => {
@@ -108,6 +130,11 @@ export default function AdminMemberManagePage() {
                     </MemberList>
                 </MemberManagementContainer>
             </MemberManagement>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <CustomAlert onClose={handleCloseSnackbar} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </CustomAlert>
+            </Snackbar>
         </>
     );
 };
@@ -192,4 +219,23 @@ const MemberRow = styled.div`
     padding: 10px;
     border-bottom: 1px solid #ddd;
     height: 6vh;
+`;
+
+const CustomAlert = styled(MuiAlert)`
+    &.MuiAlert-standardSuccess {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardError {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardWarning {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardInfo {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
 `;

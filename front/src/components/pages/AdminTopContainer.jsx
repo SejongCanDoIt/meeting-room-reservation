@@ -1,6 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
 import axios from "axios"
+import logo from "../../assets/sejong_logo.jpg"; 
+import logout from "../../assets/logout_black.png"; 
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminTopContainer() {
@@ -28,12 +30,12 @@ export default function AdminTopContainer() {
 
     return (
         <TopContainer>
-            <Logo onClick={handleLogoClick} src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblEw8g%2FbtqyceLBuz2%2Fe3A21p8V2gwd9hK8X6dC00%2Fimg.jpg" alt="세종대학교 로고" />
+            <Logo onClick={handleLogoClick} src={logo} alt="세종대학교 로고" />
             <AdminInfo>
                 <AdminInfoText>관리자</AdminInfoText>
                 <AdminInfoText>님</AdminInfoText>
                 <LogoutButton onClick={handleLogout}>
-                    <LogoutImage src="https://cdn-icons-png.flaticon.com/512/3580/3580175.png" alt="로그아웃" />
+                    <LogoutImage src={logout} alt="로그아웃" />
                 </LogoutButton>
             </AdminInfo>
         </TopContainer>
@@ -78,6 +80,7 @@ const AdminInfoText = styled.p`
 `;
 
 const LogoutButton = styled.button`
+    padding-top: 10px;
     background-color: transparent;
     border: none;
     cursor: pointer;
