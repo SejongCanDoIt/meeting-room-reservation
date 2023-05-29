@@ -1,4 +1,4 @@
-import TimeBox from "./TimeBox";
+import AdminTimeBox from "./AdminTimeBox";
 import styled from "styled-components";
 import "../css/CustomCalendar.css";
 
@@ -7,7 +7,7 @@ export default function AdminTimeTable({onTimeHandler, reservedStatusList}) {
 
     return (
         <TimeContainer>
-            {timeSchdule.map((it, idx) => <BoxContainer key={idx}><TimeBox key={it} id={it} reservedStatusList={reservedStatusList[idx]}/><Ptag>{it}</Ptag></BoxContainer>)}
+            {timeSchdule.map((it, idx) => <BoxContainer key={idx}><AdminTimeBox key={it} id={it} reservedStatusList={reservedStatusList[idx]}/><Ptag>{it}</Ptag></BoxContainer>)}
         </TimeContainer>
     );
 }

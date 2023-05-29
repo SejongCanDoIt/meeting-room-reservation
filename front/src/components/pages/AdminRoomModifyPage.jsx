@@ -4,8 +4,17 @@ import axios from 'axios';
 import styled, { createGlobalStyle } from 'styled-components';
 import AdminTopContainer from './AdminTopContainer';
 import AdminSideBar from './AdminSideBar';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/lab/Alert';
+import monitor from "../../assets/monitor.png";
+import wifi from "../../assets/wifi2.png";
+import whiteboard from "../../assets/blackboard.png";
+import computer from "../../assets/computer.png";
+import projector from "../../assets/projector.png";
+import chair from "../../assets/office-chair.png";
 
 export default function AdminRoomModifyPage() {
+    // 회의실 정보 관련
     const { id } = useParams();
     const [roomData, setRoomData] = useState(null);
     const [roomId, setRoomId] = useState("");
@@ -15,7 +24,27 @@ export default function AdminRoomModifyPage() {
     const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({});
     const navigate = useNavigate();
+    // 스낵바 관련
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
 
+    // 스낵바 관련
+    const handleClickSnackbar = (message, severity) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    // 회의실 정보 요청 관련
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
@@ -47,6 +76,7 @@ export default function AdminRoomModifyPage() {
         return <p>Loading...</p>;
     }
 
+    // 회의실 정보 수정 관련
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -65,8 +95,10 @@ export default function AdminRoomModifyPage() {
         try {
             const response = await axios.patch(`/room/update`, dataToSend);
             console.log(response);  // 서버 응답을 콘솔에 출력
-            alert("회의실 정보가 성공적으로 변경되었습니다.");
-            navigate(`/AdminRoomInfoPage/${id}`);
+            handleClickSnackbar('회의실 정보가 성공적으로 변경되었습니다', 'success');
+            setTimeout(() => {
+                navigate(`/AdminRoomInfoPage/${id}`);
+            }, 2000); // 2초의 딜레이를 준 후 페이지 이동
         } catch (error) {
             console.error("회의실 정보 변경에 실패하였습니다.", error);
         }
@@ -146,7 +178,7 @@ export default function AdminRoomModifyPage() {
                                 </ButtonContainer>
                                 <FacilitiesList>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/664/664374.png" alt="의자 아이콘" />
+                                        <FacilityIcon src={chair} alt="의자 아이콘" />
                                         <select
                                             value={roomFacilities.cap}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, cap: parseInt(e.target.value) }))}
@@ -165,7 +197,7 @@ export default function AdminRoomModifyPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/3562/3562383.png" alt="와이파이 아이콘" />
+                                        <FacilityIcon src={wifi} alt="와이파이 아이콘" />
                                         <select
                                             value={roomFacilities.wifi}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, wifi: e.target.value }))}
@@ -175,7 +207,7 @@ export default function AdminRoomModifyPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/8148/8148583.png" alt="화이트보드 아이콘" />
+                                        <FacilityIcon src={whiteboard} alt="화이트보드 아이콘" />
                                         <select
                                             value={roomFacilities.board}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, board: parseInt(e.target.value) }))}
@@ -187,7 +219,7 @@ export default function AdminRoomModifyPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/512/5219/5219916.png" alt="모니터 아이콘" />
+                                        <FacilityIcon src={monitor} alt="모니터 아이콘" />
                                         <select
                                             value={roomFacilities.tv}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, tv: parseInt(e.target.value) }))}
@@ -206,7 +238,7 @@ export default function AdminRoomModifyPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/4021/4021963.png" alt="빔 프로젝터 아이콘" />
+                                        <FacilityIcon src={projector} alt="빔 프로젝터 아이콘" />
                                         <select
                                             value={roomFacilities.bim_projector}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, bim_projector: e.target.value }))}
@@ -216,7 +248,7 @@ export default function AdminRoomModifyPage() {
                                         </select>
                                     </FacilityItem>
                                     <FacilityItem>
-                                        <FacilityIcon src="https://cdn-icons-png.flaticon.com/128/3667/3667881.png" alt="컴퓨터 아이콘" />
+                                        <FacilityIcon src={computer} alt="컴퓨터 아이콘" />
                                         <select
                                             value={roomFacilities.com}
                                             onChange={(e) => setRoomFacilities(prevState => ({ ...prevState, com: parseInt(e.target.value) }))}
@@ -240,6 +272,11 @@ export default function AdminRoomModifyPage() {
                     </form>
                 </RoomInfoContainer>
             </RoomInformation>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <CustomAlert onClose={handleCloseSnackbar} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </CustomAlert>
+            </Snackbar>
         </>
     );
 };
@@ -406,4 +443,23 @@ const FacilityIcon = styled.img`
     display: inline-block;
     width: 40px;
     height: 40px;
+`;
+
+const CustomAlert = styled(MuiAlert)`
+    &.MuiAlert-standardSuccess {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardError {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardWarning {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardInfo {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
 `;

@@ -4,15 +4,38 @@ import AdminSideBar from './AdminSideBar';
 import axios from "axios"
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/lab/Alert';
 
 export default function AdminSettingModifyPage() {
+    // 상세 설정 관련
     const [settingList, setSettingList] = useState(null);
     const [univSetting, setUnivSetting] = useState({});
     const [postSetting, setPostSetting] = useState({});
     const [proSetting, setProSetting] = useState({});
     const [officeSetting, setOfficeSetting] = useState({});
     const navigate = useNavigate();
+    // 스낵바 관련
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('info');
 
+    // 스낵바 관련
+    const handleClickSnackbar = (message, severity) => {
+        setAlertMessage(message);
+        setAlertSeverity(severity);
+        setOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    // 권한별로 데이터 세팅
     const processData = (data) => {
         return [
             {
@@ -46,6 +69,7 @@ export default function AdminSettingModifyPage() {
         ];
     };
 
+    // 세부 설정 정보 요청
     useEffect(() => {
         const fetchSettingListData = async () => {
             try {
@@ -90,6 +114,7 @@ export default function AdminSettingModifyPage() {
         return <p>Loading...</p>; // 데이터 로딩 중에는 로딩 메시지 표시
     }
 
+    // 세부 설정 변경 관련
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -104,8 +129,10 @@ export default function AdminSettingModifyPage() {
 
         try {
             await axios.patch(`/manage/update`, dataToSend);
-            alert("세부 설정이 성공적으로 변경되었습니다.");
-            navigate('/AdminSettingPage');
+            handleClickSnackbar('세부 설정이 성공적으로 변경되었습니다', 'success');
+            setTimeout(() => {
+                navigate('/AdminSettingPage');
+            }, 2000); // 2초의 딜레이를 준 후 페이지 이동
         } catch (error) {
             console.error("세부 설정 변경에 실패하였습니다.", error);
         }
@@ -306,6 +333,11 @@ export default function AdminSettingModifyPage() {
                     </SettingsList >
                 </SettingsManagementContainer >
             </SettingsManagement >
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <CustomAlert onClose={handleCloseSnackbar} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </CustomAlert>
+            </Snackbar>
         </>
     );
 };
@@ -377,4 +409,23 @@ const SettingsRow = styled.div`
 const SettingsField = styled.div`
     display: flex;
     align-items: center;
+`;
+
+const CustomAlert = styled(MuiAlert)`
+    &.MuiAlert-standardSuccess {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardError {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardWarning {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
+    &.MuiAlert-standardInfo {
+        background-color: #A1203C;
+        color: #FFFFFF;
+    }
 `;
