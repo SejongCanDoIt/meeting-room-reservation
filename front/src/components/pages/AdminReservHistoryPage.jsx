@@ -176,17 +176,16 @@ export default function AdminReservHistoryPage() {
                                     default:
                                         reservationStatus = "상태 미지정";
                                 }
-
                                 return (
                                     <ReservationItem>
-                                        <div>예약 종류: {reservation.regular ? "정기 예약" : "일반 예약"}</div>
-                                        <div>예약 ID: {reservation.reservation_id}</div>
-                                        <div>예약자 학번: {reservation.member_sno}</div>
-                                        <div>노쇼 여부: {reservation.noShowCheck ? "있음" : "없음"}</div>
-                                        <div>예약 시작 시간: {startString}</div>
-                                        <div>예약 종료 시간: {endString}</div>
-                                        <div>회의실 ID: {reservation.room_id}</div>
-                                        <div>예약 상태: {reservationStatus}</div>
+                                        <div><b>예약 종류:</b> {reservation.regular ? "정기 예약" : "일반 예약"}</div>
+                                        <div><b>예약 ID:</b> {reservation.reservation_id}</div>
+                                        <div><b>예약자 학번:</b> {reservation.member_sno}</div>
+                                        <div><b>노쇼 여부:</b> {reservation.noShowCheck ? "있음" : "없음"}</div>
+                                        <div><b>예약 시작 시간:</b> {startString}</div>
+                                        <div><b>예약 종료 시간:</b> {endString}</div>
+                                        <div><b>회의실 ID:</b> {reservation.room_id}</div>
+                                        <div><b>예약 상태:</b> <Status status={reservation.status}>{reservationStatus}</Status></div>
                                     </ReservationItem>
                                 );
                             })}
@@ -290,4 +289,8 @@ const ReservationItem = styled.div`
     border-radius: 5px;
     margin-bottom: 10px;
     background: white;
+`;
+
+const Status = styled.span`
+    color: ${props => props.status === 'RESERVED' ? 'green' : props.status === 'FINISHED' ? 'red' : 'black'};
 `;

@@ -8,6 +8,7 @@ import axios from 'axios'
 export default function AdminRoomAddPage() {
     const navigate = useNavigate();
     const [roomName, setRoomName] = useState('');
+    const [roomImage, setRoomImage] = useState('');
     const [roomInfo, setRoomInfo] = useState('');
     const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({
@@ -18,8 +19,7 @@ export default function AdminRoomAddPage() {
         bim_projector: 0,
         com: 0,
     });
-    const [roomImage, setRoomImage] = useState('');
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 

@@ -9,6 +9,7 @@ export default function AdminRoomModifyPage() {
     const { id } = useParams();
     const [roomData, setRoomData] = useState(null);
     const [roomId, setRoomId] = useState("");
+    const [roomImage, setRoomImage] = useState('');
     const [roomName, setRoomName] = useState("");
     const [roomInfo, setRoomInfo] = useState("");
     const [roomBuilding, setRoomBuilding] = useState("");
@@ -22,6 +23,7 @@ export default function AdminRoomModifyPage() {
                 setRoomData(response.data);
                 setRoomId(response.data.id);
                 setRoomName(response.data.name);
+                setRoomImage(response.data.picture);
                 setRoomInfo(response.data.info);
                 setRoomBuilding(response.data.buildingName);
                 setRoomFacilities({
@@ -55,7 +57,7 @@ export default function AdminRoomModifyPage() {
             buildingName: roomBuilding,
             ...roomFacilities,
             empty: true,
-            picture: roomData.picture
+            picture: roomImage
         };
 
         console.log("Data to send: ", dataToSend);
@@ -68,6 +70,10 @@ export default function AdminRoomModifyPage() {
         } catch (error) {
             console.error("회의실 정보 변경에 실패하였습니다.", error);
         }
+    };
+
+    const handleImageChange = (event) => {
+        setRoomImage(event.target.value);
     };
 
     return (
@@ -129,9 +135,14 @@ export default function AdminRoomModifyPage() {
                                 </Block>
                             </LeftInfo>
                             <RightInfo>
-                                <RoomImg src={roomData.picture} alt={`이미지: ${roomData.name}`} />
+                                <RoomImgContianer roomImage={roomImage} />
                                 <ButtonContainer>
-                                    <RoomAddButton>사진 추가하기</RoomAddButton>
+                                    <StyledInput
+                                        type="text"
+                                        placeholder="Image URL"
+                                        value={roomImage}
+                                        onChange={handleImageChange}
+                                    />
                                 </ButtonContainer>
                                 <FacilitiesList>
                                     <FacilityItem>
@@ -349,24 +360,28 @@ const RoomImg = styled.img`
     margin-bottom: 20px;
 `;
 
-const ButtonContainer = styled.div`
-    text-align: center;
+const RoomImgContianer = styled.img.attrs(props => ({
+    src: props.roomImage
+}))`
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
     margin-bottom: 20px;
 `;
 
-const RoomAddButton = styled.button`
-    width: 150px;
-    background-color: #A1203C;
-    color: white;
-    border: none;
+const StyledInput = styled.input`
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    
-    &:hover {
-        background-color: #8B1B34;
-    }
+    margin-bottom: 10px;
+`;
+
+const ButtonContainer = styled.div`
+    text-align: center;
+    margin-bottom: 20px;
 `;
 
 const FacilitiesList = styled.ul`

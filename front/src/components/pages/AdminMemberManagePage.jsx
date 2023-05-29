@@ -15,7 +15,13 @@ export default function AdminMemberManagePage() {
         event.preventDefault();
 
         if (!file) {
-            console.log('No file selected.');
+            console.log('파일이 선택되지 않았습니다.');
+            return;
+        }
+
+        const confirmAddMember = window.confirm('회원을 추가하시겠습니까?');
+
+        if (!confirmAddMember) {
             return;
         }
 
@@ -32,11 +38,13 @@ export default function AdminMemberManagePage() {
             // Handle server response here
             if (fileResponse.data.success) {
                 console.log(fileResponse.data.message);
+                window.alert('회원 추가가 완료되었습니다');
+                window.location.reload();
             } else {
                 console.log(fileResponse.data.message);
             }
         } catch (err) {
-            console.log('An error occurred while uploading file.');
+            console.log('파일을 업로드하는 동안 오류가 발생했습니다.');
         }
     };
 
