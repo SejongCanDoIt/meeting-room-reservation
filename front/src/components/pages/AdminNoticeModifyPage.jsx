@@ -19,7 +19,7 @@ export default function AdminNoticeModifyPage() {
     const [noticeTitle, setNoticeTitle] = useState('');
     const [noticeContent, setNoticeContent] = useState('');
 
-    // snackbar 관련
+    // 스낵바 관련
     const handleClickSnackbar = (message, severity) => {
         setAlertMessage(message);
         setAlertSeverity(severity);
@@ -70,7 +70,7 @@ export default function AdminNoticeModifyPage() {
         const dataToSend = {
             noticeId: noticeId,
             title: noticeTitle,
-            content: noticeContent,
+            content: encodeURIComponent(noticeContent),
         };
 
         console.log("Data to Send", dataToSend);

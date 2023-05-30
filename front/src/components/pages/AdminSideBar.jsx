@@ -6,6 +6,7 @@ export default function AdminSideBar() {
     const [activeMenu, setActiveMenu] = useState("");
     const [reservationSubmenu, setReservationSubmenu] = useState(false);
 
+    // 메뉴 클릭 시
     const handleMenuClick = (menu) => {
         if (menu === "reservation") {
             setReservationSubmenu(!reservationSubmenu);

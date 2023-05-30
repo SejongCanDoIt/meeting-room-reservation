@@ -104,6 +104,7 @@ export default function AdminRoomModifyPage() {
         }
     };
 
+    // 회의실 이미지 수정
     const handleImageChange = (event) => {
         setRoomImage(event.target.value);
     };
@@ -407,6 +408,7 @@ const RoomImgContianer = styled.img.attrs(props => ({
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 20px;
+    margin: auto;
 `;
 
 const StyledInput = styled.input`

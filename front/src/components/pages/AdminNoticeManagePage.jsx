@@ -16,7 +16,7 @@ export default function AdminNoticeManagePage() {
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('info');
 
-    // snackbar 관련
+    // 스낵바 관련
     const handleClickSnackbar = (message, severity) => {
         setAlertMessage(message);
         setAlertSeverity(severity);

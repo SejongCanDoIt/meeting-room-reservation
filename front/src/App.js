@@ -28,6 +28,7 @@ import ShowReservation from "./components/pages/ShowReservation";
 import Logout from './components/pages/Logout';
 import AuthenticatingPage from './components/pages/AuthenticatingPage';
 import styled from 'styled-components';
+import AdminMainPage from './components/pages/AdminMainPage';
 import AdminMemberManagePage from './components/pages/AdminMemberManagePage';
 import AdminRoomManagePage from './components/pages/AdminRoomManagePage';
 import AdminSettingPage from './components/pages/AdminSettingPage';
@@ -73,6 +74,7 @@ function App() {
           <Route path="/reservation" element={<Reservation />}></Route>
           <Route path="/test-reservation" element={<TestReservation />}></Route>
           <Route path="/regularReservation" element={<Regularreservations />}></Route>
+          <Route path="/AdminMainPage" element={<AdminMainPage />}></Route>
           <Route path="/AdminMemberManagePage" element={<AdminMemberManagePage />}></Route>
           <Route path="/AdminRoomManagePage" element={<AdminRoomManagePage />}></Route>
           <Route path="/AdminSettingPage" element={<AdminSettingPage />}></Route>

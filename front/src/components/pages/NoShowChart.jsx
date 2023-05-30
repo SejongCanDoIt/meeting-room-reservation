@@ -10,7 +10,7 @@ const NoshowContainer = styled.div`
     justify-content: center;
     align-itmes: center;
     width: 100%;
-    height: 100vh;
+    // height: 100vh;
 
     // background-color: gray;
 `

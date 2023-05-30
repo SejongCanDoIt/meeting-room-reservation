@@ -6,8 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function AdminSettingPage() {
-    const [settingList, setSettingList] = useState(null);
+    const [settingList, setSettingList] = useState([]);
 
+    // 세부 설정 데이터 처리
     const processData = (data) => {
         return [
             {
@@ -45,6 +46,7 @@ export default function AdminSettingPage() {
         ];
     };
 
+    // 세부 설정 받아오기
     useEffect(() => {
         const fetchSettingListData = async () => {
             try {
@@ -85,15 +87,21 @@ export default function AdminSettingPage() {
                             <span>예약 시간 간격 기준: 일</span>
                             <span>예약 시간 간격 기준: 주</span>
                         </SettingsListHeader>
-                        {settingList.map(setting => (
-                            <SettingsRow key={setting.id}>
-                                <span>{setting.role}</span>
-                                <span>{setting.cnt}</span>
-                                <span>{setting.period_time}</span>
-                                <span>{setting.period_day}</span>
-                                <span>{setting.period_week}</span>
-                            </SettingsRow>
-                        ))}
+                        {settingList.length === 0 ? (
+                            <NoSettingMessage>초기 세부 설정을 해주세요</NoSettingMessage>
+                        ) : (
+                            settingList.map(setting => {
+                                return (
+                                    <SettingsRow key={setting.id}>
+                                        <span>{setting.role}</span>
+                                        <span>{setting.cnt}</span>
+                                        <span>{setting.period_time}</span>
+                                        <span>{setting.period_day}</span>
+                                        <span>{setting.period_week}</span>
+                                    </SettingsRow>
+                                );
+                            })
+                        )}
                     </SettingsList>
                 </SettingsManagementContainer>
             </SettingsManagement>
@@ -132,6 +140,18 @@ const EditSettingsButton = styled.button`
     &:hover {
         background-color: #8B1B34;
     }
+`;
+
+const NoSettingMessage = styled.p`
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: 30px;
+    color: #A1203C;
 `;
 
 const SettingsList = styled.div`

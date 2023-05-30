@@ -14,6 +14,7 @@ import projector from "../../assets/projector.png";
 import chair from "../../assets/office-chair.png";
 
 export default function AdminRoomInfoPage() {
+    // 회의실 정보 관련
     const { id } = useParams();
     const [roomInfo, setRoomInfo] = useState(null);
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function AdminRoomInfoPage() {
         setOpen(false);
     };
 
-    // 정보 요청 관련
+    // 회의실 정보 요청
     useEffect(() => {
         const fetchRoomData = async () => {
             try {
@@ -57,7 +58,7 @@ export default function AdminRoomInfoPage() {
         return <p>Loading...</p>;
     }
 
-    // 회의실 삭제 관련
+    // 회의실 삭제
     const handleDelete = async () => {
         const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
         if (confirmDelete) {
@@ -249,6 +250,7 @@ const RoomImg = styled.img`
     max-height: 300px;
     width: 100%;
     height: auto;
+    margin: auto;
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 20px;
