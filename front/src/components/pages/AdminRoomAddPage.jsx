@@ -22,7 +22,7 @@ export default function AdminRoomAddPage() {
     const [alertSeverity, setAlertSeverity] = useState('info');
     // 회의실 정보 관련
     const [roomName, setRoomName] = useState('');
-    const [roomImage, setRoomImage] = useState(imageready);
+    const [roomImage, setRoomImage] = useState("http://home.sejong.ac.kr/ImageFileView?imgPath=datafile/wsl/bbs/1393&imgName=6772_1.jpg&imgGubun=NAS");
     const [roomInfo, setRoomInfo] = useState('');
     const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({
@@ -139,7 +139,8 @@ export default function AdminRoomAddPage() {
                                 </Block>
                             </LeftInfo>
                             <RightInfo>
-                                <RoomImgContianer roomImage={roomImage} />
+                                <RoomImgContianer roomImage="http://home.sejong.ac.kr/ImageFileView?imgPath=datafile/wsl/bbs/1393&imgName=6772_1.jpg&imgGubun=NAS" />
+                                {/* <RoomImgContianer roomImage={roomImage} />
                                 <ButtonContainer>
                                     <StyledInput
                                         type="text"
@@ -148,7 +149,7 @@ export default function AdminRoomAddPage() {
                                         onChange={handleImageChange}
                                     />
                                     <RoomAdd>사진 URL을 추가해주세요</RoomAdd>
-                                </ButtonContainer>
+                                </ButtonContainer> */}
                                 <FacilitiesList>
                                     <FacilityItem>
                                         <FacilityIcon src={chair} alt="의자 아이콘" />
