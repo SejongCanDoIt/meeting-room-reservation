@@ -22,7 +22,7 @@ export default function AdminRoomAddPage() {
     const [alertSeverity, setAlertSeverity] = useState('info');
     // 회의실 정보 관련
     const [roomName, setRoomName] = useState('');
-    const [roomImage, setRoomImage] = useState(imageready);
+    const [roomImage, setRoomImage] = useState("http://home.sejong.ac.kr/ImageFileView?imgPath=datafile/wsl/bbs/1393&imgName=6772_1.jpg&imgGubun=NAS");
     const [roomInfo, setRoomInfo] = useState('');
     const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({
