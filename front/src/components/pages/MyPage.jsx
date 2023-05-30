@@ -24,7 +24,7 @@ export default function MyPage() {
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
         // 서버로부터 로그인 여부 확인
-        axios.get('http://3.36.241.224:8080/auth/checkLogin')
+        axios.get('/auth/checkLogin')
             .then((res) => {
                 console.log(res);
                 setLoginId((id) => res.data);
@@ -36,7 +36,7 @@ export default function MyPage() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://3.36.241.224:8080/reserve/user-list')
+        axios.get('/reserve/user-list')
             .then((res) => {
                 console.log(res.data);
                 const info = makeReserveList(res.data);

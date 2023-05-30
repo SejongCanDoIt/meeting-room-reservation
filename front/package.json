@@ -24,7 +24,6 @@
     "react-cookie": "^4.1.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
-    "react-minimal-pie-chart": "^8.4.0",
     "react-modal": "^3.16.1",
     "react-query": "^3.39.3",
     "react-router": "^6.9.0",
@@ -57,9 +56,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "http://devMingu.com/",
-  "devDependencies": {
-    "gh-pages": "^5.0.0"
   }
 }

@@ -3,6 +3,7 @@ package sejong.reserve.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Management;
 import sejong.reserve.domain.Member;
 import sejong.reserve.dto.ManagementDto;
@@ -26,6 +27,23 @@ public class ManagementService{
     public void update(ManagementDto managementInfo) {
         Management management = managementRepository.findOne();
         management.setManagement(management, managementInfo);
+        List<Member> members = memberRepository.findAll();
+        for (Member member : members) {
+            switch (member.getAuthority()) {
+                case UNI_STUDENT:
+                    member.setCnt(management.getUniv_cnt());
+                    break;
+                case POST_STUDENT:
+                    member.setCnt(management.getPost_cnt());
+                    break;
+                case PROFESSOR:
+                    member.setCnt(management.getPro_cnt());
+                    break;
+                case OFFICE:
+                    member.setCnt(management.getOffice_cnt());
+                    break;
+            }
+        }
     }
 
 
