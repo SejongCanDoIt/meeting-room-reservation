@@ -18,6 +18,7 @@ export default function MyPage() {
     const [serchParams, setSearchParams] = useSearchParams();
     const [loginId, setLoginId] = useState("");
     const [reserveList, setReserveList] = useState([]);
+    const [noShowCheck, setNoShowCheck] = useState(false);
     const dayList = ["일", "월", "화", "수", "목", "금", "토"];
     const navigate = useNavigate();
 
@@ -65,7 +66,8 @@ export default function MyPage() {
             const startCal = startTmp[0].split('-');
             const startTime = startTmp[1].split(':');
             const endTime = endTmp[1].split(':');
-            const isExpire = new Date(el.start) < new Date(); // 만료된 예약인지 확인.
+            const isExpire = new Date(el.end) < new Date(); // 만료된 예약인지 확인.
+            const isQrCheck = (new Date(el.start) < new Date()) && (new Date() < new Date(el.end));
             // console.log(isExpire);
 
             const info = {
@@ -82,7 +84,7 @@ export default function MyPage() {
                 isExpire: isExpire,
                 buildingName: el.room_building_name,
                 roomName: el.room_name,
-
+                isQrCheck: isQrCheck,
             }
             infoData.push(info);
             // console.log(info);
@@ -93,13 +95,14 @@ export default function MyPage() {
     const todayList = () => {
         let message = "오늘의 예약이 없습니다"
         for (let el of reserveList) {
-            // console.log(el);
+            console.log(el);
             const year = parseInt(el.year);
             const month = parseInt(el.month) - 1;
             const date = parseInt(el.date);
             // console.log(moment(new Date(year, month, date)).format("YYYY-MM-DD"), moment(new Date()).format("YYYY-MM-DD"));
             if (moment(new Date(year, month, date)).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD") && !el.isExpire) {
                 message = `[${el.buildingName} ${el.roomName}] ${el.startHour}시${el.startMinute}분 ~ ${el.endHour}시${el.endMinute}분 오늘 예약이 있어요`;
+                // setNoShowCheck(el.isQrCheck);
             }
         }
         return message;
@@ -118,7 +121,6 @@ export default function MyPage() {
     const recentListPropsFunction = () => {
         let message = "최근 예약내역이 없습니다."
         for (let el of reserveList) {
-            console.log(el);
             if (el.isExpire) {
                 const recentData = {
                     year: el.year,
