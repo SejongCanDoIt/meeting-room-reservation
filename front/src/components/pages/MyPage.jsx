@@ -15,6 +15,81 @@ import { useSearchParams, Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function MyPage() {
+<<<<<<< HEAD
+    const [serchParams, setSearchParams] = useSearchParams();
+    const [loginId, setLoginId] = useState("");
+    const [reserveList, setReserveList] = useState([]);
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"];
+    const navigate = useNavigate();
+
+    // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
+    useEffect(() => {
+        // 서버로부터 로그인 여부 확인
+        axios.get('/auth/checkLogin')
+            .then((res) => {
+                console.log(res);
+                setLoginId((id) => res.data);
+                // console.log("로그인 되어있습니다")
+            })
+            .catch((err) => {
+                navigate('/loginPage')
+            })
+    }, []);
+
+    useEffect(() => {
+        axios.get('/reserve/user-list')
+            .then((res) => {
+                console.log(res.data);
+                const info = makeReserveList(res.data);
+
+                // 같은 날일때는 시간이 앞선 것부터.
+                info.sort((a, b) => b.startHour - a.startHour);
+                // 그 다음에 날짜를 기준으로 정렬
+                info.sort((a, b) => b.date - a.date);
+                // 월별 기준으로 정렬
+                info.sort((a, b) => b.month - a.month);
+
+                // 상태 반영
+                setReserveList((state) => [...info]);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, []);
+
+    const makeReserveList = (data) => {
+        const infoData = [];
+        for (let el of data) {
+            const startTmp = el.start.split('T'); // 2023-04-20     05:00:00
+            const endTmp = el.end.split('T'); // 2023-04-20     05:00:00
+            
+            const startCal = startTmp[0].split('-');
+            const startTime = startTmp[1].split(':');
+            const endTime = endTmp[1].split(':');
+            const isExpire = new Date(el.start) < new Date(); // 만료된 예약인지 확인.
+            // console.log(isExpire);
+
+            const info = {
+                reservationId: el.reservation_id,
+                year: startCal[0],
+                month: startCal[1],
+                date: startCal[2],
+                day: dayList[new Date(startCal[0], startCal[1]-1, startCal[2]).getDay()],
+                startHour: startTime[0],
+                startMinute: startTime[1],
+                endHour: endTime[0],
+                endMinute: endTime[1],
+                room_id: el.room_id,
+                isExpire: isExpire,
+                buildingName: el.room_building_name,
+                roomName: el.room_name,
+
+            }
+            infoData.push(info);
+            // console.log(info);
+        }
+        return infoData;
+=======
   const [serchParams, setSearchParams] = useSearchParams();
   const [loginId, setLoginId] = useState("");
   const [reserveList, setReserveList] = useState([]);
@@ -89,6 +164,7 @@ export default function MyPage() {
       };
       infoData.push(info);
       // console.log(info);
+>>>>>>> dev
     }
     return infoData;
   };
