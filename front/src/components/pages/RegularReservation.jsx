@@ -386,7 +386,7 @@ export default function RegularReservations() {
     const onBtnClicked = () => {
         // 주간 정기예약
         if (regularInfo.dayWeekMonth === "weekly") {
-            for (let day=0 ; day <= regularInfo.count*7; day += 7) {
+            for (let day=0 ; day < regularInfo.count*7; day += 7) {
                 onWeekRegularHandler(day);
             }
         }
@@ -400,7 +400,7 @@ export default function RegularReservations() {
             const selecDay = translateIntToString(yearR, monthR, dateR, dayR);
 
             makeReservation(selecDay.year, selecDay.month, selecDay.date, dayR, selecDay.startTime, selecDay.startMinute, selecDay.endTime, selecDay.endMinute);
-            for (let cnt=0 ; cnt < regularInfo.count; cnt++) {
+            for (let cnt=0 ; cnt < regularInfo.count - 1; cnt++) {
                 const nextRegular = onMonthRegularHandler(yearR, monthR, dateR, dayR);
                 yearR = nextRegular.yearR;
                 monthR = nextRegular.monthR;
@@ -424,7 +424,7 @@ export default function RegularReservations() {
 
         let day = parseInt(dayRepeat);
         console.log(regularInfo.dayRepeat);
-        for (let i=0 ; i<=count ; i++) {
+        for (let i=0 ; i<count ; i++) {
             if (i === 0) {
                 const selecDay = translateIntToString(todayYear, todayMonth, todayDate, todayDay);
                 makeReservation(selecDay.year, selecDay.month, selecDay.date, todayDay, selecDay.startTime, selecDay.startMinute, selecDay.endTime, selecDay.endMinute);
