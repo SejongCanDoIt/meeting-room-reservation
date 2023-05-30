@@ -168,7 +168,8 @@ export default function AdminRoomModifyPage() {
                                 </Block>
                             </LeftInfo>
                             <RightInfo>
-                                <RoomImgContianer roomImage={roomImage} />
+                                <RoomImgContianer roomImage="http://home.sejong.ac.kr/ImageFileView?imgPath=datafile/wsl/bbs/1393&imgName=6772_1.jpg&imgGubun=NAS" />
+                                {/* <RoomImgContianer roomImage={roomImage} />
                                 <ButtonContainer>
                                     <StyledInput
                                         type="text"
@@ -176,7 +177,7 @@ export default function AdminRoomModifyPage() {
                                         value={roomImage}
                                         onChange={handleImageChange}
                                     />
-                                </ButtonContainer>
+                                </ButtonContainer> */}
                                 <FacilitiesList>
                                     <FacilityItem>
                                         <FacilityIcon src={chair} alt="의자 아이콘" />
