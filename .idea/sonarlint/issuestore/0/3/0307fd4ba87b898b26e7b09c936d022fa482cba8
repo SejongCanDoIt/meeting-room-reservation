@@ -1,0 +1,11 @@
+
+w
+java:S1488"bImmediately return this expression instead of assigning it to the temporary variable "noticeList".(òÞô
+t
+java:S1488$"^Immediately return this expression instead of assigning it to the temporary variable "notice".(ÂÏ«Æ
+f
+java:S36557"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ÂÏ«Æ
+f
+java:S3655$"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ÂÏ«Æ
+f
+java:S3655-"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ØûˆÕ

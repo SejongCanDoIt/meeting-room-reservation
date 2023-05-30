@@ -28,15 +28,12 @@ public class ExcelService {
     private EntityManager entityManager;
 
     // DB의 AUTO_INCREMENT 값을 1로 재설정하는 메소드
-    public void resetAutoIncrement(){
+    @Transactional
+    public void resetAutoIncrement() {
         // Native SQL 쿼리를 이용하여 AUTO_INCREMENT를 1로 재설정
         entityManager.createNativeQuery("ALTER TABLE member AUTO_INCREMENT = 1").executeUpdate();
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createNativeQuery("ALTER TABLE member AUTO_INCREMENT = 1");
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
-        entityManager.close();
     }
+
 
     // 엑셀 파일에서 데이터를 가져와 DB에 저장하는 메소드
     @Transactional

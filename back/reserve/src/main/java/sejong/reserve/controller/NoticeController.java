@@ -65,14 +65,14 @@ public class NoticeController {
 
 
     @PatchMapping("/update")
-    public void update(HttpServletRequest request) {
-        try {
-            String body = new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            String decodedBody = URLDecoder.decode(body, StandardCharsets.UTF_8.name());
-            // 이제 decodedBody에는 URL 디코딩된 본문이 있습니다.
-            // decodedBody를 JSON으로 파싱하여 UpdateRequestNoticeDto 객체를 생성
-            ObjectMapper objectMapper = new ObjectMapper();
-            UpdateRequestNoticeDto updateNoticeInfo = objectMapper.readValue(decodedBody, UpdateRequestNoticeDto.class);
+            public void update(HttpServletRequest request) {
+                try {
+                    String body = new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+                    String decodedBody = URLDecoder.decode(body, StandardCharsets.UTF_8.name());
+                    // 이제 decodedBody에는 URL 디코딩된 본문이 있습니다.
+                    // decodedBody를 JSON으로 파싱하여 UpdateRequestNoticeDto 객체를 생성
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    UpdateRequestNoticeDto updateNoticeInfo = objectMapper.readValue(decodedBody, UpdateRequestNoticeDto.class);
             noticeService.update(updateNoticeInfo);
         } catch (IOException e) {
             // 요청 본문을 읽는 도중 오류가 발생한 경우에 대한 처리
