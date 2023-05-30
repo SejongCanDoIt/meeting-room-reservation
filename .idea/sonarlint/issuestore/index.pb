@@ -8,18 +8,12 @@ x
 Hback/reserve/src/main/java/sejong/reserve/controller/RoomController.java,6\a\6a4c42e7a266dc6a685c397d42d08c502abfa5ec
 x
 Hback/reserve/src/main/java/sejong/reserve/repository/RoomRepository.java,f\2\f220e4a6b0d914c670c16e242e1f1dad43ecc015
-I
-back/reserve/build.gradle,b\8\b8dcb96b50142b272b896e7a17a9c0d7d60540cc
-l
-<back/reserve/src/main/java/sejong/reserve/domain/Notice.java,2\0\2078e807e2c602a1db123d2b5c5af248a291119d
 p
 @back/reserve/src/main/java/sejong/reserve/domain/Management.java,6\e\6edb78d52efd9149136ef53b65d02abf3338066a
 z
 Jback/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java,a\2\a2c8f44ba7dc709bde57be7028780449fc42b8ea
 p
 @back/reserve/src/main/java/sejong/reserve/dto/ManagementDto.java,6\9\69f9320dd37c4545b26d67a208daf888aedd8e5e
-z
-Jback/reserve/src/main/java/sejong/reserve/controller/NoticeController.java,d\9\d9a64ceb8a7a9a3e45f7463fd3f379aa8b82dc56
 l
 <back/reserve/src/main/java/sejong/reserve/domain/Member.java,b\b\bb69527011b7f607ca2ff190a1e5ce92bb432a0f
 G
@@ -48,8 +42,6 @@ h
 8back/reserve/src/main/java/sejong/reserve/WebConfig.java,2\1\2160ffb53bc2795147f40acc716645f283d11f14
 x
 Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
-q
-Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
 s
 Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
 k
