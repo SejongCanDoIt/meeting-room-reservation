@@ -217,39 +217,43 @@ export default function AdminReservHistoryPage() {
                             </TimeBox>
                         </LeftInfo>
                         <RightInfo>
-                            {reservations.map(reservation => {
-                                const startDate = new Date(reservation.start);
-                                const endDate = new Date(reservation.end);
-                                const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes()}`;
-                                const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes()}`;
+                            {reservations.length === 0 ? (
+                                <NoReservationMessage>현재 예약 정보가 없습니다.</NoReservationMessage>
+                            ) : (
+                                reservations.map(reservation => {
+                                    const startDate = new Date(reservation.start);
+                                    const endDate = new Date(reservation.end);
+                                    const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes()}`;
+                                    const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes()}`;
+                                    let reservationStatus;
 
-                                let reservationStatus;
-                                switch (reservation.status) {
-                                    case "RESERVED":
-                                        reservationStatus = "예약됨";
-                                        break;
-                                    case "FINISHED":
-                                        reservationStatus = "종료됨";
-                                        break;
-                                    case "CANCELED":
-                                        reservationStatus = "취소됨";
-                                        break;
-                                    default:
-                                        reservationStatus = "상태 미지정";
-                                }
-                                return (
-                                    <ReservationItem>
-                                        <div><b>예약 종류:</b> {reservation.regular ? "정기 예약" : "일반 예약"}</div>
-                                        <div><b>예약 ID:</b> {reservation.reservation_id}</div>
-                                        <div><b>예약자 학번:</b> {reservation.member_sno}</div>
-                                        <div><b>노쇼 여부:</b> {reservation.noShowCheck ? "있음" : "없음"}</div>
-                                        <div><b>예약 시작 시간:</b> {startString}</div>
-                                        <div><b>예약 종료 시간:</b> {endString}</div>
-                                        <div><b>회의실 ID:</b> {reservation.room_id}</div>
-                                        <div><b>예약 상태:</b> <Status status={reservation.status}>{reservationStatus}</Status></div>
-                                    </ReservationItem>
-                                );
-                            })}
+                                    switch (reservation.status) {
+                                        case "RESERVED":
+                                            reservationStatus = "예약됨";
+                                            break;
+                                        case "FINISHED":
+                                            reservationStatus = "종료됨";
+                                            break;
+                                        case "CANCELED":
+                                            reservationStatus = "취소됨";
+                                            break;
+                                        default:
+                                            reservationStatus = "상태 미지정";
+                                    }
+                                    return (
+                                        <ReservationItem>
+                                            <div><b>예약 종류:</b> {reservation.regular ? "정기 예약" : "일반 예약"}</div>
+                                            <div><b>예약 ID:</b> {reservation.reservation_id}</div>
+                                            <div><b>예약자 학번:</b> {reservation.member_sno}</div>
+                                            <div><b>노쇼 여부:</b> {reservation.noShowCheck ? "있음" : "없음"}</div>
+                                            <div><b>예약 시작 시간:</b> {startString}</div>
+                                            <div><b>예약 종료 시간:</b> {endString}</div>
+                                            <div><b>회의실 ID:</b> {reservation.room_id}</div>
+                                            <div><b>예약 상태:</b> <Status status={reservation.status}>{reservationStatus}</Status></div>
+                                        </ReservationItem>
+                                    );
+                                })
+                            )}
                         </RightInfo>
                     </DayInfo>
                 </ReservationContainer>
@@ -342,6 +346,18 @@ const RightInfo = styled.div`
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+`;
+
+const NoReservationMessage = styled.p`
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: 30px;
+    color: #A1203C;
 `;
 
 const ReservationItem = styled.div`

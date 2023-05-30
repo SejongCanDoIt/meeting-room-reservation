@@ -7,7 +7,7 @@ import axios from "axios"
 
 export default function AdminRoomManagePage() {
     // 회의실 리스트 받아오기
-    const [roomList, setRoomList] = useState(null);
+    const [roomList, setRoomList] = useState([]);
 
     useEffect(() => {
         const fetchRoomListData = async () => {
@@ -114,6 +114,7 @@ const NoRoomMessage = styled.p`
     height: 100%;
     margin-top: 30px;
     color: #A1203C;
+    margin: auto;
 `;
 
 const RoomList = styled.div`
