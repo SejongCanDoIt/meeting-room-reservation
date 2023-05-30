@@ -8,8 +8,6 @@ x
 Hback/reserve/src/main/java/sejong/reserve/controller/RoomController.java,6\a\6a4c42e7a266dc6a685c397d42d08c502abfa5ec
 x
 Hback/reserve/src/main/java/sejong/reserve/repository/RoomRepository.java,f\2\f220e4a6b0d914c670c16e242e1f1dad43ecc015
-I
-back/reserve/build.gradle,b\8\b8dcb96b50142b272b896e7a17a9c0d7d60540cc
 l
 <back/reserve/src/main/java/sejong/reserve/domain/Notice.java,2\0\2078e807e2c602a1db123d2b5c5af248a291119d
 p
@@ -22,8 +20,6 @@ z
 Jback/reserve/src/main/java/sejong/reserve/controller/NoticeController.java,d\9\d9a64ceb8a7a9a3e45f7463fd3f379aa8b82dc56
 l
 <back/reserve/src/main/java/sejong/reserve/domain/Member.java,b\b\bb69527011b7f607ca2ff190a1e5ce92bb432a0f
-G
-back/reserve/.gitignore,3\5\35921015bbd4ce3e124004618788b59cbb32edcc
 „
 Tback/reserve/src/main/java/sejong/reserve/web/interceptor/LoginCheckInterceptor.java,3\0\305761b9031d44581e4528630c442e16d0ecff7e
 o
@@ -48,8 +44,6 @@ h
 8back/reserve/src/main/java/sejong/reserve/WebConfig.java,2\1\2160ffb53bc2795147f40acc716645f283d11f14
 x
 Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
-q
-Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
 s
 Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
 k
@@ -58,3 +52,19 @@ r
 Bback/reserve/src/main/java/sejong/reserve/service/RoomService.java,4\f\4f84c77c9bea201c75e324825ee9a0f9908106ce
 {
 Kback/reserve/src/main/java/sejong/reserve/service/EmailReminderService.java,e\1\e10d3c6be571b7eef703fa9ad83dd59b5c7e41e7
+s
+Cback/reserve/src/main/java/sejong/reserve/service/EmailService.java,2\1\211d191b0f5cd9839bb3c14c4b5354070b1a6077
+v
+Fback/reserve/src/test/java/sejong/reserve/ReserveApplicationTests.java,8\f\8f37575a33a4814928fc3efe6a8ab70b99b2daaf
+m
+=back/reserve/src/test/java/sejong/reserve/MockMailSender.java,2\a\2a942a5c8b0580c8ab20dd2648748286b59b8760
+
+Oback/reserve/src/main/java/sejong/reserve/controller/ReservationController.java,1\3\1373b1eb4f45c8945bdf28c50a05002054978f15
+q
+Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
+G
+back/reserve/.gitignore,3\5\35921015bbd4ce3e124004618788b59cbb32edcc
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+I
+back/reserve/build.gradle,b\8\b8dcb96b50142b272b896e7a17a9c0d7d60540cc

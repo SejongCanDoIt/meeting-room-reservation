@@ -1,0 +1,54 @@
+
+e
+java:S1192ú"IDefine a constant instead of duplicating this literal "sno = {}" 5 times.(ƒí ™ÿÿÿÿÿ
+a
+java:S1192"JDefine a constant instead of duplicating this literal "date = {}" 3 times.(’”£·
+g
+java:S1192/"QDefine a constant instead of duplicating this literal "loginMember = {}" 7 times.(¸µ¶Ç
+…
+java:S1192-"oDefine a constant instead of duplicating this literal "ë¡œê·¸ì¸ì´ ì•ˆë˜ì–´ ìˆëŠ” ìƒíƒœì…ë‹ˆë‹¤." 6 times.(ûá×ª
+f	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ôŒĞœ
+l	java:S117İ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›ÎÓõüÿÿÿÿ
+g	java:S117¹"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½åœ×
+l	java:S117¾"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÇŒ®¼ûÿÿÿÿ
+l	java:S117Ò"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( æ›Óüÿÿÿÿ
+l	java:S117×"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…¥Š¾ÿÿÿÿÿ
+g	java:S117Ü"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§úÉŒ
+>
+java:S5411="(Use a primitive boolean expression here.(òŞª•
+D
+java:S5411±"(Use a primitive boolean expression here.(îâ´¢ûÿÿÿÿ
+k
+java:S3655s"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(§éüÿÿÿÿ
+k
+java:S3655"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(…Ù¹›úÿÿÿÿ
+k
+java:S3655r"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(…Ù¹›úÿÿÿÿ
+€
+java:S4144"iUpdate this method so that its implementation is not identical to "getTodayReserveCntByRoom" on line 383.(ºåÒö
+[
+java:S4684+"@Replace this persistent entity with a simple POJO or DTO object.(°×ìÑşÿÿÿÿ
+=
+java:S1125="'Remove the unnecessary boolean literal.(òŞª•
+[
+java:S4684q"@Replace this persistent entity with a simple POJO or DTO object.(¡ù—ºÿÿÿÿÿ
+:
+java:S3751q"Make this method non "private".(¡ù—ºÿÿÿÿÿ
+V
+java:S4684z"@Replace this persistent entity with a simple POJO or DTO object.(ª‹±Æ
+5
+java:S3751z"Make this method non "private".(ª‹±Æ
+o	java:S131™"YComplete cases by adding the missing enum constants or add a default case to this switch.(¨»¥®
+o	java:S131Á"YComplete cases by adding the missing enum constants or add a default case to this switch.(¨»¥®
+W
+java:S4684ñ"@Replace this persistent entity with a simple POJO or DTO object.(şÒó‹
+W
+java:S4684ƒ"@Replace this persistent entity with a simple POJO or DTO object.(Ñ¹ÅÔ
+\
+java:S4684•"@Replace this persistent entity with a simple POJO or DTO object.(êÿ¨Øşÿÿÿÿ
+W
+java:S4684§"@Replace this persistent entity with a simple POJO or DTO object.(àÈæ¶
+W
+java:S4684Ã"@Replace this persistent entity with a simple POJO or DTO object.(ä–´Š
+W
+java:S4684¥"@Replace this persistent entity with a simple POJO or DTO object.(ŠãÙÒ
