@@ -136,7 +136,6 @@ export default function ReservationInfo({subTitle, info, recentData}) {
         <MessageBox>
             <MessageSubTitle>{subTitle}</MessageSubTitle>
             {
-                // subTitle === "가장 최근 이용 내역" && recentData ? <MessageInfo>{info} <LinkTag to={`/reservation?room_id=${recentData.room_id}&startHour=${recentData.startHour}%startMinute=${recentData.startMinute}&endHour=${recentData.endHour}&endMinute=${recentData.endMinute}$day=${recentData.day}`}><ImgIcon src={booking} alt="" /></LinkTag></MessageInfo> : <MessageInfo>{info}</MessageInfo>
                 subTitle === "가장 최근 이용 내역" && recentData ? <MessageInfo>{info} <ImgIcon src={booking} alt="" onClick={quickReservationHandler}/></MessageInfo> : <MessageInfo>{info}</MessageInfo>
             }
         </MessageBox>
