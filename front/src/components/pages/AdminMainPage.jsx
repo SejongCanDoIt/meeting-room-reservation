@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Snackbar } from '@mui/material';
 import MuiAlert from '@mui/lab/Alert';
 import NoShowChart from './NoShowChart';
-import background from "../../assets/background.jpg";
+import background from "../../assets/background.jpg"
 
 export default function AdminMainPage() {
     return (
