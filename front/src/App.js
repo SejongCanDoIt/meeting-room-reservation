@@ -37,6 +37,9 @@ import AdminReservManagePage from './components/pages/AdminReservManagePage';
 import AdminRoomInfoPage from './components/pages/AdminRoomInfoPage';
 import AdminRoomAddPage from './components/pages/AdminRoomAddPage';
 import AdminRoomModifyPage from './components/pages/AdminRoomModifyPage';
+import AdminNoticeManagePage from './components/pages/AdminNoticeManagePage';
+import AdminNoticeAddPage from './components/pages/AdminNoticeAddPage';
+import AdminNoticeModifyPage from './components/pages/AdminNoticeModifyPage';
 
 function App() {
   return (
@@ -80,8 +83,10 @@ function App() {
           <Route path="/AdminRoomAddPage" element={<AdminRoomAddPage />}></Route>
           <Route path="/AdminRoomModifyPage/:id" element={<AdminRoomModifyPage />}></Route>
           <Route path="/RoomInfo" element={<RoomInfo />}></Route>
+          <Route path="/AdminNoticeManagePage" element={<AdminNoticeManagePage />}></Route>
+          <Route path="/AdminNoticeAddPage" element={<AdminNoticeAddPage />}></Route>
+          <Route path="/AdminNoticeModifyPage/:id" element={<AdminNoticeModifyPage />}></Route>
           <Route path="/*" element={<NotFound />}></Route>
-
         </Routes>
       </RootContainer>
     </BrowserRouter>

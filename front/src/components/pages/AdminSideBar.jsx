@@ -58,6 +58,12 @@ export default function AdminSideBar() {
                 >
                     <LinkStyled to="/AdminSettingPage">세부 설정</LinkStyled>
                 </MenuItem>
+                <MenuItem
+                    className={`menu-item ${activeMenu === "notice-settings" ? "active" : ""}`}
+                    onClick={() => handleMenuClick("AdminNoticeManagePage")}
+                >
+                    <LinkStyled to="/AdminNoticeManagePage">공지사항 관리</LinkStyled>
+                </MenuItem>
             </ul>
         </Sidebar>
     );

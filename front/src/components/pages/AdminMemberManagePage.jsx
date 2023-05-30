@@ -8,7 +8,9 @@ import MuiAlert from '@mui/lab/Alert';
 
 
 export default function AdminMemberManagePage() {
+    // 회원 추가 관련
     const [file, setFile] = useState(null);
+    // 스낵바 관련
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('info');
@@ -70,7 +72,7 @@ export default function AdminMemberManagePage() {
     };
 
     // 멤버 받아오기
-    const [memberList, setMemberList] = useState(null);
+    const [memberList, setMemberList] = useState([]);
 
     useEffect(() => {
         const fetchMemberListData = async () => {
@@ -116,17 +118,23 @@ export default function AdminMemberManagePage() {
                             <span>예약 가능 횟수</span>
                             <span>노쇼 횟수</span>
                         </MemberListHeader>
-                        {memberList.map(member => (
-                            <MemberRow key={member.member_id}>
-                                <span>{member.major === 1 ? '컴퓨터공학부' : '기타'}</span>
-                                <span>{member.studentNo}</span>
-                                <span>{member.name}</span>
-                                <span>{member.phoneNo}</span>
-                                <span>{member.email}</span>
-                                <span>{member.cnt}</span>
-                                <span>{member.noshow}</span>
-                            </MemberRow>
-                        ))}
+                        {memberList.length === 0 ? (
+                            <NoMemberMessage>현재 회원 정보가 없습니다.</NoMemberMessage>
+                        ) : (
+                            memberList.map(member => {
+                                return (
+                                    <MemberRow key={member.member_id}>
+                                        <span>{member.major === 1 ? '컴퓨터공학부' : '기타'}</span>
+                                        <span>{member.studentNo}</span>
+                                        <span>{member.name}</span>
+                                        <span>{member.phoneNo}</span>
+                                        <span>{member.email}</span>
+                                        <span>{member.cnt}</span>
+                                        <span>{member.noshow}</span>
+                                    </MemberRow>
+                                );
+                            })
+                        )}
                     </MemberList>
                 </MemberManagementContainer>
             </MemberManagement>
@@ -190,6 +198,18 @@ const AddMemberButton = styled.button`
     &:hover {
         background-color: #8B1B34;
     }
+`;
+
+const NoMemberMessage = styled.p`
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: 30px;
+    color: #A1203C;
 `;
 
 const MemberList = styled.div`

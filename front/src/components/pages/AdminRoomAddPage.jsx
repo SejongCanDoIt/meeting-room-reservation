@@ -14,11 +14,11 @@ import projector from "../../assets/projector.png";
 import chair from "../../assets/office-chair.png";
 
 export default function AdminRoomAddPage() {
+    const navigate = useNavigate();
     // 스낵바 관련
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('info');
-    const navigate = useNavigate();
     // 회의실 정보 관련
     const [roomName, setRoomName] = useState('');
     const [roomImage, setRoomImage] = useState('');
@@ -363,6 +363,8 @@ const StyledP = styled.p`
 const RoomImgContianer = styled.img.attrs(props => ({
     src: props.roomImage
 }))`
+    max-width: 550px;
+    max-height: 300px;
     width: 100%;
     height: auto;
     object-fit: cover;
