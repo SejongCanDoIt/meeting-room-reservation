@@ -88,7 +88,7 @@ export default function AdminSettingPage() {
                             <span>예약 시간 간격 기준: 주</span>
                         </SettingsListHeader>
                         {settingList.length === 0 ? (
-                            <NoSettingMessage>초기 세부 설정을 해주세요</NoSettingMessage>
+                            <NoSettingMessage>초기 세부 설정을 해주세요.</NoSettingMessage>
                         ) : (
                             settingList.map(setting => {
                                 return (

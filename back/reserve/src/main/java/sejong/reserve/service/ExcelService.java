@@ -6,6 +6,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.ManagementDto;
+import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
@@ -23,20 +25,19 @@ import java.util.*;
 public class ExcelService {
     private final MemberRepository memberRepository; // Spring Data JPA를 이용하여 정의한 Repository
 
+    private final ManagementRepository managementRepository;
+
     // JPA EntityManager를 이용하여 DB와 상호작용. @PersistenceContext는 엔티티 매니저를 자동으로 주입해주는 스프링 어노테이션
     @PersistenceContext
     private EntityManager entityManager;
 
     // DB의 AUTO_INCREMENT 값을 1로 재설정하는 메소드
-    public void resetAutoIncrement(){
+    @Transactional
+    public void resetAutoIncrement() {
         // Native SQL 쿼리를 이용하여 AUTO_INCREMENT를 1로 재설정
         entityManager.createNativeQuery("ALTER TABLE member AUTO_INCREMENT = 1").executeUpdate();
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createNativeQuery("ALTER TABLE member AUTO_INCREMENT = 1");
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
-        entityManager.close();
     }
+
 
     // 엑셀 파일에서 데이터를 가져와 DB에 저장하는 메소드
     @Transactional
@@ -75,15 +76,19 @@ public class ExcelService {
                 switch (typeValue) {
                     case "1":
                         member.setAuthority(AuthState.OFFICE);
+                        member.setCnt(managementRepository.getOfficeCnt());
                         break;
                     case "2":
                         member.setAuthority(AuthState.PROFESSOR);
+                        member.setCnt(managementRepository.getProCnt());
                         break;
                     case "3":
                         member.setAuthority(AuthState.POST_STUDENT);
+                        member.setCnt(managementRepository.getPostCnt());
                         break;
                     case "4":
                         member.setAuthority(AuthState.UNI_STUDENT);
+                        member.setCnt(managementRepository.getUnivCnt());
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid Type value: " + typeValue);

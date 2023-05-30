@@ -16,6 +16,7 @@ import StartPage from "./components/pages/StartPage";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
+import QrPage from "./components/pages/QrPage";
 import RoomInfo from "./components/pages/RoomInfo";
 import Announcement from "./components/pages/Announcement";
 import NoShowChart from "./components/pages/NoShowChart";
@@ -69,6 +70,7 @@ function App() {
           <Route path="/announcement" element={<Announcement />}></Route>
           <Route path="/authenticating" element={<AuthenticatingPage />}></Route>
           <Route path="/noshow" element={<NoShowChart />}></Route>
+          <Route path="/noshowcheck" element={<QrPage />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>

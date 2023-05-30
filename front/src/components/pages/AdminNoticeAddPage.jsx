@@ -39,7 +39,7 @@ export default function AdminNoticeAddPage() {
 
         const dataToSend = {
             title: noticeTitle,
-            content: encodeURIComponent(noticeContent),
+            content: noticeContent,
         };
 
         console.log("Data to Send", dataToSend);

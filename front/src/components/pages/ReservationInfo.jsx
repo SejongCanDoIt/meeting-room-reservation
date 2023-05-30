@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import booking from "../../assets/booking.png";
+import tickMark from "../../assets/tickMark.png";
 import { useSearchParams, Link } from "react-router-dom";
 import { useLocation, useNavigate } from 'react-router';
 
@@ -52,6 +53,12 @@ const MessageInfo = styled.div`
 const ImgIcon = styled.img`
     width: 35px;
     height: 35px;
+`
+
+const Ptag = styled.p`
+    color: gray;
+    font-size: 13px;
+    width: 100px;
 `
 
 export default function ReservationInfo({subTitle, info, recentData}) {
@@ -116,13 +123,20 @@ export default function ReservationInfo({subTitle, info, recentData}) {
 
     }
 
+    const RecentTag = () => {
+        // console.log(noShowCheck);
+        // return noShowCheck ? <MessageInfo>{info}<ImgIcon src={tickMark}/></MessageInfo> : <MessageInfo>{info}</MessageInfo>
+    }
+
+    const noShowCheckHandler = () => {
+        navigate('/noshowcheck');
+    }
+
     return (
         <MessageBox>
             <MessageSubTitle>{subTitle}</MessageSubTitle>
             {
-                // subTitle === "가장 최근 이용 내역" && recentData ? <MessageInfo>{info} <LinkTag to={`/reservation?room_id=${recentData.room_id}&startHour=${recentData.startHour}%startMinute=${recentData.startMinute}&endHour=${recentData.endHour}&endMinute=${recentData.endMinute}$day=${recentData.day}`}><ImgIcon src={booking} alt="" /></LinkTag></MessageInfo> : <MessageInfo>{info}</MessageInfo>
                 subTitle === "가장 최근 이용 내역" && recentData ? <MessageInfo>{info} <ImgIcon src={booking} alt="" onClick={quickReservationHandler}/></MessageInfo> : <MessageInfo>{info}</MessageInfo>
-                // subTitle === "가장 최근 이용 내역" ? RecentElement() : <MessageInfo>{info}</MessageInfo>
             }
         </MessageBox>
 
