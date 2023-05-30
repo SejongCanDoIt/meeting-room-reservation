@@ -18,7 +18,7 @@ import MainPage from "./components/pages/MainPage";
 import MyPage from "./components/pages/MyPage";
 import RoomInfo from "./components/pages/RoomInfo";
 import Announcement from "./components/pages/Announcement";
-import NoShowTest from "./components/pages/NoShowTest";
+import NoShowChart from "./components/pages/NoShowChart";
 import TestReservation from "./components/pages/TestReservation";
 import PrivateRoute from "./components/pages/PrivateRoute";
 import ShowRegularReservation from "./components/pages/ShowRegularReservation";
@@ -64,7 +64,7 @@ function App() {
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/announcement" element={<Announcement />}></Route>
           <Route path="/authenticating" element={<AuthenticatingPage />}></Route>
-          <Route path="/noshow" element={<NoShowTest />}></Route>
+          <Route path="/noshow" element={<NoShowChart />}></Route>
           {/* <Route path="/show" element={<PrivateRoute component={<ShowReservation />} authenticated={token}/>} /> */}
           <Route path="/show" element={<ShowReservation />}/>
           <Route path="/reservation" element={<Reservation />}></Route>
