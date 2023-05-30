@@ -50,7 +50,7 @@ export default function LoginPage() {
     // login이 되어있는지 확인해서 로그인이 되어 있으면 /myPage로 라우팅.
     useEffect(() => {
         // 서버로부터 로그인 여부 확인
-        axios.get('/auth/checkLogin')
+        axios.get('http://3.36.241.224:8080/auth/checkLogin')
             .then((res) => {
                 console.log(res);
                 console.log("로그인 되어있습니다");
@@ -101,7 +101,7 @@ export default function LoginPage() {
             password: login.password,
         }
         await axios
-            .post("/auth/login", { ...loginInfo })
+            .post("http://3.36.241.224:8080/auth/login", { ...loginInfo })
             .then((res) => {
                 setIsError(false);
                 sessionStorage.setItem('Authorization', true);
