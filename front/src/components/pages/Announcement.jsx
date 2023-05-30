@@ -33,11 +33,17 @@ const AccDiv = styled.div`
     width: 100%;
 `
 
+const AnnouceContentBox = styled.div`
+    overflow-wrap: break-word;
+`
+
 export default function Announcement() {
+    const [announceDataList, setAnnounceDataList] = useState([]);
 
     useEffect(() => {
         axios.get('/notice/list')
             .then((res) => {
+                setAnnounceDataList([...res.data]);
                 console.log(res);
             })
             .catch((err) => {
@@ -52,42 +58,27 @@ export default function Announcement() {
             </AnnounceDiv>
 
             <AccDiv>
-                <Accordion sx={{width: "100%", maxWidth: "520px"}}>
+                {
+                    announceDataList.map((it, idx) => (
+                        <Accordion sx={{width: "100%", maxWidth: "520px"}}>
                     <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     >
-                    <Typography>회의실 이용시 주의사항</Typography>
+                    <Typography>{it.title}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography>
-                        <ul>
-                            <li>회의실에서 담배를 피우지 마세요.</li>
-                            <li>회의실에서 음식이나 음료를 섭취하지 마세요..</li>
-                            <li>회의실에서 소란을 피우지 마세요.</li>
-                            <li>회의가 끝나면 회의실을 원래 상태로 되돌리세요.</li>
-                        </ul>
+                        <AnnouceContentBox>
+                            {it.content}
+                        </AnnouceContentBox>
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
-                <Accordion sx={{width: "100%", maxWidth: "520px"}}>
-                    <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    >
-                    <Typography>AI센터 회의실이 오픈하였습니다.</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        <ul>
-                            <li>835호 836호 두개의 회의실이 운영중입니다.</li>
-                            <li>추가적인 문의사항은 컴퓨터공학과 조교에게 연락주세요.</li>
-                        </ul>
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
+                    ))
+                }
+                
             </AccDiv>
         </div>
 
