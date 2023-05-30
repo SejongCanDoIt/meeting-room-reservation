@@ -400,6 +400,8 @@ const RoomImg = styled.img`
 const RoomImgContianer = styled.img.attrs(props => ({
     src: props.roomImage
 }))`
+    max-width: 550px;
+    max-height: 300px;
     width: 100%;
     height: auto;
     object-fit: cover;

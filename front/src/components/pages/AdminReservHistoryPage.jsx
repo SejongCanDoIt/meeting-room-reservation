@@ -82,6 +82,69 @@ export default function AdminReservHistoryPage() {
         })
     }
 
+    // 의존성은 임시로 월별을 클릭했을때 변경되도록 함. -> 달력을 클릭했을때 바뀌는 걸로 수정해야함.
+    useEffect(() => {
+        createMonthReservedCount();
+    }, [selectedDay.month])
+
+    // 월별 예약건수를 서버에 요청해 만드는 함수.
+    const createMonthReservedCount = async () => {
+        setTmpMarks((state) => []);
+
+        // const currentMonth = selectedDay.month < 10 ? "0" + selectedDay.month.toString() : selectedDay.month.toString();
+        // const todayDay = new Date().getDate();
+        // const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 2, 0).getDate();
+        // console.log(currentMonth);
+
+        let idx = 2;
+        let ttt = 0;
+        while (idx > 0) {
+            const currentMonth = selectedDay.month + ttt < 10 ? "0" + (selectedDay.month + ttt).toString() : (selectedDay.month + ttt).toString();
+            const todayDay = new Date().getDate();
+            const lastMonthDay = new Date(selectedDay.year, selectedDay.month - 1, 0).getDate();
+            for (let day = 1; day <= lastMonthDay; day++) {
+                // 서버에 해당 날짜의 예약건수 요청.
+                const dayString = day < 10 ? "0" + day.toString() : day.toString();
+                const requestDayInfo = {
+                    year: selectedDay.year.toString(),
+                    month: selectedDay.month.toString(),
+                    day: dayString,
+                }
+
+                axios.post('/reserve/today-reserve-cnt-all', { ...requestDayInfo })
+                    .then((res) => {
+                        const cntData = {
+                            reservedCount: res.data,
+                            reservedDate: `${dayString}-${currentMonth}-${selectedDay.year}`
+                        }
+                        setTmpMarks((state) => [...state, cntData])
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+
+            }
+            idx -= 1
+            ttt += 1
+        }
+        // for (let day=1; day<=30 ; day++) {
+        //     console.log(selectedDay.year, currentMonth, day)
+        //     // 서버에 해당 날짜의 예약건수 요청.
+        //     axios.get('/reserve/today-reserve-cnt', {params: {year: selectedDay.year, month: currentMonth, day:day}})
+        //         .then((res) => {
+        //             const cntData = {
+        //                 reservedCount: res.data,
+        //                 reservedDate: `${day}-${currentMonth}-${selectedDay.year}`
+        //             }
+        //             setTmpMarks((state) => [...state, cntData])
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         })
+
+        // }
+    }
+
     // 예약 건수에 따라 필요한 배경색상을 반환해줌.
     const reservedStatus = ({ date, view }) => {
         // 3건 이상일때 색상 칠하기
@@ -97,7 +160,6 @@ export default function AdminReservHistoryPage() {
         if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
             return "heavy_reservation";
         }
-
 
         // 1~3건 사이일때의 색상 칠하기
         if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {

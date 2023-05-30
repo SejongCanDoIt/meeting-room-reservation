@@ -40,15 +40,21 @@ export default function AdminRoomManagePage() {
                         </Link>
                     </Header>
                     <RoomList>
-                        {roomList.map(room => (
-                            <RoomCard key={room.id}>
-                                <Link to={`/AdminRoomInfoPage/${room.id}`}>
-                                    <RoomImage src={room.picture} alt={`이미지: ${room.name}`} />
-                                    <h2>{room.name}</h2>
-                                    <p>{room.info}</p>
-                                </Link>
-                            </RoomCard>
-                        ))}
+                        {roomList.length === 0 ? (
+                            <NoRoomMessage>현재 사용 가능한 회의실이 없습니다.</NoRoomMessage>
+                        ) : (
+                            roomList.map(room => {
+                                return (
+                                    <RoomCard key={room.id}>
+                                        <Link to={`/AdminRoomInfoPage/${room.id}`}>
+                                            <RoomImage src={room.picture} alt={`이미지: ${room.name}`} />
+                                            <h2>{room.name}</h2>
+                                            <p>{room.info}</p>
+                                        </Link>
+                                    </RoomCard>
+                                );
+                            })
+                        )}
                     </RoomList>
                 </MeetingRoomContainer>
             </MeetingRoomManagement>
@@ -97,6 +103,18 @@ const Header = styled.div`
     }
 `;
 
+const NoRoomMessage = styled.p`
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: 30px;
+    color: #A1203C;
+`;
+
 const RoomList = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -127,6 +145,8 @@ const RoomCard = styled.div`
 `;
 
 const RoomImage = styled.img`
+    max-width: 100vw;
+    max-height: 30vh;  
     width: 100%;
     height: auto;
     object-fit: cover;
