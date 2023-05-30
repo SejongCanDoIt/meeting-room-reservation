@@ -8,12 +8,8 @@ x
 Hback/reserve/src/main/java/sejong/reserve/controller/RoomController.java,6\a\6a4c42e7a266dc6a685c397d42d08c502abfa5ec
 x
 Hback/reserve/src/main/java/sejong/reserve/repository/RoomRepository.java,f\2\f220e4a6b0d914c670c16e242e1f1dad43ecc015
-p
-@back/reserve/src/main/java/sejong/reserve/domain/Management.java,6\e\6edb78d52efd9149136ef53b65d02abf3338066a
 z
 Jback/reserve/src/main/java/sejong/reserve/repository/MemberRepository.java,a\2\a2c8f44ba7dc709bde57be7028780449fc42b8ea
-p
-@back/reserve/src/main/java/sejong/reserve/dto/ManagementDto.java,6\9\69f9320dd37c4545b26d67a208daf888aedd8e5e
 G
 back/reserve/.gitignore,3\5\35921015bbd4ce3e124004618788b59cbb32edcc
 „
@@ -38,8 +34,6 @@ y
 Iback/reserve/src/main/java/sejong/reserve/service/ReservationService.java,8\c\8caba592b04442a009b1cb844ad91abe403dd92c
 h
 8back/reserve/src/main/java/sejong/reserve/WebConfig.java,2\1\2160ffb53bc2795147f40acc716645f283d11f14
-x
-Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
 k
 ;back/reserve/src/main/java/sejong/reserve/service/Serv.java,7\6\766a5fc9df58012e1d7013f3cce9158839a38d0e
 r

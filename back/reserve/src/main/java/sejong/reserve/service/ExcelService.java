@@ -6,6 +6,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import sejong.reserve.domain.AuthState;
 import sejong.reserve.domain.Member;
+import sejong.reserve.dto.ManagementDto;
+import sejong.reserve.repository.ManagementRepository;
 import sejong.reserve.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
@@ -22,6 +24,8 @@ import java.util.*;
 @Service
 public class ExcelService {
     private final MemberRepository memberRepository; // Spring Data JPA를 이용하여 정의한 Repository
+
+    private final ManagementRepository managementRepository;
 
     // JPA EntityManager를 이용하여 DB와 상호작용. @PersistenceContext는 엔티티 매니저를 자동으로 주입해주는 스프링 어노테이션
     @PersistenceContext
@@ -72,15 +76,19 @@ public class ExcelService {
                 switch (typeValue) {
                     case "1":
                         member.setAuthority(AuthState.OFFICE);
+                        member.setCnt(managementRepository.getOfficeCnt());
                         break;
                     case "2":
                         member.setAuthority(AuthState.PROFESSOR);
+                        member.setCnt(managementRepository.getProCnt());
                         break;
                     case "3":
                         member.setAuthority(AuthState.POST_STUDENT);
+                        member.setCnt(managementRepository.getPostCnt());
                         break;
                     case "4":
                         member.setAuthority(AuthState.UNI_STUDENT);
+                        member.setCnt(managementRepository.getUnivCnt());
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid Type value: " + typeValue);
