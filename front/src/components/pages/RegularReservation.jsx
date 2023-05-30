@@ -245,15 +245,6 @@ export default function RegularReservations() {
             .catch((err) => {
                 console.log("통신실패");
             })
-        
-        // axios.get('/reserve/today-time-check', {params: {year: selectedDay.year, month: selectedDay.month, day: selectedDay.date}})
-        //     .then((res) => {
-        //         // console.log(res.data);
-        //         setReservedTime((state) => [...res.data]);
-        //     })
-        //     .catch((err) => {
-        //         console.log("통신실패");
-        //     })
     }, [selectedDay.date])
 
     // 의존성은 임시로 월별을 클릭했을때 변경되도록 함. -> 달력을 클릭했을때 바뀌는 걸로 수정해야함.
@@ -261,13 +252,6 @@ export default function RegularReservations() {
         // console.log("카운트 불러오기");
         createMonthReservedCount();
     }, [selectedDay.month])
-
-
-    // useEffect(() => {
-    //     console.log("예약될 날짜 찾아오는중");
-    //     onPreviewDay();
-    // }, [regularInfo.dayWeekMonth, regularInfo.dayRepeat, regularInfo.count])
-
 
     // 회의실이 선택되지 않았을때 실행되는 함수
     const isRoomIdSelected = () => {
@@ -345,41 +329,16 @@ export default function RegularReservations() {
 
      // 예약 건수에 따라 필요한 배경색상을 반환해줌.
      const reservedStatus = ({date, view}) => {
-
-        // 3건 이상일때 색상 칠하기
-        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
-        //     return "heavy_reservation";
-        // }
-
-
-        // // 1~3건 사이일때의 색상 칠하기
-        // if (marks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
-        //     return "middle_reservation";
-        // }
-
         if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount >= 3)) {
             return "heavy_reservation";
         }
-
 
         // 1~3건 사이일때의 색상 칠하기
         if (tmpMarks.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY") && x.reservedCount < 3 && x.reservedCount >= 1)) {
             return "middle_reservation";
         }
-
-        if (previewReservationList.find((x) => x.reservedDate === moment(date).format("DD-MM-YYYY"))) {
-            return "selected_day";
-        }
-
-
     }
 
-    // 사용자가 선택한 시간이 미리 예약된 시간과 겹치는 경우를 다루는 함수
-    // const reservationOverlapHandler = (startTime, endTime) => {
-    //     // 기존 예약시간 리스트를 예약된 시간으로 나눠서 새로운 배열 반환. -> 해당 배열에 1이 하나라도 있다면 초기화
-    //     const overlapArray = reservedTime.slice(startTime, endTime + 1)
-    //     return overlapArray.find((el) => el === 1);
-    // }
 
     const reservationOverlapHandler = async (year, month, date, day, startTime, endTime) => {
         // 기존 예약시간 리스트를 예약된 시간으로 나눠서 새로운 배열 반환. -> 해당 배열에 1이 하나라도 있다면 초기화
@@ -396,130 +355,6 @@ export default function RegularReservations() {
             })
         })
     }
-
-    /////////////////////////////////////////////////////
-    const onPreviewWeekHandler = async (day) => {
-        setPreviewReservationList((state) => []);
-        // 정기 날짜를 받아와서
-        const tmp = findWeekRegularDate(day);
-
-        // 서버에 알맞은 형태로 넘기기 위해 변환하는 작업을 거친다.
-        const yearT = tmp.getFullYear().toString();
-        const monthT = (tmp.getMonth() + 1) < 10 ? "0" + (tmp.getMonth() + 1).toString() : (tmp.getMonth() + 1).toString();
-        const dateT = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
-        const dayT = selectedDay.day;
-        const startTime = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
-        const startMinute = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
-        const endTime = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
-        const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
-
-        const previewData = {
-            reservedDate: `${dateT}-${monthT}-${yearT}`
-        }
-        console.log(`${dateT}-${monthT}-${yearT}: 예약될 날짜`)
-        // setPreviewReservationList((state) => [...state, previewData])
-    }
-
-    const onPreviewMonthHandler = (yearR, monthR, dateR, dayR) => {
-        // 해당 월의 가장 끝
-        const lastDay = new Date(yearR, monthR, 0).getDate();
-        // 기본 가중치
-        let wei = 4;
-
-        // 가중치를 더해도 월이 동일하다면 가중치 7을 더해줌.
-        if (dateR + 28 <= lastDay && dateR <= 5) {
-            // console.log("가중치를 5로 만듭니다");
-            wei = 5;
-        }
-
-        const tmp = findMonthRegularDate(7*wei, yearR, monthR, dateR, dayR);
-        const yearString = tmp.getFullYear().toString();
-        const monthString = (tmp.getMonth() + 1) < 10 ? "0" + (tmp.getMonth() + 1).toString() : (tmp.getMonth() + 1).toString();
-        const dateString = (tmp.getDate()) < 10 ? "0" + tmp.getDate().toString() : tmp.getDate().toString();
-        const dayString = dayR;
-        const startTimeR = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
-        const startMinuteR = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
-        const endTimeR = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
-        const endMinuteR = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
-        // console.log(`${yearR}년 ${monthR}월 ${dateR}일 정기 예약 진행`);
-        return {
-            yearR: tmp.getFullYear(),
-            monthR: tmp.getMonth() + 1,
-            dateR: tmp.getDate(),
-            dayR: dayR,
-        }
-    }
-
-    const onPreviewDayReservation = (dayRepeat, count) => {
-
-        const todayYear = selectedDay.year;
-        const todayMonth = selectedDay.month;
-        let todayDate = selectedDay.date;
-        const todayDay = selectedDay.day;
-
-        let day = parseInt(dayRepeat);
-        for (let i=0 ; i<count ; i++) {
-            if (i === 0) {
-                const selecDay = translateIntToString(todayYear, todayMonth, todayDate, todayDay);
-                // makeReservation(selecDay.year, selecDay.month, selecDay.date, todayDay, selecDay.startTime, selecDay.startMinute, selecDay.endTime, selecDay.endMinute);
-                todayDate += day
-            }
-            else {
-                const dayRegular = new Date(todayYear, todayMonth-1, todayDate);
-                const yearString = dayRegular.getFullYear().toString();
-                const monthString = (dayRegular.getMonth() + 1 < 10) ? "0" + (dayRegular.getMonth()+1).toString() : (dayRegular.getMonth()+1).toString();
-                const dateString = (dayRegular.getDate()) < 10 ? "0" + dayRegular.getDate().toString() : dayRegular.getDate().toString();
-                const dayString = dayRegular.getDay();
-                const startTimeR = selectedTime.startTime < 10 ? "0" + selectedTime.startTime.toString() : selectedTime.startTime.toString();
-                const startMinuteR = selectedTime.startMinute < 10 ? "0" + selectedTime.startMinute.toString() : selectedTime.startMinute.toString();
-                const endTimeR = selectedTime.endTime < 10 ? "0" + selectedTime.endTime.toString() : selectedTime.endTime.toString();
-                const endMinuteR = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
-                // makeReservation(yearString, monthString, dateString, dayString, startTimeR, startMinuteR, endTimeR, endMinuteR);
-                
-                todayDate += day;
-            }
-        }
-
-    }
-    
-    
-    
-    /////////////////////////////////////////////////////
-    
-
-    // 미리 예약될 날짜 보여주기.
-    const onPreviewDay = () => {
-        // 주간 정기예약
-        if (regularInfo.dayWeekMonth === "weekly") {
-            for (let day=0 ; day < regularInfo.count*7; day += 7) {
-                onPreviewWeekHandler(day);
-            }
-
-            console.log(previewReservationList);
-        }
-        // 월간 정기예약
-        else if (regularInfo.dayWeekMonth === "monthly") {
-            let yearR = selectedDay.year;
-            let monthR = selectedDay.month;
-            let dateR = selectedDay.date;
-            let dayR = selectedDay.day;
-
-            const selecDay = translateIntToString(yearR, monthR, dateR, dayR);
-
-            for (let cnt=0 ; cnt < regularInfo.count - 1; cnt++) {
-                const nextRegular = onPreviewMonthHandler(yearR, monthR, dateR, dayR);
-                yearR = nextRegular.yearR;
-                monthR = nextRegular.monthR;
-                dateR = nextRegular.dateR;
-                dayR = nextRegular.dayR;
-            }
-        }
-        // 일간 정기예약
-        else {
-            onPreviewDayReservation(regularInfo.dayRepeat, regularInfo.count);
-        }
-    }
-
 
     // 예약 버튼이 클릭되었을때.
     const onBtnClicked = () => {
@@ -645,14 +480,6 @@ export default function RegularReservations() {
         const endMinute = selectedTime.endMinute < 10 ? "0" + selectedTime.endMinute.toString() : selectedTime.endMinute.toString();
         
         makeReservation(yearT, monthT, dateT, dayT, startTime, startMinute, endTime, endMinute);
-
-        // console.log(`${startTime}시 부터, ${endTime}시 까지`);
-        // await reservationOverlapHandler(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime)
-        //     .then((res) => {
-        //         res ? overLapHandler(yearT, monthT, dateT) : makeReservation(yearT, monthT, dateT, dayT, startTime, startMinute, endTime, endMinute);
-        //     })
-        // console.log(`${yearT}년 ${monthT}월 ${dateT}일 중복여부: ${overlap}`);
-        // await makeReservation(yearT, monthT, dateT, dayT, selectedTime.startTime, selectedTime.endTime);
     }
 
     // [월] 자동으로 날짜가 계산되어 반환해주는 함수.
@@ -707,15 +534,6 @@ export default function RegularReservations() {
                 return true
             }
         }
-
-        // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
-        // if (moment(date).format('MM') > moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format('MM-DD')) {
-        //     return true
-        // }
-        // // 오늘을 기준으로 2개월뒤 날짜들은 비활성화 (단순히 '달'을 기준으로 할거라면 'MM' 사용)
-        // if (moment(date).format('MM-DD') > moment(new Date(new Date().getFullYear(), new Date().getMonth() + 2, new Date().getDate())).format('MM-DD')) {
-        //     return true
-        // }
     }
 
     const ShowSelectedStartTime = () => {
@@ -838,8 +656,6 @@ export default function RegularReservations() {
         
         dayType === "daily" ? setIsDayReservation(true) : setIsDayReservation(false);
 
-        onPreviewDay();
-
         regularDispatch({
             type: "R_TYPE",
             dayWeekMonth: dayType,
@@ -851,8 +667,6 @@ export default function RegularReservations() {
         const dayRepeat = e.target.value;
         console.log(dayRepeat);
 
-        onPreviewDay();
-
         regularDispatch({
             type: "REPEAT",
             dayRepeat: dayRepeat,
@@ -863,8 +677,6 @@ export default function RegularReservations() {
     const onRegularCountHandler = (e) => {
         console.log(e.target.value);
         const count = e.target.value;
-        
-        onPreviewDay();
 
         regularDispatch({
             type: "C_TYPE",
