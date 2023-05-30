@@ -12,6 +12,7 @@ import whiteboard from "../../assets/blackboard.png";
 import computer from "../../assets/computer.png";
 import projector from "../../assets/projector.png";
 import chair from "../../assets/office-chair.png";
+import imageready from "../../assets/imageready.png"
 
 export default function AdminRoomAddPage() {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function AdminRoomAddPage() {
     const [alertSeverity, setAlertSeverity] = useState('info');
     // 회의실 정보 관련
     const [roomName, setRoomName] = useState('');
-    const [roomImage, setRoomImage] = useState('');
+    const [roomImage, setRoomImage] = useState(imageready);
     const [roomInfo, setRoomInfo] = useState('');
     const [roomBuilding, setRoomBuilding] = useState("");
     const [roomFacilities, setRoomFacilities] = useState({
@@ -74,6 +75,7 @@ export default function AdminRoomAddPage() {
         }
     };
 
+    // 이미지 변경
     const handleImageChange = (event) => {
         setRoomImage(event.target.value);
     };
@@ -145,7 +147,7 @@ export default function AdminRoomAddPage() {
                                         value={roomImage}
                                         onChange={handleImageChange}
                                     />
-                                    <RoomAddButton>사진 URL 추가하기</RoomAddButton>
+                                    <RoomAdd>사진 URL을 추가해주세요</RoomAdd>
                                 </ButtonContainer>
                                 <FacilitiesList>
                                     <FacilityItem>
@@ -370,6 +372,7 @@ const RoomImgContianer = styled.img.attrs(props => ({
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 20px;
+    margin: auto;
 `;
 
 const ButtonContainer = styled.div`
@@ -377,14 +380,15 @@ const ButtonContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-const RoomAddButton = styled.button`
-    width: 200px;
+const RoomAdd = styled.div`
+    width: 250px;
     background-color: #A1203C;
     color: white;
     border: none;
     border-radius: 4px;
     padding: 10px 15px;
     font-size: 16px;
+    margin: auto;
 `;
 
 const StyledInput = styled.input`

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AdminTopContainer() {
     const navigate = useNavigate();
 
+    // 로그아웃 기능
     const handleLogout = async () => {
         try {
             const response = await axios.get(`/auth/logout`);
@@ -24,8 +25,9 @@ export default function AdminTopContainer() {
         }
     };
 
+    // 로고 클릭 시 홈페이지로 이동
     const handleLogoClick = () => {
-        navigate("/");
+        navigate("/AdminMainPage");
     }
 
     return (

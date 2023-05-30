@@ -15,7 +15,7 @@ export default function AdminMemberManagePage() {
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('info');
 
-    // snackbar 관련
+    // 스낵바 관련
     const handleClickSnackbar = (message, severity) => {
         setAlertMessage(message);
         setAlertSeverity(severity);
@@ -35,6 +35,7 @@ export default function AdminMemberManagePage() {
         setFile(event.target.files[0]);
     };
 
+    // 회원 추가
     const handleAddMember = async (event) => {
         event.preventDefault();
 
@@ -71,7 +72,7 @@ export default function AdminMemberManagePage() {
         }
     };
 
-    // 멤버 받아오기
+    // 회원 정보 받아오기
     const [memberList, setMemberList] = useState([]);
 
     useEffect(() => {

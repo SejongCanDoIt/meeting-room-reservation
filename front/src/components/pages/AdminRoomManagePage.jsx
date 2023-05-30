@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 
 export default function AdminRoomManagePage() {
+    // 회의실 리스트 받아오기
     const [roomList, setRoomList] = useState(null);
 
     useEffect(() => {
@@ -151,4 +152,5 @@ const RoomImage = styled.img`
     height: auto;
     object-fit: cover;
     border-radius: 5px;
+    margin: auto;
 `;
