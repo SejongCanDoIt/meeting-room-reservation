@@ -1,0 +1,9 @@
+
+]
+java:S2259L"GA "NullPointerException" could be thrown; "typeValue" is nullable here.(Õ““Ï
+N
+java:S1874~"3Remove this use of "setCellType"; it is deprecated.(Ş…¾Ñşÿÿÿÿ
+_
+java:S1128	"=Remove this unused import 'sejong.reserve.dto.ManagementDto'.(¤÷ß´ıÿÿÿÿ8Ô¼ºä†1
+Q
+java:S1128"4Remove this unused import 'javax.persistence.Query'.(¢ğö8Õ¼ºä†1
