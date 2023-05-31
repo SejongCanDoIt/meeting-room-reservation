@@ -1,0 +1,13 @@
+
+n	java:S116"YRename this field "reservation_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ø¹–Ó
+o	java:S116"URename this field "created_at" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùìµÍşÿÿÿÿ
+l	java:S116"RRename this field "room_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô©­Áÿÿÿÿÿ
+j	java:S116"URename this field "member_sno" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äíÎ
+n	java:S116"TRename this field "room_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´¢üáûÿÿÿÿ
+w	java:S116"]Rename this field "room_building_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘·âÿÿÿÿÿ
+@
+java:S1128"*Remove this unused import 'lombok.Getter'.(ùÒµÙ
+@
+java:S1128"*Remove this unused import 'lombok.Setter'.(ó¸çµ
+B
+java:S1128",Remove this unused import 'lombok.ToString'.(¹ÂÄÓ

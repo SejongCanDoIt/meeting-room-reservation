@@ -1,0 +1,32 @@
+
+e	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ•‘
+e	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ•‘
+e	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ•‘
+e	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ•‘
+f	java:S1171"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Γ§
+f	java:S1171"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Γ§
+f	java:S1171"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Γ§
+f	java:S1171"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Γ§
+f	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ρχν
+f	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ρχν
+f	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ρχν
+f	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ρχν
+k	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(κΘϊÿÿÿÿ
+k	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(κΘϊÿÿÿÿ
+k	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(κΘϊÿÿÿÿ
+k	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(κΘϊÿÿÿÿ
+A
+java:S1452&"&Remove usage of generic wildcard type.(ξγ ‘ώÿÿÿÿ
+T
+java:S1128
+"9Remove this unused import 'sejong.reserve.domain.Member'.(Πϊωÿÿÿÿ
+[
+java:S1128"FRemove this unused import 'sejong.reserve.web.argumentresolver.Login'.(ρΆ3
+f
+java:S1128"KRemove this unused import 'sejong.reserve.web.exception.NotLoginException'.(Η¥•ϋωÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬θύÿÿÿÿ
+G
+java:S1128",Remove this unused import 'java.time.Month'.(¤‚Ιψÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'java.time.YearMonth'.(€°’Ρωÿÿÿÿ

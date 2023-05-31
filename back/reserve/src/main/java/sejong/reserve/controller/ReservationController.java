@@ -114,7 +114,7 @@ public class ReservationController {
         Reservation reservation = reservationService.getReservation(reservationId).get();
         log.info("reservation = {}", reservationService.getReservation(reservationId).get());
         String emailSubject = loginMember.getName()+"님의 예약이 완료되었습니다.";// 메일의 제목을 여기에다 적으면 됩니다.
-        String emailText = "예약이 완료되었습니다.\n 시작시간: " + reservation.getStart() + "\n 종료시간: " + reservation.getEnd()+"\n장소: "+reservation.getRoom().getName(); //이메일에 들어갈 문장들 여기에 적으면 됩니다.
+        String emailText = "예약이 완료되었습니다.\n 시작시간: " + reservation.getStart() + "\n 종료시간: " + reservation.getEnd()+"\n장소: "+reservation.getRoom().getBuildingName()+" "+reservation.getRoom().getName(); //이메일에 들어갈 문장들 여기에 적으면 됩니다.
         emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText); // 이메일 보내기
     }
 
@@ -142,7 +142,10 @@ public class ReservationController {
                 + "예약 시작일: "+ reservation.getStart() +"\n"+
                 "예약 반복시간은 "+reservation.getStart().getHour()+"시 "+reservation.getStart().getMinute()+"분부터 "
                 + reservation.getEnd().getHour()+"시"
-                +reservation.getEnd().getMinute()+ "분 입니다.";
+                +reservation.getEnd().getMinute()+ "분 입니다."
+                +"\n장소: "+reservation.getRoom().getBuildingName() +" " +reservation.getRoom().getName();
+                ;
+
 
         emailService.sendSimpleMessage(loginMember.getEmail(), emailSubject, emailText);
     }
