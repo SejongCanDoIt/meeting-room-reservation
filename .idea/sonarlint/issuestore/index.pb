@@ -52,8 +52,6 @@ p
 @back/reserve/src/main/java/sejong/reserve/domain/Management.java,6\e\6edb78d52efd9149136ef53b65d02abf3338066a
 x
 Hback/reserve/src/main/java/sejong/reserve/service/ManagementService.java,b\c\bc39bd9bc22b4f8291045724bb290422e0d26a67
-s
-Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
 t
 Dback/reserve/src/main/java/sejong/reserve/service/MemberService.java,1\4\1410e27fdc2e822e1bad0c301913be6174005e72
 y
@@ -72,3 +70,15 @@ l
 <back/reserve/src/main/java/sejong/reserve/dto/MemberDto.java,5\b\5b99b4a40d19502504dff85b9a650e0c1c697ecb
 ~
 Nback/reserve/src/main/java/sejong/reserve/controller/ManagementController.java,1\e\1e9ce6b9dbe4000fae1b1979124a5d53cc8b6fe6
+x
+Hback/reserve/src/main/java/sejong/reserve/domain/SejongBuildingName.java,3\d\3d43e1037ec804f3e82f0ebd84b024810759ec96
+
+Oback/reserve/src/main/java/sejong/reserve/controller/ReservationController.java,1\3\1373b1eb4f45c8945bdf28c50a05002054978f15
+s
+Cback/reserve/src/main/java/sejong/reserve/service/ExcelService.java,1\6\161eb3dd7148d3f9e93913729f41eefcdcf30590
+s
+Cback/reserve/src/main/java/sejong/reserve/service/EmailService.java,2\1\211d191b0f5cd9839bb3c14c4b5354070b1a6077
+q
+Aback/reserve/src/main/java/sejong/reserve/ReserveApplication.java,f\4\f4fc1939053a5e88a3baca394328838d0ddcf77c
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
