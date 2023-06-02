@@ -111,7 +111,7 @@ export default function AdminSettingPage() {
 
 const SettingsManagement = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
@@ -125,6 +125,14 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const EditSettingsButton = styled.button`
@@ -166,6 +174,15 @@ const SettingsListHeader = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
     align-items: center;
+    justify-items: center;
+
+    span {
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
+    }
 `;
 
 const SettingsRow = styled.div`
@@ -179,4 +196,5 @@ const SettingsRow = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
     align-items: center;
+    justify-items: center;
 `;

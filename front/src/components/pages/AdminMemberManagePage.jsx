@@ -150,7 +150,7 @@ export default function AdminMemberManagePage() {
 
 const MemberManagement = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
@@ -162,6 +162,14 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const FileInput = styled.input`
@@ -226,9 +234,22 @@ const MemberListHeader = styled.div`
     padding: 10px;
     border-bottom: 1px solid #ddd;
     height: 6vh;
-    
+    justify-items: center;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(7, minmax(100px, 1fr));
+    }
+
     & span {
         font-weight: bold;
+    }
+
+    span {
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
     }
 `;
 
@@ -240,6 +261,19 @@ const MemberRow = styled.div`
     padding: 10px;
     border-bottom: 1px solid #ddd;
     height: 6vh;
+    justify-items: center;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(7, minmax(100px, 1fr));
+    }
+
+    span {
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
+    }
 `;
 
 const CustomAlert = styled(MuiAlert)`

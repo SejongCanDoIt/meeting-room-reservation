@@ -158,12 +158,16 @@ const GlobalStyle = createGlobalStyle`
 
 const RoomInformation = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
 const RoomInfoContainer = styled.div`
     padding: 20px;
+
+    @media (max-width: 768px) {  
+        overflow-y: auto; 
+    }
 `;
 
 const Header = styled.div`
@@ -171,6 +175,14 @@ const Header = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 
     button {
         background-color: #A1203C;
@@ -191,7 +203,12 @@ const RoomInfo = styled.div`
     display: flex;
     justify-content: space-between;
     height: 70vh;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
+
 
 const LeftInfo = styled.div`
     flex: 1;
@@ -275,9 +292,9 @@ const FacilityItem = styled.li`
 `;
 
 const FacilityIcon = styled.img`
-display: inline-block;
-width: 40px;
-height: 40px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
 `;
 
 const CustomAlert = styled(MuiAlert)`

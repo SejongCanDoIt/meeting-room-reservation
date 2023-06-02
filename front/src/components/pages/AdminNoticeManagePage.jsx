@@ -116,7 +116,7 @@ export default function AdminNoticeManagePage() {
 
 const NoticeManagement = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
@@ -128,6 +128,14 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const NoNoticeMessage = styled.p`
@@ -151,6 +159,7 @@ const NoticeList = styled.div`
 const NoticeHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `;
 
 const NoticeRow = styled.div`
@@ -189,8 +198,10 @@ const AddNoticeButton = styled.button`
 `;
 
 const Icon = styled.img`
-    height: 4vh;
-    width: auto;
+    height: auto;
+    width: 4vw;
+    max-width: 32px;
+    min-width: 24px;
 `;
 
 const EditNoticeButton = styled.button`

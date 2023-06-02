@@ -75,7 +75,7 @@ const GlobalStyle = createGlobalStyle`
 
 const MeetingRoomManagement = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
@@ -88,6 +88,14 @@ const Header = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 
     button {
         background-color: #A1203C;
@@ -137,7 +145,8 @@ const RoomCard = styled.div`
     background-color: #f1f1f1;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 48%;
+    width: 41vw;
+    min-width: 300px;
 
     a {
         display: inline-block;
