@@ -223,8 +223,8 @@ export default function AdminReservHistoryPage() {
                                 reservations.map(reservation => {
                                     const startDate = new Date(reservation.start);
                                     const endDate = new Date(reservation.end);
-                                    const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes()}`;
-                                    const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes()}`;
+                                    const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, '0')}`;
+                                    const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, '0')}`;
                                     let reservationStatus;
 
                                     switch (reservation.status) {
@@ -264,24 +264,37 @@ export default function AdminReservHistoryPage() {
 
 const ReservationHistory = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
 const ReservationContainer = styled.div`
     padding: 20px;
+    overflow-y: auto;
 `
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const DayInfo = styled.div`
     display: flex;
     justify-content: space-between;
     height: 70vh;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 const LeftInfo = styled.div`
@@ -296,19 +309,33 @@ const StyledCalendar = styled(Calendar)`
     width: 100%;
     height: 70%;
     max-width: 100%;
+    min-height: 38vh;
     background: white;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 1rem;
+
+    @media (max-width: 768px) {
+        font-size: 0.5rem;
+    }
+
     line-height: 1.2em;
     color: #000000;
 
     & .react-calendar__navigation__label {
-        font-size: 20px;
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
     }
 
     & .react-calendar__tile {
         height: 50px;
-        font-size: 20px;
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
     }
 
     & .react-calendar__tile--active {
@@ -346,6 +373,7 @@ const RightInfo = styled.div`
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    min-height: 50vh;
 `;
 
 const NoReservationMessage = styled.p`
@@ -366,6 +394,12 @@ const ReservationItem = styled.div`
     border-radius: 5px;
     margin-bottom: 10px;
     background: white;
+
+    font-size: 1rem;
+
+    @media (max-width: 768px) {
+        font-size: 0.5rem;
+    }
 `;
 
 const Status = styled.span`

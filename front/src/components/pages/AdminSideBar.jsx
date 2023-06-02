@@ -88,7 +88,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Sidebar = styled.div`
-    width: 200px;
+    min-width: 43px;
+    width: 10vw;
     background-color: #f1f1f1;
     position: fixed;
     top: 10vh;
@@ -122,7 +123,7 @@ const MenuItem = styled.li`
     &.reservation::after {
         content: '';
         display: inline-block;
-        margin-left: 10px;
+        margin-left: 1vw;
         margin-bottom: 2px;
         width: 8px;
         height: 8px;

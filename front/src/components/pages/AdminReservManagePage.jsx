@@ -57,6 +57,7 @@ export default function AdminReservManagePage() {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '40%',
+            minWidth: '300px',
             padding: '20px',
             border: '1px solid #ccc',
             borderRadius: '4px',
@@ -103,8 +104,8 @@ export default function AdminReservManagePage() {
                             reservList.map(reservation => {
                                 const startDate = new Date(reservation.start);
                                 const endDate = new Date(reservation.end);
-                                const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes()}`;
-                                const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes()}`;
+                                const startString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, '0')}`;
+                                const endString = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, '0')}`;
 
                                 return (
                                     <ReservationRow key={reservation.reservation_id} status={reservation.status}>
@@ -114,9 +115,9 @@ export default function AdminReservManagePage() {
                                             <span>{endString}</span>
                                             <span>{reservation.status}</span>
                                         </InfoDiv>
-                                        <div onClick={() => handleRoomClick(reservation.room_id)}>
+                                        <RoomDiv onClick={() => handleRoomClick(reservation.room_id)}>
                                             <span>{reservation.room_id}</span>
-                                        </div>
+                                        </RoomDiv>
                                         <CancelReservation
                                             disabled={reservation.status === 'FINISHED'}
                                             status={reservation.status}
@@ -149,7 +150,6 @@ export default function AdminReservManagePage() {
                         <p><b>노쇼 횟수:</b> {selectedReservation.noshow}</p>
                         <CloseModalButton onClick={closeModal}>닫기</CloseModalButton>
                     </ModalContent>
-
                 )}
                 {selectedRoom && (
                     <ModalContent>
@@ -160,7 +160,6 @@ export default function AdminReservManagePage() {
                         <p><b>회의실 건물:</b> {selectedRoom.buildingName}</p>
                         <CloseModalButton onClick={closeModal}>닫기</CloseModalButton>
                     </ModalContent>
-
                 )}
             </Modal>
         </>
@@ -169,7 +168,7 @@ export default function AdminReservManagePage() {
 
 const ReservationManagement = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
@@ -181,6 +180,14 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const ReservationList = styled.div`
@@ -195,8 +202,18 @@ const ReservationListHeader = styled.div`
     padding: 10px;
     border-bottom: 1px solid #ddd;
     height: 6vh;
+    justify-items: center;
+
     & span {
         font-weight: bold;
+    }
+
+    span {
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
     }
 `;
 
@@ -215,6 +232,12 @@ const NoReservationMessage = styled.p`
 const InfoDiv = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+`;
+
+const RoomDiv = styled.div`
+    display: grid;
+    justify-items: center;
 `;
 
 const ReservationRow = styled.div`
@@ -225,8 +248,17 @@ const ReservationRow = styled.div`
     border-bottom: 1px solid #ddd;
     height: 6vh;
     background-color: ${props => props.status === 'FINISHED' ? '#d3d3d3' : 'white'};
+
     & span {
         font-weight: normal;
+    }
+
+    span {
+        font-size: 1rem;
+
+        @media (max-width: 768px) {
+            font-size: 0.5rem;
+        }
     }
 `;
 
@@ -259,7 +291,6 @@ background-color: ${props => props.status === 'FINISHED' ? '#8B1B34' : '#A1203C'
     border: none;
     border-radius: 4px;
     padding: 5px 10px;
-    font-size: 14px;
     cursor: pointer;
     width: auto;
     height: 40px;
@@ -268,5 +299,11 @@ background-color: ${props => props.status === 'FINISHED' ? '#8B1B34' : '#A1203C'
     }
     &:disabled {
         cursor: not-allowed;
+    }
+    
+    font-size: 1rem;
+
+    @media (max-width: 768px) {
+        font-size: 0.5rem;
     }
 `;

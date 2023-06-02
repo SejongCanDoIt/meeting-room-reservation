@@ -88,7 +88,7 @@ export default function AdminNoticeAddPage() {
 
 const NoticeManagement = styled.div`
     max-width: 100%;
-    padding-left: 200px;
+    padding-left: 10vw;
     padding-top: 7vh;
 `;
 
@@ -100,6 +100,14 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    h1 {
+        font-size: 2rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const Form = styled.form`

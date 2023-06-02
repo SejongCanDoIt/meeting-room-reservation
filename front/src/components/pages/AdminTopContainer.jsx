@@ -59,8 +59,10 @@ const TopContainer = styled.div`
 `;
 
 const Logo = styled.img`
-    height: 10vh;
-    width: auto;
+    height: auto;
+    width: 25vw;
+    min-width: 180px;
+    max-width: 350px;
     cursor: pointer;
 `;
 
@@ -70,7 +72,7 @@ const AdminInfo = styled.div`
 `;
 
 const AdminInfoText = styled.p`
-    font-size: 40px;
+    font-size: 2rem;
 
     &:first-child {
         font-weight: bold;
@@ -78,6 +80,10 @@ const AdminInfoText = styled.p`
 
     &:last-of-type {
         margin-right: 0.4em;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.5rem;
     }
 `;
 
@@ -94,7 +100,9 @@ const LogoutButton = styled.button`
 `;
 
 const LogoutImage = styled.img`
-    height: 4vh;
-    width: auto;
+    height: auto;
+    width: 4vw;
+    max-width: 32px;
+    min-width: 24px;
     margin-right: 1vw;
 `;

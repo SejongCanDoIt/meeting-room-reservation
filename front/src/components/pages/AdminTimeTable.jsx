@@ -15,6 +15,7 @@ export default function AdminTimeTable({onTimeHandler, reservedStatusList}) {
 const TimeContainer = styled.div`
     display: flex;
     width: 100%;
+    min-width: 300px;
     justify-content: center;
 `
 
@@ -25,5 +26,9 @@ const BoxContainer = styled.div`
 const Ptag = styled.p`
     margin-top: 7px;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 0.5rem;
+    }
 `
 
