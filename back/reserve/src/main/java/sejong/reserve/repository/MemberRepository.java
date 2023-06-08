@@ -11,11 +11,16 @@ import sejong.reserve.domain.Member;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findByName(String name);
+
+
+    @Query("select m from Member m where m.studentNo = :studentNo")
+    Optional<Member> findByMemberIdOp(String studentNo);
 
     @Query("select m from Member m where m.studentNo = :studentNo")
     Member findByStudentNo(@Param("studentNo") String studentNo);

@@ -4,12 +4,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sejong.reserve.domain.Admin;
 import sejong.reserve.domain.Member;
 import sejong.reserve.dto.AdminDto;
 import sejong.reserve.dto.LoginDto;
+import sejong.reserve.security.TokenInfo;
 import sejong.reserve.service.AdminService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.web.SessionConst;
@@ -28,7 +34,16 @@ public class AuthController {
   private final AdminService adminService;
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(
+  public TokenInfo login(@RequestBody LoginDto memberLoginRequestDto) {
+    log.info("login info: = {}", memberLoginRequestDto);
+    String memberId = memberLoginRequestDto.getSno();
+    String password = memberLoginRequestDto.getPassword();
+    TokenInfo tokenInfo = memberService.login(memberId, password);
+    return tokenInfo;
+  }
+
+//  @PostMapping("/login")
+  public ResponseEntity<?> loginOld(
           @RequestBody LoginDto loginInfo,
           HttpServletResponse response,
           HttpSession session) throws Exception {
@@ -74,36 +89,41 @@ public class AuthController {
   }
 
   @GetMapping("/checkLogin")
-  public ResponseEntity<String> checkLogin(HttpSession session) throws Exception {
-    log.info("checkLogin-test");
+  public ResponseEntity<String> checkLogin() throws Exception {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    log.info("Authentication: {}", authentication); // 추가된 코드
 
-    Object sessionAttribute = session.getAttribute(SessionConst.LOGIN_MEMBER);
-//    log.info("session member instance = {}", sessionAttribute instanceof Member);
-//    log.info("session admin instance = {}", sessionAttribute instanceof AdminDto);
 
-    if (sessionAttribute instanceof AdminDto) {
-      AdminDto admin = (AdminDto) session.getAttribute(SessionConst.LOGIN_MEMBER);
-//      log.info("checkLogin session = {}", admin);
-      if (admin == null) {
-        throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
-      } else {
-        log.info("admin login success");
-        return new ResponseEntity<>(admin.getLoginId(), HttpStatus.OK);
-      }
-    } else if (sessionAttribute instanceof Member) {
-      Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-//      log.info("checkLogin session = {}", member);
+    log.info("checkLogin 1 = {}", authentication);
+    if(authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken){
+      throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
+    }
+    if (!(authentication.getPrincipal() instanceof UserDetails)) {
+      throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
+    }
 
-      if (member == null) {
-        throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
-      } else {
-        log.info("member login success");
-        return new ResponseEntity<>(member.getStudentNo(), HttpStatus.OK);
-      }
+    log.info("checkLogin 2");
+
+    // "USER" 또는 "ADMIN"을 반환
+    String role = authentication.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .findFirst()
+            .orElseThrow(() -> new NotLoginException("로그인이 되어 있지 않은 상태 입니다!"));
+
+    String username = authentication.getName(); // 로그인한 사용자의 ID 가져오기
+    log.info("checkLogin: {}", username);
+
+    if(role.equals("ROLE_ADMIN")) {
+      log.info("admin login success");
+      return new ResponseEntity<>(username, HttpStatus.OK);
+    } else if(role.equals("ROLE_USER")) {
+      log.info("member login success");
+      return new ResponseEntity<>(username, HttpStatus.OK);
     } else{
       throw new NotLoginException("로그인이 되어 있지 않은 상태 입니다!");
     }
   }
+
 
 
 }

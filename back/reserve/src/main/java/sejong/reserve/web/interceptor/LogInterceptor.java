@@ -18,23 +18,18 @@ public class LogInterceptor implements HandlerInterceptor {
         log.info("---------------------LogInterceptor Start---------------------");
 
         String requestURI = request.getRequestURI();
-        String uuid = UUID.randomUUID().toString();
-        request.setAttribute(LOG_ID, uuid);
 
         // @RequestMapping -> HandlerMethod
         // 정적 리소스 -> ResourceHttpRequestHandler
-        if(handler instanceof HandlerMethod) {
-            HandlerMethod hm = (HandlerMethod) handler;// 호출할 컨트롤러의 모든 정보가 포함되어 있다.
-        }
-
-        log.info("preHandle REQUEST: uuid = [{}]",
-                uuid);
+//        if(handler instanceof HandlerMethod) {
+//            HandlerMethod hm = (HandlerMethod) handler;// 호출할 컨트롤러의 모든 정보가 포함되어 있다.
+//        }
 
         log.info("preHandle REQUEST: requestURI = [{}]",
                 requestURI);
 
-        log.info("preHandle REQUEST: handler = [{}]",
-                handler);
+//        log.info("preHandle REQUEST: handler = [{}]",
+//                handler);
 
         log.info("---------------------LogInterceptor End---------------------");
 
