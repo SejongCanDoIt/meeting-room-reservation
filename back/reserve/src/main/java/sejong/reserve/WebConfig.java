@@ -19,7 +19,9 @@ import sejong.reserve.security.JwtTokenProvider;
 import sejong.reserve.service.AdminService;
 import sejong.reserve.service.MemberService;
 import sejong.reserve.web.argumentresolver.LoginMemberArgumentResolver;
+import sejong.reserve.web.interceptor.AdminCheckInterceptor;
 import sejong.reserve.web.interceptor.LogInterceptor;
+import sejong.reserve.web.interceptor.LoginCheckInterceptor;
 
 import java.util.List;
 
@@ -89,8 +91,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "/room/list", "/room/detail/**", "/notice/list", "/notice/detail/**", "/reserve/today-reserve-cnt-all"
                 ).permitAll()
                 .antMatchers(
-                        "/member/**", "/reserve/**"
-                ).hasRole("ADMIN")
+                        "/manage/update", "/manage/member",  "/manage/date",
+                        "/notice/insert", "/notice/delete/**"
+                ).hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
