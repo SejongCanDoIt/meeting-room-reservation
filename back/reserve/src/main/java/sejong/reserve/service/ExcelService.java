@@ -25,6 +25,8 @@ import java.util.*;
 public class ExcelService {
     private final MemberRepository memberRepository; // Spring Data JPA를 이용하여 정의한 Repository
 
+
+
     private final ManagementRepository managementRepository;
 
     // JPA EntityManager를 이용하여 DB와 상호작용. @PersistenceContext는 엔티티 매니저를 자동으로 주입해주는 스프링 어노테이션
@@ -42,9 +44,6 @@ public class ExcelService {
     // 엑셀 파일에서 데이터를 가져와 DB에 저장하는 메소드
     @Transactional
     public void importExcelFile(InputStream in) {
-        memberRepository.deleteAll(); // 현재 DB의 모든 멤버 데이터를 삭제
-        resetAutoIncrement(); // AUTO_INCREMENT 값을 재설정
-
         // try-with-resources 구문을 이용하여 엑셀 파일을 열고 작업 후 자동으로 닫음
         try (Workbook workbook = new XSSFWorkbook(in)) {
             Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트를 가져옴
@@ -62,14 +61,20 @@ public class ExcelService {
                 Row currentRow = rows.next(); // 현재 행을 가져옴
                 if (isRowEmpty(currentRow)) continue; // 행이 비어있으면 다음 행으로 넘어감
 
-                Member member = new Member(); // 새로운 멤버 객체 생성
+                String studentNo = getCellValueAsString(currentRow.getCell(headerMap.get("ID")));
+                Member member = memberRepository.findByStudentNo(studentNo);
+                if (member == null) {
+                    member = new Member(); // 새로운 멤버 객체 생성
+                    member.setStudentNo(studentNo);
+                }
+
                 // 각 멤버의 필드를 셀의 값에 따라 설정
-                member.setStudentNo(getCellValueAsString(currentRow.getCell(headerMap.get("ID"))));
                 member.setPassword(getCellValueAsString(currentRow.getCell(headerMap.get("PASS"))));
                 member.setName(getCellValueAsString(currentRow.getCell(headerMap.get("Name"))));
                 member.setMajor(getCellValueAsInt(currentRow.getCell(headerMap.get("Dept."))));
                 member.setPhoneNo(getCellValueAsString(currentRow.getCell(headerMap.get("Phone"))));
                 member.setEmail(getCellValueAsString(currentRow.getCell(headerMap.get("email"))));
+                member.setNoshow(getCellValueAsInt(currentRow.getCell(headerMap.get("NoShow"))));
 
                 // "Type" 셀의 값에 따라 권한 설정
                 String typeValue = getCellValueAsString(currentRow.getCell(headerMap.get("Type")));
@@ -94,14 +99,13 @@ public class ExcelService {
                         throw new IllegalArgumentException("Invalid Type value: " + typeValue);
                 }
 
-                member.setNoshow(getCellValueAsInt(currentRow.getCell(headerMap.get("NoShow"))));
-
-                memberRepository.save(member); // 멤버 객체를 DB에 저장
+                memberRepository.save(member); // 멤버 객체를 DB에 저장 또는 업데이트
             }
         } catch (IOException e) {
             e.printStackTrace(); // 파일 입출력 에러 발생 시 에러 메시지를 출력
         }
     }
+
 
     // 행이 비어있는지 확인하는 메소드
     private boolean isRowEmpty(Row row) {
