@@ -26,7 +26,7 @@ public class SchedulerFunction {
     private final MemberService memberService;
     private final ReservationService reservationService;
 
-    @Scheduled(cron = "0 0 0 1 * ?", zone="Asia/Seoul") // 매달 1일 0시 0분에 실행
+//    @Scheduled(cron = "0 0 0 1 * ?", zone="Asia/Seoul") // 매달 1일 0시 0분에 실행
     public void resetCntValue() {
         managementService.resetCntAll();
 
@@ -37,7 +37,7 @@ public class SchedulerFunction {
         }
     }
 
-    @Scheduled(cron = "0 * * * * ?") // 매분 확인
+//    @Scheduled(cron = "0 * * * * ?") // 매분 확인
     public void resetReservationStatus() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime todayStartDateTime = LocalDateTime.of(now.getYear(), now.getMonth().minus(1), now.getDayOfMonth(), now.getHour(), 0, 0);
@@ -52,7 +52,7 @@ public class SchedulerFunction {
         }
     }
 
-    @Scheduled(cron = "0 * * * * ?") // 매분 확인
+//    @Scheduled(cron = "0 * * * * ?") // 매분 확인
     public void noShowCheck() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime todayDate = LocalDateTime.of(now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), 0, 0, 0);

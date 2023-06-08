@@ -15,6 +15,7 @@ import sejong.reserve.domain.Admin;
 import sejong.reserve.domain.Member;
 import sejong.reserve.dto.AdminDto;
 import sejong.reserve.dto.LoginDto;
+import sejong.reserve.security.SecurityUtil;
 import sejong.reserve.security.TokenInfo;
 import sejong.reserve.service.AdminService;
 import sejong.reserve.service.MemberService;
@@ -39,6 +40,7 @@ public class AuthController {
     String memberId = memberLoginRequestDto.getSno();
     String password = memberLoginRequestDto.getPassword();
     TokenInfo tokenInfo = memberService.login(memberId, password);
+    log.info("login token = {}", tokenInfo);
     return tokenInfo;
   }
 
@@ -93,6 +95,8 @@ public class AuthController {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     log.info("Authentication: {}", authentication); // 추가된 코드
 
+    String currentMemberId = SecurityUtil.getCurrentMemberId();
+    log.info(currentMemberId);
 
     log.info("checkLogin 1 = {}", authentication);
     if(authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken){
@@ -124,6 +128,11 @@ public class AuthController {
     }
   }
 
+
+  @PostMapping("/test")
+  public String test() {
+    return "success";
+  }
 
 
 }
