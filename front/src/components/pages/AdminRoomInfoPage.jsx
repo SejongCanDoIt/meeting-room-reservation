@@ -33,7 +33,6 @@ export default function AdminRoomInfoPage() {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpen(false);
     };
 
