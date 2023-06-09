@@ -309,7 +309,7 @@ const StyledCalendar = styled(Calendar)`
     width: 100%;
     height: 70%;
     max-width: 100%;
-    min-height: 38vh;
+    min-height: 55vh;
     background: white;
     border-radius: 10px;
     font-size: 1rem;

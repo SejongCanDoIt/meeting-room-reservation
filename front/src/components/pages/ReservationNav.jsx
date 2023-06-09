@@ -19,6 +19,8 @@ const ReservationTopNav = styled.div`
     max-width: 350px;
 
     margin: 15px 0px;
+    margin-top: 2em;
+    
 `
 
 const MainMsg = styled.div`

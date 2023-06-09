@@ -505,6 +505,18 @@ export default function Reservation() {
                 minute: minute,
             })
         }
+        else if (hour === 12) {
+            console.log(`선택된 시작시간은 ${hour}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "START_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "START_MINUTE",
+                minute: minute,
+            })
+        }
         else {
             console.log(`선택된 시작시간은 ${hour+12}시 ${minute}분`);
             // const start = parseInt(e.target.value);
@@ -532,6 +544,19 @@ export default function Reservation() {
                 minute: minute,
             })
         }
+        else if (hour === 12) {
+            console.log(`선택된 종료시간은 ${hour+12}시 ${minute}분`);
+            // const start = parseInt(e.target.value);
+            timeDispatch({
+                type: "END_TIME",
+                time: hour,
+            })
+            timeDispatch({
+                type: "END_MINUTE",
+                minute: minute,
+            })
+        }
+        
         else {
             console.log(`선택된 종료시간은 ${hour}시 ${minute}분`);
             // const start = parseInt(e.target.value);
